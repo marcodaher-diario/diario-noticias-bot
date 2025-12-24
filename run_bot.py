@@ -160,7 +160,8 @@ def publicar_post(service, titulo, conteudo, tags, horario=None):
     }
 
     if horario:
-        post["published"] = horario.isoformat()
+        # Converte para RFC3339 com UTC (Z)
+        post["published"] = horario.strftime("%Y-%m-%dT%H:%M:%SZ")
 
     service.posts().insert(
         blogId=BLOG_ID,
@@ -176,7 +177,7 @@ def publicar_post(service, titulo, conteudo, tags, horario=None):
 def executar_fluxo():
     service = autenticar_blogger()
 
-    agora = datetime.utcnow() - timedelta(hours=3)
+    agora = datetime.utcnow()
 
     # 🔥 POLÍTICA – MANHÃ
     noticias_politica = buscar_noticias(RSS_POLITICA)
