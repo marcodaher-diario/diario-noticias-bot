@@ -6,7 +6,7 @@ from googleapiclient.discovery import build
 # CONFIGURAÇÕES
 # =============================
 
-BLOG_ID = "SEU_BLOG_ID_AQUI"
+BLOG_ID = "7605688984374445860"
 
 RSS_FEEDS = [
     "https://g1.globo.com/rss/g1/",
