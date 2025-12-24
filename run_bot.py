@@ -14,8 +14,6 @@ OPENAI_API_KEY = "sk-proj-oTZEt_EKDIim8DurS2sb8-oWSsFKxLajiSFz4Q5LJNBt0aIqXU05h2
 
 SCOPES = ["https://www.googleapis.com/auth/blogger"]
 
-openai.api_key = OPENAI_API_KEY
-
 
 # =========================
 # AUTENTICAÇÃO BLOGGER
