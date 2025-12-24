@@ -1,4 +1,5 @@
 import feedparser
+import re
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 
@@ -6,7 +7,7 @@ from googleapiclient.discovery import build
 # CONFIGURAÇÕES
 # =============================
 
-BLOG_ID = "SEU_BLOG_ID_AQUI"
+BLOG_ID = "7605688984374445860"
 
 RSS_FEEDS = [
     "https://g1.globo.com/rss/g1/",
@@ -15,6 +16,14 @@ RSS_FEEDS = [
 ]
 
 SCOPES = ["https://www.googleapis.com/auth/blogger"]
+
+# =============================
+# BLOCO FIXO FINAL
+# =============================
+
+BLOCO_FIXO_FINAL = """COLE AQUI EXATAMENTE O CÓDIGO HTML FIXO QUE VOCÊ ENVIOU
+SEM ALTERAR UMA ÚNICA LINHA
+"""
 
 # =============================
 # AUTENTICAÇÃO BLOGGER
@@ -26,7 +35,19 @@ def autenticar_blogger():
     return build("blogger", "v3", credentials=creds)
 
 # =============================
-# BUSCAR NOTÍCIAS (RSS)
+# LIMPAR HTML DO RSS
+# =============================
+
+def limpar_html(texto):
+    if not texto:
+        return ""
+    texto = re.sub(r"<img[^>]*>", "", texto)
+    texto = re.sub(r"<iframe[^>]*>.*?</iframe>", "", texto, flags=re.DOTALL)
+    texto = re.sub(r"<[^>]+>", "", texto)
+    return texto.strip()
+
+# =============================
+# BUSCAR NOTÍCIAS
 # =============================
 
 def buscar_noticias(limite_por_feed=2):
@@ -39,7 +60,7 @@ def buscar_noticias(limite_por_feed=2):
         for entry in feed.entries[:limite_por_feed]:
             noticias.append({
                 "titulo": entry.get("title", "Sem título"),
-                "resumo": entry.get("summary", ""),
+                "resumo": limpar_html(entry.get("summary", "")),
                 "link": entry.get("link", ""),
                 "fonte": feed.feed.get("title", "Fonte desconhecida")
             })
@@ -48,24 +69,51 @@ def buscar_noticias(limite_por_feed=2):
     return noticias
 
 # =============================
-# GERAR CONTEÚDO (CURADORIA)
+# GERAR CONTEÚDO FORMATADO
 # =============================
 
 def gerar_conteudo(noticia):
     return f"""
-    <p><strong>Fonte:</strong> {noticia['fonte']}</p>
+    <div style="font-family: Arial; color:#444444; font-size:16px; text-align:justify;">
 
-    <p>{noticia['resumo']}</p>
+        <h2 style="font-size:26px; text-align:center;">
+            {noticia['titulo']}
+        </h2>
 
-    <p>
-        <a href="{noticia['link']}" target="_blank">
-            🔗 Leia a matéria completa na fonte original
-        </a>
-    </p>
+        <div style="height:1em;"></div>
+
+        <div style="text-align:center;">
+            <iframe 
+                width="680" 
+                height="383" 
+                src="" 
+                frameborder="0" 
+                allowfullscreen
+                style="max-width:100%;">
+            </iframe>
+        </div>
+
+        <div style="height:1em;"></div>
+
+        <p><b>Fonte:</b> {noticia['fonte']}</p>
+
+        <p>{noticia['resumo']}</p>
+
+        <p>
+            <a href="{noticia['link']}" target="_blank">
+                🔗 Leia a matéria completa na fonte original
+            </a>
+        </p>
+
+        <br><br>
+
+        {BLOCO_FIXO_FINAL}
+
+    </div>
     """
 
 # =============================
-# PUBLICAR NO BLOGGER
+# PUBLICAR POST
 # =============================
 
 def publicar_post(service, titulo, conteudo):
