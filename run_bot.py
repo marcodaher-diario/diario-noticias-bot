@@ -80,3 +80,5 @@ def publicar_post(service, titulo, conteudo):
         blogId=BLOG_ID,
         body=post
     ).execute()
+if __name__ == "__main__":
+    executar_fluxo()
