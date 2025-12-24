@@ -1,5 +1,5 @@
 import requests
-import openai
+from openai import OpenAI
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 
