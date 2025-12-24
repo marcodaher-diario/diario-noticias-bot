@@ -80,8 +80,14 @@ def publicar_post(service, titulo, conteudo):
         blogId=BLOG_ID,
         body=post
     ).execute()
-if __name__ == "__main__":
-    def executar_fluxo():
+
+def executar_fluxo():
     print("Fluxo iniciado")
-    
+    # aqui você vai chamar o restante do bot
+    # exemplo:
+    # buscar_noticias()
+    # gerar_conteudo()
+    # publicar_blog()
+
+if __name__ == "__main__":
     executar_fluxo()
