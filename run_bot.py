@@ -83,11 +83,43 @@ def publicar_post(service, titulo, conteudo):
 
 def executar_fluxo():
     print("Fluxo iniciado")
-    # aqui você vai chamar o restante do bot
-    # exemplo:
-    # buscar_noticias()
-    # gerar_conteudo()
-    # publicar_blog()
+
+    # 1️⃣ Autenticar no Blogger
+    print("Autenticando no Blogger...")
+    service = autenticar_blogger()
+
+    # 2️⃣ Buscar notícias
+    print("Buscando notícias...")
+    noticias = buscar_noticias(qtd=3)
+
+    if not noticias:
+        print("Nenhuma notícia encontrada. Encerrando fluxo.")
+        return
+
+    # 3️⃣ Processar e publicar cada notícia
+    for idx, noticia in enumerate(noticias, start=1):
+        titulo = noticia.get("title", "").strip()
+
+        if not titulo:
+            print(f"Notícia {idx} sem título. Pulando.")
+            continue
+
+        print(f"[{idx}] Gerando conteúdo para: {titulo}")
+
+        try:
+            conteudo = gerar_conteudo(noticia)
+        except Exception as e:
+            print(f"Erro ao gerar conteúdo: {e}")
+            continue
+
+        try:
+            print(f"[{idx}] Publicando no Blogger...")
+            publicar_post(service, titulo, conteudo)
+            print(f"[{idx}] Post publicado com sucesso!")
+        except Exception as e:
+            print(f"Erro ao publicar no Blogger: {e}")
+
+    print("Fluxo finalizado com sucesso.")
 
 if __name__ == "__main__":
     executar_fluxo()
