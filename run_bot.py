@@ -1,114 +1,76 @@
-import requests
-from openai import OpenAI
+import feedparser
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
-import os
 
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-client = OpenAI(api_key=OPENAI_API_KEY)
-
-
-# =========================
+# =============================
 # CONFIGURAÇÕES
-# =========================
+# =============================
 
-BLOG_ID = 7605688984374445860
+BLOG_ID = "SEU_BLOG_ID_AQUI"
 
-NEWS_API_KEY = "d5a632c8259648eaab341a5e26fa9568"
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+RSS_FEEDS = [
+    "https://g1.globo.com/rss/g1/",
+    "https://feeds.uol.com.br/home.xml",
+    "https://agenciabrasil.ebc.com.br/rss"
+]
 
 SCOPES = ["https://www.googleapis.com/auth/blogger"]
 
-
-# =========================
+# =============================
 # AUTENTICAÇÃO BLOGGER
-# =========================
+# =============================
 
 def autenticar_blogger():
+    print("🔐 Autenticando no Blogger...")
     creds = Credentials.from_authorized_user_file("token.json", SCOPES)
     return build("blogger", "v3", credentials=creds)
 
+# =============================
+# BUSCAR NOTÍCIAS (RSS)
+# =============================
 
-# =========================
-# BUSCAR NOTÍCIAS
-# =========================
+def buscar_noticias(limite_por_feed=2):
+    print("📰 Buscando notícias via RSS...")
+    noticias = []
 
-def buscar_noticias(qtd=3):
-    """
-    Busca notícias em português com fallback automático.
-    Prioriza estabilidade no plano FREE da NewsAPI.
-    """
+    for feed_url in RSS_FEEDS:
+        feed = feedparser.parse(feed_url)
 
-    urls = [
-        # FONTE 1 – MAIS ESTÁVEL (everything)
-        (
-            "https://newsapi.org/v2/everything?"
-            f"q=Brasil OR política OR economia OR sociedade&"
-            f"language=pt&sortBy=publishedAt&pageSize={qtd}&"
-            f"apiKey={NEWS_API_KEY}"
-        ),
+        for entry in feed.entries[:limite_por_feed]:
+            noticias.append({
+                "titulo": entry.get("title", "Sem título"),
+                "resumo": entry.get("summary", ""),
+                "link": entry.get("link", ""),
+                "fonte": feed.feed.get("title", "Fonte desconhecida")
+            })
 
-        # FONTE 2 – fallback (top-headlines)
-        (
-            "https://newsapi.org/v2/top-headlines?"
-            f"country=br&language=pt&pageSize={qtd}&"
-            f"apiKey={NEWS_API_KEY}"
-        )
-    ]
+    print(f"✅ {len(noticias)} notícias coletadas.")
+    return noticias
 
-    for i, url in enumerate(urls, start=1):
-        try:
-            print(f"Tentativa {i}: buscando notícias...")
-            resposta = requests.get(url, timeout=15).json()
-
-            if resposta.get("status") == "ok":
-                artigos = resposta.get("articles", [])
-                if artigos:
-                    print(f"{len(artigos)} notícias encontradas.")
-                    return artigos
-
-            print("Nenhuma notícia retornada nesta tentativa.")
-
-        except Exception as e:
-            print(f"Erro ao buscar notícias (tentativa {i}): {e}")
-
-    print("Todas as fontes falharam. Nenhuma notícia disponível.")
-    return []
-
-# =========================
-# GERAR CONTEÚDO
-# =========================
+# =============================
+# GERAR CONTEÚDO (CURADORIA)
+# =============================
 
 def gerar_conteudo(noticia):
-    titulo = noticia.get("title", "")
-    descricao = noticia.get("description", "")
-    conteudo_original = noticia.get("content", "")
+    return f"""
+    <p><strong>Fonte:</strong> {noticia['fonte']}</p>
 
-    prompt = f"""
-    Reescreva a notícia abaixo em português brasileiro,
-    com linguagem jornalística profissional, original,
-    clara e otimizada para publicação em blog.
+    <p>{noticia['resumo']}</p>
 
-    Título: {titulo}
-    Descrição: {descricao}
-    Conteúdo: {conteudo_original}
+    <p>
+        <a href="{noticia['link']}" target="_blank">
+            🔗 Leia a matéria completa na fonte original
+        </a>
+    </p>
     """
 
-    resposta = client.responses.create(
-        model="gpt-4.1-mini",
-        input=prompt
-    )
-
-    texto = resposta.output_text.strip()
-    return f"<p>{texto.replace(chr(10), '</p><p>')}</p>"
-
-
-# =========================
-# PUBLICAR POST
-# =========================
+# =============================
+# PUBLICAR NO BLOGGER
+# =============================
 
 def publicar_post(service, titulo, conteudo):
     post = {
+        "kind": "blogger#post",
         "title": titulo,
         "content": conteudo,
         "status": "LIVE"
@@ -119,45 +81,33 @@ def publicar_post(service, titulo, conteudo):
         body=post
     ).execute()
 
+    print(f"🚀 Post publicado: {titulo}")
+
+# =============================
+# FLUXO PRINCIPAL
+# =============================
+
 def executar_fluxo():
-    print("Fluxo iniciado")
-
-    # 1️⃣ Autenticar no Blogger
-    print("Autenticando no Blogger...")
+    print("▶️ Fluxo iniciado")
     service = autenticar_blogger()
-
-    # 2️⃣ Buscar notícias
-    print("Buscando notícias...")
-    noticias = buscar_noticias(qtd=3)
+    noticias = buscar_noticias()
 
     if not noticias:
-        print("Nenhuma notícia encontrada. Encerrando fluxo.")
+        print("⚠️ Nenhuma notícia encontrada.")
         return
 
-    # 3️⃣ Processar e publicar cada notícia
-    for idx, noticia in enumerate(noticias, start=1):
-        titulo = noticia.get("title", "").strip()
+    for noticia in noticias:
+        publicar_post(
+            service,
+            noticia["titulo"],
+            gerar_conteudo(noticia)
+        )
 
-        if not titulo:
-            print(f"Notícia {idx} sem título. Pulando.")
-            continue
+    print("🏁 Fluxo finalizado com sucesso")
 
-        print(f"[{idx}] Gerando conteúdo para: {titulo}")
-
-        try:
-            conteudo = gerar_conteudo(noticia)
-        except Exception as e:
-            print(f"Erro ao gerar conteúdo: {e}")
-            continue
-
-        try:
-            print(f"[{idx}] Publicando no Blogger...")
-            publicar_post(service, titulo, conteudo)
-            print(f"[{idx}] Post publicado com sucesso!")
-        except Exception as e:
-            print(f"Erro ao publicar no Blogger: {e}")
-
-    print("Fluxo finalizado com sucesso.")
+# =============================
+# EXECUÇÃO
+# =============================
 
 if __name__ == "__main__":
     executar_fluxo()
