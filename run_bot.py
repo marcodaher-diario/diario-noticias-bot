@@ -7,7 +7,7 @@ from googleapiclient.discovery import build
 # CONFIGURAÇÕES
 # =========================
 
-BLOG_ID = "7605688984374445860"
+BLOG_ID = 7605688984374445860
 
 NEWS_API_KEY = d5a632c8259648eaab341a5e26fa9568
 OPENAI_API_KEY = sk-abcdef1234567890abcdef1234567890abcdef12
