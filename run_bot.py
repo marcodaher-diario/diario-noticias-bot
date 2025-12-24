@@ -1,79 +1,81 @@
-import os
 import requests
-import datetime
 import openai
-from google_auth_oauthlib.flow import InstalledAppFlow
+from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 
-# --- CONFIGURAÇÕES ---
-NEWS_API_KEY = "COLE_AQUI_SUA_CHAVE_NEWSAPI"
-OPENAI_API_KEY = "COLE_AQUI_SUA_CHAVE_OPENAI"
+# =========================
+# CONFIGURAÇÕES
+# =========================
+
 BLOG_ID = "7605688984374445860"
 
+NEWS_API_KEY = d5a632c8259648eaab341a5e26fa9568
+OPENAI_API_KEY = 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
+
+SCOPES = ["https://www.googleapis.com/auth/blogger"]
+
 openai.api_key = OPENAI_API_KEY
-SCOPES = ["https://www.googleapis.com/auth/blogger"]
 
-from google.oauth2.credentials import Credentials
-from google_auth_oauthlib.flow import InstalledAppFlow
-from googleapiclient.discovery import build
-import os
 
-SCOPES = ["https://www.googleapis.com/auth/blogger"]
+# =========================
+# AUTENTICAÇÃO BLOGGER
+# =========================
 
 def autenticar_blogger():
-    creds = None
-
-    if os.path.exists("token.json"):
-        creds = Credentials.from_authorized_user_file("token.json", SCOPES)
-
-    if not creds or not creds.valid:
-        flow = InstalledAppFlow.from_client_secrets_file(
-            "credentials.json", SCOPES
-        )
-        creds = flow.run_console()
-
-        with open("token.json", "w") as token:
-            token.write(creds.to_json())
-
+    creds = Credentials.from_authorized_user_file("token.json", SCOPES)
     return build("blogger", "v3", credentials=creds)
 
 
-def buscar_noticias(qtd=3):
-    url = (f"https://newsapi.org/v2/top-headlines?country=br&language=pt&pageSize={qtd}&apiKey={NEWS_API_KEY}")
-    resp = requests.get(url)
-    data = resp.json()
+# =========================
+# BUSCAR NOTÍCIAS
+# =========================
+
+def buscar_noticias(qtd=1):
+    url = (
+        "https://newsapi.org/v2/top-headlines?"
+        f"country=br&language=pt&pageSize={qtd}&apiKey={NEWS_API_KEY}"
+    )
+    response = requests.get(url, timeout=30)
+    data = response.json()
     return data.get("articles", [])
 
-def gerar_texto_openai(titulo, conteudo):
-    prompt = (f"Reescreva a notícia abaixo com clareza e originalidade, mantendo os fatos e criando um parágrafo de análise.\n\nTÍTULO: {titulo}\n\nTEXTO: {conteudo}\n\nRESPOSTA:")
-    resp = openai.ChatCompletion.create(
-        model="gpt-4o-mini",
-        messages=[{"role": "user", "content": prompt}],
-        temperature=0.7
+
+# =========================
+# GERAR CONTEÚDO
+# =========================
+
+def gerar_conteudo(noticia):
+    prompt = (
+        "Reescreva a notícia abaixo com linguagem jornalística original, "
+        "sem copiar o texto, e faça uma breve análise.\n\n"
+        f"Título: {noticia.get('title', '')}\n"
+        f"Descrição: {noticia.get('description', '')}"
     )
-    return resp.choices[0].message["content"]
 
-def gerar_imagem_openai(prompt):
-    resp = openai.images.generate(model="gpt-image-1", prompt=prompt, size="1024x1024", n=1)
-    return resp.data[0].url
+    resposta = openai.ChatCompletion.create(
+        model="gpt-4o-mini",
+        messages=[
+            {"role": "system", "content": "Você é um jornalista profissional."},
+            {"role": "user", "content": prompt}
+        ],
+        temperature=0.6
+    )
 
-def publicar_no_blogger(service, blog_id, titulo, conteudo_html):
-    post_body = {"kind": "blogger#post", "blog": {"id": blog_id}, "title": titulo, "content": conteudo_html}
-    post = service.posts().insert(blogId=blog_id, body=post_body, isDraft=False).execute()
-    return post
+    texto = resposta["choices"][0]["message"]["content"]
+    return f"<p>{texto.replace(chr(10), '</p><p>')}</p>"
 
-def executar_fluxo(blog_id):
-    noticias = buscar_noticias()
-    service = autenticar_blogger()
-    for n in noticias:
-        titulo = n.get("title", "Sem título")
-        descricao = n.get("description", "")
-        fonte = n.get("source", {}).get("name", "Desconhecida")
-        texto = gerar_texto_openai(titulo, descricao)
-        img_url = gerar_imagem_openai(f"Imagem jornalística de: {titulo}")
-        conteudo_html = f"<h2>{titulo}</h2><img src='{img_url}'><p>{texto}</p><p><em>Fonte: {fonte}</em></p>"
-        post = publicar_no_blogger(service, blog_id, titulo, conteudo_html)
-        print("Publicado:", post.get("url"))
 
-if __name__ == "__main__":
-    executar_fluxo(BLOG_ID)
+# =========================
+# PUBLICAR POST
+# =========================
+
+def publicar_post(service, titulo, conteudo):
+    post = {
+        "title": titulo,
+        "content": conteudo,
+        "status": "LIVE"
+    }
+
+    service.posts().insert(
+        blogId=BLOG_ID,
+        b
