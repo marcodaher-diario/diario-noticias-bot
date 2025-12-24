@@ -2,9 +2,9 @@ import requests
 from openai import OpenAI
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
+import os
 
-OPENAI_API_KEY = "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"
-
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 client = OpenAI(api_key=OPENAI_API_KEY)
 
 
@@ -15,7 +15,7 @@ client = OpenAI(api_key=OPENAI_API_KEY)
 BLOG_ID = 7605688984374445860
 
 NEWS_API_KEY = "d5a632c8259648eaab341a5e26fa9568"
-OPENAI_API_KEY = "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"
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 SCOPES = ["https://www.googleapis.com/auth/blogger"]
 
