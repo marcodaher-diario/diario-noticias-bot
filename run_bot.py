@@ -78,4 +78,5 @@ def publicar_post(service, titulo, conteudo):
 
     service.posts().insert(
         blogId=BLOG_ID,
-        b
+        body=post
+    ).execute()
