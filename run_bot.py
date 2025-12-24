@@ -17,6 +17,8 @@ RSS_FEEDS = [
 
 SCOPES = ["https://www.googleapis.com/auth/blogger"]
 
+IMAGEM_FALLBACK = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/News_icon.svg/800px-News_icon.svg.png"
+
 # =============================
 # BLOCO FIXO FINAL
 # =============================
@@ -34,25 +36,48 @@ def autenticar_blogger():
     return build("blogger", "v3", credentials=creds)
 
 # =============================
-# EXTRAIR IMAGEM DO RSS
+# EXTRAIR IMAGEM
 # =============================
 
 def extrair_imagem(entry):
-    # 1️⃣ media:content
     if "media_content" in entry:
         return entry.media_content[0].get("url")
 
-    # 2️⃣ media:thumbnail
     if "media_thumbnail" in entry:
         return entry.media_thumbnail[0].get("url")
 
-    # 3️⃣ img dentro do summary
     summary = entry.get("summary", "")
     match = re.search(r'<img[^>]+src="([^">]+)"', summary)
     if match:
         return match.group(1)
 
-    return None
+    return IMAGEM_FALLBACK
+
+# =============================
+# EXTRAIR VÍDEO YOUTUBE
+# =============================
+
+def extrair_video(link):
+    if "youtube.com/watch" in link or "youtu.be/" in link:
+        video_id = None
+
+        if "watch?v=" in link:
+            video_id = link.split("watch?v=")[1].split("&")[0]
+        elif "youtu.be/" in link:
+            video_id = link.split("youtu.be/")[1]
+
+        if video_id:
+            return f"""
+            <div style="text-align:center;">
+                <iframe width="680" height="383"
+                    src="https://www.youtube.com/embed/{video_id}"
+                    frameborder="0"
+                    allowfullscreen>
+                </iframe>
+            </div>
+            <br>
+            """
+    return ""
 
 # =============================
 # LIMPAR TEXTO
@@ -67,6 +92,26 @@ def limpar_texto(html):
     return html.strip()
 
 # =============================
+# QUEBRAR TEXTO EM PARÁGRAFOS
+# =============================
+
+def quebrar_paragrafos(texto):
+    frases = re.split(r'(?<=[.!?]) +', texto)
+    paragrafos = []
+    bloco = []
+
+    for frase in frases:
+        bloco.append(frase)
+        if len(bloco) >= 2:
+            paragrafos.append(" ".join(bloco))
+            bloco = []
+
+    if bloco:
+        paragrafos.append(" ".join(bloco))
+
+    return "".join(f"<p>{p}</p><br>" for p in paragrafos)
+
+# =============================
 # BUSCAR NOTÍCIAS
 # =============================
 
@@ -78,28 +123,28 @@ def buscar_noticias(limite_por_feed=2):
         feed = feedparser.parse(feed_url)
 
         for entry in feed.entries[:limite_por_feed]:
-            imagem = extrair_imagem(entry)
-
             noticias.append({
                 "titulo": entry.get("title", "Sem título"),
-                "resumo": limpar_texto(entry.get("summary", "")),
+                "texto": limpar_texto(entry.get("summary", "")),
                 "link": entry.get("link", ""),
                 "fonte": feed.feed.get("title", "Fonte desconhecida"),
-                "imagem": imagem
+                "imagem": extrair_imagem(entry),
+                "video": extrair_video(entry.get("link", ""))
             })
 
     print(f"✅ {len(noticias)} notícias coletadas.")
     return noticias
 
 # =============================
-# GERAR CONTEÚDO FORMATADO
+# GERAR CONTEÚDO
 # =============================
 
 def gerar_conteudo(noticia):
 
-    bloco_imagem = ""
-    if noticia["imagem"]:
-        bloco_imagem = f"""
+    bloco_midia = noticia["video"]
+
+    if not bloco_midia:
+        bloco_midia = f"""
         <div style="text-align:center;">
             <img src="{noticia['imagem']}"
                  width="680"
@@ -108,6 +153,8 @@ def gerar_conteudo(noticia):
         </div>
         <br>
         """
+
+    texto_formatado = quebrar_paragrafos(noticia["texto"])
 
     return f"""
     <div style="font-family: Arial; color:#444444; font-size:16px; text-align:justify;">
@@ -118,11 +165,11 @@ def gerar_conteudo(noticia):
 
         <br>
 
-        {bloco_imagem}
+        {bloco_midia}
 
         <p><b>Fonte:</b> {noticia['fonte']}</p>
 
-        <p>{noticia['resumo']}</p>
+        {texto_formatado}
 
         <p>
             <a href="{noticia['link']}" target="_blank">
@@ -142,16 +189,14 @@ def gerar_conteudo(noticia):
 # =============================
 
 def publicar_post(service, titulo, conteudo):
-    post = {
-        "kind": "blogger#post",
-        "title": titulo,
-        "content": conteudo,
-        "status": "LIVE"
-    }
-
     service.posts().insert(
         blogId=BLOG_ID,
-        body=post
+        body={
+            "kind": "blogger#post",
+            "title": titulo,
+            "content": conteudo,
+            "status": "LIVE"
+        }
     ).execute()
 
     print(f"🚀 Post publicado: {titulo}")
