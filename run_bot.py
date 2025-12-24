@@ -30,15 +30,47 @@ def autenticar_blogger():
 # BUSCAR NOTÍCIAS
 # =========================
 
-def buscar_noticias(qtd=1):
-    url = (
-        "https://newsapi.org/v2/top-headlines?"
-        f"country=br&language=pt&pageSize={qtd}&apiKey={NEWS_API_KEY}"
-    )
-    response = requests.get(url, timeout=30)
-    data = response.json()
-    return data.get("articles", [])
+def buscar_noticias(qtd=3):
+    """
+    Busca notícias em português com fallback automático.
+    Prioriza estabilidade no plano FREE da NewsAPI.
+    """
 
+    urls = [
+        # FONTE 1 – MAIS ESTÁVEL (everything)
+        (
+            "https://newsapi.org/v2/everything?"
+            f"q=Brasil OR política OR economia OR sociedade&"
+            f"language=pt&sortBy=publishedAt&pageSize={qtd}&"
+            f"apiKey={NEWS_API_KEY}"
+        ),
+
+        # FONTE 2 – fallback (top-headlines)
+        (
+            "https://newsapi.org/v2/top-headlines?"
+            f"country=br&language=pt&pageSize={qtd}&"
+            f"apiKey={NEWS_API_KEY}"
+        )
+    ]
+
+    for i, url in enumerate(urls, start=1):
+        try:
+            print(f"Tentativa {i}: buscando notícias...")
+            resposta = requests.get(url, timeout=15).json()
+
+            if resposta.get("status") == "ok":
+                artigos = resposta.get("articles", [])
+                if artigos:
+                    print(f"{len(artigos)} notícias encontradas.")
+                    return artigos
+
+            print("Nenhuma notícia retornada nesta tentativa.")
+
+        except Exception as e:
+            print(f"Erro ao buscar notícias (tentativa {i}): {e}")
+
+    print("Todas as fontes falharam. Nenhuma notícia disponível.")
+    return []
 
 # =========================
 # GERAR CONTEÚDO
