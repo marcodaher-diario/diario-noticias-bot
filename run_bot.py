@@ -81,4 +81,7 @@ def publicar_post(service, titulo, conteudo):
         body=post
     ).execute()
 if __name__ == "__main__":
+    def executar_fluxo():
+    print("Fluxo iniciado")
+    
     executar_fluxo()
