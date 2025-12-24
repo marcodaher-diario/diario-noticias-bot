@@ -21,8 +21,34 @@ SCOPES = ["https://www.googleapis.com/auth/blogger"]
 # BLOCO FIXO FINAL
 # =============================
 
-BLOCO_FIXO_FINAL = """COLE AQUI EXATAMENTE O CÓDIGO HTML FIXO QUE VOCÊ ENVIOU
-SEM ALTERAR UMA ÚNICA LINHA
+BLOCO_FIXO_FINAL = """<div style="text-align: center;"><br /></div><div style="text-align: 
+center;"><div bis_skin_checked="1" style="background-color: white; color: #333333; font-family: Arial, 
+Tahoma, Helvetica, FreeSans, sans-serif; font-size: 14.85px; text-align: right;"><span style="color: red; 
+font-family: arial; font-size: x-small;"><i><b>Por: Marco Daher</b></i></span></div><div bis_skin_checked="1" 
+style="background-color: white; color: #333333; font-family: Arial, Tahoma, Helvetica, FreeSans, sans-serif; 
+font-size: 14.85px; text-align: right;"><b style="color: red; font-family: arial; font-size: x-small;">Todos os Direitos Reservados</b></div><div bis_skin_checked="1" 
+style="background-color: white; color: #333333; font-family: Arial, Tahoma, Helvetica, FreeSans, sans-serif; font-size: 14.85px; text-align: right;"><span style="color: red; 
+font-family: arial; font-size: x-small;"><b>©MarcoDaher2025<br /><br /></b></span></div><div bis_skin_checked="1" style="background-color: white; color: #333333; 
+font-family: Arial, Tahoma, Helvetica, FreeSans, sans-serif; font-size: 14.85px;"><b style="background-color: red; color: red; 
+font-family: arial; font-size: small; 
+text-align: right;">________________________________________________________________ ___________________________________________</b></div>
+<div bis_skin_checked="1" style="background-color: white; color: #333333; font-family: Arial, Tahoma, Helvetica, FreeSans, sans-serif; font-size: 14.85px; 
+text-align: right;"><br /></div><div bis_skin_checked="1" style="background-color: white; color: #333333; font-family: Arial, Tahoma, Helvetica, FreeSans, 
+sans-serif; font-size: 14.85px;"><span style="font-family: arial;">Caso queira contribuir com o BLOG e o Canal, use a&nbsp;<b>
+<span style="color: red;">Chave PIX:</span><span style="color: #2b00fe;">&nbsp;diariodenoticiasmd@gmail.com</span></b>&nbsp;</span></div><div bis_skin_checked="1" 
+style="background-color: white; color: #333333; font-family: Arial, Tahoma, Helvetica, FreeSans, sans-serif; font-size: 14.85px; text-align: justify;"><div bis_skin_checked="1" 
+style="text-align: center;"><span style="font-family: arial;">O conhecimento é o combustível para o Sucesso. Não pesa e não ocupa espaço.</span></div>
+<span style="font-family: arial;"><div bis_skin_checked="1" style="text-align: center;">Aqui você encontra análise das últimas notícias e muito mais.</div><div bis_skin_checked="1" 
+style="text-align: center;"><br />Obrigado pela Audiência.</div><div bis_skin_checked="1" 
+style="text-align: center;">🚨 Aproveite Acesse e Inscreva-se 📌 no Canal, Não esqueça do 👍 LIKE 👍 porque isso ajuda muito a continuarmos a fazer vídeos 🎥, ative o Sininho 🔔, 
+assim vc sempre será lembrado ⏰ quando um vídeo novo estiver no ar. Compartilhe 📢 o vídeo para mais pessoas conhecerem as informaações do canal.<br /><br /></div></span></div>
+<div bis_skin_checked="1" style="background-color: white; color: #333333; font-family: Arial, Tahoma, Helvetica, FreeSans, sans-serif; font-size: 14.85px;">
+<span style="font-family: arial;">Muito obrigado por assistir e abraço. 🎯</span></div><div bis_skin_checked="1" style="background-color: white; color: #333333; 
+font-family: Arial, Tahoma, Helvetica, FreeSans, sans-serif; font-size: 14.85px; text-align: justify;"><span style="font-family: arial;"><br /></span></div>
+<div bis_skin_checked="1" style="background-color: white; color: #333333; font-family: Arial, Tahoma, Helvetica, FreeSans, sans-serif; font-size: 14.85px; text-align: justify;">
+<span style="font-family: arial;"><br /></span></div><div bis_skin_checked="1" style="background-color: white; color: #333333; font-family: Arial, Tahoma, Helvetica, 
+FreeSans, sans-serif; font-size: 14.85px;"><span style="font-family: arial;">Veja também esses&nbsp;<b><span style="color: red;">LINKS&nbsp;</span></b>interessantes, 
+e&nbsp;<b><span style="color: red;">INCREVA-SE</span></b>&nbsp;nos meus&nbsp;<b><span style="color: red;">CANAIS</span></b>:&nbsp;</span></div><div bis_skin_checked="1" 
 """
 
 # =============================
