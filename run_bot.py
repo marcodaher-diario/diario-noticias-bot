@@ -174,10 +174,22 @@ def publicar_post(service, titulo, conteudo, tags, horario=None):
 # FLUXO PRINCIPAL
 # =============================
 
+____________________________________________________
 def executar_fluxo():
     service = autenticar_blogger()
 
     agora = datetime.utcnow()
+
+from datetime import datetime, timedelta
+
+def proximo_horario(hour):
+    agora = datetime.utcnow()
+    horario = agora.replace(hour=hour, minute=0, second=0, microsecond=0)
+
+    if horario <= agora:
+        horario += timedelta(days=1)
+
+    return horario
 
     # 🔥 POLÍTICA – MANHÃ
     noticias_politica = buscar_noticias(RSS_POLITICA)
