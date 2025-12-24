@@ -151,27 +151,35 @@ def RODAPE_FIXO():
 # PUBLICAR NO BLOGGER
 # =============================
 
-def publicar_post(service, titulo, conteudo, tags, horario=None):
+def publicar_post(service, titulo, conteudo, tags, horario):
     post = {
         "kind": "blogger#post",
         "title": titulo,
         "content": conteudo,
-        "labels": tags
+        "labels": tags,
+        "published": horario,
+        "status": "LIVE"
     }
-
-    if horario:
-        post["published"] = horario.isoformat()
 
     service.posts().insert(
         blogId=BLOG_ID,
-        body=post
+        body=post,
+        isDraft=False
     ).execute()
 
     print(f"✅ Publicado: {titulo}")
 
+
 # =============================
 # FLUXO PRINCIPAL
 # =============================
+
+from datetime import datetime, timedelta, timezone
+
+def gerar_data_rfc3339(horas_a_frente=0):
+    fuso_brasil = timezone(timedelta(hours=-3))
+    data = datetime.now(fuso_brasil) + timedelta(hours=horas_a_frente)
+    return data.replace(microsecond=0).isoformat()
 
 def executar_fluxo():
     service = autenticar_blogger()
