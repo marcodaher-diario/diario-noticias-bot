@@ -15,9 +15,15 @@ RSS_FEEDS = [
     "https://agenciabrasil.ebc.com.br/rss"
 ]
 
-SCOPES = ["https://www.googleapis.com/auth/blogger"]
+PALAVRAS_POLITICA = [
+    "política", "governo", "presidente", "lula", "bolsonaro",
+    "congresso", "senado", "stf", "eleição", "deputado", "ministro"
+]
 
+SCOPES = ["https://www.googleapis.com/auth/blogger"]
 IMAGEM_FALLBACK = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/News_icon.svg/800px-News_icon.svg.png"
+ARQUIVO_LOG = "posts_publicados.txt"
+
 
 # =============================
 # BLOCO FIXO FINAL
@@ -33,6 +39,20 @@ def autenticar_blogger():
     print("🔐 Autenticando no Blogger...")
     creds = Credentials.from_authorized_user_file("token.json", SCOPES)
     return build("blogger", "v3", credentials=creds)
+
+# =============================
+# CONTROLE DE DUPLICAÇÃO
+# =============================
+
+def ja_publicado(link):
+    if not os.path.exists(ARQUIVO_LOG):
+        return False
+    with open(ARQUIVO_LOG, "r", encoding="utf-8") as f:
+        return link in f.read()
+
+def registrar_publicacao(link):
+    with open(ARQUIVO_LOG, "a", encoding="utf-8") as f:
+        f.write(link + "\n")
 
 # =============================
 # EXTRAIR IMAGEM
@@ -111,6 +131,14 @@ def quebrar_paragrafos(texto):
     return "".join(f"<p>{p}</p><br>" for p in paragrafos)
 
 # =============================
+# IDENTIFICAR POLÍTICA
+# =============================
+
+def eh_politica(titulo, texto):
+    conteudo = f"{titulo} {texto}".lower()
+    return any(p in conteudo for p in PALAVRAS_POLITICA)
+
+# =============================
 # BUSCAR NOTÍCIAS
 # =============================
 
@@ -121,65 +149,59 @@ def buscar_noticias(limite_por_feed=2):
     for feed_url in RSS_FEEDS:
         feed = feedparser.parse(feed_url)
 
-        for entry in feed.entries[:limite_por_feed]:
+        for entry in feed.entries:
+            titulo = entry.get("title", "")
+            texto = limpar_html(entry.get("summary", ""))
+            link = entry.get("link", "")
+
+            if ja_publicado(link):
+                continue
+
+            politica = eh_politica(titulo, texto)
+
+            if tipo == "politica" and not politica:
+                continue
+            if tipo == "geral" and politica:
+                continue
+
             noticias.append({
-                "titulo": entry.get("title", "Sem título"),
-                "texto": limpar_texto(entry.get("summary", "")),
-                "link": entry.get("link", ""),
-                "fonte": feed.feed.get("title", "Fonte desconhecida"),
-                "imagem": extrair_imagem(entry),
-                "video": extrair_video(entry.get("link", ""))
+                "titulo": titulo,
+                "texto": texto,
+                "link": link,
+                "fonte": feed.feed.get("title", "Fonte"),
+                "imagem": extrair_imagem(entry)
             })
 
-    print(f"✅ {len(noticias)} notícias coletadas.")
+            if len(noticias) >= limite:
+                return noticias
+
     return noticias
+
 
 # =============================
 # GERAR CONTEÚDO
 # =============================
 
-def gerar_conteudo(noticia):
-
-    bloco_midia = noticia["video"]
-
-    if not bloco_midia:
-        bloco_midia = f"""
-        <div style="text-align:center;">
-            <img src="{noticia['imagem']}"
-                 width="680"
-                 height="383"
-                 style="max-width:100%; height:auto; display:block; margin:auto;" />
-        </div>
-        <br>
-        """
-
-    texto_formatado = quebrar_paragrafos(noticia["texto"])
+def gerar_conteudo(n):
+    texto = quebrar_paragrafos(n["texto"])
 
     return f"""
-    <div style="font-family: Arial; color:#444444; font-size:16px; text-align:justify;">
+    <div style="font-family:Arial; color:#444; font-size:16px; text-align:justify;">
 
-        <h2 style="font-size:26px; text-align:center;">
-            {noticia['titulo']}
-        </h2>
+    <h2 style="font-size:26px; text-align:center;">{n['titulo']}</h2><br>
 
-        <br>
+    <div style="text-align:center;">
+        <img src="{n['imagem']}" width="680" height="383"
+             style="max-width:100%; height:auto; margin:auto;">
+    </div><br>
 
-        {bloco_midia}
+    <p><b>Fonte:</b> {n['fonte']}</p>
 
-        <p><b>Fonte:</b> {noticia['fonte']}</p>
+    {texto}
 
-        {texto_formatado}
+    <p><a href="{n['link']}" target="_blank">🔗 Leia na fonte original</a></p>
 
-        <p>
-            <a href="{noticia['link']}" target="_blank">
-                🔗 Leia a matéria completa na fonte original
-            </a>
-        </p>
-
-        <br><br>
-
-        {BLOCO_FIXO_FINAL}
-
+    <br>{BLOCO_FIXO_FINAL}
     </div>
     """
 
@@ -187,36 +209,37 @@ def gerar_conteudo(noticia):
 # PUBLICAR
 # =============================
 
-def publicar_post(service, titulo, conteudo):
+def publicar(service, noticia):
     service.posts().insert(
         blogId=BLOG_ID,
         body={
-            "kind": "blogger#post",
-            "title": titulo,
-            "content": conteudo,
+            "title": noticia["titulo"],
+            "content": gerar_conteudo(noticia),
             "status": "LIVE"
         }
     ).execute()
 
-    print(f"🚀 Post publicado: {titulo}")
+    registrar_publicacao(noticia["link"])
+    print(f"✅ Publicado: {noticia['titulo']}")
+
 
 # =============================
 # FLUXO PRINCIPAL
 # =============================
 
 def executar_fluxo():
-    print("▶️ Fluxo iniciado")
+    hora = datetime.now().hour
     service = autenticar_blogger()
-    noticias = buscar_noticias()
 
-    for noticia in noticias:
-        publicar_post(
-            service,
-            noticia["titulo"],
-            gerar_conteudo(noticia)
-        )
+    if hora < 12:
+        tipo = "politica"
+    else:
+        tipo = "geral"
 
-    print("🏁 Fluxo finalizado com sucesso")
+    noticias = buscar_noticias(tipo)
+
+    for n in noticias:
+        publicar(service, n)
 
 # =============================
 # EXECUÇÃO
