@@ -174,7 +174,6 @@ def publicar_post(service, titulo, conteudo, tags, horario=None):
 # FLUXO PRINCIPAL
 # =============================
 
-____________________________________________________
 def executar_fluxo():
     service = autenticar_blogger()
 
