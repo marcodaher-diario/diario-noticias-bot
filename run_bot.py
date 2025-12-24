@@ -3,6 +3,11 @@ from openai import OpenAI
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 
+OPENAI_API_KEY = "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"
+
+client = OpenAI(api_key=OPENAI_API_KEY)
+
+
 # =========================
 # CONFIGURAÇÕES
 # =========================
@@ -82,7 +87,7 @@ def gerar_conteudo(noticia):
     prompt = f"""
     Reescreva a notícia abaixo em português brasileiro,
     com linguagem jornalística profissional, original,
-    clara, objetiva e otimizada para blog.
+    clara e otimizada para publicação em blog.
 
     Título: {titulo}
     Descrição: {descricao}
@@ -94,8 +99,9 @@ def gerar_conteudo(noticia):
         input=prompt
     )
 
-    texto = resposta.output_text
+    texto = resposta.output_text.strip()
     return f"<p>{texto.replace(chr(10), '</p><p>')}</p>"
+
 
 # =========================
 # PUBLICAR POST
