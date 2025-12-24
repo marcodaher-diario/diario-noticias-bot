@@ -52,7 +52,7 @@ e&nbsp;<b><span style="color: red;">INCREVA-SE</span></b>&nbsp;nos meus&nbsp;<b>
 """
 
 # =============================
-# AUTENTICAÇÃO BLOGGER
+# AUTENTICAÇÃO
 # =============================
 
 def autenticar_blogger():
@@ -61,16 +61,37 @@ def autenticar_blogger():
     return build("blogger", "v3", credentials=creds)
 
 # =============================
-# LIMPAR HTML DO RSS
+# EXTRAIR IMAGEM DO RSS
 # =============================
 
-def limpar_html(texto):
-    if not texto:
+def extrair_imagem(entry):
+    # 1️⃣ media:content
+    if "media_content" in entry:
+        return entry.media_content[0].get("url")
+
+    # 2️⃣ media:thumbnail
+    if "media_thumbnail" in entry:
+        return entry.media_thumbnail[0].get("url")
+
+    # 3️⃣ img dentro do summary
+    summary = entry.get("summary", "")
+    match = re.search(r'<img[^>]+src="([^">]+)"', summary)
+    if match:
+        return match.group(1)
+
+    return None
+
+# =============================
+# LIMPAR TEXTO
+# =============================
+
+def limpar_texto(html):
+    if not html:
         return ""
-    texto = re.sub(r"<img[^>]*>", "", texto)
-    texto = re.sub(r"<iframe[^>]*>.*?</iframe>", "", texto, flags=re.DOTALL)
-    texto = re.sub(r"<[^>]+>", "", texto)
-    return texto.strip()
+    html = re.sub(r"<img[^>]*>", "", html)
+    html = re.sub(r"<iframe[^>]*>.*?</iframe>", "", html, flags=re.DOTALL)
+    html = re.sub(r"<[^>]+>", "", html)
+    return html.strip()
 
 # =============================
 # BUSCAR NOTÍCIAS
@@ -84,11 +105,14 @@ def buscar_noticias(limite_por_feed=2):
         feed = feedparser.parse(feed_url)
 
         for entry in feed.entries[:limite_por_feed]:
+            imagem = extrair_imagem(entry)
+
             noticias.append({
                 "titulo": entry.get("title", "Sem título"),
-                "resumo": limpar_html(entry.get("summary", "")),
+                "resumo": limpar_texto(entry.get("summary", "")),
                 "link": entry.get("link", ""),
-                "fonte": feed.feed.get("title", "Fonte desconhecida")
+                "fonte": feed.feed.get("title", "Fonte desconhecida"),
+                "imagem": imagem
             })
 
     print(f"✅ {len(noticias)} notícias coletadas.")
@@ -99,6 +123,19 @@ def buscar_noticias(limite_por_feed=2):
 # =============================
 
 def gerar_conteudo(noticia):
+
+    bloco_imagem = ""
+    if noticia["imagem"]:
+        bloco_imagem = f"""
+        <div style="text-align:center;">
+            <img src="{noticia['imagem']}"
+                 width="680"
+                 height="383"
+                 style="max-width:100%; height:auto; display:block; margin:auto;" />
+        </div>
+        <br>
+        """
+
     return f"""
     <div style="font-family: Arial; color:#444444; font-size:16px; text-align:justify;">
 
@@ -106,20 +143,9 @@ def gerar_conteudo(noticia):
             {noticia['titulo']}
         </h2>
 
-        <div style="height:1em;"></div>
+        <br>
 
-        <div style="text-align:center;">
-            <iframe 
-                width="680" 
-                height="383" 
-                src="" 
-                frameborder="0" 
-                allowfullscreen
-                style="max-width:100%;">
-            </iframe>
-        </div>
-
-        <div style="height:1em;"></div>
+        {bloco_imagem}
 
         <p><b>Fonte:</b> {noticia['fonte']}</p>
 
@@ -139,7 +165,7 @@ def gerar_conteudo(noticia):
     """
 
 # =============================
-# PUBLICAR POST
+# PUBLICAR
 # =============================
 
 def publicar_post(service, titulo, conteudo):
@@ -165,10 +191,6 @@ def executar_fluxo():
     print("▶️ Fluxo iniciado")
     service = autenticar_blogger()
     noticias = buscar_noticias()
-
-    if not noticias:
-        print("⚠️ Nenhuma notícia encontrada.")
-        return
 
     for noticia in noticias:
         publicar_post(
