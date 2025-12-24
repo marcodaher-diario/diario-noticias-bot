@@ -1,4 +1,5 @@
 import feedparser
+import re
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 
@@ -17,6 +18,14 @@ RSS_FEEDS = [
 SCOPES = ["https://www.googleapis.com/auth/blogger"]
 
 # =============================
+# BLOCO FIXO FINAL
+# =============================
+
+BLOCO_FIXO_FINAL = """COLE AQUI EXATAMENTE O CÓDIGO HTML FIXO QUE VOCÊ ENVIOU
+SEM ALTERAR UMA ÚNICA LINHA
+"""
+
+# =============================
 # AUTENTICAÇÃO BLOGGER
 # =============================
 
@@ -26,29 +35,19 @@ def autenticar_blogger():
     return build("blogger", "v3", credentials=creds)
 
 # =============================
-# BLOCO PADRÃO DE IMAGEM (680x383)
+# LIMPAR HTML DO RSS
 # =============================
 
-def bloco_imagem(url):
-    if not url:
+def limpar_html(texto):
+    if not texto:
         return ""
-
-    return f"""
-    <div style="text-align:center; margin:20px 0;">
-        <img src="{url}"
-             style="
-                width:680px;
-                height:383px;
-                max-width:100%;
-                object-fit:cover;
-                display:block;
-                margin:0 auto;
-             ">
-    </div>
-    """
+    texto = re.sub(r"<img[^>]*>", "", texto)
+    texto = re.sub(r"<iframe[^>]*>.*?</iframe>", "", texto, flags=re.DOTALL)
+    texto = re.sub(r"<[^>]+>", "", texto)
+    return texto.strip()
 
 # =============================
-# BUSCAR NOTÍCIAS (RSS)
+# BUSCAR NOTÍCIAS
 # =============================
 
 def buscar_noticias(limite_por_feed=2):
@@ -59,49 +58,62 @@ def buscar_noticias(limite_por_feed=2):
         feed = feedparser.parse(feed_url)
 
         for entry in feed.entries[:limite_por_feed]:
-
-            imagem = ""
-
-            # tenta pegar imagem do RSS (quando existir)
-            if "media_content" in entry:
-                imagem = entry.media_content[0].get("url", "")
-            elif "media_thumbnail" in entry:
-                imagem = entry.media_thumbnail[0].get("url", "")
-
             noticias.append({
                 "titulo": entry.get("title", "Sem título"),
-                "resumo": entry.get("summary", ""),
+                "resumo": limpar_html(entry.get("summary", "")),
                 "link": entry.get("link", ""),
-                "fonte": feed.feed.get("title", "Fonte desconhecida"),
-                "imagem": imagem
+                "fonte": feed.feed.get("title", "Fonte desconhecida")
             })
 
     print(f"✅ {len(noticias)} notícias coletadas.")
     return noticias
 
 # =============================
-# GERAR CONTEÚDO (CURADORIA)
+# GERAR CONTEÚDO FORMATADO
 # =============================
 
 def gerar_conteudo(noticia):
-    imagem_html = bloco_imagem(noticia.get("imagem"))
-
     return f"""
-    <p><strong>Fonte:</strong> {noticia['fonte']}</p>
+    <div style="font-family: Arial; color:#444444; font-size:16px; text-align:justify;">
 
-    {imagem_html}
+        <h2 style="font-size:26px; text-align:center;">
+            {noticia['titulo']}
+        </h2>
 
-    <p>{noticia['resumo']}</p>
+        <div style="height:1em;"></div>
 
-    <p style="text-align:center; margin-top:20px;">
-        <a href="{noticia['link']}" target="_blank">
-            🔗 Leia a matéria completa na fonte original
-        </a>
-    </p>
+        <div style="text-align:center;">
+            <iframe 
+                width="680" 
+                height="383" 
+                src="" 
+                frameborder="0" 
+                allowfullscreen
+                style="max-width:100%;">
+            </iframe>
+        </div>
+
+        <div style="height:1em;"></div>
+
+        <p><b>Fonte:</b> {noticia['fonte']}</p>
+
+        <p>{noticia['resumo']}</p>
+
+        <p>
+            <a href="{noticia['link']}" target="_blank">
+                🔗 Leia a matéria completa na fonte original
+            </a>
+        </p>
+
+        <br><br>
+
+        {BLOCO_FIXO_FINAL}
+
+    </div>
     """
 
 # =============================
-# PUBLICAR NO BLOGGER
+# PUBLICAR POST
 # =============================
 
 def publicar_post(service, titulo, conteudo):
@@ -147,4 +159,3 @@ def executar_fluxo():
 
 if __name__ == "__main__":
     executar_fluxo()
-
