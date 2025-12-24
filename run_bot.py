@@ -10,7 +10,7 @@ from googleapiclient.discovery import build
 BLOG_ID = "7605688984374445860"
 
 NEWS_API_KEY = d5a632c8259648eaab341a5e26fa9568
-OPENAI_API_KEY = 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
+OPENAI_API_KEY = sk-abcdef1234567890abcdef1234567890abcdef12
 
 SCOPES = ["https://www.googleapis.com/auth/blogger"]
 
