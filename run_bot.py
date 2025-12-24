@@ -13,10 +13,30 @@ BLOG_ID = "7605688984374445860"
 openai.api_key = OPENAI_API_KEY
 SCOPES = ["https://www.googleapis.com/auth/blogger"]
 
+from google.oauth2.credentials import Credentials
+from google_auth_oauthlib.flow import InstalledAppFlow
+from googleapiclient.discovery import build
+import os
+
+SCOPES = ["https://www.googleapis.com/auth/blogger"]
+
 def autenticar_blogger():
-    flow = InstalledAppFlow.from_client_secrets_file("credentials.json", SCOPES)
-    creds = flow.run_local_server(port=0)
+    creds = None
+
+    if os.path.exists("token.json"):
+        creds = Credentials.from_authorized_user_file("token.json", SCOPES)
+
+    if not creds or not creds.valid:
+        flow = InstalledAppFlow.from_client_secrets_file(
+            "credentials.json", SCOPES
+        )
+        creds = flow.run_console()
+
+        with open("token.json", "w") as token:
+            token.write(creds.to_json())
+
     return build("blogger", "v3", credentials=creds)
+
 
 def buscar_noticias(qtd=3):
     url = (f"https://newsapi.org/v2/top-headlines?country=br&language=pt&pageSize={qtd}&apiKey={NEWS_API_KEY}")
