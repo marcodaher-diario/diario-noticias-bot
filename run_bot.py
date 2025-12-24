@@ -74,33 +74,28 @@ def buscar_noticias(qtd=3):
 # GERAR CONTEÚDO
 # =========================
 
-from openai import OpenAI
+def gerar_conteudo(noticia):
+    titulo = noticia.get("title", "")
+    descricao = noticia.get("description", "")
+    conteudo_original = noticia.get("content", "")
 
-client = OpenAI(api_key=OPENAI_API_KEY)
+    prompt = f"""
+    Reescreva a notícia abaixo em português brasileiro,
+    com linguagem jornalística profissional, original,
+    clara, objetiva e otimizada para blog.
 
-def gerar_conteudo(titulo, descricao):
-    try:
-        prompt = f"""
-        Escreva uma notícia jornalística em português, clara, objetiva e bem estruturada,
-        com título, introdução e desenvolvimento, baseada no tema abaixo.
+    Título: {titulo}
+    Descrição: {descricao}
+    Conteúdo: {conteudo_original}
+    """
 
-        TEMA: {titulo}
+    resposta = client.responses.create(
+        model="gpt-4.1-mini",
+        input=prompt
+    )
 
-        CONTEXTO:
-        {descricao}
-        """
-
-        response = client.responses.create(
-            model="gpt-4.1-mini",
-            input=prompt
-        )
-
-        texto = response.output_text.strip()
-        return texto
-
-    except Exception as e:
-        print(f"Erro ao gerar conteúdo: {e}")
-        return None
+    texto = resposta.output_text
+    return f"<p>{texto.replace(chr(10), '</p><p>')}</p>"
 
 # =========================
 # PUBLICAR POST
