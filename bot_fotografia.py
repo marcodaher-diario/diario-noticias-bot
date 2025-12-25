@@ -16,18 +16,30 @@ ARQUIVO_LOG = "posts_foto_publicados.txt"
 SCOPES = ["https://www.googleapis.com/auth/blogger"]
 
 def criar_resenha_ia(titulo, link, resumo_original):
+    # Prompt mais específico para evitar bloqueios da IA
     prompt = f"""
-    Aja como um especialista em fotografia. Leia este título: {titulo} 
-    e este resumo: {resumo_original}.
-    Escreva uma resenha curta e inédita em português (Brasil) para um blog. 
-    Não copie o texto original. Explique por que isso é importante para fotógrafos.
-    Use um tom profissional e amigável. Máximo de 3 parágrafos.
+    Aja como um crítico de fotografia. Escreva uma resenha curta (2 parágrafos) em português sobre o tema: {titulo}.
+    Use como base estas informações: {resumo_original}.
+    Não copie o texto, crie uma análise original e profissional.
     """
     try:
-        response = model.generate_content(prompt)
-        return response.text
-    except:
-        return "Erro ao gerar resenha."
+        # Adicionei configurações de segurança para evitar o erro de 'bloqueio'
+        response = model.generate_content(
+            prompt,
+            generation_config={"temperature": 0.7},
+            safety_settings=[
+                {"category": "HARM_CATEGORY_HARASSMENT", "threshold": "BLOCK_NONE"},
+                {"category": "HARM_CATEGORY_HATE_SPEECH", "threshold": "BLOCK_NONE"},
+                {"category": "HARM_CATEGORY_SEXUALLY_EXPLICIT", "threshold": "BLOCK_NONE"},
+                {"category": "HARM_CATEGORY_DANGEROUS_CONTENT", "threshold": "BLOCK_NONE"},
+            ]
+        )
+        if response.text:
+            return response.text
+        return "Resenha gerada vazia pela IA."
+    except Exception as e:
+        print(f"Erro detalhado na IA: {e}")
+        return f"Erro técnico na criação da resenha: {str(e)[:50]}"
 
 def publicar_foto():
     if not os.path.exists("token.json"): return
