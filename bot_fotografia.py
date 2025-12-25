@@ -48,6 +48,9 @@ def publicar_foto():
             imagem = "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800"
             if "media_content" in entry: imagem = entry.media_content[0]['url']
             
+            # Criamos o texto com quebras de linha ANTES de montar o HTML para evitar erro de barra
+            resenha_html = resenha_pt.replace('\n', '<br>')
+
             conteudo = f"""
             <div style="font-family: Verdana, sans-serif; color: #002b36; background: transparent;">
                 <h1 style="color: #004d40; text-align: center;">{entry.title}</h1>
@@ -55,7 +58,7 @@ def publicar_foto():
                     <img src="{imagem}" style="width: 100%; max-width: 680px; border-radius: 15px; border: 3px solid #004d40;">
                 </div>
                 <div style="font-size: 16px; text-align: justify;">
-                    {resenha_pt.replace('\n', '<br>')}
+                    {resenha_html}
                 </div>
                 <hr style="border: 0; border-top: 1px solid #004d40; margin: 30px 0;">
                 {BLOCO_FIXO_FINAL}
