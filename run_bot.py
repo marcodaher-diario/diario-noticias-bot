@@ -119,15 +119,32 @@ def buscar_noticias(tipo, limite=5): # Adicionado 'tipo' e 'limite'
 
 def gerar_conteudo(n):
     texto_formatado = quebrar_paragrafos(n["texto"])
+    
+    # Tenta extrair o player de vídeo
+    video_embed = extrair_video(n["link"])
+    
+    # Se houver vídeo, ele substitui a imagem de topo ou fica logo abaixo dela
+    media_display = ""
+    if video_embed:
+        media_display = video_embed
+    else:
+        # Mantém sua diretriz de 16:9 para a imagem caso não tenha vídeo
+        media_display = f"""
+        <div style="text-align:center;">
+            <img src="{n['imagem']}" width="680" height="383" 
+                 style="max-width:100%; height:auto; border-radius:8px;">
+        </div>"""
+
     return f"""
     <div style="font-family:Arial; color:#444; font-size:16px; text-align:justify;">
         <h2 style="font-size:26px; text-align:center;">{n['titulo']}</h2><br>
-        <div style="text-align:center;">
-            <img src="{n['imagem']}" width="680" height="383" style="max-width:100%; height:auto; margin:auto;">
-        </div><br>
+        
+        {media_display}
+        
+        <br>
         <p><b>Fonte:</b> {n['fonte']}</p>
         {texto_formatado}
-        <p><a href="{n['link']}" target="_blank">🔗 Leia na fonte original</a></p>
+        <p><a href="{n['link']}" target="_blank">🔗 Leia na fonte original e assista ao vídeo completo</a></p>
         <br>{BLOCO_FIXO_FINAL}
     </div>
     """
