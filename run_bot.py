@@ -165,7 +165,7 @@ def executar_fluxo():
         elif 10 <= hora < 15: tipo = "geral"
         else: tipo = "economia"
 
-        noticias = buscar_noticias(tipo, limite=2)
+        noticias = buscar_noticias(tipo, limite=4)
         for n in noticias:
             service.posts().insert(blogId=BLOG_ID, body={"title": n["titulo"], "content": gerar_conteudo(n), "labels": n["labels"], "status": "LIVE"}).execute()
             registrar_publicacao(n["link"])
