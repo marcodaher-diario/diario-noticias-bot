@@ -1,33 +1,36 @@
 import feedparser
-import re
 import os
-from deep_translator import GoogleTranslator
+import google.generativeai as genai
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 from configuracoes import BLOCO_FIXO_FINAL
 
-# CONFIGURAÇÕES MD ARTE FOTO
+# --- CONFIGURAÇÕES ---
 BLOG_ID = "5852420775961497718"
-RSS_FONTES = [
-    "https://petapixel.com/feed/",
-    "https://digital-photography-school.com/feed/",
-    "https://www.thephoblographer.com/feed/"
-]
+# Substitua 'SUA_CHAVE_AQUI' pela sua chave do Gemini depois
+genai.configure(api_key="SUA_CHAVE_AQUI")
+model = genai.GenerativeModel('gemini-1.5-flash')
+
+RSS_FONTES = ["https://petapixel.com/feed/", "https://digital-photography-school.com/feed/"]
 ARQUIVO_LOG = "posts_foto_publicados.txt"
 SCOPES = ["https://www.googleapis.com/auth/blogger"]
 
-translator = GoogleTranslator(source='en', target='pt')
-
-def traduzir(texto):
+def criar_resenha_ia(titulo, link, resumo_original):
+    prompt = f"""
+    Aja como um especialista em fotografia. Leia este título: {titulo} 
+    e este resumo: {resumo_original}.
+    Escreva uma resenha curta e inédita em português (Brasil) para um blog. 
+    Não copie o texto original. Explique por que isso é importante para fotógrafos.
+    Use um tom profissional e amigável. Máximo de 3 parágrafos.
+    """
     try:
-        if not texto: return ""
-        texto_limpo = re.sub(r"<[^>]+>", "", texto)
-        return translator.translate(texto_limpo[:4500])
-    except: return texto
+        response = model.generate_content(prompt)
+        return response.text
+    except:
+        return "Erro ao gerar resenha."
 
 def publicar_foto():
     if not os.path.exists("token.json"): return
-    
     creds = Credentials.from_authorized_user_file("token.json", SCOPES)
     service = build("blogger", "v3", credentials=creds)
 
@@ -39,47 +42,28 @@ def publicar_foto():
                 with open(ARQUIVO_LOG, "r") as f:
                     if link in f.read(): continue
 
-            print(f"📸 Traduzindo: {entry.title}")
-            tit_pt = traduzir(entry.title)
-            res_pt = traduzir(entry.get("summary", entry.get("description", "")))
+            print(f"🤖 IA Criando resenha para: {entry.title}")
+            resenha_pt = criar_resenha_ia(entry.title, link, entry.get("summary", ""))
             
-            # Imagem padrão 16:9 conforme sua preferência
             imagem = "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800"
             if "media_content" in entry: imagem = entry.media_content[0]['url']
             
-            # Código adaptado para fundo transparente e contraste com verde água
             conteudo = f"""
-            <div style="font-family: 'Verdana', sans-serif; color: #002b36; line-height: 1.6; background: transparent;">
-                
-                <h1 style="color: #004d40; text-align: center; font-size: 26px; border-bottom: 2px solid #004d40; padding-bottom: 10px;">
-                    {tit_pt}
-                </h1>
-                
-                <div style="text-align: center; margin: 25px 0;">
-                    <img src="{imagem}" style="width: 100%; max-width: 680px; height: auto; border-radius: 15px; border: 3px solid #004d40;">
+            <div style="font-family: Verdana, sans-serif; color: #002b36; background: transparent;">
+                <h1 style="color: #004d40; text-align: center;">{entry.title}</h1>
+                <div style="text-align: center; margin: 20px 0;">
+                    <img src="{imagem}" style="width: 100%; max-width: 680px; border-radius: 15px; border: 3px solid #004d40;">
                 </div>
-
-                <div style="margin-bottom: 30px; padding: 10px;">
-                    <p style="font-size: 18px; color: #00332e; font-weight: bold; text-shadow: 1px 1px 0px rgba(255,255,255,0.3);">
-                        {res_pt}
-                    </p>
+                <div style="font-size: 16px; text-align: justify;">
+                    {resenha_pt.replace('\n', '<br>')}
                 </div>
-
-                <div style="text-align: center; margin: 30px 0;">
-                    <a href="{link}" target="_blank" style="background-color: #004d40; color: white; padding: 12px 25px; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 14px; box-shadow: 2px 2px 5px rgba(0,0,0,0.2);">
-                        LER TUTORIAL ORIGINAL
-                    </a>
-                </div>
-
-                <div style="margin-top: 50px; background: transparent;">
-                    {BLOCO_FIXO_FINAL}
-                </div>
+                <hr style="border: 0; border-top: 1px solid #004d40; margin: 30px 0;">
+                {BLOCO_FIXO_FINAL}
             </div>"""
 
             service.posts().insert(blogId=BLOG_ID, body={
-                "title": tit_pt,
+                "title": entry.title, # O título pode ser traduzido também se preferir
                 "content": conteudo,
-                "labels": ["Fotografia", "Tutorial", "Dicas"],
                 "status": "LIVE"
             }).execute()
 
