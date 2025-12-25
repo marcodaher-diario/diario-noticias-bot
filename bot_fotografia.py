@@ -1,45 +1,28 @@
 import feedparser
 import os
-import google.generativeai as genai
+from google.genai import Client
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 from configuracoes import BLOCO_FIXO_FINAL
 
 # --- CONFIGURAÇÕES ---
 BLOG_ID = "5852420775961497718"
-# Substitua 'SUA_CHAVE_AQUI' pela sua chave do Gemini depois
-genai.configure(api_key="AIzaSyA3tfsYn-cxO5DQ013b2YUy837LuNWHpUI")
-model = genai.GenerativeModel('models/gemini-1.5-flash')
+# Certifique-se de colocar sua chave entre as aspas abaixo
+MINHA_CHAVE = "AIzaSyA3tfsYn-cxO5DQ013b2YUy837LuNWHpUI" 
+client = Client(api_key=MINHA_CHAVE)
 
 RSS_FONTES = ["https://petapixel.com/feed/", "https://digital-photography-school.com/feed/"]
 ARQUIVO_LOG = "posts_foto_publicados.txt"
 SCOPES = ["https://www.googleapis.com/auth/blogger"]
 
-def criar_resenha_ia(titulo, link, resumo_original):
-    # Prompt mais específico para evitar bloqueios da IA
-    prompt = f"""
-    Aja como um crítico de fotografia. Escreva uma resenha curta (2 parágrafos) em português sobre o tema: {titulo}.
-    Use como base estas informações: {resumo_original}.
-    Não copie o texto, crie uma análise original e profissional.
-    """
+def criar_resenha_ia(titulo, resumo_original):
+    prompt = f"Aja como um crítico de fotografia. Escreva uma resenha curta (2 parágrafos) em português sobre: {titulo}. Baseie-se nisto: {resumo_original}. Não copie, seja original."
     try:
-        # Adicionei configurações de segurança para evitar o erro de 'bloqueio'
-        response = model.generate_content(
-            prompt,
-            generation_config={"temperature": 0.7},
-            safety_settings=[
-                {"category": "HARM_CATEGORY_HARASSMENT", "threshold": "BLOCK_NONE"},
-                {"category": "HARM_CATEGORY_HATE_SPEECH", "threshold": "BLOCK_NONE"},
-                {"category": "HARM_CATEGORY_SEXUALLY_EXPLICIT", "threshold": "BLOCK_NONE"},
-                {"category": "HARM_CATEGORY_DANGEROUS_CONTENT", "threshold": "BLOCK_NONE"},
-            ]
-        )
-        if response.text:
-            return response.text
-        return "Resenha gerada vazia pela IA."
+        response = client.models.generate_content(model="gemini-1.5-flash", contents=prompt)
+        return response.text
     except Exception as e:
-        print(f"Erro detalhado na IA: {e}")
-        return f"Erro técnico na criação da resenha: {str(e)[:50]}"
+        print(f"Erro na IA: {e}")
+        return "Confira os detalhes no site original."
 
 def publicar_foto():
     if not os.path.exists("token.json"): return
@@ -54,15 +37,16 @@ def publicar_foto():
                 with open(ARQUIVO_LOG, "r") as f:
                     if link in f.read(): continue
 
-            print(f"🤖 IA Criando resenha para: {entry.title}")
-            resenha_pt = criar_resenha_ia(entry.title, link, entry.get("summary", ""))
+            print(f"🤖 Criando conteúdo para: {entry.title}")
             
+            # Criando a resenha e o título em português
+            resenha_pt = criar_resenha_ia(entry.title, entry.get("summary", ""))
+            resenha_html = resenha_pt.replace('\n', '<br>')
+            
+            # Imagem 16:9
             imagem = "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800"
             if "media_content" in entry: imagem = entry.media_content[0]['url']
             
-            # Criamos o texto com quebras de linha ANTES de montar o HTML para evitar erro de barra
-            resenha_html = resenha_pt.replace('\n', '<br>')
-
             conteudo = f"""
             <div style="font-family: Verdana, sans-serif; color: #002b36; background: transparent;">
                 <h1 style="color: #004d40; text-align: center;">{entry.title}</h1>
@@ -77,12 +61,13 @@ def publicar_foto():
             </div>"""
 
             service.posts().insert(blogId=BLOG_ID, body={
-                "title": tit_pt, # O título pode ser traduzido também se preferir
+                "title": entry.title,
                 "content": conteudo,
                 "status": "LIVE"
             }).execute()
 
             with open(ARQUIVO_LOG, "a") as f: f.write(link + "\n")
+            print("✅ Postado com sucesso!")
             return
 
 if __name__ == "__main__":
