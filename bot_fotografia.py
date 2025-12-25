@@ -9,7 +9,7 @@ from configuracoes import BLOCO_FIXO_FINAL
 BLOG_ID = "5852420775961497718"
 # Substitua 'SUA_CHAVE_AQUI' pela sua chave do Gemini depois
 genai.configure(api_key="AIzaSyA3tfsYn-cxO5DQ013b2YUy837LuNWHpUI")
-model = genai.GenerativeModel('gemini-1.5-flash')
+model = genai.GenerativeModel('models/gemini-1.5-flash')
 
 RSS_FONTES = ["https://petapixel.com/feed/", "https://digital-photography-school.com/feed/"]
 ARQUIVO_LOG = "posts_foto_publicados.txt"
@@ -77,7 +77,7 @@ def publicar_foto():
             </div>"""
 
             service.posts().insert(blogId=BLOG_ID, body={
-                "title": entry.title, # O título pode ser traduzido também se preferir
+                "title": tit_pt, # O título pode ser traduzido também se preferir
                 "content": conteudo,
                 "status": "LIVE"
             }).execute()
