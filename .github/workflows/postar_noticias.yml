@@ -1,29 +1,30 @@
-name: Bot Diario de Noticias
+name: Bots Marco Daher
 
 on:
   schedule:
-    # 08:00 Brasília = 11:00 UTC (Política)
-    - cron: '0 11 * * *'
-    # 12:00 Brasília = 15:00 UTC (Geral)
-    - cron: '0 15 * * *'
-    # 18:00 Brasília = 21:00 UTC (Economia)
-    - cron: '0 21 * * *'
-  workflow_dispatch: # Permite rodar manualmente se quiser
+    - cron: '0 11 * * *' # 08:00 Brasília
+    - cron: '0 12 * * *' # 09:00 Brasília
+    - cron: '0 15 * * *' # 12:00 Brasília
+    - cron: '0 21 * * *' # 18:00 Brasília
+  workflow_dispatch:
 
 jobs:
-  postar:
+  executar:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Código
         uses: actions/checkout@v4
 
-      - name: Setup Python
+      - name: Configurar Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
-      - name: Instalar Dependências
-        run: pip install feedparser google-auth google-auth-oauthlib google-api-python-client
+      - name: Instalar Bibliotecas
+        run: pip install feedparser google-auth google-api-python-client deep-translator
 
-      - name: Rodar Bot
+      - name: Rodar Bot de Noticias
         run: python run_bot.py
+
+      - name: Rodar Bot de Fotografia
+        run: python bot_fotografia.py
