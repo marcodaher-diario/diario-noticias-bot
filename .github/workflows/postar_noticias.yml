@@ -1,28 +1,29 @@
-name: Publicar Notícias Diário de Notícias
+name: Bot Diario de Noticias
 
 on:
   schedule:
-    - cron: '0 11' # 08:00 Brasil → POLÍTICA
-    - cron: '0 17' # 14:00 Brasil → GERAIS
-  workflow_dispatch:
+    # 08:00 Brasília = 11:00 UTC (Política)
+    - cron: '0 11 * * *'
+    # 12:00 Brasília = 15:00 UTC (Geral)
+    - cron: '0 15 * * *'
+    # 18:00 Brasília = 21:00 UTC (Economia)
+    - cron: '0 21 * * *'
+  workflow_dispatch: # Permite rodar manualmente se quiser
 
 jobs:
   postar:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Baixar código
+      - name: Checkout Código
         uses: actions/checkout@v4
 
-      - name: Configurar Python
+      - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.10'
 
-      - name: Instalar dependências
-        run: |
-          pip install feedparser google-auth google-auth-oauthlib google-api-python-client
+      - name: Instalar Dependências
+        run: pip install feedparser google-auth google-auth-oauthlib google-api-python-client
 
-      - name: Rodar bot
-        run: |
-          python run_bot.py
+      - name: Rodar Bot
+        run: python run_bot.py
