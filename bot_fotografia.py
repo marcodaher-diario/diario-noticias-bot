@@ -8,7 +8,7 @@ from configuracoes import BLOCO_FIXO_FINAL
 # --- CONFIGURAÇÕES ---
 BLOG_ID = "5852420775961497718"
 # Substitua 'SUA_CHAVE_AQUI' pela sua chave do Gemini depois
-genai.configure(api_key="SUA_CHAVE_AQUI")
+genai.configure(api_key="AIzaSyA3tfsYn-cxO5DQ013b2YUy837LuNWHpUI")
 model = genai.GenerativeModel('gemini-1.5-flash')
 
 RSS_FONTES = ["https://petapixel.com/feed/", "https://digital-photography-school.com/feed/"]
