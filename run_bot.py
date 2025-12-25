@@ -16,7 +16,7 @@ RSS_FEEDS = [
     "https://g1.globo.com/rss/g1/economia/"
 ]
 
-PALAVRAS_POLITICA = ["política", "governo", "presidente", "lula", "bolsonaro", "congresso", "senado", "stf", "eleição"]
+PALAVRAS_POLITICA = ["política", "governo", "presidente", "lula", "bolsonaro", "congresso", "senado", "stf", "eleição", "moraes", "toffoli", "fux", "Dino", "flavio", "eduardo", "depoimento", "magistrados", "juízes", "ex-presidente", "corrupção", "vereadores", "deputado", "senador", "PGR", "ministério público"]
 PALAVRAS_ECONOMIA = ["economia", "pib", "dólar", "euro", "inflação", "selic", "mercado", "bolsa de valores", "banco central"]
 
 SCOPES = ["https://www.googleapis.com/auth/blogger"]
