@@ -47,15 +47,33 @@ def publicar_foto():
             imagem = "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800"
             if "media_content" in entry: imagem = entry.media_content[0]['url']
             
+            # Código adaptado para fundo transparente e contraste com verde água
             conteudo = f"""
-            <div style="font-family:Arial; text-align:justify;">
-                <h2 style="text-align:center;">{tit_pt}</h2>
-                <div style="text-align:center; margin:20px 0;">
-                    <img src="{imagem}" width="680" height="383" style="max-width:100%; border-radius:10px;">
+            <div style="font-family: 'Verdana', sans-serif; color: #002b36; line-height: 1.6; background: transparent;">
+                
+                <h1 style="color: #004d40; text-align: center; font-size: 26px; border-bottom: 2px solid #004d40; padding-bottom: 10px;">
+                    {tit_pt}
+                </h1>
+                
+                <div style="text-align: center; margin: 25px 0;">
+                    <img src="{imagem}" style="width: 100%; max-width: 680px; height: auto; border-radius: 15px; border: 3px solid #004d40;">
                 </div>
-                <p>{res_pt}</p>
-                <hr>
-                {BLOCO_FIXO_FINAL}
+
+                <div style="margin-bottom: 30px; padding: 10px;">
+                    <p style="font-size: 18px; color: #00332e; font-weight: bold; text-shadow: 1px 1px 0px rgba(255,255,255,0.3);">
+                        {res_pt}
+                    </p>
+                </div>
+
+                <div style="text-align: center; margin: 30px 0;">
+                    <a href="{link}" target="_blank" style="background-color: #004d40; color: white; padding: 12px 25px; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 14px; box-shadow: 2px 2px 5px rgba(0,0,0,0.2);">
+                        LER TUTORIAL ORIGINAL
+                    </a>
+                </div>
+
+                <div style="margin-top: 50px; background: transparent;">
+                    {BLOCO_FIXO_FINAL}
+                </div>
             </div>"""
 
             service.posts().insert(blogId=BLOG_ID, body={
