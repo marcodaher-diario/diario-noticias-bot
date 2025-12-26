@@ -12,14 +12,14 @@ BLOG_ID = "7605688984374445860"
 RSS_FEEDS = [
     "https://g1.globo.com/rss/g1/",
     "https://feeds.uol.com.br/home.xml",
-    “https://rss.uol.com.br/feed/noticias.xml”,
-    “https://feeds.folha.uol.com.br/emcimadahora/rss091.xml”,
+    "https://rss.uol.com.br/feed/noticias.xml",
+    "https://feeds.folha.uol.com.br/emcimadahora/rss091.xml",
     "https://agenciabrasil.ebc.com.br/rss",
-    “https://feeds.bbci.co.uk/portuguese/rss.xml”,
-    “https://www.gazetadopovo.com.br/feed/rss/brasil.xml”,
-    “https://reporterbrasil.org.br/feed/”,
-    “https://www.cnnbrasil.com.br/feed/”,
-    “https://www.estadao.com.br/arc/outboundfeeds/rss/category/brasil/”,
+    "https://feeds.bbci.co.uk/portuguese/rss.xml",
+    "https://www.gazetadopovo.com.br/feed/rss/brasil.xml",
+    "https://reporterbrasil.org.br/feed/",
+    "https://www.cnnbrasil.com.br/feed/",
+    "https://www.estadao.com.br/arc/outboundfeeds/rss/category/brasil/",
     "https://g1.globo.com/rss/g1/economia/"
 ]
 
