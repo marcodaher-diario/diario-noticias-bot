@@ -139,45 +139,46 @@ def gerar_conteudo(n):
 # FLUXO PRINCIPAL
 # =============================
 
-def buscar_noticias(tipo_alvo, limite=2):
+import random
+
+def buscar_noticias(tipo_alvo, limite=6):
     print(f"📰 Buscando notícias do tipo: {tipo_alvo}...")
     noticias = []
+
     for feed_url in RSS_FEEDS:
         feed = feedparser.parse(feed_url)
+        fonte = feed.feed.get("title", "Fonte")
+
         for entry in feed.entries:
             titulo = entry.get("title", "")
             texto = entry.get("summary", "")
             link = entry.get("link", "")
-            if ja_publicado(link): continue
-            
+
+            if not titulo or not link:
+                continue
+
+            if ja_publicado(link):
+                continue
+
             tipo_detectado = verificar_assunto(titulo, texto)
-            if tipo_alvo != tipo_detectado: continue
+            if tipo_detectado != tipo_alvo:
+                continue
 
             noticias.append({
-                "titulo": titulo, "texto": texto, "link": link,
-                "fonte": feed.feed.get("title", "Fonte"),
+                "titulo": titulo,
+                "texto": texto,
+                "link": link,
+                "fonte": fonte,
                 "imagem": extrair_imagem(entry),
                 "labels": gerar_tags_seo(titulo, texto)
             })
-            if len(noticias) >= limite: return noticias
-    return noticias
 
-def executar_fluxo():
-    try:
-        service = autenticar_blogger()
-        # Define o assunto baseado na hora de Brasília (considerando que o server é UTC, ajustamos no YAML)
-        hora = datetime.now().hour
-        
-        if hora < 10: tipo = "politica"
-        elif 10 <= hora < 15: tipo = "geral"
-        else: tipo = "economia"
+    # 🔀 embaralha todas as fontes
+    random.shuffle(noticias)
 
-        noticias = buscar_noticias(tipo, limite=4)
-        for n in noticias:
-            service.posts().insert(blogId=BLOG_ID, body={"title": n["titulo"], "content": gerar_conteudo(n), "labels": n["labels"], "status": "LIVE"}).execute()
-            registrar_publicacao(n["link"])
-            print(f"✅ Publicado [{tipo}]: {n['titulo']}")
-    except Exception as e: print(f"💥 Erro: {e}")
+    # ✂️ corta no limite desejado
+    return noticias[:limite]
+
 
 if __name__ == "__main__":
     executar_fluxo()
