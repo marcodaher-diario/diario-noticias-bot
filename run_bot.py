@@ -141,7 +141,7 @@ def gerar_conteudo(n):
 
 import random
 
-def buscar_noticias(tipo_alvo, limite=6):
+def buscar_noticias(tipo_alvo, limite=4):
     print(f"📰 Buscando notícias do tipo: {tipo_alvo}...")
     noticias = []
 
@@ -179,4 +179,22 @@ def buscar_noticias(tipo_alvo, limite=6):
     # ✂️ corta no limite desejado
     return noticias[:limite]
 
+def executar_fluxo():
+    try:
+        service = autenticar_blogger()
+        # Define o assunto baseado na hora de Brasília (considerando que o server é UTC, ajustamos no YAML)
+        hora = datetime.now().hour
+        
+        if hora < 10: tipo = "politica"
+        elif 10 <= hora < 15: tipo = "geral"
+        else: tipo = "economia"
 
+        noticias = buscar_noticias(tipo, limite=4)
+        for n in noticias:
+            service.posts().insert(blogId=BLOG_ID, body={"title": n["titulo"], "content": gerar_conteudo(n), "labels": n["labels"], "status": "LIVE"}).execute()
+            registrar_publicacao(n["link"])
+            print(f"✅ Publicado [{tipo}]: {n['titulo']}")
+    except Exception as e: print(f"💥 Erro: {e}")
+
+if __name__ == "__main__":
+    executar_fluxo()
