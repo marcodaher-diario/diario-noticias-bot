@@ -180,5 +180,3 @@ def buscar_noticias(tipo_alvo, limite=6):
     return noticias[:limite]
 
 
-if __name__ == "__main__":
-    executar_fluxo()
