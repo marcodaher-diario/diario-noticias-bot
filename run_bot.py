@@ -193,7 +193,7 @@ def buscar_noticias(tipo_alvo, limite=4):
         fonte = feed.feed.get("title", "Fonte")
 
         for entry in feed.entries:
-            if not noticia_recente(entry, horas=24):
+            if not noticia_recente(entry, horas=48):
                 continue
 
             titulo = entry.get("title", "")
