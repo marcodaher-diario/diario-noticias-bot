@@ -121,7 +121,7 @@ def verificar_assunto(titulo, texto):
 import time
 from datetime import datetime, timedelta
 
-def noticia_recente(entry, horas=24):
+def noticia_recente(entry, horas=48):
     data_entry = None
 
     if hasattr(entry, "published_parsed") and entry.published_parsed:
@@ -168,7 +168,7 @@ import random
 import time
 from datetime import datetime, timedelta
 
-def noticia_recente(entry, horas=36):
+def noticia_recente(entry, horas=48):
     data_entry = None
 
     if hasattr(entry, "published_parsed") and entry.published_parsed:
@@ -229,8 +229,8 @@ def executar_fluxo():
         # Define o assunto baseado na hora de Brasília (considerando que o server é UTC, ajustamos no YAML)
         hora = datetime.now().hour
         
-        if hora < 10: tipo = "politica"
-        elif 10 <= hora < 15: tipo = "geral"
+        if hora < 12: tipo = "politica"
+        elif 12 <= hora < 18: tipo = "geral"
         else: tipo = "economia"
 
         noticias = buscar_noticias(tipo, limite=10)
