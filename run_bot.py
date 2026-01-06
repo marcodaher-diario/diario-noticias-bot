@@ -23,7 +23,7 @@ RSS_FEEDS = [
     "https://g1.globo.com/rss/g1/economia/"
 ]
 
-PALAVRAS_POLITICA = ["política", "governo", "presidente", "lula", "bolsonaro", "congresso", "senado", "stf", "eleição", "moraes", "toffoli", "fux", "Dino", "flavio", "eduardo", "depoimento", "magistrados", "juízes", "ex-presidente", "corrupção", "vereadores", "deputado", "senador", "PGR", "ministério público"]
+PALAVRAS_POLITICA = ["política", "mundo", "governo", "presidente", "lula", "bolsonaro", "congresso", "senado", "stf", "eleição", "moraes", "toffoli", "fux", "Dino", "flavio", "eduardo", "depoimento", "magistrados", "juízes", "ex-presidente", "corrupção", "vereadores", "deputado", "senador", "PGR", "ministério público"]
 PALAVRAS_ECONOMIA = ["economia", "pib", "dólar", "euro", "inflação", "selic", "mercado", "bolsa de valores", "banco central"]
 
 SCOPES = ["https://www.googleapis.com/auth/blogger"]
@@ -112,6 +112,25 @@ def verificar_assunto(titulo, texto):
     if any(p in conteudo for p in PALAVRAS_ECONOMIA): return "economia"
     return "geral"
 
+import time
+from datetime import datetime, timedelta
+
+def noticia_recente(entry, horas=24):
+    data_entry = None
+
+    if hasattr(entry, "published_parsed") and entry.published_parsed:
+        data_entry = entry.published_parsed
+    elif hasattr(entry, "updated_parsed") and entry.updated_parsed:
+        data_entry = entry.updated_parsed
+    else:
+        return False  # sem data = descarta
+
+    data_noticia = datetime.fromtimestamp(time.mktime(data_entry))
+    limite = datetime.now() - timedelta(hours=horas)
+
+    return data_noticia >= limite
+
+
 # =============================
 # GERAÇÃO DE CONTEÚDO
 # =============================
@@ -149,29 +168,33 @@ def buscar_noticias(tipo_alvo, limite=4):
         feed = feedparser.parse(feed_url)
         fonte = feed.feed.get("title", "Fonte")
 
-        for entry in feed.entries:
-            titulo = entry.get("title", "")
-            texto = entry.get("summary", "")
-            link = entry.get("link", "")
+       for entry in feed.entries:
+    if not noticia_recente(entry, horas=36):
+        continue
 
-            if not titulo or not link:
-                continue
+    titulo = entry.get("title", "")
+    texto = entry.get("summary", "")
+    link = entry.get("link", "")
 
-            if ja_publicado(link):
-                continue
+    if not titulo or not link:
+        continue
 
-            tipo_detectado = verificar_assunto(titulo, texto)
-            if tipo_detectado != tipo_alvo:
-                continue
+    if ja_publicado(link):
+        continue
 
-            noticias.append({
-                "titulo": titulo,
-                "texto": texto,
-                "link": link,
-                "fonte": fonte,
-                "imagem": extrair_imagem(entry),
-                "labels": gerar_tags_seo(titulo, texto)
-            })
+    tipo_detectado = verificar_assunto(titulo, texto)
+    if tipo_detectado != tipo_alvo:
+        continue
+
+    noticias.append({
+        "titulo": titulo,
+        "texto": texto,
+        "link": link,
+        "fonte": fonte,
+        "imagem": extrair_imagem(entry),
+        "labels": gerar_tags_seo(titulo, texto)
+    })
+
 
     # 🔀 embaralha todas as fontes
     random.shuffle(noticias)
