@@ -1,9 +1,15 @@
+# =========================================================
+# IMPORTS
+# =========================================================
 import feedparser
 import re
 import os
 from datetime import datetime
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
+import random
+import time
+from datetime import datetime, timedelta
 
 # =============================
 # CONFIGURAÇÕES
