@@ -162,7 +162,7 @@ import random
 import time
 from datetime import datetime, timedelta
 
-def noticia_recente(entry, horas=24):
+def noticia_recente(entry, horas=36):
     data_entry = None
 
     if hasattr(entry, "published_parsed") and entry.published_parsed:
@@ -227,7 +227,7 @@ def executar_fluxo():
         elif 10 <= hora < 15: tipo = "geral"
         else: tipo = "economia"
 
-        noticias = buscar_noticias(tipo, limite=4)
+        noticias = buscar_noticias(tipo, limite=10)
         for n in noticias:
             service.posts().insert(blogId=BLOG_ID, body={"title": n["titulo"], "content": gerar_conteudo(n), "labels": n["labels"], "status": "LIVE"}).execute()
             registrar_publicacao(n["link"])
