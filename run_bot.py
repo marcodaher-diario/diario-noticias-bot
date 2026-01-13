@@ -26,7 +26,8 @@ RSS_FEEDS = [
     "https://reporterbrasil.org.br/feed/",
     "https://www.cnnbrasil.com.br/feed/",
     "https://www.estadao.com.br/arc/outboundfeeds/rss/category/brasil/",
-    "https://g1.globo.com/rss/g1/economia/"
+    "https://g1.globo.com/rss/g1/economia/",
+    "https://www.metropoles.com/feed/"
 ]
 
 PALAVRAS_POLITICA = ["política", "mundo", "governo", "presidente", "lula", "bolsonaro", "congresso", "senado", "stf", "eleição", "moraes", "toffoli", "fux", "Dino", "flavio", "eduardo", "depoimento", "magistrados", "juízes", "ex-presidente", "corrupção", "vereadores", "deputado", "senador", "PGR", "ministério público"]
