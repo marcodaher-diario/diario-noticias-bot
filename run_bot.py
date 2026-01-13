@@ -43,66 +43,52 @@ ARQUIVO_LOG = "posts_publicados.txt"
 
 BLOCO_FIXO_FINAL = """<p></p>
 <div style="text-align: right;">
-  <span style="color: #073763;"><span style="font-family: arial; font-size: xx-small;"><b><i>Por: Marco Daher</i></b></span>
-  </span>
-</div>
-<div style="text-align: right;">
-  <span style="color: #073763;"><span style="font-family: arial; font-size: xx-small;"><b><i>Todos os Direitos Reservados</i></b></span>
-  </span>
-</div>
-<div style="text-align: right;">
-  <span style="color: #073763;"><span style="font-family: arial; font-size: xx-small;"><b><i>©MarcoDaher2025</i></b></span>
-  </span>
-</div>
-<span style="color: #073763; font-size: medium;"><span style="font-family: arial;"><br /></span>
+  <span style="color: #073763;"><span style="font-family: arial; font-size: xx-small;"><b><i>Por: Marco Daher</i></b></span></span></div><div style="text-align: right;"><b style="color: #073763; font-family: arial; font-size: x-small;"><i>Todos os Direitos Reservados</i></b></div><div style="text-align: right;"><b style="color: #073763; font-family: arial; font-size: x-small;"><i>©MarcoDaher2025</i></b></div><div style="text-align: right;"><b style="color: #073763; font-family: arial; font-size: x-small;"><i><br /></i></b></div><div style="text-align: right;"><b style="color: #073763; font-family: arial; font-size: x-small;"><i><br /></i></b></div><div style="text-align: right;"><b style="color: #073763;"><i><span style="font-family: arial; font-size: medium;"><br /></span></i></b></div><span style="font-family: arial; font-size: medium;"><span style="color: #073763;">
 </span>
-<div style="text-align: center;">
-  <span style="color: #073763; font-size: medium;"><span style="font-family: arial;"><b><span>Veja também esses </span><span>LINKS </span><span>interessantes, e </span><span>INSCREVA-SE</span><span> nos meus CANAIS:</span></b></span>
-  </span>
-</div>
-<span style="color: #073763; font-size: medium;"><span style="font-family: arial;"><br /><br /></span>
+</span><div style="text-align: center;">
+  <span style="color: #073763; font-size: medium;"><span style="font-family: arial;"><b><span>Veja também esses </span><span>LINKS </span><span>interessantes, e </span><span>INSCREVA-SE</span><span> nos meus CANAIS:</span></b></span></span></div><div style="text-align: center;"><span style="color: #073763; font-size: medium;"><span style="font-family: arial;"><b><span><br /></span></b></span></span></div><span style="font-family: arial; font-size: medium;"><span style="color: #073763;">
 </span>
-<div style="text-align: center;">
-  <span style="color: #073763; font-size: medium;"><span style="font-family: arial;"><b>Zona do Saber ⇨ <a href="http://zonadosaber1.blogspot.com/">Blog</a> -
+</span><div style="text-align: center;">
+  <span style="font-family: arial; font-size: medium;"><span style="color: #073763;"><span><b>Zona do Saber ⇨ <a href="http://zonadosaber1.blogspot.com/">Blog</a> -
         <a href="https://www.youtube.com/@ZonadoSaber51">Canal Youtube</a> -
         <a href="https://www.facebook.com/profile.php?id=61558194825166">FaceBook</a></b></span>
   </span>
-</div>
+</span></div>
 <div style="text-align: center;">
-  <span style="color: #073763; font-size: medium;"><span style="font-family: arial;"><b><br /></b></span>
+  <span style="font-family: arial; font-size: medium;"><span style="color: #073763;"><span><b><br /></b></span>
   </span>
-</div>
+</span></div>
 <div style="text-align: center;">
-  <span style="color: #073763; font-size: medium;"><span style="font-family: arial;"><b>DFBolhas ⇨ <a href="https://dfbolhas.blogspot.com/">BLOG</a> -
+  <span style="font-family: arial; font-size: medium;"><span style="color: #073763;"><span><b>DFBolhas ⇨ <a href="https://dfbolhas.blogspot.com/">Blog</a> -
         <a href="https://www.youtube.com/marcodaher51">Canal Youtube</a> -
         <a href="https://www.facebook.com/mdaher51/">Facebook</a></b></span>
   </span>
-</div>
+</span></div>
 <div style="text-align: center;">
-  <span style="color: #073763; font-size: medium;"><span style="font-family: arial;"><b><br /></b></span>
+  <span style="font-family: arial; font-size: medium;"><span style="color: #073763;"><span><b><br /></b></span>
   </span>
-</div>
+</span></div>
 <div style="text-align: center;">
-  <span style="color: #073763;"><span style="font-size: medium;"><span style="font-family: arial;"><b>Cursos, Negócios e Oportunidades ⇨
-          <a href="https://cursosnegocioseoportunidades.blogspot.com/">Blog</a>&nbsp;</b></span></span><b style="font-family: arial; font-size: large;">-&nbsp;<a href="https://www.youtube.com/@CursoseNegociosMD">Canal Youtube</a>&nbsp;</b><b style="font-family: arial; font-size: large;">-
+  <span style="font-family: arial; font-size: medium;"><span style="color: #073763;"><span><span><b>Cursos, Negócios e Oportunidades ⇨
+          <a href="https://cursosnegocioseoportunidades.blogspot.com/">Blog</a>&nbsp;</b></span></span><b>-&nbsp;<a href="https://www.youtube.com/@CursoseNegociosMD">Canal Youtube</a>&nbsp;</b><b>-
       <a href="https://www.facebook.com/CursosNegociosOportunidades">FaceBook</a></b></span>
-</div>
+</span></div>
 <div style="text-align: center;">
-  <span style="color: #073763; font-size: medium;"><span style="font-family: arial;"><b><br /></b></span>
+  <span style="font-family: arial; font-size: medium;"><span style="color: #073763;"><span><b><br /></b></span>
   </span>
-</div>
-<div style="text-align: center;"><b style="color: #073763; font-family: arial; font-size: large;">Emagrecer com Saúde ⇨
-        <a href="https://emagrecendo100crise.blogspot.com/">BLOG</a> -
+</span></div>
+<div style="text-align: center;"><b style="color: #073763;"><span style="font-family: arial; font-size: medium;">Emagrecer com Saúde ⇨
+        <a href="https://emagrecendo100crise.blogspot.com/">Blog</a> -
         <a href="https://www.youtube.com/@Saude-Bem-Estar-51">Canal YouTube</a>
-        - <a href="https://www.facebook.com/marcocuidese">FaceBook</a></b></div><div style="text-align: center;"><br /></div><div style="text-align: center;"><span style="color: #073763; font-size: medium;"><span style="font-family: arial;"><b>Marco Daher ⇨&nbsp;<a href="https://www.youtube.com/@MarcoDaher">Canal Youtube</a></b></span></span><b style="color: #073763; font-family: arial; font-size: large;">&nbsp;</b><b style="color: #073763; font-family: arial; font-size: large;">-&nbsp;<a href="https://www.facebook.com/MarcoDaher51/">FaceBook</a></b></div>
+        - <a href="https://www.facebook.com/marcocuidese">FaceBook</a></span></b></div><div style="text-align: center;"><span style="font-family: arial; font-size: medium;"><br /></span></div><div style="text-align: center;"><span style="font-family: arial; font-size: medium;"><span style="color: #073763;"><span><b>Marco Daher ⇨&nbsp;<a href="https://www.youtube.com/@MarcoDaher">Canal Youtube</a></b></span></span><b style="color: #073763;">&nbsp;</b><b style="color: #073763;">-&nbsp;<a href="https://www.facebook.com/MarcoDaher51/">FaceBook</a></b></span></div>
 <div style="text-align: center;">
-  <span style="color: #073763; font-size: medium;"><span style="font-family: arial;"><b><br /></b></span>
+  <span style="font-family: arial; font-size: medium;"><span style="color: #073763;"><span><b><br /></b></span>
   </span>
-</div>
-<div style="text-align: center;"><b style="color: #073763; font-family: arial; font-size: large;">Relaxamento e Meditação ⇨
-        <a href="https://www.youtube.com/channel/UCRNq9fN3jzLt0JeE5yBsqQQ">Canal YouTube</a></b></div><div style="text-align: center;"><br /></div><div style="text-align: center;"><b style="color: #073763; font-family: arial; font-size: large;">MD Arte Foto ⇨&nbsp;<a href="https://mdartefoto.blogspot.com/">Blog</a></b></div><div style="text-align: center;"><br /></div><div style="text-align: center;"><span style="color: #073763; font-size: medium;">
+</span></div>
+<div style="text-align: center;"><b style="color: #073763;"><span style="font-family: arial; font-size: medium;">Relaxamento e Meditação ⇨
+        <a href="https://www.youtube.com/channel/UCRNq9fN3jzLt0JeE5yBsqQQ">Canal YouTube</a></span></b></div><div style="text-align: center;"><span style="font-family: arial; font-size: medium;"><br /></span></div><div style="text-align: center;"><b style="color: #073763;"><span style="font-family: arial; font-size: medium;">MD Arte Foto ⇨&nbsp;<a href="https://mdartefoto.blogspot.com/">Blog</a></span></b></div><div style="text-align: center;"><span style="font-family: arial; font-size: medium;"><br /></span></div><div style="text-align: center;"><span style="font-family: arial; font-size: medium;"><br /></span></div><div style="text-align: center;"><span style="font-family: arial; font-size: medium;"><span style="color: #073763;">
   </span>
-</div>
+</span></div>
 <div style="text-align: center;">
   <span style="color: #073763;"><span style="font-family: arial; font-size: medium;">Caso queira contribuir com o Canal, use a Chave PIX: </span><span style="font-family: arial; font-size: medium;"><b>marco.caixa104@gmail.com<br /></b></span><span style="font-family: arial; font-size: medium;">O conhecimento é o combustível para o Sucesso. Não pesa e nãoocupa
       espaço. <br />🚨 Aproveite e Inscreva-se no Canal 📌, deixe o LIKE 👍 e
