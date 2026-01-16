@@ -169,131 +169,94 @@ def formatar_texto(texto):
 # ==========================================
 
 def gerar_assinatura():
-    return """
-<div class="footer-marco-daher" style="text-align:center; font-family: Arial, Helvetica, sans-serif; line-height: 1.4; color:#073763; margin-top:30px;">
-  <!-- Cabeçalho discreto -->
-  <p style="font-size: x-small; font-weight: bold; text-align:right;">
+    assinatura_html = """
+<div class="footer-marco-daher" style="font-family: Arial, Helvetica, sans-serif; color: #073763; line-height: 1.3;">
+  <!-- Linhas discretas à direita -->
+  <p style="font-size: x-small; font-weight: bold; text-align: right;">
     <i>Por: Marco Daher<br>Todos os Direitos Reservados<br>©MarcoDaher2025</i>
   </p>
 
-  <!-- Frase de impacto -->
-  <p style="margin:10px 0; font-style:italic; font-size:13px;">
-    O conhecimento é o combustível para o Sucesso. Não pesa e não ocupa espaço.
-  </p>
+  <!-- Introdução centralizada -->
+  <p style="font-weight: bold; text-align: center;">Veja também esses LINKS interessantes, e INSCREVA-SE nos meus CANAIS:</p>
 
-  <!-- Grupos de ícones intercalados -->
-  <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:25px; margin:20px 0;">
-    <!-- Grupo 1: 3 ícones -->
-    <div style="text-align:center;">
-      <a href="http://zonadosaber1.blogspot.com/" target="_blank">
-        <img src="https://img.icons8.com/color/48/000000/blogger.png" style="width:40px;height:40px;">
-      </a>
-      <div style="font-size:12px; margin-top:2px; color:#073763;">Zona do Saber</div>
-    </div>
-    <div style="text-align:center;">
-      <a href="https://www.youtube.com/@ZonadoSaber51" target="_blank">
-        <img src="https://img.icons8.com/color/48/000000/youtube-play.png" style="width:40px;height:40px;">
-      </a>
-      <div style="font-size:12px; margin-top:2px; color:#073763;">YouTube</div>
-    </div>
-    <div style="text-align:center;">
-      <a href="https://www.facebook.com/profile.php?id=61558194825166" target="_blank">
-        <img src="https://img.icons8.com/color/48/000000/facebook-new.png" style="width:40px;height:40px;">
-      </a>
-      <div style="font-size:12px; margin-top:2px; color:#073763;">Facebook</div>
-    </div>
+  <!-- Linha 1 de grupos de ícones -->
+  <div style="text-align: center; margin-bottom: 10px;">
+    <!-- Zona do Saber - 3 ícones -->
+    <span style="margin: 0 15px; display: inline-block; text-align: center;">
+      <div style="color: #990000; font-weight: bold;">Zona do Saber</div>
+      <a href="http://zonadosaber1.blogspot.com/" target="_blank"><img src="https://i.ibb.co/7j2pC8B/blog-icon-orange.png" alt="Blog" style="width:24px; height:24px;"></a>
+      <a href="https://www.youtube.com/@ZonadoSaber51" target="_blank"><img src="https://i.ibb.co/F7GZbVG/youtube-icon-red.png" alt="YouTube" style="width:24px; height:24px;"></a>
+      <a href="https://www.facebook.com/profile.php?id=61558194825166" target="_blank"><img src="https://i.ibb.co/0FvV8M9/facebook-icon-blue.png" alt="Facebook" style="width:24px; height:24px;"></a>
+    </span>
 
-    <!-- Separador leve -->
-    <div style="width:100%; height:10px;"></div>
+    <!-- Marco Daher - 2 ícones -->
+    <span style="margin: 0 15px; display: inline-block; text-align: center;">
+      <div style="color: #990000; font-weight: bold;">Marco Daher</div>
+      <a href="https://www.youtube.com/@MarcoDaher" target="_blank"><img src="https://i.ibb.co/F7GZbVG/youtube-icon-red.png" alt="YouTube" style="width:24px; height:24px;"></a>
+      <a href="https://www.facebook.com/MarcoDaher51/" target="_blank"><img src="https://i.ibb.co/0FvV8M9/facebook-icon-blue.png" alt="Facebook" style="width:24px; height:24px;"></a>
+    </span>
 
-    <!-- Grupo 2: 2 ícones -->
-    <div style="text-align:center;">
-      <a href="https://dfbolhas.blogspot.com/" target="_blank">
-        <img src="https://img.icons8.com/color/48/000000/blogger.png" style="width:40px;height:40px;">
-      </a>
-      <div style="font-size:12px; margin-top:2px; color:#073763;">DF Bolhas</div>
-    </div>
-    <div style="text-align:center;">
-      <a href="https://www.youtube.com/marcodaher51" target="_blank">
-        <img src="https://img.icons8.com/color/48/000000/youtube-play.png" style="width:40px;height:40px;">
-      </a>
-      <div style="font-size:12px; margin-top:2px; color:#073763;">YouTube</div>
-    </div>
+    <!-- DF Bolhas - 3 ícones -->
+    <span style="margin: 0 15px; display: inline-block; text-align: center;">
+      <div style="color: #990000; font-weight: bold;">DF Bolhas</div>
+      <a href="https://dfbolhas.blogspot.com/" target="_blank"><img src="https://i.ibb.co/7j2pC8B/blog-icon-orange.png" alt="Blog" style="width:24px; height:24px;"></a>
+      <a href="https://www.youtube.com/marcodaher51" target="_blank"><img src="https://i.ibb.co/F7GZbVG/youtube-icon-red.png" alt="YouTube" style="width:24px; height:24px;"></a>
+      <a href="https://www.facebook.com/mdaher51/" target="_blank"><img src="https://i.ibb.co/0FvV8M9/facebook-icon-blue.png" alt="Facebook" style="width:24px; height:24px;"></a>
+    </span>
 
-    <!-- Separador leve -->
-    <div style="width:100%; height:10px;"></div>
+    <!-- MD Arte Foto - 2 ícones -->
+    <span style="margin: 0 15px; display: inline-block; text-align: center;">
+      <div style="color: #990000; font-weight: bold;">MD Arte Foto</div>
+      <a href="https://mdartefoto.blogspot.com/" target="_blank"><img src="https://i.ibb.co/7j2pC8B/blog-icon-orange.png" alt="Blog" style="width:24px; height:24px;"></a>
+      <a href="https://www.facebook.com/profile.php?id=61586448041932" target="_blank"><img src="https://i.ibb.co/0FvV8M9/facebook-icon-blue.png" alt="Facebook" style="width:24px; height:24px;"></a>
+    </span>
 
-    <!-- Grupo 3: 3 ícones -->
-    <div style="text-align:center;">
-      <a href="https://cursosnegocioseoportunidades.blogspot.com/" target="_blank">
-        <img src="https://img.icons8.com/color/48/000000/blogger.png" style="width:40px;height:40px;">
-      </a>
-      <div style="font-size:12px; margin-top:2px; color:#073763;">Cursos</div>
-    </div>
-    <div style="text-align:center;">
-      <a href="https://www.facebook.com/CursosNegociosOportunidades" target="_blank">
-        <img src="https://img.icons8.com/color/48/000000/facebook-new.png" style="width:40px;height:40px;">
-      </a>
-      <div style="font-size:12px; margin-top:2px; color:#073763;">Facebook</div>
-    </div>
-    <div style="text-align:center;">
-      <a href="https://www.youtube.com/@MarcoDaher" target="_blank">
-        <img src="https://img.icons8.com/color/48/000000/youtube-play.png" style="width:40px;height:40px;">
-      </a>
-      <div style="font-size:12px; margin-top:2px; color:#073763;">Marco Daher</div>
-    </div>
-
-    <!-- Separador leve -->
-    <div style="width:100%; height:10px;"></div>
-
-    <!-- Grupo 4: 2 ícones -->
-    <div style="text-align:center;">
-      <a href="https://emagrecendo100crise.blogspot.com/" target="_blank">
-        <img src="https://img.icons8.com/color/48/000000/blogger.png" style="width:40px;height:40px;">
-      </a>
-      <div style="font-size:12px; margin-top:2px; color:#073763;">Emagrecer</div>
-    </div>
-    <div style="text-align:center;">
-      <a href="https://www.youtube.com/@Saude-Bem-Estar-51" target="_blank">
-        <img src="https://img.icons8.com/color/48/000000/youtube-play.png" style="width:40px;height:40px;">
-      </a>
-      <div style="font-size:12px; margin-top:2px; color:#073763;">YouTube</div>
-    </div>
-
-    <!-- Separador leve -->
-    <div style="width:100%; height:10px;"></div>
-
-    <!-- Grupo 5: 2 ícones -->
-    <div style="text-align:center;">
-      <a href="https://mdartefoto.blogspot.com/" target="_blank">
-        <img src="https://img.icons8.com/color/48/000000/blogger.png" style="width:40px;height:40px;">
-      </a>
-      <div style="font-size:12px; margin-top:2px; color:#073763;">MD Arte Foto</div>
-    </div>
-    <div style="text-align:center;">
-      <a href="https://www.youtube.com/channel/UCRNq9fN3jzLt0JeE5yBsqQQ" target="_blank">
-        <img src="https://img.icons8.com/color/48/000000/youtube-play.png" style="width:40px;height:40px;">
-      </a>
-      <div style="font-size:12px; margin-top:2px; color:#073763;">Relaxamento</div>
-    </div>
+    <!-- Emagrecer com Saúde - 3 ícones -->
+    <span style="margin: 0 15px; display: inline-block; text-align: center;">
+      <div style="color: #990000; font-weight: bold;">Emagrecer com Saúde</div>
+      <a href="https://emagrecendo100crise.blogspot.com/" target="_blank"><img src="https://i.ibb.co/7j2pC8B/blog-icon-orange.png" alt="Blog" style="width:24px; height:24px;"></a>
+      <a href="https://www.youtube.com/@Saude-Bem-Estar-51" target="_blank"><img src="https://i.ibb.co/F7GZbVG/youtube-icon-red.png" alt="YouTube" style="width:24px; height:24px;"></a>
+      <a href="https://www.facebook.com/marcocuidese" target="_blank"><img src="https://i.ibb.co/0FvV8M9/facebook-icon-blue.png" alt="Facebook" style="width:24px; height:24px;"></a>
+    </span>
   </div>
 
-  <!-- Frase PIX -->
-  <p style="font-weight:bold; margin-top:20px;">Caso queira contribuir com meu trabalho, use a CHAVE PIX abaixo:</p>
+  <!-- Linha 2 de grupos de ícones -->
+  <div style="text-align: center; margin-bottom: 10px;">
+    <!-- Cursos, Negócios e Oportunidades - 2 ícones -->
+    <span style="margin: 0 15px; display: inline-block; text-align: center;">
+      <div style="color: #990000; font-weight: bold;">Cursos, Negócios e Oportunidades</div>
+      <a href="https://www.youtube.com/@CursoseNegociosMD" target="_blank"><img src="https://i.ibb.co/F7GZbVG/youtube-icon-red.png" alt="YouTube" style="width:24px; height:24px;"></a>
+      <a href="https://www.facebook.com/CursosNegociosOportunidades" target="_blank"><img src="https://i.ibb.co/0FvV8M9/facebook-icon-blue.png" alt="Facebook" style="width:24px; height:24px;"></a>
+    </span>
 
-  <!-- Botão PIX -->
-  <button onclick="navigator.clipboard.writeText('marco.caixa104@gmail.com')" 
-          style="cursor:pointer; padding:10px 15px; font-weight:bold; font-size:14px; background-color:#990000; color:#ffffff; border:none; border-radius:5px;">
-    Copiar Chave PIX
-  </button>
+    <!-- Relaxamento e Meditação - 1 ícone -->
+    <span style="margin: 0 15px; display: inline-block; text-align: center;">
+      <div style="color: #990000; font-weight: bold;">Relaxamento e Meditação</div>
+      <a href="https://www.youtube.com/channel/UCRNq9fN3jzLt0JeE5yBsqQQ" target="_blank"><img src="https://i.ibb.co/F7GZbVG/youtube-icon-red.png" alt="YouTube" style="width:24px; height:24px;"></a>
+    </span>
+  </div>
 
-  <p style="margin-top:15px; font-size:13px;">
-    🚨 Aproveite e Inscreva-se nos canais 📌, deixe o LIKE 👍 e ative o Sininho 🔔.<br>
-    Muito obrigado por acompanhar! 🎯
+  <!-- Frase da PIX -->
+  <p style="text-align: center; font-size: 14px; font-weight: bold; margin-bottom: 5px;">
+    Caso queira contribuir com meu trabalho, use a CHAVE PIX abaixo:
+  </p>
+
+  <!-- Botão da PIX -->
+  <div style="text-align: center; margin-bottom: 10px;">
+    <button onclick="navigator.clipboard.writeText('marco.caixa104@gmail.com')" style="padding:8px 20px; font-size:14px; font-weight:bold; cursor:pointer; background-color:#1962dd; color:#fff; border:none; border-radius:4px;">
+      Copiar Chave PIX
+    </button>
+  </div>
+
+  <!-- Frase final centralizada -->
+  <p style="text-align: center; font-size: 12px;">
+    O conhecimento é o combustível para o Sucesso. Não pesa e não ocupa espaço.<br>
+    🚨 Aproveite e Inscreva-se no Canal 📌, deixe o LIKE 👍 e ative o Sininho 🔔.<br>
+    Muito obrigado por assistir e abraço. 🎯
   </p>
 </div>
 """
-
+    return assinatura_html
 
 # =============================
 # BUSCA DE NOTÍCIAS
