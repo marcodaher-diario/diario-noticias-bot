@@ -164,52 +164,53 @@ def formatar_texto(texto):
     )
 
 # =============================
-# FUNÇÃO — ASSINATURA PADRONIZADA
+# FUNÇÃO — ASSINATURA NOVA PADRONIZADA
 # =============================
 
 def gerar_assinatura():
     return """
-<div style="margin-top:30px; padding-top:20px; border-top:2px solid #073763; font-family:Arial, sans-serif; color:#073763; line-height:1.5; text-align:center;">
-    <p style="font-size:12px; font-weight:bold;"><i>Por: Marco Daher | Todos os Direitos Reservados | ©MarcoDaher2025</i></p>
-
-    <p style="font-size:14px; font-weight:bold; color:#073763;">Veja também esses LINKS interessantes e INSCREVA-SE nos meus CANAIS:</p>
-
-    <div style="margin:10px 0;">
-        <p><span style="color:#990000; font-weight:bold;">Zona do Saber</span> ⇨ 
-           <a href="http://zonadosaber1.blogspot.com/" target="_blank">Blog</a> - 
-           <a href="https://www.youtube.com/@ZonadoSaber51" target="_blank">YouTube</a> - 
-           <a href="https://www.facebook.com/profile.php?id=61558194825166" target="_blank">Facebook</a>
-        </p>
-        <p><span style="color:#990000; font-weight:bold;">DFBolhas</span> ⇨ 
-           <a href="https://dfbolhas.blogspot.com/" target="_blank">Blog</a> - 
-           <a href="https://www.youtube.com/marcodaher51" target="_blank">YouTube</a>
-        </p>
-        <p><span style="color:#990000; font-weight:bold;">Cursos, Negócios e Oportunidades</span> ⇨ 
-           <a href="https://cursosnegocioseoportunidades.blogspot.com/" target="_blank">Blog</a> - 
-           <a href="https://www.facebook.com/CursosNegociosOportunidades" target="_blank">Facebook</a>
-        </p>
-        <p><span style="color:#990000; font-weight:bold;">Marco Daher</span> ⇨ 
-           <a href="https://www.youtube.com/@MarcoDaher" target="_blank">YouTube</a>
-        </p>
-        <p><span style="color:#990000; font-weight:bold;">Emagrecer com Saúde</span> ⇨ 
-           <a href="https://emagrecendo100crise.blogspot.com/" target="_blank">Blog</a> - 
-           <a href="https://www.youtube.com/@Saude-Bem-Estar-51" target="_blank">YouTube</a> - 
-           <a href="https://www.facebook.com/marcocuidese" target="_blank">Facebook</a>
-        </p>
-        <p><span style="color:#990000; font-weight:bold;">MD Arte Foto</span> ⇨ 
-           <a href="https://mdartefoto.blogspot.com/" target="_blank">Blog</a>
-        </p>
-        <p><span style="color:#990000; font-weight:bold;">Relaxamento e Meditação</span> ⇨ 
-           <a href="https://www.youtube.com/channel/UCRNq9fN3jzLt0JeE5yBsqQQ" target="_blank">YouTube</a>
-        </p>
+<div class="footer-marco-daher">
+  <div class="footer-header">
+    <div style="color: #073763; font-family: Arial, Helvetica, sans-serif; font-size: 14px; line-height: 1.3; text-align: justify;">
+      <p style="font-size: x-small; font-weight: bold; line-height: 1.3; text-align: right;">
+        <i>Por: Marco Daher&nbsp;<br />Todos os Direitos Reservados<br />©MarcoDaher2025</i>
+      </p>
     </div>
-
-    <p style="font-size:14px; margin-top:15px;">
-        Caso queira contribuir com o Canal, use a Chave PIX: <span style="color:#990000; font-weight:bold;">marco.caixa104@gmail.com</span><br>
-        O conhecimento é o combustível para o Sucesso. Não pesa e não ocupa espaço.<br>
-        🚨 Aproveite e inscreva-se no Canal 📌, deixe o LIKE 👍 e ative o Sininho 🔔.<br>
-        Muito obrigado por assistir e abraço. 🎯
+    <p style="color: #073763; font-family: Arial, Helvetica, sans-serif; font-weight: bold; line-height: 1.3; text-align: center;">
+      Veja também esses LINKS interessantes, e INSCREVA-SE nos meus CANAIS:
     </p>
+    <div style="font-family: Arial, Helvetica, sans-serif; line-height: 1.3; text-align: justify;">
+      <div style="line-height: 1.7;">
+        <p style="line-height: 1.7; text-align: center;">
+          <span style="color: #990000;">Zona do Saber</span> ⇨ <a href="http://zonadosaber1.blogspot.com/" style="color: #1962dd; text-decoration-line: none;" target="_blank">Blog</a> - <a href="https://www.youtube.com/@ZonadoSaber51" style="color: #1962dd; text-decoration-line: none;" target="_blank">Canal Youtube</a> - <a href="https://www.facebook.com/profile.php?id=61558194825166" style="color: #1962dd; text-decoration-line: none;" target="_blank">FaceBook</a>
+        </p>
+        <p style="line-height: 1.7; text-align: center;">
+          <span style="color: #990000;">DFBolhas</span> ⇨ <a href="https://dfbolhas.blogspot.com/" style="color: #1962dd; text-decoration-line: none;" target="_blank">Blog</a> - <a href="https://www.youtube.com/marcodaher51" style="color: #1962dd; text-decoration-line: none;" target="_blank">Canal Youtube</a> - <a href="https://www.facebook.com/mdaher51/" style="color: #1962dd; text-decoration-line: none;" target="_blank">Facebook</a>
+        </p>
+        <p style="line-height: 1.7; text-align: center;">
+          <span style="color: #990000;">Cursos, Negócios e Oportunidades</span> ⇨ <a href="https://cursosnegocioseoportunidades.blogspot.com/" style="color: #1962dd; text-decoration-line: none;" target="_blank">Blog</a> - <a href="https://www.facebook.com/CursosNegociosOportunidades" style="color: #1962dd; text-decoration-line: none;" target="_blank">FaceBook</a>
+        </p>
+        <p style="line-height: 1.7; text-align: center;">
+          <span style="color: #990000;">Marco Daher</span> ⇨ <a href="https://www.youtube.com/@MarcoDaher" style="color: #1962dd; text-decoration-line: none;" target="_blank">Canal Youtube</a>
+        </p>
+        <p style="line-height: 1.7; text-align: center;">
+          <span style="color: #990000;">Emagrecer com Saúde</span> ⇨ <a href="https://emagrecendo100crise.blogspot.com/" style="color: #1962dd; text-decoration-line: none;" target="_blank">BLOG</a> - <a href="https://www.youtube.com/@Saude-Bem-Estar-51" style="color: #1962dd; text-decoration-line: none;" target="_blank">Canal YouTube</a> - <a href="https://www.facebook.com/marcocuidese" style="color: #1962dd; text-decoration-line: none;" target="_blank">FaceBook</a>
+        </p>
+        <p style="line-height: 1.7; text-align: center;">
+          <span style="color: #990000;">MD Arte Foto</span> ⇨ <a href="https://mdartefoto.blogspot.com/" style="color: #1962dd; text-decoration-line: none;" target="_blank">Blog</a>
+        </p>
+        <p style="line-height: 1.7; text-align: center;">
+          <span style="color: #990000;">Relaxamento e Meditação</span> ⇨ <a href="https://www.youtube.com/channel/UCRNq9fN3jzLt0JeE5yBsqQQ" style="color: #1962dd; text-decoration-line: none;" target="_blank">Canal YouTube</a>
+        </p>
+        <p style="line-height: 1.7; text-align: center;">
+          Caso queira contribuir com o Canal, use a Chave PIX: <span style="color: #990000;">marco.caixa104@gmail.com</span><br>
+          O conhecimento é o combustível para o Sucesso. Não pesa e não ocupa espaço.<br>
+          🚨 Aproveite e Inscreva-se no Canal 📌, deixe o LIKE 👍 e ative o Sininho 🔔.<br>
+          Muito obrigado por assistir e abraço. 🎯
+        </p>
+      </div>
+    </div>
+  </div>
 </div>
 """
 
