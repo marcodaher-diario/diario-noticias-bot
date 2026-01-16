@@ -163,77 +163,121 @@ def formatar_texto(texto):
         for b in blocos
     )
 
-# ================================
-# FUNÇÃO — ASSINATURA COM ÍCONES
-# ================================
+
+# ==========================================
+# FUNÇÃO — ASSINATURA COM ÍCONES + LEGENDA
+# ==========================================
 
 def gerar_assinatura():
     return """
-<div class="footer-marco-daher" style="text-align:center; font-family: Arial, Helvetica, sans-serif; line-height: 1.4; color:#073763;">
+<div class="footer-marco-daher" style="text-align:center; font-family: Arial, Helvetica, sans-serif; line-height: 1.4; color:#073763; margin-top:30px;">
   <p style="font-size: x-small; font-weight: bold;">
     <i>Por: Marco Daher<br>Todos os Direitos Reservados<br>©MarcoDaher2025</i>
   </p>
-  <p style="font-weight: bold;">Veja também meus canais:</p>
+  <p style="font-weight: bold; margin-bottom:10px;">Veja também meus canais:</p>
 
-  <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:12px; margin:10px 0;">
+  <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:15px; margin:10px 0;">
     <!-- Zona do Saber -->
-    <a href="http://zonadosaber1.blogspot.com/" target="_blank">
-      <img src="https://img.icons8.com/color/48/000000/blogger.png" alt="Zona do Saber Blog" style="width:40px; height:40px;">
-    </a>
-    <a href="https://www.youtube.com/@ZonadoSaber51" target="_blank">
-      <img src="https://img.icons8.com/color/48/000000/youtube-play.png" alt="Zona do Saber YouTube" style="width:40px; height:40px;">
-    </a>
-    <a href="https://www.facebook.com/profile.php?id=61558194825166" target="_blank">
-      <img src="https://img.icons8.com/color/48/000000/facebook-new.png" alt="Zona do Saber Facebook" style="width:40px; height:40px;">
-    </a>
+    <div style="text-align:center;">
+      <a href="http://zonadosaber1.blogspot.com/" target="_blank">
+        <img src="https://img.icons8.com/color/48/000000/blogger.png" alt="Zona do Saber Blog" style="width:40px; height:40px;">
+      </a>
+      <div style="font-size:12px; margin-top:2px; color:#073763;">Zona do Saber</div>
+    </div>
+    <div style="text-align:center;">
+      <a href="https://www.youtube.com/@ZonadoSaber51" target="_blank">
+        <img src="https://img.icons8.com/color/48/000000/youtube-play.png" alt="Zona do Saber YouTube" style="width:40px; height:40px;">
+      </a>
+      <div style="font-size:12px; margin-top:2px; color:#073763;">YouTube</div>
+    </div>
+    <div style="text-align:center;">
+      <a href="https://www.facebook.com/profile.php?id=61558194825166" target="_blank">
+        <img src="https://img.icons8.com/color/48/000000/facebook-new.png" alt="Zona do Saber Facebook" style="width:40px; height:40px;">
+      </a>
+      <div style="font-size:12px; margin-top:2px; color:#073763;">Facebook</div>
+    </div>
 
     <!-- DFBolhas -->
-    <a href="https://dfbolhas.blogspot.com/" target="_blank">
-      <img src="https://img.icons8.com/color/48/000000/blogger.png" alt="DFBolhas Blog" style="width:40px; height:40px;">
-    </a>
-    <a href="https://www.youtube.com/marcodaher51" target="_blank">
-      <img src="https://img.icons8.com/color/48/000000/youtube-play.png" alt="DFBolhas YouTube" style="width:40px; height:40px;">
-    </a>
-    <a href="https://www.facebook.com/mdaher51/" target="_blank">
-      <img src="https://img.icons8.com/color/48/000000/facebook-new.png" alt="DFBolhas Facebook" style="width:40px; height:40px;">
-    </a>
+    <div style="text-align:center;">
+      <a href="https://dfbolhas.blogspot.com/" target="_blank">
+        <img src="https://img.icons8.com/color/48/000000/blogger.png" alt="DFBolhas Blog" style="width:40px; height:40px;">
+      </a>
+      <div style="font-size:12px; margin-top:2px; color:#073763;">DFBolhas</div>
+    </div>
+    <div style="text-align:center;">
+      <a href="https://www.youtube.com/marcodaher51" target="_blank">
+        <img src="https://img.icons8.com/color/48/000000/youtube-play.png" alt="DFBolhas YouTube" style="width:40px; height:40px;">
+      </a>
+      <div style="font-size:12px; margin-top:2px; color:#073763;">YouTube</div>
+    </div>
+    <div style="text-align:center;">
+      <a href="https://www.facebook.com/mdaher51/" target="_blank">
+        <img src="https://img.icons8.com/color/48/000000/facebook-new.png" alt="DFBolhas Facebook" style="width:40px; height:40px;">
+      </a>
+      <div style="font-size:12px; margin-top:2px; color:#073763;">Facebook</div>
+    </div>
 
     <!-- Cursos -->
-    <a href="https://cursosnegocioseoportunidades.blogspot.com/" target="_blank">
-      <img src="https://img.icons8.com/color/48/000000/blogger.png" alt="Cursos Blog" style="width:40px; height:40px;">
-    </a>
-    <a href="https://www.facebook.com/CursosNegociosOportunidades" target="_blank">
-      <img src="https://img.icons8.com/color/48/000000/facebook-new.png" alt="Cursos Facebook" style="width:40px; height:40px;">
-    </a>
+    <div style="text-align:center;">
+      <a href="https://cursosnegocioseoportunidades.blogspot.com/" target="_blank">
+        <img src="https://img.icons8.com/color/48/000000/blogger.png" alt="Cursos Blog" style="width:40px; height:40px;">
+      </a>
+      <div style="font-size:12px; margin-top:2px; color:#073763;">Cursos</div>
+    </div>
+    <div style="text-align:center;">
+      <a href="https://www.facebook.com/CursosNegociosOportunidades" target="_blank">
+        <img src="https://img.icons8.com/color/48/000000/facebook-new.png" alt="Cursos Facebook" style="width:40px; height:40px;">
+      </a>
+      <div style="font-size:12px; margin-top:2px; color:#073763;">Facebook</div>
+    </div>
 
     <!-- Marco Daher -->
-    <a href="https://www.youtube.com/@MarcoDaher" target="_blank">
-      <img src="https://img.icons8.com/color/48/000000/youtube-play.png" alt="Marco Daher YouTube" style="width:40px; height:40px;">
-    </a>
+    <div style="text-align:center;">
+      <a href="https://www.youtube.com/@MarcoDaher" target="_blank">
+        <img src="https://img.icons8.com/color/48/000000/youtube-play.png" alt="Marco Daher YouTube" style="width:40px; height:40px;">
+      </a>
+      <div style="font-size:12px; margin-top:2px; color:#073763;">Marco Daher</div>
+    </div>
 
     <!-- Emagrecer com Saúde -->
-    <a href="https://emagrecendo100crise.blogspot.com/" target="_blank">
-      <img src="https://img.icons8.com/color/48/000000/blogger.png" alt="Emagrecer Blog" style="width:40px; height:40px;">
-    </a>
-    <a href="https://www.youtube.com/@Saude-Bem-Estar-51" target="_blank">
-      <img src="https://img.icons8.com/color/48/000000/youtube-play.png" alt="Emagrecer YouTube" style="width:40px; height:40px;">
-    </a>
-    <a href="https://www.facebook.com/marcocuidese" target="_blank">
-      <img src="https://img.icons8.com/color/48/000000/facebook-new.png" alt="Emagrecer Facebook" style="width:40px; height:40px;">
-    </a>
+    <div style="text-align:center;">
+      <a href="https://emagrecendo100crise.blogspot.com/" target="_blank">
+        <img src="https://img.icons8.com/color/48/000000/blogger.png" alt="Emagrecer Blog" style="width:40px; height:40px;">
+      </a>
+      <div style="font-size:12px; margin-top:2px; color:#073763;">Emagrecer</div>
+    </div>
+    <div style="text-align:center;">
+      <a href="https://www.youtube.com/@Saude-Bem-Estar-51" target="_blank">
+        <img src="https://img.icons8.com/color/48/000000/youtube-play.png" alt="Emagrecer YouTube" style="width:40px; height:40px;">
+      </a>
+      <div style="font-size:12px; margin-top:2px; color:#073763;">YouTube</div>
+    </div>
+    <div style="text-align:center;">
+      <a href="https://www.facebook.com/marcocuidese" target="_blank">
+        <img src="https://img.icons8.com/color/48/000000/facebook-new.png" alt="Emagrecer Facebook" style="width:40px; height:40px;">
+      </a>
+      <div style="font-size:12px; margin-top:2px; color:#073763;">Facebook</div>
+    </div>
 
     <!-- MD Arte Foto -->
-    <a href="https://mdartefoto.blogspot.com/" target="_blank">
-      <img src="https://img.icons8.com/color/48/000000/blogger.png" alt="MD Arte Foto Blog" style="width:40px; height:40px;">
-    </a>
+    <div style="text-align:center;">
+      <a href="https://mdartefoto.blogspot.com/" target="_blank">
+        <img src="https://img.icons8.com/color/48/000000/blogger.png" alt="MD Arte Foto Blog" style="width:40px; height:40px;">
+      </a>
+      <div style="font-size:12px; margin-top:2px; color:#073763;">MD Arte Foto</div>
+    </div>
 
     <!-- Relaxamento e Meditação -->
-    <a href="https://www.youtube.com/channel/UCRNq9fN3jzLt0JeE5yBsqQQ" target="_blank">
-      <img src="https://img.icons8.com/color/48/000000/youtube-play.png" alt="Relaxamento YouTube" style="width:40px; height:40px;">
-    </a>
+    <div style="text-align:center;">
+      <a href="https://www.youtube.com/channel/UCRNq9fN3jzLt0JeE5yBsqQQ" target="_blank">
+        <img src="https://img.icons8.com/color/48/000000/youtube-play.png" alt="Relaxamento YouTube" style="width:40px; height:40px;">
+      </a>
+      <div style="font-size:12px; margin-top:2px; color:#073763;">Relaxamento</div>
+    </div>
+
   </div>
 
-  <p style="margin-top:15px;">
+  <p style="margin-top:15px; font-size:13px;">
     Caso queira contribuir com o Canal, use a Chave PIX: <span style="color: #990000;">marco.caixa104@gmail.com</span><br>
     O conhecimento é o combustível para o Sucesso. Não pesa e não ocupa espaço.<br>
     🚨 Aproveite e Inscreva-se no Canal 📌, deixe o LIKE 👍 e ative o Sininho 🔔.<br>
@@ -241,6 +285,7 @@ def gerar_assinatura():
   </p>
 </div>
 """
+
 
 
 # =============================
