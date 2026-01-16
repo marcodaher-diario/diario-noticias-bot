@@ -1,6 +1,6 @@
-# =========================================================
+# =============================================================
 # RUN_BOT.PY — BLOGGER NEWS BOT (FINAL / SAFE / PROFESSIONAL)
-# =========================================================
+# =============================================================
 
 import feedparser
 import re
@@ -60,9 +60,9 @@ def registrar_publicacao(link):
     with open(ARQUIVO_LOG, "a", encoding="utf-8") as f:
         f.write(link + "\n")
 
-# =============================
+# ===============================
 # TAGS — LIMITE 200 CARACTERES
-# =============================
+# ===============================
 
 def gerar_tags_blogger(tags, limite=200):
     tags_limpas = []
@@ -143,9 +143,9 @@ def gerar_texto_ia(titulo, categoria):
         print(f"⚠️ IA indisponível: {e}")
         return f"<p>Matéria em atualização sobre: <b>{titulo}</b>.</p>"
 
-# =============================
+# ===============================
 # FORMATAÇÃO HTML (JUSTIFICADO)
-# =============================
+# ===============================
 
 def formatar_texto(texto):
     frases = re.split(r'(?<=[.!?])\s+', texto)
@@ -163,9 +163,9 @@ def formatar_texto(texto):
         for b in blocos
     )
 
-# =============================
-# FUNÇÃO — ASSINATURA PADRONIZADA COM BOTÕES
-# =============================
+# ================================
+# FUNÇÃO — ASSINATURA COM ÍCONES
+# ================================
 
 def gerar_assinatura():
     return """
@@ -173,41 +173,64 @@ def gerar_assinatura():
   <p style="font-size: x-small; font-weight: bold;">
     <i>Por: Marco Daher<br>Todos os Direitos Reservados<br>©MarcoDaher2025</i>
   </p>
-  <p style="font-weight: bold;">Veja também esses LINKS interessantes, e INSCREVA-SE nos meus CANAIS:</p>
+  <p style="font-weight: bold;">Veja também meus canais:</p>
 
-  <div style="margin:10px 0;">
-    <a href="http://zonadosaber1.blogspot.com/" target="_blank" style="background-color:#1962dd;color:white;padding:6px 12px;margin:2px;text-decoration:none;border-radius:5px;display:inline-block;">Zona do Saber Blog</a>
-    <a href="https://www.youtube.com/@ZonadoSaber51" target="_blank" style="background-color:#ff0000;color:white;padding:6px 12px;margin:2px;text-decoration:none;border-radius:5px;display:inline-block;">Zona do Saber YouTube</a>
-    <a href="https://www.facebook.com/profile.php?id=61558194825166" target="_blank" style="background-color:#3b5998;color:white;padding:6px 12px;margin:2px;text-decoration:none;border-radius:5px;display:inline-block;">Zona do Saber Facebook</a>
-  </div>
+  <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:12px; margin:10px 0;">
+    <!-- Zona do Saber -->
+    <a href="http://zonadosaber1.blogspot.com/" target="_blank">
+      <img src="https://img.icons8.com/color/48/000000/blogger.png" alt="Zona do Saber Blog" style="width:40px; height:40px;">
+    </a>
+    <a href="https://www.youtube.com/@ZonadoSaber51" target="_blank">
+      <img src="https://img.icons8.com/color/48/000000/youtube-play.png" alt="Zona do Saber YouTube" style="width:40px; height:40px;">
+    </a>
+    <a href="https://www.facebook.com/profile.php?id=61558194825166" target="_blank">
+      <img src="https://img.icons8.com/color/48/000000/facebook-new.png" alt="Zona do Saber Facebook" style="width:40px; height:40px;">
+    </a>
 
-  <div style="margin:10px 0;">
-    <a href="https://dfbolhas.blogspot.com/" target="_blank" style="background-color:#1962dd;color:white;padding:6px 12px;margin:2px;text-decoration:none;border-radius:5px;display:inline-block;">DFBolhas Blog</a>
-    <a href="https://www.youtube.com/marcodaher51" target="_blank" style="background-color:#ff0000;color:white;padding:6px 12px;margin:2px;text-decoration:none;border-radius:5px;display:inline-block;">DFBolhas YouTube</a>
-    <a href="https://www.facebook.com/mdaher51/" target="_blank" style="background-color:#3b5998;color:white;padding:6px 12px;margin:2px;text-decoration:none;border-radius:5px;display:inline-block;">DFBolhas Facebook</a>
-  </div>
+    <!-- DFBolhas -->
+    <a href="https://dfbolhas.blogspot.com/" target="_blank">
+      <img src="https://img.icons8.com/color/48/000000/blogger.png" alt="DFBolhas Blog" style="width:40px; height:40px;">
+    </a>
+    <a href="https://www.youtube.com/marcodaher51" target="_blank">
+      <img src="https://img.icons8.com/color/48/000000/youtube-play.png" alt="DFBolhas YouTube" style="width:40px; height:40px;">
+    </a>
+    <a href="https://www.facebook.com/mdaher51/" target="_blank">
+      <img src="https://img.icons8.com/color/48/000000/facebook-new.png" alt="DFBolhas Facebook" style="width:40px; height:40px;">
+    </a>
 
-  <div style="margin:10px 0;">
-    <a href="https://cursosnegocioseoportunidades.blogspot.com/" target="_blank" style="background-color:#1962dd;color:white;padding:6px 12px;margin:2px;text-decoration:none;border-radius:5px;display:inline-block;">Cursos Blog</a>
-    <a href="https://www.facebook.com/CursosNegociosOportunidades" target="_blank" style="background-color:#3b5998;color:white;padding:6px 12px;margin:2px;text-decoration:none;border-radius:5px;display:inline-block;">Cursos Facebook</a>
-  </div>
+    <!-- Cursos -->
+    <a href="https://cursosnegocioseoportunidades.blogspot.com/" target="_blank">
+      <img src="https://img.icons8.com/color/48/000000/blogger.png" alt="Cursos Blog" style="width:40px; height:40px;">
+    </a>
+    <a href="https://www.facebook.com/CursosNegociosOportunidades" target="_blank">
+      <img src="https://img.icons8.com/color/48/000000/facebook-new.png" alt="Cursos Facebook" style="width:40px; height:40px;">
+    </a>
 
-  <div style="margin:10px 0;">
-    <a href="https://www.youtube.com/@MarcoDaher" target="_blank" style="background-color:#ff0000;color:white;padding:6px 12px;margin:2px;text-decoration:none;border-radius:5px;display:inline-block;">Marco Daher YouTube</a>
-  </div>
+    <!-- Marco Daher -->
+    <a href="https://www.youtube.com/@MarcoDaher" target="_blank">
+      <img src="https://img.icons8.com/color/48/000000/youtube-play.png" alt="Marco Daher YouTube" style="width:40px; height:40px;">
+    </a>
 
-  <div style="margin:10px 0;">
-    <a href="https://emagrecendo100crise.blogspot.com/" target="_blank" style="background-color:#1962dd;color:white;padding:6px 12px;margin:2px;text-decoration:none;border-radius:5px;display:inline-block;">Emagrecer Blog</a>
-    <a href="https://www.youtube.com/@Saude-Bem-Estar-51" target="_blank" style="background-color:#ff0000;color:white;padding:6px 12px;margin:2px;text-decoration:none;border-radius:5px;display:inline-block;">Emagrecer YouTube</a>
-    <a href="https://www.facebook.com/marcocuidese" target="_blank" style="background-color:#3b5998;color:white;padding:6px 12px;margin:2px;text-decoration:none;border-radius:5px;display:inline-block;">Emagrecer Facebook</a>
-  </div>
+    <!-- Emagrecer com Saúde -->
+    <a href="https://emagrecendo100crise.blogspot.com/" target="_blank">
+      <img src="https://img.icons8.com/color/48/000000/blogger.png" alt="Emagrecer Blog" style="width:40px; height:40px;">
+    </a>
+    <a href="https://www.youtube.com/@Saude-Bem-Estar-51" target="_blank">
+      <img src="https://img.icons8.com/color/48/000000/youtube-play.png" alt="Emagrecer YouTube" style="width:40px; height:40px;">
+    </a>
+    <a href="https://www.facebook.com/marcocuidese" target="_blank">
+      <img src="https://img.icons8.com/color/48/000000/facebook-new.png" alt="Emagrecer Facebook" style="width:40px; height:40px;">
+    </a>
 
-  <div style="margin:10px 0;">
-    <a href="https://mdartefoto.blogspot.com/" target="_blank" style="background-color:#1962dd;color:white;padding:6px 12px;margin:2px;text-decoration:none;border-radius:5px;display:inline-block;">MD Arte Foto Blog</a>
-  </div>
+    <!-- MD Arte Foto -->
+    <a href="https://mdartefoto.blogspot.com/" target="_blank">
+      <img src="https://img.icons8.com/color/48/000000/blogger.png" alt="MD Arte Foto Blog" style="width:40px; height:40px;">
+    </a>
 
-  <div style="margin:10px 0;">
-    <a href="https://www.youtube.com/channel/UCRNq9fN3jzLt0JeE5yBsqQQ" target="_blank" style="background-color:#ff0000;color:white;padding:6px 12px;margin:2px;text-decoration:none;border-radius:5px;display:inline-block;">Relaxamento YouTube</a>
+    <!-- Relaxamento e Meditação -->
+    <a href="https://www.youtube.com/channel/UCRNq9fN3jzLt0JeE5yBsqQQ" target="_blank">
+      <img src="https://img.icons8.com/color/48/000000/youtube-play.png" alt="Relaxamento YouTube" style="width:40px; height:40px;">
+    </a>
   </div>
 
   <p style="margin-top:15px;">
@@ -218,6 +241,7 @@ def gerar_assinatura():
   </p>
 </div>
 """
+
 
 # =============================
 # BUSCA DE NOTÍCIAS
