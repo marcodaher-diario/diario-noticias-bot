@@ -119,25 +119,29 @@ def classificar_noticia(titulo, texto):
 # =============================
 
 def gerar_texto_ia(titulo, categoria):
-    prompt = f"""
-Escreva uma notícia informativa, imparcial e clara sobre o tema:
-"{titulo}"
+    try:
+        client = OpenAI()
 
-Categoria: {categoria}
+        resposta = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {
+                    "role": "system",
+                    "content": "Você é um jornalista imparcial que escreve notícias informativas e claras."
+                },
+                {
+                    "role": "user",
+                    "content": f"Escreva um texto jornalístico imparcial sobre o tema: {titulo}. Categoria: {categoria}."
+                }
+            ],
+            max_tokens=300
+        )
 
-Regras:
-- Linguagem jornalística
-- Sem opinião pessoal
-- Sem militância
-- Texto original
-- 3 a 5 parágrafos
-"""
-    resposta = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[{"role": "user", "content": prompt}],
-        temperature=0.4
-    )
-    return resposta.choices[0].message.content.strip()
+        return resposta.choices[0].message.content.strip()
+
+    except Exception as e:
+        print(f"⚠️ IA indisponível: {e}")
+        return f"<p>Matéria em atualização sobre: <b>{titulo}</b>.</p>"
 
 # =============================
 # FORMATAÇÃO HTML (JUSTIFICADO)
