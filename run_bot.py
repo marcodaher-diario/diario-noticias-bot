@@ -4,17 +4,18 @@
 import feedparser
 import re
 import os
-from datetime import datetime
+import time
+import random
+from datetime import datetime, timedelta
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
-import random
-import time
-from datetime import datetime, timedelta
 
-# =============================
+# =========================================================
 # CONFIGURAÇÕES
-# =============================
+# =========================================================
 BLOG_ID = "7605688984374445860"
+SCOPES = ["https://www.googleapis.com/auth/blogger"]
+
 RSS_FEEDS = [
     "https://g1.globo.com/rss/g1/",
     "https://feeds.uol.com.br/home.xml",
@@ -30,12 +31,105 @@ RSS_FEEDS = [
     "https://www.metropoles.com/feed/"
 ]
 
-PALAVRAS_POLITICA = ["política", "mundo", "governo", "presidente", "lula", "bolsonaro", "congresso", "senado", "stf", "eleição", "moraes", "toffoli", "fux", "Dino", "flavio", "eduardo", "depoimento", "magistrados", "juízes", "ex-presidente", "corrupção", "vereadores", "deputado", "senador", "PGR", "ministério público"]
-PALAVRAS_ECONOMIA = ["economia", "pib", "dólar", "euro", "inflação", "selic", "mercado", "bolsa de valores", "banco central", "presidente", "aumento", "real"]
-
-SCOPES = ["https://www.googleapis.com/auth/blogger"]
 IMAGEM_FALLBACK = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/News_icon.svg/800px-News_icon.svg.png"
 ARQUIVO_LOG = "posts_publicados.txt"
+
+PALAVRAS_POLITICA = [
+    "política", "governo", "presidente", "lula", "bolsonaro",
+    "congresso", "senado", "stf", "eleição"
+]
+
+PALAVRAS_ECONOMIA = [
+    "economia", "pib", "dólar", "inflação", "selic",
+    "mercado", "bolsa", "banco central"
+]
+
+# =========================================================
+# AUTENTICAÇÃO
+# =========================================================
+def autenticar_blogger():
+    if not os.path.exists("token.json"):
+        raise FileNotFoundError("token.json não encontrado")
+    creds = Credentials.from_authorized_user_file("token.json", SCOPES)
+    return build("blogger", "v3", credentials=creds)
+
+# =========================================================
+# CONTROLE DE DUPLICAÇÃO
+# =========================================================
+def ja_publicado(link):
+    if not os.path.exists(ARQUIVO_LOG):
+        return False
+    with open(ARQUIVO_LOG, "r", encoding="utf-8") as f:
+        return link in f.read()
+
+def registrar_publicacao(link):
+    with open(ARQUIVO_LOG, "a", encoding="utf-8") as f:
+        f.write(link + "\n")
+
+# =========================================================
+# SEO / TAGS
+# =========================================================
+def gerar_tags_seo(titulo, texto):
+    stopwords = {"com","de","do","da","em","para","uma","que","na","no"}
+    palavras = re.findall(r"\b\w{4,}\b", f"{titulo} {texto}".lower())
+    tags = []
+    for p in palavras:
+        if p not in stopwords and p.capitalize() not in tags:
+            tags.append(p.capitalize())
+    return tags[:15] + ["Notícias", "Marco Daher"]
+
+# =========================================================
+# EXTRAÇÃO DE MÍDIA
+# =========================================================
+def extrair_imagem(entry):
+    if "media_content" in entry:
+        return entry.media_content[0].get("url")
+    if "media_thumbnail" in entry:
+        return entry.media_thumbnail[0].get("url")
+    match = re.search(r'<img[^>]+src="([^">]+)"', entry.get("summary", ""))
+    return match.group(1) if match else IMAGEM_FALLBACK
+
+def extrair_video_youtube(link):
+    if "youtube.com/watch" in link:
+        return link.split("watch?v=")[1].split("&")[0]
+    if "youtu.be/" in link:
+        return link.split("youtu.be/")[1]
+    return None
+
+def gerar_video_embed(video_id):
+    if not video_id:
+        return None
+    return f"""
+    <div class="auto-video">
+        <iframe
+            src="https://www.youtube.com/embed/{video_id}"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"></iframe>
+    </div>
+    """
+
+# =========================================================
+# TEXTO
+# =========================================================
+def quebrar_paragrafos(texto):
+    frases = re.split(r'(?<=[.!?]) +', texto)
+    return "".join(f"<p>{' '.join(frases[i:i+2])}</p>" for i in range(0, len(frases), 2))
+
+def verificar_assunto(titulo, texto):
+    base = f"{titulo} {texto}".lower()
+    if any(p in base for p in PALAVRAS_POLITICA):
+        return "politica"
+    if any(p in base for p in PALAVRAS_ECONOMIA):
+        return "economia"
+    return "geral"
+
+def noticia_recente(entry, horas=48):
+    data = entry.get("published_parsed") or entry.get("updated_parsed")
+    if not data:
+        return False
+    return datetime.fromtimestamp(time.mktime(data)) >= datetime.now() - timedelta(hours=horas)
 
 # =============================
 # BLOCO FIXO FINAL
@@ -99,206 +193,111 @@ BLOCO_FIXO_FINAL = """<div style="text-align: right;">
 </div>
 """
 
-# =============================
-# FUNÇÕES DE APOIO
-# =============================
-
-def autenticar_blogger():
-    print("🔐 Autenticando no Blogger...")
-    if not os.path.exists("token.json"):
-        raise FileNotFoundError("Erro: 'token.json' não encontrado!")
-    creds = Credentials.from_authorized_user_file("token.json", SCOPES)
-    return build("blogger", "v3", credentials=creds)
-
-def ja_publicado(link):
-    if not os.path.exists(ARQUIVO_LOG): return False
-    with open(ARQUIVO_LOG, "r", encoding="utf-8") as f:
-        return link in f.read()
-
-def registrar_publicacao(link):
-    with open(ARQUIVO_LOG, "a", encoding="utf-8") as f:
-        f.write(link + "\n")
-
-def gerar_tags_seo(titulo, texto):
-    stopwords = ["com", "de", "do", "da", "em", "para", "um", "uma", "os", "as", "que", "no", "na", "ao", "aos"]
-    conteudo = f"{titulo} {texto[:100]}"
-    palavras = re.findall(r'\b\w{4,}\b', conteudo.lower())
-    tags = []
-    for p in palavras:
-        if p not in stopwords and p not in tags:
-            tags.append(p.capitalize())
-    
-    tags_fixas = ["Notícias", "Diário de Notícias", "Marco Daher"]
-    for tf in tags_fixas:
-        if tf not in tags: tags.append(tf)
-
-    resultado = []
-    tamanho_atual = 0
-    for tag in tags:
-        if tamanho_atual + len(tag) + 2 <= 200:
-            resultado.append(tag)
-            tamanho_atual += len(tag) + 2
-        else: break
-    return resultado
-
-def extrair_imagem(entry):
-    if "media_content" in entry: return entry.media_content[0].get("url")
-    if "media_thumbnail" in entry: return entry.media_thumbnail[0].get("url")
-    summary = entry.get("summary", "")
-    match = re.search(r'<img[^>]+src="([^">]+)"', summary)
-    if match: return match.group(1)
-    return IMAGEM_FALLBACK
-
-def extrair_video_youtube(link):
-    video_id = None
-    if "youtube.com/watch" in link:
-        video_id = link.split("watch?v=")[1].split("&")[0]
-    elif "youtu.be/" in link:
-        video_id = link.split("youtu.be/")[1]
-    
-    if video_id:
-        return f'<div style="text-align:center; margin: 20px 0;"><iframe width="680" height="383" src="https://www.youtube.com/embed/{video_id}" frameborder="0" allowfullscreen style="max-width:100%;"></iframe></div>'
-    return None
-
-def quebrar_paragrafos(texto):
-    frases = re.split(r'(?<=[.!?]) +', texto)
-    paragrafos = []
-    bloco = []
-    for frase in frases:
-        bloco.append(frase)
-        if len(bloco) >= 2:
-            paragrafos.append(" ".join(bloco))
-            bloco = []
-    if bloco: paragrafos.append(" ".join(bloco))
-    return "".join(f"<p>{p}</p><br>" for p in paragrafos)
-
-def verificar_assunto(titulo, texto):
-    conteudo = f"{titulo} {texto}".lower()
-    if any(p in conteudo for p in PALAVRAS_POLITICA): return "politica"
-    if any(p in conteudo for p in PALAVRAS_ECONOMIA): return "economia"
-    return "geral"
-
-import time
-from datetime import datetime, timedelta
-
-def noticia_recente(entry, horas=48):
-    data_entry = None
-
-    if hasattr(entry, "published_parsed") and entry.published_parsed:
-        data_entry = entry.published_parsed
-    elif hasattr(entry, "updated_parsed") and entry.updated_parsed:
-        data_entry = entry.updated_parsed
-    else:
-        return False  # sem data = descarta
-
-    data_noticia = datetime.fromtimestamp(time.mktime(data_entry))
-    limite = datetime.now() - timedelta(hours=horas)
-
-    return data_noticia >= limite
-
-
-# =============================
-# GERAÇÃO DE CONTEÚDO
-# =============================
-
+# =========================================================
+# CONTEÚDO FINAL
+# =========================================================
 def gerar_conteudo(n):
     texto_limpo = quebrar_paragrafos(re.sub(r"<[^>]+>", "", n["texto"]))
-    video_html = extrair_video_youtube(n["link"])
-    
-    if not video_html:
-        media_html = f"""
-        <div style="text-align:center; margin: 20px 0;">
-            <a href="{n['link']}" target="_blank" style="text-decoration:none;">
-                <img src="{n['imagem']}" width="680" height="383" style="max-width:100%; height:auto; border-radius:10px; border: 1px solid #ddd;">
-                <div style="margin-top:15px;">
-                    <span style="background-color: #cc0000; color: white; padding: 12px 25px; font-weight: bold; border-radius: 5px; font-family: Arial; display: inline-block;">▶ ASSISTIR VÍDEO COMPLETO NA FONTE</span>
-                </div>
-            </a>
-        </div>"""
-    else:
-        media_html = video_html
+    video_html = gerar_video_embed(n["video_id"])
 
-    return f"""<div style="font-family:Arial; color:#444; font-size:16px; text-align:justify; line-height:1.6;"><h2 style="font-size:26px; text-align:center; color:#073763;">{n['titulo']}</h2><hr style="border: 0; border-top: 1px solid #eee;">{media_html}<p><b>Fonte:</b> {n['fonte']}</p><div style="margin-top:20px;">{texto_limpo}</div><p style="text-align:center; margin-top:30px;"><a href="{n['link']}" target="_blank" style="color: #992211; font-weight: bold;">🔗 Clique aqui para ler a matéria original</a></p><br>{BLOCO_FIXO_FINAL}</div>"""
+    media_html = video_html if video_html else f"""
+    <div class="auto-media">
+        <a href="{n['link']}" target="_blank">
+            <img src="{n['imagem']}" alt="{n['titulo']}">
+            <span class="auto-btn">▶ ASSISTIR NA FONTE</span>
+        </a>
+    </div>
+    """
 
-# =============================
-# FLUXO PRINCIPAL
-# =============================
+    return f"""
+    <div class="auto-post">
+        <h2>{n['titulo']}</h2>
+        {media_html}
+        <p><b>Fonte:</b> {n['fonte']}</p>
+        {texto_limpo}
+        <p style="text-align:center;">
+            <a href="{n['link']}" target="_blank">🔗 Leia a matéria original</a>
+        </p>
+        {BLOCO_FIXO_FINAL}
+    </div>
+    """
 
-import random
-import time
-from datetime import datetime, timedelta
-
-def noticia_recente(entry, horas=48):
-    data_entry = None
-
-    if hasattr(entry, "published_parsed") and entry.published_parsed:
-        data_entry = entry.published_parsed
-    elif hasattr(entry, "updated_parsed") and entry.updated_parsed:
-        data_entry = entry.updated_parsed
-    else:
-        return False
-
-    data_noticia = datetime.fromtimestamp(time.mktime(data_entry))
-    limite = datetime.now() - timedelta(hours=horas)
-
-    return data_noticia >= limite
-
-
-def buscar_noticias(tipo_alvo, limite=4):
-    print(f"📰 Buscando notícias do tipo: {tipo_alvo}...")
+# =========================================================
+# BUSCA DE NOTÍCIAS
+# =========================================================
+def buscar_noticias(tipo, limite=5):
     noticias = []
-
     for feed_url in RSS_FEEDS:
         feed = feedparser.parse(feed_url)
         fonte = feed.feed.get("title", "Fonte")
-
         for entry in feed.entries:
-            if not noticia_recente(entry, horas=48):
+            if not noticia_recente(entry):
                 continue
-
             titulo = entry.get("title", "")
             texto = entry.get("summary", "")
             link = entry.get("link", "")
-
-            if not titulo or not link:
+            if not titulo or ja_publicado(link):
                 continue
-
-            if ja_publicado(link):
+            if verificar_assunto(titulo, texto) != tipo:
                 continue
-
-            tipo_detectado = verificar_assunto(titulo, texto)
-            if tipo_detectado != tipo_alvo:
-                continue
-
             noticias.append({
                 "titulo": titulo,
                 "texto": texto,
                 "link": link,
                 "fonte": fonte,
                 "imagem": extrair_imagem(entry),
+                "video_id": extrair_video_youtube(link),
                 "labels": gerar_tags_seo(titulo, texto)
             })
-
     random.shuffle(noticias)
     return noticias[:limite]
 
+# =========================================================
+# 🔧 CORREÇÃO AUTOMÁTICA DE POSTS ANTIGOS
+# =========================================================
+def corrigir_posts_antigos(service, limite=20):
+    posts = service.posts().list(blogId=BLOG_ID, maxResults=limite).execute()
+    for post in posts.get("items", []):
+        content = post["content"]
 
-def executar_fluxo():
-    try:
-        service = autenticar_blogger()
-        # Define o assunto baseado na hora de Brasília (considerando que o server é UTC, ajustamos no YAML)
-        hora = datetime.now().hour
-        
-        if hora < 12: tipo = "politica"
-        elif 12 <= hora < 18: tipo = "geral"
-        else: tipo = "economia"
+        # remove width, height e styles inline de imagens
+        content = re.sub(r'\s(width|height|style)="[^"]*"', '', content)
 
-        noticias = buscar_noticias(tipo, limite=10)
-        for n in noticias:
-            service.posts().insert(blogId=BLOG_ID, body={"title": n["titulo"], "content": gerar_conteudo(n), "labels": n["labels"], "status": "LIVE"}).execute()
-            registrar_publicacao(n["link"])
-            print(f"✅ Publicado [{tipo}]: {n['titulo']}")
-    except Exception as e: print(f"💥 Erro: {e}")
+        # corrige iframe quebrado
+        content = re.sub(r'<iframe[^>]*></iframe>', '', content)
+
+        service.posts().update(
+            blogId=BLOG_ID,
+            postId=post["id"],
+            body={"content": content}
+        ).execute()
+
+        print(f"🔧 Corrigido: {post['title']}")
+
+# =========================================================
+# FLUXO PRINCIPAL
+# =========================================================
+def executar():
+    service = autenticar_blogger()
+    hora = datetime.now().hour
+    tipo = "politica" if hora < 12 else "geral" if hora < 18 else "economia"
+
+    noticias = buscar_noticias(tipo)
+    for n in noticias:
+        service.posts().insert(
+            blogId=BLOG_ID,
+            body={
+                "title": n["titulo"],
+                "content": gerar_conteudo(n),
+                "labels": n["labels"],
+                "status": "LIVE"
+            }
+        ).execute()
+        registrar_publicacao(n["link"])
+        print(f"✅ Publicado: {n['titulo']}")
+
+    # ativa correção automática
+    corrigir_posts_antigos(service)
 
 if __name__ == "__main__":
-    executar_fluxo()
+    executar()
