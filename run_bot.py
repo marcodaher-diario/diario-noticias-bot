@@ -1,12 +1,5 @@
 # =========================================================
-# RUN_BOT.PY — VERSÃO FINAL ESTÁVEL (Blogger Safe Edition)
-# =========================================================
-# ✔ Layout preservado
-# ✔ Texto JUSTIFICADO
-# ✔ Fontes intactas
-# ✔ TAGs (labels) até 200 caracteres
-# ✔ Bloqueio de conteúdo pobre
-# ✔ Sem conflitos de CSS / layout
+# RUN_BOT.PY — BLOGGER NEWS BOT (FINAL / SAFE / PROFESSIONAL)
 # =========================================================
 
 import feedparser
@@ -17,13 +10,17 @@ import random
 from datetime import datetime, timedelta
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
+from openai import OpenAI
 
 # =============================
-# CONFIGURAÇÕES
+# CONFIGURAÇÕES GERAIS
 # =============================
 
 BLOG_ID = "7605688984374445860"
 SCOPES = ["https://www.googleapis.com/auth/blogger"]
+
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+client = OpenAI(api_key=OPENAI_API_KEY)
 
 RSS_FEEDS = [
     "https://g1.globo.com/rss/g1/",
@@ -32,8 +29,6 @@ RSS_FEEDS = [
     "https://feeds.folha.uol.com.br/emcimadahora/rss091.xml",
     "https://agenciabrasil.ebc.com.br/rss",
     "https://feeds.bbci.co.uk/portuguese/rss.xml",
-    "https://www.gazetadopovo.com.br/feed/rss/brasil.xml",
-    "https://www.cnnbrasil.com.br/feed/",
     "https://www.estadao.com.br/arc/outboundfeeds/rss/category/brasil/",
 ]
 
@@ -44,12 +39,10 @@ PALAVRAS_POLITICA = ["política", "governo", "presidente", "lula", "bolsonaro", 
 PALAVRAS_ECONOMIA = ["economia", "inflação", "selic", "dólar", "mercado", "banco central"]
 
 # =============================
-# AUTENTICAÇÃO
+# AUTENTICAÇÃO BLOGGER
 # =============================
 
 def autenticar_blogger():
-    if not os.path.exists("token.json"):
-        raise FileNotFoundError("token.json não encontrado")
     creds = Credentials.from_authorized_user_file("token.json", SCOPES)
     return build("blogger", "v3", credentials=creds)
 
@@ -68,6 +61,23 @@ def registrar_publicacao(link):
         f.write(link + "\n")
 
 # =============================
+# TAGS — LIMITE 200 CARACTERES
+# =============================
+
+def gerar_tags_blogger(tags, limite=200):
+    tags_limpas = []
+    total = 0
+    for tag in tags:
+        tag = tag.strip()
+        if not tag or tag.lower() in [t.lower() for t in tags_limpas]:
+            continue
+        if total + len(tag) > limite:
+            break
+        tags_limpas.append(tag)
+        total += len(tag)
+    return tags_limpas
+
+# =============================
 # EXTRAÇÃO DE IMAGEM
 # =============================
 
@@ -76,28 +86,27 @@ def extrair_imagem(entry):
         return entry.media_content[0].get("url")
     if hasattr(entry, "media_thumbnail"):
         return entry.media_thumbnail[0].get("url")
-
     summary = entry.get("summary", "")
     match = re.search(r'<img[^>]+src="([^">]+)"', summary)
-    return match.group(1) if match else IMAGEM_FALLBACK
+    return match.group(1) if match else None
 
 # =============================
-# VALIDAÇÃO DE CONTEÚDO
+# DETECÇÃO DE CONTEÚDO FRACO
 # =============================
 
-def conteudo_insuficiente(texto):
+def conteudo_invalido(texto):
     texto_limpo = re.sub(r"<[^>]+>", "", texto).strip()
-    if len(texto_limpo) < 120:
+    if len(texto_limpo) < 150:
         return True
-
-    bloqueio = ["assista", "veja", "vídeo", "clique", "confira"]
-    return any(p in texto_limpo.lower() for p in bloqueio)
+    if "<iframe" in texto.lower() or "youtube" in texto.lower():
+        return True
+    return False
 
 # =============================
-# CLASSIFICAÇÃO DE ASSUNTO
+# CLASSIFICAÇÃO
 # =============================
 
-def verificar_assunto(titulo, texto):
+def classificar_noticia(titulo, texto):
     base = f"{titulo} {texto}".lower()
     if any(p in base for p in PALAVRAS_POLITICA):
         return "politica"
@@ -106,63 +115,49 @@ def verificar_assunto(titulo, texto):
     return "geral"
 
 # =============================
-# LIMITADOR DE TAGS (200 chars)
+# IA — GERAÇÃO DE TEXTO
 # =============================
 
-def gerar_tags_blogger(tags, limite=200):
-    tags_final = []
-    total = 0
+def gerar_texto_ia(titulo, categoria):
+    prompt = f"""
+Escreva uma notícia informativa, imparcial e clara sobre o tema:
+"{titulo}"
 
-    for tag in tags:
-        tag = tag.strip()
-        if not tag or tag.lower() in [t.lower() for t in tags_final]:
-            continue
+Categoria: {categoria}
 
-        tamanho = len(tag)
-        if total + tamanho > limite:
-            break
-
-        tags_final.append(tag)
-        total += tamanho
-
-    return tags_final
-
-def gerar_tags_noticia(titulo, texto):
-    base = f"{titulo} {texto}".lower()
-    tags = []
-
-    if any(p in base for p in PALAVRAS_POLITICA):
-        tags.extend(["Política", "Governo", "Brasil"])
-
-    if any(p in base for p in PALAVRAS_ECONOMIA):
-        tags.extend(["Economia", "Mercado", "Brasil"])
-
-    tags.append("Diário de Notícias")
-
-    palavras = re.findall(r'\b[a-záéíóúâêôãõç]{5,}\b', base)
-    for p in palavras[:10]:
-        tags.append(p.capitalize())
-
-    return gerar_tags_blogger(tags, limite=200)
+Regras:
+- Linguagem jornalística
+- Sem opinião pessoal
+- Sem militância
+- Texto original
+- 3 a 5 parágrafos
+"""
+    resposta = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[{"role": "user", "content": prompt}],
+        temperature=0.4
+    )
+    return resposta.choices[0].message.content.strip()
 
 # =============================
-# FORMATAÇÃO DE TEXTO
+# FORMATAÇÃO HTML (JUSTIFICADO)
 # =============================
 
-def quebrar_paragrafos(texto):
+def formatar_texto(texto):
     frases = re.split(r'(?<=[.!?])\s+', texto)
-    blocos, temp = [], []
-
+    blocos = []
+    temp = []
     for frase in frases:
         temp.append(frase)
         if len(temp) >= 2:
             blocos.append(" ".join(temp))
             temp = []
-
     if temp:
         blocos.append(" ".join(temp))
-
-    return "".join(f"<p style='text-align:justify;'>{b}</p>" for b in blocos)
+    return "".join(
+        f"<p style='text-align:justify; font-size:16px; line-height:1.6;'>{b}</p>"
+        for b in blocos
+    )
 
 # =============================
 # BUSCA DE NOTÍCIAS
@@ -174,82 +169,86 @@ def noticia_recente(entry, horas=48):
         return False
     return datetime.fromtimestamp(time.mktime(data)) >= datetime.now() - timedelta(hours=horas)
 
-def buscar_noticias(tipo, limite=5):
+def buscar_noticias():
     noticias = []
-
     for feed_url in RSS_FEEDS:
         feed = feedparser.parse(feed_url)
         fonte = feed.feed.get("title", "Fonte")
-
         for entry in feed.entries:
             if not noticia_recente(entry):
                 continue
 
-            titulo = entry.get("title", "")
-            texto = entry.get("summary", "")
+            titulo = entry.get("title", "").strip()
+            resumo = entry.get("summary", "")
             link = entry.get("link", "")
 
-            if not titulo or not texto or not link:
+            if not titulo or not link or ja_publicado(link):
                 continue
-            if ja_publicado(link):
-                continue
-            if verificar_assunto(titulo, texto) != tipo:
-                continue
-            if conteudo_insuficiente(texto):
-                continue
+
+            categoria = classificar_noticia(titulo, resumo)
+
+            if conteudo_invalido(resumo):
+                if categoria in ["politica", "economia"]:
+                    texto = gerar_texto_ia(titulo, categoria)
+                else:
+                    continue
+            else:
+                texto = re.sub(r"<[^>]+>", "", resumo)
+
+            imagem = extrair_imagem(entry) or IMAGEM_FALLBACK
 
             noticias.append({
                 "titulo": titulo,
                 "texto": texto,
                 "link": link,
                 "fonte": fonte,
-                "imagem": extrair_imagem(entry)
+                "imagem": imagem,
+                "categoria": categoria
             })
-
     random.shuffle(noticias)
-    return noticias[:limite]
+    return noticias[:3]
 
 # =============================
-# GERAÇÃO DE HTML FINAL
+# GERAÇÃO DO POST
 # =============================
 
-def gerar_conteudo(n):
-    texto_limpo = re.sub(r"<[^>]+>", "", n["texto"])
-    corpo = quebrar_paragrafos(texto_limpo)
-
+def gerar_html(n):
     return f"""
-    <h2 style="text-align:center;">{n['titulo']}</h2>
-    <div style="text-align:center; margin:20px 0;">
-        <img src="{n['imagem']}" alt="{n['titulo']}" style="max-width:100%; height:auto;">
-    </div>
-    <p><b>Fonte:</b> {n['fonte']}</p>
-    {corpo}
-    <p style="text-align:center;">
-        <a href="{n['link']}" target="_blank">Leia a matéria original</a>
-    </p>
-    """
+<h2 style="text-align:center;">{n['titulo']}</h2>
+
+<div style="text-align:center; margin:20px 0;">
+    <img src="{n['imagem']}" alt="{n['titulo']}" style="max-width:100%;">
+</div>
+
+<p style="text-align:center; font-size:14px;">
+<b>Fonte:</b> {n['fonte']}
+</p>
+
+{formatar_texto(n['texto'])}
+
+<p style="text-align:center;">
+<a href="{n['link']}" target="_blank">Leia a matéria original</a>
+</p>
+"""
 
 # =============================
-# EXECUÇÃO PRINCIPAL
+# EXECUÇÃO
 # =============================
 
 def executar():
     service = autenticar_blogger()
-    hora = datetime.now().hour
-
-    tipo = "politica" if hora < 12 else "geral" if hora < 18 else "economia"
-    noticias = buscar_noticias(tipo)
+    noticias = buscar_noticias()
 
     for n in noticias:
         try:
-            tags = gerar_tags_noticia(n["titulo"], n["texto"])
-
             service.posts().insert(
                 blogId=BLOG_ID,
                 body={
                     "title": n["titulo"],
-                    "content": gerar_conteudo(n),
-                    "labels": tags,
+                    "content": gerar_html(n),
+                    "labels": gerar_tags_blogger(
+                        n["titulo"].lower().split()
+                    ),
                     "status": "LIVE"
                 }
             ).execute()
