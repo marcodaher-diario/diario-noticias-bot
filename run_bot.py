@@ -194,7 +194,7 @@ def formatar_texto(texto):
 # FUNÇÃO — ASSINATURA COM ÍCONES + PIX
 # ==========================================
 
-def obter_assinatura():
+def gerar_assinatura():
     # A variável começa sem espaços extras antes das aspas triplas
     assinatura_html = """<div class="footer-marco-daher" style="color: #073763; font-family: Arial, Helvetica, sans-serif; line-height: 1.4; margin-top: 30px; text-align: center; background-color: #e1f5fe; padding: 25px; border-radius: 15px; border: 1px solid #b3e5fc;">
   <p style="font-size: x-small; font-weight: bold; text-align: right; margin-top: 0;">
