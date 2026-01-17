@@ -70,18 +70,38 @@ def registrar_publicacao(link):
 # TAGS — LIMITE 200 CARACTERES
 # ===============================
 
-def gerar_tags_blogger(tags, limite=200):
-    tags_limpas = []
-    total = 0
-    for tag in tags:
-        tag = tag.strip()
-        if not tag or tag.lower() in [t.lower() for t in tags_limpas]:
+import re
+
+def gerar_tags_blogger(tags_sujas, limite=200):
+    # Lista de palavras inúteis para tags
+    ignorar = {"a", "o", "as", "os", "um", "uma", "uns", "umas", "de", "do", "da", "dos", "das", 
+               "em", "no", "na", "nos", "nas", "ao", "aos", "à", "às", "por", "para", "com", 
+               "e", "ou", "que", "sob", "sobre", "ante", "após", "num", "numa", "esta", "este", "isso"}
+    
+    tags_finais = []
+    lista_processada = []
+
+    # 1. Transformar tudo em palavras individuais e limpar pontuação
+    for item in tags_sujas:
+        # Remove pontuação e separa por espaço
+        palavras = re.findall(r'\w+', item.lower())
+        lista_processada.extend(palavras)
+
+    # 2. Filtrar e montar a lista final
+    total_caracteres = 0
+    for palavra in lista_processada:
+        # Filtra: se for inútil, se tiver menos de 3 letras ou se já estiver na lista
+        if palavra in ignorar or len(palavra) < 3 or palavra in tags_finais:
             continue
-        if total + len(tag) > limite:
+            
+        # Verifica o limite de 200 caracteres (considerando a vírgula e espaço)
+        if total_caracteres + len(palavra) + 2 > limite:
             break
-        tags_limpas.append(tag)
-        total += len(tag)
-    return tags_limpas
+            
+        tags_finais.append(palavra.capitalize()) # Capitaliza para ficar bonito (Ex: "Lula", "Selic")
+        total_caracteres += len(palavra) + 2
+        
+    return tags_finais
 
 # =============================
 # EXTRAÇÃO DE IMAGEM
@@ -239,7 +259,7 @@ def obter_assinatura():
 # BUSCA DE NOTÍCIAS
 # =============================
 
-def noticia_recente(entry, horas=48):
+def noticia_recente(entry, horas=18):
     data = entry.get("published_parsed") or entry.get("updated_parsed")
     if not data:
         return False
