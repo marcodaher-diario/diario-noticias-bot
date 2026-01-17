@@ -30,13 +30,19 @@ RSS_FEEDS = [
     "https://agenciabrasil.ebc.com.br/rss",
     "https://feeds.bbci.co.uk/portuguese/rss.xml",
     "https://www.estadao.com.br/arc/outboundfeeds/rss/category/brasil/",
+    "https://www.camara.leg.br/noticias/rss/politica", 
+    "https://www12.senado.leg.br/noticias/rss", 
+    "https://www.infomoney.com.br/mercado/feed/", 
+    "https://br.investing.com/rss/news.rss", 
+    "https://portal.stf.jus.br/noticias/rss.asp", 
+    "https://www.canalrural.com.br/feed/"
 ]
 
 IMAGEM_FALLBACK = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/News_icon.svg/800px-News_icon.svg.png"
 ARQUIVO_LOG = "posts_publicados.txt"
 
-PALAVRAS_POLITICA = ["política", "governo", "presidente", "lula", "bolsonaro", "congresso", "stf"]
-PALAVRAS_ECONOMIA = ["economia", "inflação", "selic", "dólar", "mercado", "banco central"]
+PALAVRAS_POLITICA = ["Lula", "Bolsonaro", "Eleições 2026", "STF", "Congresso Nacional", "Pesquisa eleitoral", "Corrupção", "Inflação", "Reforma tributária", "Orçamento", "Segurança pública", "Senado", "Câmara dos Deputados", "Tarcísio de Freitas", "Alexandre de Moraes", "Governo Federal", "Direita", "Esquerda", "Polarização", "Fake news"]
+PALAVRAS_ECONOMIA = ["Inflação", "Selic", "Dólar", "PIB", "IPCA", "Boletim Focus", "Reforma Tributária", "Bolsa de Valores", "Ibovespa", "Preço dos combustíveis", "Imposto de Renda 2026", "Salário Mínimo", "Juros", "Dívida Pública", "Câmbio", "Cesta Básica", "Corte de Gastos", "Mercado Financeiro", "Arrecadação", "Renda Fixa"]
 
 # =============================
 # AUTENTICAÇÃO BLOGGER
