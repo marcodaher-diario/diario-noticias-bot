@@ -168,57 +168,48 @@ def formatar_texto(texto):
 # FUNÇÃO — ASSINATURA COM ÍCONES + PIX
 # ==========================================
 
-assinatura_html = """
-<div class="footer-marco-daher" style="color: #073763; font-family: Arial, Helvetica, sans-serif; line-height: 1.4; margin-top: 30px; text-align: center; background-color: #e1f5fe; padding: 25px; border-radius: 15px; border: 1px solid #b3e5fc;">
-
+def obter_assinatura():
+    # A variável começa sem espaços extras antes das aspas triplas
+    assinatura_html = """<div class="footer-marco-daher" style="color: #073763; font-family: Arial, Helvetica, sans-serif; line-height: 1.4; margin-top: 30px; text-align: center; background-color: #e1f5fe; padding: 25px; border-radius: 15px; border: 1px solid #b3e5fc;">
   <p style="font-size: x-small; font-weight: bold; text-align: right; margin-top: 0;">
     <i>Por: Marco Daher<br />Todos os Direitos Reservados<br />©MarcoDaher2025</i>
   </p>
-
   <p style="font-size: 16px; font-weight: bold; margin-bottom: 20px;">
     O conhecimento é o combustível para o Sucesso. Não pesa e não ocupa espaço.
   </p>
-
   <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin: 20px 0;">
-    
     <div style="text-align: center; padding: 10px; border-right: 1px solid #07376333; min-width: 120px;">
       <div style="font-size: 13px; font-weight: bold; margin-bottom: 5px; color: #b45f06;">Zona do Saber</div>
       <a href="http://zonadosaber1.blogspot.com/" target="_blank"><img src="https://img.icons8.com/color/48/000000/blogger.png" style="height: 32px; width: 32px;" title="Blogger" /></a>
       <a href="https://www.youtube.com/@ZonadoSaber51" target="_blank"><img src="https://img.icons8.com/color/48/000000/youtube-play.png" style="height: 32px; width: 32px;" title="YouTube" /></a>
       <a href="https://www.facebook.com/profile.php?id=61558194825166" target="_blank"><img src="https://img.icons8.com/color/48/000000/facebook-new.png" style="height: 32px; width: 32px;" title="Facebook" /></a>
     </div>
-
     <div style="text-align: center; padding: 10px; border-right: 1px solid #07376333; min-width: 120px;">
       <div style="font-size: 13px; font-weight: bold; margin-bottom: 5px; color: #b45f06;">MD Arte Foto</div>
       <a href="https://mdartefoto.blogspot.com/" target="_blank"><img src="https://img.icons8.com/color/48/000000/blogger.png" style="height: 32px; width: 32px;" /></a>
       <a href="https://www.facebook.com/mdaher51/" target="_blank"><img src="https://img.icons8.com/color/48/000000/facebook-new.png" style="height: 32px; width: 32px;" /></a>
     </div>
-
     <div style="text-align: center; padding: 10px; border-right: 1px solid #07376333; min-width: 120px;">
       <div style="font-size: 13px; font-weight: bold; margin-bottom: 5px; color: #b45f06;">DF Bolhas</div>
       <a href="https://dfbolhas.blogspot.com/" target="_blank"><img src="https://img.icons8.com/color/48/000000/blogger.png" style="height: 32px; width: 32px;" /></a>
       <a href="https://www.youtube.com/marcodaher51" target="_blank"><img src="https://img.icons8.com/color/48/000000/youtube-play.png" style="height: 32px; width: 32px;" /></a>
       <a href="https://www.facebook.com/mdaher51/" target="_blank"><img src="https://img.icons8.com/color/48/000000/facebook-new.png" style="height: 32px; width: 32px;" /></a>
     </div>
-
     <div style="text-align: center; padding: 10px; border-right: 1px solid #07376333; min-width: 120px;">
       <div style="font-size: 13px; font-weight: bold; margin-bottom: 5px; color: #b45f06;">Marco Daher</div>
       <a href="https://www.youtube.com/@MarcoDaher" target="_blank"><img src="https://img.icons8.com/color/48/000000/youtube-play.png" style="height: 32px; width: 32px;" /></a>
       <a href="https://www.facebook.com/MarcoDaher51/" target="_blank"><img src="https://img.icons8.com/color/48/000000/facebook-new.png" style="height: 32px; width: 32px;" /></a>
     </div>
-
     <div style="text-align: center; padding: 10px; border-right: 1px solid #07376333; min-width: 120px;">
       <div style="font-size: 13px; font-weight: bold; margin-bottom: 5px; color: #b45f06;">Emagrecer com Saúde</div>
       <a href="https://emagrecendo100crise.blogspot.com/" target="_blank"><img src="https://img.icons8.com/color/48/000000/blogger.png" style="height: 32px; width: 32px;" /></a>
       <a href="https://www.youtube.com/@Saude-Bem-Estar-51" target="_blank"><img src="https://img.icons8.com/color/48/000000/youtube-play.png" style="height: 32px; width: 32px;" /></a>
       <a href="https://www.facebook.com/marcocuidese" target="_blank"><img src="https://img.icons8.com/color/48/000000/facebook-new.png" style="height: 32px; width: 32px;" /></a>
     </div>
-
     <div style="text-align: center; padding: 10px; border-right: 1px solid #07376333; min-width: 120px;">
       <div style="font-size: 13px; font-weight: bold; margin-bottom: 5px; color: #b45f06;">Relaxamento</div>
       <a href="https://www.youtube.com/channel/UCRNq9fN3jzLt0JeE5yBsqQQ" target="_blank"><img src="https://img.icons8.com/color/48/000000/youtube-play.png" style="height: 32px; width: 32px;" /></a>
     </div>
-
     <div style="text-align: center; padding: 10px; min-width: 120px;">
       <div style="font-size: 13px; font-weight: bold; margin-bottom: 5px; color: #b45f06;">Cursos e Negócios</div>
       <a href="https://cursosnegocioseoportunidades.blogspot.com/" target="_blank"><img src="https://img.icons8.com/color/48/000000/blogger.png" style="height: 32px; width: 32px;" /></a>
@@ -226,19 +217,14 @@ assinatura_html = """
       <a href="https://www.facebook.com/CursosNegociosOportunidades" target="_blank"><img src="https://img.icons8.com/color/48/000000/facebook-new.png" style="height: 32px; width: 32px;" /></a>
     </div>
   </div>
-
   <hr style="border: 0; border-top: 1px solid #07376322; margin: 20px 0;">
-
   <p style="font-size: 14px; font-weight: bold; margin-bottom: 10px;">
     Caso queira contribuir com o meu Trabalho, use a CHAVE PIX abaixo:
   </p>
-  
   <button onclick="navigator.clipboard.writeText('marco.caixa104@gmail.com'); alert('Chave PIX copiada!');" style="background-color: #0288d1; border-radius: 8px; border: none; color: white; cursor: pointer; font-size: 14px; font-weight: bold; padding: 12px 20px; transition: 0.3s; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
     Copiar Chave PIX: marco.caixa104@gmail.com
   </button>
-
-</div>
-"""
+</div>"""
 
     return assinatura_html
 
