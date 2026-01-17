@@ -259,7 +259,7 @@ def gerar_assinatura():
 # BUSCA DE NOTÍCIAS
 # =============================
 
-def noticia_recente(entry, horas=18):
+def noticia_recente(entry, horas=48):
     data = entry.get("published_parsed") or entry.get("updated_parsed")
     if not data:
         return False
@@ -302,7 +302,7 @@ def buscar_noticias():
                 "categoria": categoria
             })
     random.shuffle(noticias)
-    return noticias[:3]
+    return noticias[:10]
 
 # =============================
 # GERAÇÃO DO POST
