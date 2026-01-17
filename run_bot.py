@@ -239,7 +239,7 @@ def gerar_assinatura():
 
   <!--Frase da PIX-->
   <p style="font-size: 14px; font-weight: bold; margin-bottom: 10px;">
-    Caso queira contribui com o meu Trabalho, use a CHAVE PIX abaixo:
+    Caso queira contribuir com o meu Trabalho, use a CHAVE PIX abaixo:
   </p>
 
   <!--Botão PIX-->
