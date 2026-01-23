@@ -35,7 +35,8 @@ RSS_FEEDS = [
     "https://www.infomoney.com.br/mercado/feed/", 
     "https://br.investing.com/rss/news.rss", 
     "https://portal.stf.jus.br/noticias/rss.asp", 
-    "https://www.canalrural.com.br/feed/"
+    "https://www.canalrural.com.br/feed/",
+    "https://www.poder360.com.br/feed/"
 ]
 
 IMAGEM_FALLBACK = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/News_icon.svg/800px-News_icon.svg.png"
