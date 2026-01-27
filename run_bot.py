@@ -199,7 +199,7 @@ def gerar_assinatura():
     # A variável começa sem espaços extras antes das aspas triplas
     assinatura_html = """<br /><div style="text-align: center;"><a href="https://s.shopee.com.br/6pub68ugUC" imageanchor="1" style="background-color: #e1f5fe; font-family: Arial, Helvetica, sans-serif; font-size: x-small; font-style: italic; font-weight: 700; margin-left: 1em; margin-right: 1em;" target="_blank"><img border="0" data-original-height="319" data-original-width="1536" height="132" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi_AvhsoDW1EVGuyDqa-O_AZ7g0NyiVi4eihOS7ItouDyBWf2nfvmC_iIG0CmMVXAsT3aXslP4UdNEXrj312vS2A73z_NbDFKLHoBfJJAXC1EmjToCgAnvTNgj3NCf2rH7O4uZ8rFaNDOq9sazLcaq3OikC6DPf-b_wZmEBdKEbeF0mrCnStfwHPmLg08s/w640-h132/Banner%20Shopee%20Rodap%C3%A9.gif" width="640" /></a></div>
 <div class="footer-marco-daher" style="background-color: #e1f5fe; border-radius: 15px; border: 1px solid rgb(179, 229, 252); color: #073763; font-family: Arial, Helvetica, sans-serif; line-height: 1.4; margin-top: 30px; padding: 25px; text-align: center;">
-  <p style="font-size: x-small; font-weight: bold; margin-top: 0px; text-align: right;"><i>Por: Marco Daher<br />Todos os Direitos Reservados<br />©MarcoDaher2025</i>
+  <p style="font-size: x-small; font-weight: bold; margin-top: 0px; text-align: right;"><i>Por: Marco Daher<br />Todos os Direitos Reservados<br />©MarcoDaher2026</i>
   </p>
   <p style="font-size: 16px; font-weight: bold; margin-bottom: 20px;">
     O conhecimento é o combustível para o Sucesso. Não pesa e não ocupa espaço.
