@@ -1,58 +1,74 @@
 BLOCO_FIXO_FINAL = """
-<div style="text-align: right;">
-    <span style="color: #073763; font-family: arial; font-size: xx-small;"><b><i><br /></i></b></span>
-  </div>
-  <div style="text-align: right;">
-    <span style="font-family: arial;"><div bis_skin_checked="1" class="footer-header" style="background-color: white; color: #073763; font-family: Arial, Helvetica, sans-serif; font-size: 18px; line-height: 1.3; text-align: justify;">
-        <p style="font-size: x-small; font-weight: bold; line-height: 1.3; text-align: right;">
-          <i>Por: Marco Daher&nbsp;<br />Todos os Direitos Reservados<br />©MarcoDaher2025</i>
-        </p>
+<p><br /></p>
+<hr data-end="883" data-start="880" style="text-align: justify;" />
+<div class="separator" style="clear: both; text-align: center;">
+  <a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhHYBTRiztv4UNKBsiwX8nQn1M00BUz-LtO58gTZ6hEsU3VPClePhQwPWw0NyUJGqXvm3vWbRPP6LPQS6m5iyI0UQBBKmdIkNYNuXmGaxv5eMac9R6i2e9MIU7_YmWeMKntQ1ZWlzplYlDYNJr5lGHiUvwJ1CuvQOLzbOT61kF3LQ0-nD4j3Xo4HJWeOG4/s1536/Banner%20Shopee%20Rodap%C3%A9.gif" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="319" data-original-width="1536" height="132" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhHYBTRiztv4UNKBsiwX8nQn1M00BUz-LtO58gTZ6hEsU3VPClePhQwPWw0NyUJGqXvm3vWbRPP6LPQS6m5iyI0UQBBKmdIkNYNuXmGaxv5eMac9R6i2e9MIU7_YmWeMKntQ1ZWlzplYlDYNJr5lGHiUvwJ1CuvQOLzbOT61kF3LQ0-nD4j3Xo4HJWeOG4/w640-h132/Banner%20Shopee%20Rodap%C3%A9.gif" width="640" /></a>
+</div>
+<div class="footer-marco-daher" style="background-color: #e1f5fe; border-radius: 15px; border: 1px solid rgb(179, 229, 252); color: #073763; font-family: Arial, Helvetica, sans-serif; line-height: 1.4; margin-top: 30px; padding: 25px; text-align: center;">
+  <p style="font-size: x-small; font-weight: bold; margin-top: 0px; text-align: right;">
+    <i>Por: Marco Daher<br />Todos os Direitos Reservados<br />©MarcoDaher2025</i>
+  </p>
+  <p style="font-size: 16px; font-weight: bold; margin-bottom: 20px;">
+    O conhecimento é o combustível para o Sucesso. Não pesa e não ocupa espaço.
+  </p>
+  <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin: 20px 0px;">
+    <div style="border-right: 1px solid rgba(7, 55, 99, 0.2); min-width: 120px; padding: 10px;">
+      <div style="color: #b45f06; font-size: 13px; font-weight: bold; margin-bottom: 5px;">
+        Zona do Saber
       </div>
-      <p style="background-color: white; color: #073763; font-family: Arial, Helvetica, sans-serif; font-weight: bold; line-height: 1.3; text-align: center;">
-        <span style="font-family: arial;">Veja também esses LINKS interessantes, e INSCREVA-SE nos meus
-          CANAIS:</span>
-      </p>
-      <div bis_skin_checked="1" class="footer-grid" style="background-color: white; font-family: Arial, Helvetica, sans-serif; line-height: 1.3; text-align: justify;">
-        <div bis_skin_checked="1" class="footer-item" style="line-height: 1.7;">
-          <h4 style="margin: 0px; position: relative;">
-            <p style="line-height: 1.7; text-align: center;">
-              <span style="font-family: arial;"><span style="color: #990000;">Zona do Saber</span></span><span style="color: #073763; font-family: arial;">
-                ⇨&nbsp;<a bis_skin_checked="1" href="http://zonadosaber1.blogspot.com/" style="color: #1962dd; text-decoration-line: none;" target="_blank">Blog</a>&nbsp;-&nbsp;<a bis_skin_checked="1" href="https://www.youtube.com/@ZonadoSaber51" style="color: #1962dd; text-decoration-line: none;" target="_blank">Canal Youtube</a>&nbsp;-&nbsp;<a bis_skin_checked="1" href="https://www.facebook.com/profile.php?id=61558194825166" style="color: #1962dd; text-decoration-line: none;" target="_blank">FaceBook</a></span>
-            </p>
-            <p style="line-height: 1.7; text-align: center;">
-              <span style="font-family: arial;"><span style="color: #990000;">DFBolhas</span></span><span style="color: #073763; font-family: arial;">&nbsp;⇨&nbsp;<a bis_skin_checked="1" href="https://dfbolhas.blogspot.com/" style="color: #1962dd; text-decoration-line: none;" target="_blank">BLOG</a>&nbsp;-&nbsp;&nbsp;<a bis_skin_checked="1" href="https://www.youtube.com/marcodaher51" style="color: #1962dd; text-decoration-line: none;" target="_blank">Canal Youtube</a>&nbsp;-&nbsp;<a bis_skin_checked="1" href="https://www.facebook.com/mdaher51/" style="color: #1962dd; text-decoration-line: none;" target="_blank">Facebook</a></span>
-            </p>
-            <p style="line-height: 1.7; text-align: center;">
-              <span style="font-family: arial;"><span style="color: #990000;">Cursos, Negócios e Oportunidades</span></span><span style="color: #073763; font-family: arial;">
-                &nbsp;⇨&nbsp;&nbsp;<a bis_skin_checked="1" href="https://cursosnegocioseoportunidades.blogspot.com/" style="color: #1962dd; text-decoration-line: none;" target="_blank">Blog</a>&nbsp;&nbsp;-&nbsp;<a bis_skin_checked="1" href="https://www.facebook.com/CursosNegociosOportunidades" style="color: #1962dd; text-decoration-line: none;" target="_blank">FaceBook</a></span>
-            </p>
-            <p style="line-height: 1.7; text-align: center;">
-              <span style="font-family: arial;"><span style="color: #990000;">Marco Daher&nbsp;</span></span><span style="color: #073763; font-family: arial;">⇨&nbsp;&nbsp;<a bis_skin_checked="1" href="https://www.youtube.com/@MarcoDaher" style="color: #1962dd; text-decoration-line: none;" target="_blank">Canal Youtube</a></span>
-            </p>
-            <p style="line-height: 1.7; text-align: center;">
-              <span style="font-family: arial;"><span style="color: #990000;">Emagrecer com Saúde&nbsp;</span></span><span style="color: #073763; font-family: arial;">⇨&nbsp;&nbsp;<a bis_skin_checked="1" href="https://emagrecendo100crise.blogspot.com/" style="color: #1962dd; text-decoration-line: none;" target="_blank">BLOG</a>&nbsp;-&nbsp;<a bis_skin_checked="1" href="https://www.youtube.com/@Saude-Bem-Estar-51" style="color: #1962dd; text-decoration-line: none;" target="_blank">Canal YouTube</a>&nbsp;-&nbsp;<a bis_skin_checked="1" href="https://www.facebook.com/marcocuidese" style="color: #1962dd; text-decoration-line: none;" target="_blank">FaceBook</a></span>
-            </p>
-            <p style="line-height: 1.7; text-align: center;">
-              <span style="font-family: arial; white-space-collapse: preserve;"><span style="color: #990000;">MD Arte Foto </span></span><span style="color: #073763; font-family: arial; white-space-collapse: preserve;">⇨ </span><a bis_skin_checked="1" href="https://mdartefoto.blogspot.com/" style="color: #1962dd; font-family: arial; text-decoration-line: none; white-space-collapse: preserve;" target="_blank">Blog</a>
-            </p>
-            <p style="line-height: 1.7; text-align: center;">
-              <span style="font-family: arial; white-space-collapse: preserve;"><span style="color: #990000;">Relaxamento e Meditação</span><span style="color: #073763;"> </span></span><span style="color: #073763; font-family: arial; white-space-collapse: preserve;">⇨ </span><a bis_skin_checked="1" href="https://www.youtube.com/channel/UCRNq9fN3jzLt0JeE5yBsqQQ" style="color: #1962dd; font-family: arial; text-decoration-line: none; white-space-collapse: preserve;" target="_blank">Canal YouTube</a>
-            </p>
-            <p style="line-height: 1.7; text-align: center;">
-              <span style="color: #073763; font-family: arial; white-space-collapse: preserve;">Caso queira contribuir com o Canal, use a Chave PIX: </span><span style="font-family: arial; white-space-collapse: preserve;"><span style="color: #990000;">marco.caixa104@gmail.com</span></span><span style="color: #073763; font-family: arial; white-space-collapse: preserve;">
-              </span><span style="color: #073763; font-family: arial; white-space-collapse: preserve;">O conhecimento é o combustível para o Sucesso. Não pesa e não </span><span style="color: #073763; font-family: arial; white-space-collapse: preserve;">ocupa espaço. 
-</span><span style="color: #073763; font-family: arial; white-space-collapse: preserve;">🚨 Aproveite e Inscreva-se no Canal 📌, deixe o LIKE 👍 e ative </span><span style="color: #073763; font-family: arial; white-space-collapse: preserve;">o Sininho 🔔. 
-</span><span style="color: #073763; font-family: arial; white-space-collapse: preserve;">Muito obrigado por assistir e abraço. 🎯</span>
-            </p>
-          </h4>
-        </div>
-      </div></span>
+      <a href="http://zonadosaber1.blogspot.com/" target="_blank"><img src="https://img.icons8.com/color/48/000000/blogger.png" style="height: 32px; width: 32px;" title="Blogger" /></a>&nbsp;<a href="https://www.youtube.com/@ZonadoSaber51" target="_blank"><img src="https://img.icons8.com/color/48/000000/youtube-play.png" style="height: 32px; width: 32px;" title="YouTube" /></a>&nbsp;<a href="https://www.facebook.com/profile.php?id=61558194825166" target="_blank"><img src="https://img.icons8.com/color/48/000000/facebook-new.png" style="height: 32px; width: 32px;" title="Facebook" /></a>
+    </div>
+    <div style="border-right: 1px solid rgba(7, 55, 99, 0.2); min-width: 120px; padding: 10px;">
+      <div style="color: #b45f06; font-size: 13px; font-weight: bold; margin-bottom: 5px;">
+        MD Arte Foto
+      </div>
+      <a href="https://mdartefoto.blogspot.com/" target="_blank"><img src="https://img.icons8.com/color/48/000000/blogger.png" style="height: 32px; width: 32px;" /></a>&nbsp;<a href="https://www.facebook.com/mdaher51/" target="_blank"><img src="https://img.icons8.com/color/48/000000/facebook-new.png" style="height: 32px; width: 32px;" /></a>
+    </div>
+    <div style="border-right: 1px solid rgba(7, 55, 99, 0.2); min-width: 120px; padding: 10px;">
+      <div style="color: #b45f06; font-size: 13px; font-weight: bold; margin-bottom: 5px;">
+        DF Bolhas
+      </div>
+      <a href="https://dfbolhas.blogspot.com/" target="_blank"><img src="https://img.icons8.com/color/48/000000/blogger.png" style="height: 32px; width: 32px;" /></a>&nbsp;<a href="https://www.youtube.com/marcodaher51" target="_blank"><img src="https://img.icons8.com/color/48/000000/youtube-play.png" style="height: 32px; width: 32px;" /></a>&nbsp;<a href="https://www.facebook.com/mdaher51/" target="_blank"><img src="https://img.icons8.com/color/48/000000/facebook-new.png" style="height: 32px; width: 32px;" /></a>
+    </div>
+    <div style="border-right: 1px solid rgba(7, 55, 99, 0.2); min-width: 120px; padding: 10px;">
+      <div style="color: #b45f06; font-size: 13px; font-weight: bold; margin-bottom: 5px;">
+        Marco Daher
+      </div>
+      <a href="https://www.youtube.com/@MarcoDaher" target="_blank"><img src="https://img.icons8.com/color/48/000000/youtube-play.png" style="height: 32px; width: 32px;" /></a>&nbsp;<a href="https://www.facebook.com/MarcoDaher51/" target="_blank"><img src="https://img.icons8.com/color/48/000000/facebook-new.png" style="height: 32px; width: 32px;" /></a>
+    </div>
+    <div style="border-right: 1px solid rgba(7, 55, 99, 0.2); min-width: 120px; padding: 10px;">
+      <div style="color: #b45f06; font-size: 13px; font-weight: bold; margin-bottom: 5px;">
+        Diário de Notícias
+      </div>
+      <a href="https://diariodenoticias-md.blogspot.com/" target="_blank"><img src="https://img.icons8.com/color/48/000000/blogger.png" style="height: 32px; width: 32px;" /></a>&nbsp;<a href="https://www.youtube.com/@DiariodeNoticiasBrazuca" target="_blank"><img src="https://img.icons8.com/color/48/000000/youtube-play.png" style="height: 32px; width: 32px;" /></a>
+    </div>
+    <div style="border-right: 1px solid rgba(7, 55, 99, 0.2); min-width: 120px; padding: 10px;">
+      <div style="color: #b45f06; font-size: 13px; font-weight: bold; margin-bottom: 5px;">
+        Emagrecer com Saúde
+      </div>
+      <a href="https://emagrecendo100crise.blogspot.com/" target="_blank"><img src="https://img.icons8.com/color/48/000000/blogger.png" style="height: 32px; width: 32px;" /></a>&nbsp;<a href="https://www.youtube.com/@Saude-Bem-Estar-51" target="_blank"><img src="https://img.icons8.com/color/48/000000/youtube-play.png" style="height: 32px; width: 32px;" /></a>&nbsp;<a href="https://www.facebook.com/marcocuidese" target="_blank"><img src="https://img.icons8.com/color/48/000000/facebook-new.png" style="height: 32px; width: 32px;" /></a>
+    </div>
+    <div style="border-right: 1px solid rgba(7, 55, 99, 0.2); min-width: 120px; padding: 10px;">
+      <div style="color: #b45f06; font-size: 13px; font-weight: bold; margin-bottom: 5px;">
+        Relaxamento
+      </div>
+      <a href="https://www.youtube.com/channel/UCRNq9fN3jzLt0JeE5yBsqQQ" target="_blank"><img src="https://img.icons8.com/color/48/000000/youtube-play.png" style="height: 32px; width: 32px;" /></a>
+    </div>
+    <div style="min-width: 120px; padding: 10px;">
+      <div style="color: #b45f06; font-size: 13px; font-weight: bold; margin-bottom: 5px;">
+        Cursos e Negócios
+      </div>
+      <a href="https://cursosnegocioseoportunidades.blogspot.com/" target="_blank"><img src="https://img.icons8.com/color/48/000000/blogger.png" style="height: 32px; width: 32px;" /></a>&nbsp;<a href="https://www.youtube.com/@CursoseNegociosMD" target="_blank"><img src="https://img.icons8.com/color/48/000000/youtube-play.png" style="height: 32px; width: 32px;" /></a>&nbsp;<a href="https://www.facebook.com/CursosNegociosOportunidades" target="_blank"><img src="https://img.icons8.com/color/48/000000/facebook-new.png" style="height: 32px; width: 32px;" /></a>
+    </div>
   </div>
+  <hr style="border-bottom: 0px; border-image: initial; border-left: 0px; border-right: 0px; border-top: 1px solid rgba(7, 55, 99, 0.133); border: 0px; margin: 20px 0px;" />
+  <p style="font-size: 14px; font-weight: bold; margin-bottom: 10px;">
+    Caso queira contribuir com o meu Trabalho, use a CHAVE PIX abaixo:
+  </p>
+  <button onclick="navigator.clipboard.writeText('marco.caixa104@gmail.com'); alert('Chave PIX copiada!');" style="background-color: #0288d1; border-color: initial; border-radius: 8px; border-style: none; border-width: initial; box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px; color: white; cursor: pointer; font-size: 14px; font-weight: bold; padding: 12px 20px; transition: 0.3s;">
+    Copiar Chave PIX: marco.caixa104@gmail.com
+  </button>
 </div>
-<p></p>
-<div bis_skin_checked="1" class="footer-grid" style="background-color: white; color: #686868; font-family: Arial, Helvetica, sans-serif; font-size: 18px; line-height: 1.3; text-align: justify;">
-  <div bis_skin_checked="1" class="footer-item" style="line-height: 1.3;">
-    <h4 style="margin: 0px; position: relative;"></h4>
-  </div>
-</div>
+<hr data-end="883" data-start="880" style="text-align: justify;" />
+<h2 data-end="913" data-start="885" style="text-align: justify;"><br /></h2>
 """
