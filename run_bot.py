@@ -186,7 +186,7 @@ def formatar_texto(texto):
     if temp:
         blocos.append(" ".join(temp))
     return "".join(
-        f"<p style='text-align:justify; font-size:16px; line-height:1.6;'>{b}</p>"
+        f"<p style='text-align:justify; font-size: medium; line-height:1.6;'>{b}</p>"
         for b in blocos
     )
 
@@ -197,14 +197,16 @@ def formatar_texto(texto):
 
 def gerar_assinatura():
     # A variável começa sem espaços extras antes das aspas triplas
-    assinatura_html = """<p><br /></p>
+    assinatura_html = """<!--INÍCIO DO BANNER-->
+<p><br /></p>
 <hr data-end="883" data-start="880" style="text-align: justify;" />
 <div class="separator" style="clear: both; text-align: center;">
   <a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhHYBTRiztv4UNKBsiwX8nQn1M00BUz-LtO58gTZ6hEsU3VPClePhQwPWw0NyUJGqXvm3vWbRPP6LPQS6m5iyI0UQBBKmdIkNYNuXmGaxv5eMac9R6i2e9MIU7_YmWeMKntQ1ZWlzplYlDYNJr5lGHiUvwJ1CuvQOLzbOT61kF3LQ0-nD4j3Xo4HJWeOG4/s1536/Banner%20Shopee%20Rodap%C3%A9.gif" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="319" data-original-width="1536" height="132" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhHYBTRiztv4UNKBsiwX8nQn1M00BUz-LtO58gTZ6hEsU3VPClePhQwPWw0NyUJGqXvm3vWbRPP6LPQS6m5iyI0UQBBKmdIkNYNuXmGaxv5eMac9R6i2e9MIU7_YmWeMKntQ1ZWlzplYlDYNJr5lGHiUvwJ1CuvQOLzbOT61kF3LQ0-nD4j3Xo4HJWeOG4/w640-h132/Banner%20Shopee%20Rodap%C3%A9.gif" width="640" /></a>
 </div>
-<div class="footer-marco-daher" style="background-color: #e1f5fe; border-radius: 15px; border: 1px solid rgb(179, 229, 252); color: #073763; font-family: Arial, Helvetica, sans-serif; line-height: 1.4; margin-top: 30px; padding: 25px; text-align: center;">
-  <p style="font-size: x-small; font-weight: bold; margin-top: 0px; text-align: right;">
-    <i>Por: Marco Daher<br />Todos os Direitos Reservados<br />©MarcoDaher2025</i>
+<hr data-end="883" data-start="880" style="text-align: justify;" />
+<!--FINAL DO BANNER-->
+<!--INÍCIO DA ASSINATURA-->
+<div class="footer-marco-daher" style="background-color: #e1f5fe; border-radius: 15px; border: 1px solid rgb(179, 229, 252); color: #073763; font-family: Arial, Helvetica, sans-serif; line-height: 1.4; margin-top: 30px; padding: 25px; text-align: center;"><p style="font-size: x-small; font-weight: bold; margin-top: 0px; text-align: right;"><i>Por: Marco Daher<br />Todos os Direitos Reservados<br />©MarcoDaher2026</i>
   </p>
   <p style="font-size: 16px; font-weight: bold; margin-bottom: 20px;">
     O conhecimento é o combustível para o Sucesso. Não pesa e não ocupa espaço.
@@ -269,6 +271,8 @@ def gerar_assinatura():
 </div>
 <hr data-end="883" data-start="880" style="text-align: justify;" />
 <h2 data-end="913" data-start="885" style="text-align: justify;"><br /></h2>
+<!--FINAL DA ASSINATURA-->
+
 """
 
     return assinatura_html
