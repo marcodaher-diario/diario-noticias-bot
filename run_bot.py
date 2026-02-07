@@ -1,5 +1,5 @@
 # =============================================================
-# RUN_BOT.PY — DIÁRIO DE NOTÍCIAS (VERSÃO GEMINI IA)
+# RUN_BOT.PY — DIÁRIO DE NOTÍCIAS (VERSÃO BLINDADA)
 # =============================================================
 
 import feedparser
@@ -12,9 +12,8 @@ from datetime import datetime, timedelta
 from google.oauth2.credentials import Credentials
 from google.auth.transport.requests import Request
 from googleapiclient.discovery import build
-from google import genai  # Biblioteca do Google Gemini
+from google import genai
 
-# IMPORTAÇÃO DA ASSINATURA DO ARQUIVO CONFIGURACOES.PY
 try:
     from configuracoes import BLOCO_FIXO_FINAL
 except ImportError:
@@ -23,11 +22,7 @@ except ImportError:
 # =============================
 # CONFIGURAÇÕES GERAIS
 # =============================
-
 BLOG_ID = "7605688984374445860"
-SCOPES = ["https://www.googleapis.com/auth/blogger"]
-
-# Configuração da API do Gemini
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 client_gemini = genai.Client(api_key=GEMINI_API_KEY)
 
@@ -51,13 +46,25 @@ RSS_FEEDS = [
 IMAGEM_FALLBACK = "https://images.pexels.com/photos/3944454/pexels-photo-3944454.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
 
 # =============================
-# AUTENTICAÇÃO BLOGGER
+# FILTROS DE QUALIDADE
+# =============================
+
+def e_titulo_inutil(titulo):
+    """Filtra títulos que não são notícias reais (vídeos, transmissões, etc)."""
+    termos_proibidos = ["VÍDEOS:", "ASSISTA:", "OUÇA:", "ÍNTEGRA:", "AO VIVO:", "JORNAL ANHANGUERA", "VÍDEO:", "PODCAST:"]
+    for termo in termos_proibidos:
+        if termo in titulo.upper():
+            return True
+    return False
+
+# =============================
+# AUTENTICAÇÃO
 # =============================
 
 def autenticar_blogger():
     if not os.path.exists("token.json"):
-        raise FileNotFoundError("O arquivo token.json não foi encontrado!")
-    creds = Credentials.from_authorized_user_file("token.json", SCOPES)
+        raise FileNotFoundError("token.json ausente!")
+    creds = Credentials.from_authorized_user_file("token.json", ["https://www.googleapis.com/auth/blogger"])
     if creds.expired and creds.refresh_token:
         creds.refresh(Request())
     return build("blogger", "v3", credentials=creds)
@@ -68,143 +75,103 @@ def autenticar_blogger():
 
 def gerar_texto_ia_gemini(titulo, fonte_nome):
     prompt = (
-        f"Aja como um jornalista sênior. Escreva uma notícia detalhada, imparcial e informativa baseada no título: '{titulo}'.\n"
-        f"Mencione que os fatos iniciais foram apurados pelo portal {fonte_nome}. "
-        "O texto deve ter pelo menos 4 parágrafos bem desenvolvidos (aprox. 500 palavras). "
-        "Use tom jornalístico profissional. Não use formatação Markdown (como asteriscos ou hashtags)."
+        f"Aja como um jornalista sênior. Escreva uma notícia detalhada e informativa baseada exclusivamente no título: '{titulo}'.\n"
+        f"Mencione que os fatos iniciais são do portal {fonte_nome}. "
+        "O texto deve ser longo, com no mínimo 5 parágrafos e tom sério. "
+        "Se o título não contiver uma notícia real ou for impossível criar um texto informativo, responda apenas com a palavra: ERRO_INSUFICIENTE."
     )
     try:
         response = client_gemini.models.generate_content(
             model="gemini-1.5-flash",
             contents=prompt
         )
-        return response.text
-    except Exception as e:
-        print(f"⚠️ Erro Gemini: {e}")
-        return f"Matéria em atualização sobre: {titulo}. Mais detalhes em instantes."
+        texto = response.text.strip()
+        # Se a IA não gerou conteúdo suficiente ou deu a palavra de erro, descartamos
+        if "ERRO_INSUFICIENTE" in texto or len(texto) < 500:
+            return None
+        return texto
+    except:
+        return None
 
 # ===============================
-# TRATAMENTO DE IMAGEM E DATA
+# UTILITÁRIOS
 # ===============================
 
-def noticia_recente(entry, horas=48):
+def noticia_recente(entry, horas=12):
     data = entry.get("published_parsed") or entry.get("updated_parsed")
-    if not data:
-        return False
+    if not data: return False
     return datetime.fromtimestamp(time.mktime(data)) >= datetime.now() - timedelta(hours=horas)
 
 def extrair_imagem(entry):
     img = None
-    if hasattr(entry, "media_content"):
-        img = entry.media_content[0].get("url")
-    elif hasattr(entry, "media_thumbnail"):
-        img = entry.media_thumbnail[0].get("url")
-    
+    if hasattr(entry, "media_content"): img = entry.media_content[0].get("url")
+    elif hasattr(entry, "media_thumbnail"): img = entry.media_thumbnail[0].get("url")
     if not img:
-        summary = entry.get("summary", "")
-        match = re.search(r'<img[^>]+src="([^">]+)"', summary)
+        match = re.search(r'<img[^>]+src="([^">]+)"', entry.get("summary", ""))
         if match: img = match.group(1)
-    
     if img and any(x in img.lower() for x in ["video", "icon", "1x1", "logo"]):
         return IMAGEM_FALLBACK
-    return img if img else IMAGEM_FALLBACK
-
-def gerar_tags(titulo):
-    palavras = re.findall(r'\w+', titulo.lower())
-    ignorar = {"o", "a", "os", "as", "em", "de", "do", "da", "para", "com", "que"}
-    tags = [p.capitalize() for p in palavras if p not in ignorar and len(p) > 3]
-    return tags[:5]
-
-# ===============================
-# FORMATAÇÃO HTML
-# ===============================
-
-def formatar_texto_html(texto_ia):
-    paragrafos = texto_ia.split('\n')
-    html = ""
-    for p in paragrafos:
-        if len(p.strip()) > 10:
-            html += f"<p style='text-align:justify; font-size: medium; line-height:1.6;'>{p.strip()}</p>"
-    return html
+    return img or IMAGEM_FALLBACK
 
 def gerar_html_final(n):
+    paragrafos = n['texto'].split('\n')
+    html_corpo = "".join([f"<p style='text-align:justify; font-size: medium; line-height:1.6;'>{p.strip()}</p>" for p in paragrafos if len(p.strip()) > 10])
+    
     return f"""
-    <div style="color: #003366; font-family: Arial, sans-serif; line-height: 1.6;">
-        <h1 style="font-weight: bold; margin-bottom: 20px; text-align: center; font-size: x-large;">
-            {n['titulo'].upper()}
-        </h1>
-
+    <div style="color: #003366; font-family: Arial, sans-serif;">
+        <h1 style="text-align: center;">{n['titulo'].upper()}</h1>
         <div style='text-align:center; margin-bottom:20px;'>
-            <img src='{n['imagem']}' style='width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);'/>
+            <img src='{n['imagem']}' style='width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:10px;'/>
         </div>
-
-        <p style="text-align:center; font-size:13px; color: #666; margin-bottom: 20px;">
-            <b>Fonte Original:</b> {n['fonte']}
-        </p>
-
-        {formatar_texto_html(n['texto'])}
-
+        <p style="text-align:center; font-size:13px; color: #666;"><b>Fonte Original:</b> {n['fonte']}</p>
+        {html_corpo}
         <div style="text-align:center; margin: 30px 0;">
-            <a href="{n['link']}" target="_blank" style="background-color: #003366; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">
-                Leia a Matéria Completa na Fonte
-            </a>
+            <a href="{n['link']}" target="_blank" style="background-color: #003366; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Leia a Matéria Original</a>
         </div>
-
-        <div style="margin-top: 10px;">
-            {BLOCO_FIXO_FINAL}
-        </div>
+        {BLOCO_FIXO_FINAL}
     </div>
     """
 
 # =============================
-# EXECUÇÃO PRINCIPAL
+# EXECUÇÃO
 # =============================
 
 def executar():
     service = autenticar_blogger()
-    noticias_processadas = []
+    processadas = []
     
     for feed_url in RSS_FEEDS:
         feed = feedparser.parse(feed_url)
-        fonte_nome = feed.feed.get("title", "Portal de Notícias")
-        
+        fonte = feed.feed.get("title", "Notícias")
         for entry in feed.entries:
-            # FILTRO POR DATA (O que você já usava)
-            if not noticia_recente(entry, horas=12):
+            titulo = entry.get("title", "").strip()
+            
+            # FILTRO 1: Ignora títulos inúteis (vídeos/transmissões)
+            if e_titulo_inutil(titulo) or not noticia_recente(entry):
+                continue
+            
+            # FILTRO 2: Tenta gerar com IA, se retornar None (erro ou curto), descarta
+            texto_ia = gerar_texto_ia_gemini(titulo, fonte)
+            if not texto_ia:
+                print(f"⏩ Descartado (Sem conteúdo real): {titulo}")
                 continue
                 
-            titulo = entry.get("title", "").strip()
-            link = entry.get("link", "")
-            
-            # IA gera o texto completo baseado no título
-            texto_ia = gerar_texto_ia_gemini(titulo, fonte_nome)
-            imagem = extrair_imagem(entry)
-            
-            noticias_processadas.append({
-                "titulo": titulo,
-                "texto": texto_ia,
-                "link": link,
-                "fonte": fonte_nome,
-                "imagem": imagem
+            processadas.append({
+                "titulo": titulo, "texto": texto_ia, "link": entry.get("link", ""),
+                "fonte": fonte, "imagem": extrair_imagem(entry)
             })
-            if len(noticias_processadas) >= 10: break
-        if len(noticias_processadas) >= 10: break
+            if len(processadas) >= 5: break
+        if len(processadas) >= 5: break
 
-    for n in noticias_processadas:
+    for n in processadas:
         try:
-            service.posts().insert(
-                blogId=BLOG_ID,
-                body={
-                    "title": n["titulo"],
-                    "content": gerar_html_final(n),
-                    "labels": gerar_tags(n["titulo"]),
-                    "status": "LIVE"
-                }
-            ).execute()
+            service.posts().insert(blogId=BLOG_ID, body={
+                "title": n["titulo"], "content": gerar_html_final(n),
+                "labels": ["Notícias", n["fonte"]], "status": "LIVE"
+            }).execute()
             print(f"✅ Publicado: {n['titulo']}")
-            time.sleep(5)
-        except Exception as e:
-            print(f"❌ Erro: {e}")
+            time.sleep(10)
+        except Exception as e: print(f"❌ Erro: {e}")
 
 if __name__ == "__main__":
     executar()
