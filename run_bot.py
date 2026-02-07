@@ -1,16 +1,24 @@
 # =============================================================
-# RUN_BOT.PY — BLOGGER NEWS BOT (FINAL / SAFE / PROFESSIONAL)
+# RUN_BOT.PY — DIÁRIO DE NOTÍCIAS (VERSÃO GEMINI IA)
 # =============================================================
 
 import feedparser
 import re
 import os
 import time
+import json
 import random
 from datetime import datetime, timedelta
 from google.oauth2.credentials import Credentials
+from google.auth.transport.requests import Request
 from googleapiclient.discovery import build
-from openai import OpenAI
+from google import genai  # Biblioteca do Google Gemini
+
+# IMPORTAÇÃO DA ASSINATURA DO ARQUIVO CONFIGURACOES.PY
+try:
+    from configuracoes import BLOCO_FIXO_FINAL
+except ImportError:
+    BLOCO_FIXO_FINAL = "<p style='text-align:center;'>© Marco Daher 2026</p>"
 
 # =============================
 # CONFIGURAÇÕES GERAIS
@@ -19,8 +27,9 @@ from openai import OpenAI
 BLOG_ID = "7605688984374445860"
 SCOPES = ["https://www.googleapis.com/auth/blogger"]
 
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-client = OpenAI(api_key=OPENAI_API_KEY)
+# Configuração da API do Gemini
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+client_gemini = genai.Client(api_key=GEMINI_API_KEY)
 
 RSS_FEEDS = [
     "https://g1.globo.com/rss/g1/",
@@ -39,248 +48,44 @@ RSS_FEEDS = [
     "https://www.poder360.com.br/feed/"
 ]
 
-IMAGEM_FALLBACK = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/News_icon.svg/800px-News_icon.svg.png"
-ARQUIVO_LOG = "posts_publicados.txt"
-
-PALAVRAS_POLITICA = ["Lula", "Bolsonaro", "Eleições 2026", "STF", "Congresso Nacional", "Pesquisa eleitoral", "Corrupção", "Inflação", "Reforma tributária", "Orçamento", "Segurança pública", "Senado", "Câmara dos Deputados", "Tarcísio de Freitas", "Alexandre de Moraes", "Governo Federal", "Direita", "Esquerda", "Polarização", "Fake news"]
-PALAVRAS_ECONOMIA = ["Inflação", "Selic", "Dólar", "PIB", "IPCA", "Boletim Focus", "Reforma Tributária", "Bolsa de Valores", "Ibovespa", "Preço dos combustíveis", "Imposto de Renda 2026", "Salário Mínimo", "Juros", "Dívida Pública", "Câmbio", "Cesta Básica", "Corte de Gastos", "Mercado Financeiro", "Arrecadação", "Renda Fixa"]
+IMAGEM_FALLBACK = "https://images.pexels.com/photos/3944454/pexels-photo-3944454.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
 
 # =============================
 # AUTENTICAÇÃO BLOGGER
 # =============================
 
 def autenticar_blogger():
+    if not os.path.exists("token.json"):
+        raise FileNotFoundError("O arquivo token.json não foi encontrado!")
     creds = Credentials.from_authorized_user_file("token.json", SCOPES)
+    if creds.expired and creds.refresh_token:
+        creds.refresh(Request())
     return build("blogger", "v3", credentials=creds)
 
-# =============================
-# CONTROLE DE DUPLICAÇÃO
-# =============================
-
-def ja_publicado(link):
-    if not os.path.exists(ARQUIVO_LOG):
-        return False
-    with open(ARQUIVO_LOG, "r", encoding="utf-8") as f:
-        return link in f.read()
-
-def registrar_publicacao(link):
-    with open(ARQUIVO_LOG, "a", encoding="utf-8") as f:
-        f.write(link + "\n")
-
 # ===============================
-# TAGS — LIMITE 200 CARACTERES
+# IA — GERAÇÃO COM GEMINI
 # ===============================
 
-import re
-
-def gerar_tags_blogger(tags_sujas, limite=200):
-    # Lista de palavras inúteis para tags
-    ignorar = {"a", "o", "as", "os", "um", "uma", "uns", "umas", "de", "do", "da", "dos", "das", 
-               "em", "no", "na", "nos", "nas", "ao", "aos", "à", "às", "por", "para", "com", 
-               "e", "ou", "que", "sob", "sobre", "ante", "após", "num", "numa", "esta", "este", "isso"}
-    
-    tags_finais = []
-    lista_processada = []
-
-    # 1. Transformar tudo em palavras individuais e limpar pontuação
-    for item in tags_sujas:
-        # Remove pontuação e separa por espaço
-        palavras = re.findall(r'\w+', item.lower())
-        lista_processada.extend(palavras)
-
-    # 2. Filtrar e montar a lista final
-    total_caracteres = 0
-    for palavra in lista_processada:
-        # Filtra: se for inútil, se tiver menos de 3 letras ou se já estiver na lista
-        if palavra in ignorar or len(palavra) < 3 or palavra in tags_finais:
-            continue
-            
-        # Verifica o limite de 200 caracteres (considerando a vírgula e espaço)
-        if total_caracteres + len(palavra) + 2 > limite:
-            break
-            
-        tags_finais.append(palavra.capitalize()) # Capitaliza para ficar bonito (Ex: "Lula", "Selic")
-        total_caracteres += len(palavra) + 2
-        
-    return tags_finais
-
-# =============================
-# EXTRAÇÃO DE IMAGEM
-# =============================
-
-def extrair_imagem(entry):
-    if hasattr(entry, "media_content"):
-        return entry.media_content[0].get("url")
-    if hasattr(entry, "media_thumbnail"):
-        return entry.media_thumbnail[0].get("url")
-    summary = entry.get("summary", "")
-    match = re.search(r'<img[^>]+src="([^">]+)"', summary)
-    return match.group(1) if match else None
-
-# =============================
-# DETECÇÃO DE CONTEÚDO FRACO
-# =============================
-
-def conteudo_invalido(texto):
-    texto_limpo = re.sub(r"<[^>]+>", "", texto).strip()
-    if len(texto_limpo) < 150:
-        return True
-    if "<iframe" in texto.lower() or "youtube" in texto.lower():
-        return True
-    return False
-
-# =============================
-# CLASSIFICAÇÃO
-# =============================
-
-def classificar_noticia(titulo, texto):
-    base = f"{titulo} {texto}".lower()
-    if any(p in base for p in PALAVRAS_POLITICA):
-        return "politica"
-    if any(p in base for p in PALAVRAS_ECONOMIA):
-        return "economia"
-    return "geral"
-
-# =============================
-# IA — GERAÇÃO DE TEXTO
-# =============================
-
-def gerar_texto_ia(titulo, categoria):
-    try:
-        client = OpenAI()
-
-        resposta = client.chat.completions.create(
-            model="gpt-4o-mini",
-            messages=[
-                {
-                    "role": "system",
-                    "content": "Você é um jornalista imparcial que escreve notícias informativas e claras."
-                },
-                {
-                    "role": "user",
-                    "content": f"Escreva um texto jornalístico imparcial sobre o tema: {titulo}. Categoria: {categoria}."
-                }
-            ],
-            max_tokens=300
-        )
-
-        return resposta.choices[0].message.content.strip()
-
-    except Exception as e:
-        print(f"⚠️ IA indisponível: {e}")
-        return f"<p>Matéria em atualização sobre: <b>{titulo}</b>.</p>"
-
-# ===============================
-# FORMATAÇÃO HTML (JUSTIFICADO)
-# ===============================
-
-def formatar_texto(texto):
-    frases = re.split(r'(?<=[.!?])\s+', texto)
-    blocos = []
-    temp = []
-    for frase in frases:
-        temp.append(frase)
-        if len(temp) >= 2:
-            blocos.append(" ".join(temp))
-            temp = []
-    if temp:
-        blocos.append(" ".join(temp))
-    return "".join(
-        f"<p style='text-align:justify; font-size: medium; line-height:1.6;'>{b}</p>"
-        for b in blocos
+def gerar_texto_ia_gemini(titulo, fonte_nome):
+    prompt = (
+        f"Aja como um jornalista sênior. Escreva uma notícia detalhada, imparcial e informativa baseada no título: '{titulo}'.\n"
+        f"Mencione que os fatos iniciais foram apurados pelo portal {fonte_nome}. "
+        "O texto deve ter pelo menos 4 parágrafos bem desenvolvidos (aprox. 500 palavras). "
+        "Use tom jornalístico profissional. Não use formatação Markdown (como asteriscos ou hashtags)."
     )
+    try:
+        response = client_gemini.models.generate_content(
+            model="gemini-1.5-flash",
+            contents=prompt
+        )
+        return response.text
+    except Exception as e:
+        print(f"⚠️ Erro Gemini: {e}")
+        return f"Matéria em atualização sobre: {titulo}. Mais detalhes em instantes."
 
-
-# ==========================================
-# FUNÇÃO — ASSINATURA COM ÍCONES + PIX
-# ==========================================
-
-def gerar_assinatura():
-    # A variável começa sem espaços extras antes das aspas triplas
-    assinatura_html = """<!--INÍCIO DO BANNER-->
-<p><br /></p>
-<hr data-end="883" data-start="880" style="text-align: justify;" />
-<div class="separator" style="clear: both; text-align: center;">
-  <a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhHYBTRiztv4UNKBsiwX8nQn1M00BUz-LtO58gTZ6hEsU3VPClePhQwPWw0NyUJGqXvm3vWbRPP6LPQS6m5iyI0UQBBKmdIkNYNuXmGaxv5eMac9R6i2e9MIU7_YmWeMKntQ1ZWlzplYlDYNJr5lGHiUvwJ1CuvQOLzbOT61kF3LQ0-nD4j3Xo4HJWeOG4/s1536/Banner%20Shopee%20Rodap%C3%A9.gif" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="319" data-original-width="1536" height="132" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhHYBTRiztv4UNKBsiwX8nQn1M00BUz-LtO58gTZ6hEsU3VPClePhQwPWw0NyUJGqXvm3vWbRPP6LPQS6m5iyI0UQBBKmdIkNYNuXmGaxv5eMac9R6i2e9MIU7_YmWeMKntQ1ZWlzplYlDYNJr5lGHiUvwJ1CuvQOLzbOT61kF3LQ0-nD4j3Xo4HJWeOG4/w640-h132/Banner%20Shopee%20Rodap%C3%A9.gif" width="640" /></a>
-</div>
-<hr data-end="883" data-start="880" style="text-align: justify;" />
-<!--FINAL DO BANNER-->
-<!--INÍCIO DA ASSINATURA-->
-<div class="footer-marco-daher" style="background-color: #e1f5fe; border-radius: 15px; border: 1px solid rgb(179, 229, 252); color: #073763; font-family: Arial, Helvetica, sans-serif; line-height: 1.4; margin-top: 30px; padding: 25px; text-align: center;"><p style="font-size: x-small; font-weight: bold; margin-top: 0px; text-align: right;"><i>Por: Marco Daher<br />Todos os Direitos Reservados<br />©MarcoDaher2026</i>
-  </p>
-  <p style="font-size: 16px; font-weight: bold; margin-bottom: 20px;">
-    O conhecimento é o combustível para o Sucesso. Não pesa e não ocupa espaço.
-  </p>
-  <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin: 20px 0px;">
-    <div style="border-right: 1px solid rgba(7, 55, 99, 0.2); min-width: 120px; padding: 10px;">
-      <div style="color: #b45f06; font-size: 13px; font-weight: bold; margin-bottom: 5px;">
-        Zona do Saber
-      </div>
-      <a href="http://zonadosaber1.blogspot.com/" target="_blank"><img src="https://img.icons8.com/color/48/000000/blogger.png" style="height: 32px; width: 32px;" title="Blogger" /></a>&nbsp;<a href="https://www.youtube.com/@ZonadoSaber51" target="_blank"><img src="https://img.icons8.com/color/48/000000/youtube-play.png" style="height: 32px; width: 32px;" title="YouTube" /></a>&nbsp;<a href="https://www.facebook.com/profile.php?id=61558194825166" target="_blank"><img src="https://img.icons8.com/color/48/000000/facebook-new.png" style="height: 32px; width: 32px;" title="Facebook" /></a>
-    </div>
-    <div style="border-right: 1px solid rgba(7, 55, 99, 0.2); min-width: 120px; padding: 10px;">
-      <div style="color: #b45f06; font-size: 13px; font-weight: bold; margin-bottom: 5px;">
-        MD Arte Foto
-      </div>
-      <a href="https://mdartefoto.blogspot.com/" target="_blank"><img src="https://img.icons8.com/color/48/000000/blogger.png" style="height: 32px; width: 32px;" /></a>&nbsp;<a href="https://www.facebook.com/mdaher51/" target="_blank"><img src="https://img.icons8.com/color/48/000000/facebook-new.png" style="height: 32px; width: 32px;" /></a>
-    </div>
-    <div style="border-right: 1px solid rgba(7, 55, 99, 0.2); min-width: 120px; padding: 10px;">
-      <div style="color: #b45f06; font-size: 13px; font-weight: bold; margin-bottom: 5px;">
-        DF Bolhas
-      </div>
-      <a href="https://dfbolhas.blogspot.com/" target="_blank"><img src="https://img.icons8.com/color/48/000000/blogger.png" style="height: 32px; width: 32px;" /></a>&nbsp;<a href="https://www.youtube.com/marcodaher51" target="_blank"><img src="https://img.icons8.com/color/48/000000/youtube-play.png" style="height: 32px; width: 32px;" /></a>&nbsp;<a href="https://www.facebook.com/mdaher51/" target="_blank"><img src="https://img.icons8.com/color/48/000000/facebook-new.png" style="height: 32px; width: 32px;" /></a>
-    </div>
-    <div style="border-right: 1px solid rgba(7, 55, 99, 0.2); min-width: 120px; padding: 10px;">
-      <div style="color: #b45f06; font-size: 13px; font-weight: bold; margin-bottom: 5px;">
-        Marco Daher
-      </div>
-      <a href="https://www.youtube.com/@MarcoDaher" target="_blank"><img src="https://img.icons8.com/color/48/000000/youtube-play.png" style="height: 32px; width: 32px;" /></a>&nbsp;<a href="https://www.facebook.com/MarcoDaher51/" target="_blank"><img src="https://img.icons8.com/color/48/000000/facebook-new.png" style="height: 32px; width: 32px;" /></a>
-    </div>
-    <div style="border-right: 1px solid rgba(7, 55, 99, 0.2); min-width: 120px; padding: 10px;">
-      <div style="color: #b45f06; font-size: 13px; font-weight: bold; margin-bottom: 5px;">
-        Diário de Notícias
-      </div>
-      <a href="https://diariodenoticias-md.blogspot.com/" target="_blank"><img src="https://img.icons8.com/color/48/000000/blogger.png" style="height: 32px; width: 32px;" /></a>&nbsp;<a href="https://www.youtube.com/@DiariodeNoticiasBrazuca" target="_blank"><img src="https://img.icons8.com/color/48/000000/youtube-play.png" style="height: 32px; width: 32px;" /></a>
-    </div>
-    <div style="border-right: 1px solid rgba(7, 55, 99, 0.2); min-width: 120px; padding: 10px;">
-      <div style="color: #b45f06; font-size: 13px; font-weight: bold; margin-bottom: 5px;">
-        Emagrecer com Saúde
-      </div>
-      <a href="https://emagrecendo100crise.blogspot.com/" target="_blank"><img src="https://img.icons8.com/color/48/000000/blogger.png" style="height: 32px; width: 32px;" /></a>&nbsp;<a href="https://www.youtube.com/@Saude-Bem-Estar-51" target="_blank"><img src="https://img.icons8.com/color/48/000000/youtube-play.png" style="height: 32px; width: 32px;" /></a>&nbsp;<a href="https://www.facebook.com/marcocuidese" target="_blank"><img src="https://img.icons8.com/color/48/000000/facebook-new.png" style="height: 32px; width: 32px;" /></a>
-    </div>
-    <div style="border-right: 1px solid rgba(7, 55, 99, 0.2); min-width: 120px; padding: 10px;">
-      <div style="color: #b45f06; font-size: 13px; font-weight: bold; margin-bottom: 5px;">
-        Relaxamento
-      </div>
-      <a href="https://www.youtube.com/channel/UCRNq9fN3jzLt0JeE5yBsqQQ" target="_blank"><img src="https://img.icons8.com/color/48/000000/youtube-play.png" style="height: 32px; width: 32px;" /></a>
-    </div>
-    <div style="min-width: 120px; padding: 10px;">
-      <div style="color: #b45f06; font-size: 13px; font-weight: bold; margin-bottom: 5px;">
-        Cursos e Negócios
-      </div>
-      <a href="https://cursosnegocioseoportunidades.blogspot.com/" target="_blank"><img src="https://img.icons8.com/color/48/000000/blogger.png" style="height: 32px; width: 32px;" /></a>&nbsp;<a href="https://www.youtube.com/@CursoseNegociosMD" target="_blank"><img src="https://img.icons8.com/color/48/000000/youtube-play.png" style="height: 32px; width: 32px;" /></a>&nbsp;<a href="https://www.facebook.com/CursosNegociosOportunidades" target="_blank"><img src="https://img.icons8.com/color/48/000000/facebook-new.png" style="height: 32px; width: 32px;" /></a>
-    </div>
-  </div>
-  <hr style="border-bottom: 0px; border-image: initial; border-left: 0px; border-right: 0px; border-top: 1px solid rgba(7, 55, 99, 0.133); border: 0px; margin: 20px 0px;" />
-  <p style="font-size: 14px; font-weight: bold; margin-bottom: 10px;">
-    Caso queira contribuir com o meu Trabalho, use a CHAVE PIX abaixo:
-  </p>
-  <button onclick="navigator.clipboard.writeText('marco.caixa104@gmail.com'); alert('Chave PIX copiada!');" style="background-color: #0288d1; border-color: initial; border-radius: 8px; border-style: none; border-width: initial; box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px; color: white; cursor: pointer; font-size: 14px; font-weight: bold; padding: 12px 20px; transition: 0.3s;">
-    Copiar Chave PIX: marco.caixa104@gmail.com
-  </button>
-</div>
-<hr data-end="883" data-start="880" style="text-align: justify;" />
-<h2 data-end="913" data-start="885" style="text-align: justify;"><br /></h2>
-<!--FINAL DA ASSINATURA-->
-
-"""
-
-    return assinatura_html
-
-
-# =============================
-# BUSCA DE NOTÍCIAS
-# =============================
+# ===============================
+# TRATAMENTO DE IMAGEM E DATA
+# ===============================
 
 def noticia_recente(entry, horas=48):
     data = entry.get("published_parsed") or entry.get("updated_parsed")
@@ -288,97 +93,118 @@ def noticia_recente(entry, horas=48):
         return False
     return datetime.fromtimestamp(time.mktime(data)) >= datetime.now() - timedelta(hours=horas)
 
-def buscar_noticias():
-    noticias = []
-    for feed_url in RSS_FEEDS:
-        feed = feedparser.parse(feed_url)
-        fonte = feed.feed.get("title", "Fonte")
-        for entry in feed.entries:
-            if not noticia_recente(entry):
-                continue
+def extrair_imagem(entry):
+    img = None
+    if hasattr(entry, "media_content"):
+        img = entry.media_content[0].get("url")
+    elif hasattr(entry, "media_thumbnail"):
+        img = entry.media_thumbnail[0].get("url")
+    
+    if not img:
+        summary = entry.get("summary", "")
+        match = re.search(r'<img[^>]+src="([^">]+)"', summary)
+        if match: img = match.group(1)
+    
+    if img and any(x in img.lower() for x in ["video", "icon", "1x1", "logo"]):
+        return IMAGEM_FALLBACK
+    return img if img else IMAGEM_FALLBACK
 
-            titulo = entry.get("title", "").strip()
-            resumo = entry.get("summary", "")
-            link = entry.get("link", "")
+def gerar_tags(titulo):
+    palavras = re.findall(r'\w+', titulo.lower())
+    ignorar = {"o", "a", "os", "as", "em", "de", "do", "da", "para", "com", "que"}
+    tags = [p.capitalize() for p in palavras if p not in ignorar and len(p) > 3]
+    return tags[:5]
 
-            if not titulo or not link or ja_publicado(link):
-                continue
+# ===============================
+# FORMATAÇÃO HTML
+# ===============================
 
-            categoria = classificar_noticia(titulo, resumo)
+def formatar_texto_html(texto_ia):
+    paragrafos = texto_ia.split('\n')
+    html = ""
+    for p in paragrafos:
+        if len(p.strip()) > 10:
+            html += f"<p style='text-align:justify; font-size: medium; line-height:1.6;'>{p.strip()}</p>"
+    return html
 
-            if conteudo_invalido(resumo):
-                if categoria in ["politica", "economia"]:
-                    texto = gerar_texto_ia(titulo, categoria)
-                else:
-                    continue
-            else:
-                texto = re.sub(r"<[^>]+>", "", resumo)
-
-            imagem = extrair_imagem(entry) or IMAGEM_FALLBACK
-
-            noticias.append({
-                "titulo": titulo,
-                "texto": texto,
-                "link": link,
-                "fonte": fonte,
-                "imagem": imagem,
-                "categoria": categoria
-            })
-    random.shuffle(noticias)
-    return noticias[:10]
-
-# =============================
-# GERAÇÃO DO POST
-# =============================
-
-def gerar_html(n):
+def gerar_html_final(n):
     return f"""
-<h2 style="text-align:center;">{n['titulo']}</h2>
+    <div style="color: #003366; font-family: Arial, sans-serif; line-height: 1.6;">
+        <h1 style="font-weight: bold; margin-bottom: 20px; text-align: center; font-size: x-large;">
+            {n['titulo'].upper()}
+        </h1>
 
-<div style="text-align:center; margin:20px 0;">
-    <img src="{n['imagem']}" alt="{n['titulo']}" style="max-width:100%;">
-</div>
+        <div style='text-align:center; margin-bottom:20px;'>
+            <img src='{n['imagem']}' style='width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);'/>
+        </div>
 
-<p style="text-align:center; font-size:14px;">
-<b>Fonte:</b> {n['fonte']}
-</p>
+        <p style="text-align:center; font-size:13px; color: #666; margin-bottom: 20px;">
+            <b>Fonte Original:</b> {n['fonte']}
+        </p>
 
-{formatar_texto(n['texto'])}
+        {formatar_texto_html(n['texto'])}
 
-<p style="text-align:center;">
-<a href="{n['link']}" target="_blank">Leia a matéria original</a>
-</p>
+        <div style="text-align:center; margin: 30px 0;">
+            <a href="{n['link']}" target="_blank" style="background-color: #003366; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">
+                Leia a Matéria Completa na Fonte
+            </a>
+        </div>
 
-{gerar_assinatura()}
-"""
+        <div style="margin-top: 10px;">
+            {BLOCO_FIXO_FINAL}
+        </div>
+    </div>
+    """
 
 # =============================
-# EXECUÇÃO
+# EXECUÇÃO PRINCIPAL
 # =============================
 
 def executar():
     service = autenticar_blogger()
-    noticias = buscar_noticias()
+    noticias_processadas = []
+    
+    for feed_url in RSS_FEEDS:
+        feed = feedparser.parse(feed_url)
+        fonte_nome = feed.feed.get("title", "Portal de Notícias")
+        
+        for entry in feed.entries:
+            # FILTRO POR DATA (O que você já usava)
+            if not noticia_recente(entry, horas=12):
+                continue
+                
+            titulo = entry.get("title", "").strip()
+            link = entry.get("link", "")
+            
+            # IA gera o texto completo baseado no título
+            texto_ia = gerar_texto_ia_gemini(titulo, fonte_nome)
+            imagem = extrair_imagem(entry)
+            
+            noticias_processadas.append({
+                "titulo": titulo,
+                "texto": texto_ia,
+                "link": link,
+                "fonte": fonte_nome,
+                "imagem": imagem
+            })
+            if len(noticias_processadas) >= 10: break
+        if len(noticias_processadas) >= 10: break
 
-    for n in noticias:
+    for n in noticias_processadas:
         try:
             service.posts().insert(
                 blogId=BLOG_ID,
                 body={
                     "title": n["titulo"],
-                    "content": gerar_html(n),
-                    "labels": gerar_tags_blogger(
-                        n["titulo"].lower().split()
-                    ),
+                    "content": gerar_html_final(n),
+                    "labels": gerar_tags(n["titulo"]),
                     "status": "LIVE"
                 }
             ).execute()
-
-            registrar_publicacao(n["link"])
             print(f"✅ Publicado: {n['titulo']}")
-
+            time.sleep(5)
         except Exception as e:
-            print(f"❌ Erro ao publicar: {e}")
+            print(f"❌ Erro: {e}")
 
 if __name__ == "__main__":
     executar()
