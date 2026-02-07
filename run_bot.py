@@ -8,17 +8,16 @@ from google.genai import types
 
 # --- CONFIGURAÇÕES ---
 BLOG_ID = "7605688984374445860"
-# O cliente pega a GEMINI_API_KEY automaticamente das variáveis de ambiente do GitHub
-client_gemini = genai.Client()
+client_gemini = genai.Client() # Pega a chave do ambiente automaticamente
 BLOCO_FIXO_FINAL = "<p>© Marco Daher 2026</p>"
 
 def gerar_imagem_ia(titulo):
     print(f"🎨 Criando imagem 16:9 para: {titulo}")
     try:
-        # Usando o modelo Imagen 3 conforme os padrões da nova SDK
-        res = client_gemini.models.generate_image(
+        # CORREÇÃO: O comando correto na versão 1.0.0+ é client.models.imagen.generate_image
+        res = client_gemini.models.imagen.generate_image(
             model="imagen-3.0-generate-001",
-            prompt=f"Professional editorial news photography, high quality, realistic, related to: {titulo}",
+            prompt=f"Professional photojournalism, wide angle, high quality, realistic: {titulo}",
             config=types.GenerateImageConfig(
                 number_of_images=1, 
                 aspect_ratio="16:9", 
@@ -31,21 +30,20 @@ def gerar_imagem_ia(titulo):
         return None
 
 def salvar_no_drive(drive_service, img_bytes, nome):
-    print(f"💾 Salvando no Google Drive...")
+    print(f"💾 Gravando no Google Drive...")
     try:
         media = MediaIoBaseUpload(io.BytesIO(img_bytes), mimetype='image/png')
         file_metadata = {'name': nome}
         file = drive_service.files().create(body=file_metadata, media_body=media, fields='id').execute()
         file_id = file.get('id')
-        # Permissão pública para o Blogger conseguir "puxar" a foto
+        # Torna visível para o blog
         drive_service.permissions().create(fileId=file_id, body={'type': 'anyone', 'role': 'viewer'}).execute()
         return f"https://drive.google.com/uc?export=view&id={file_id}"
     except Exception as e:
-        print(f"❌ Erro ao salvar no Drive: {e}")
+        print(f"❌ Erro Drive: {e}")
         return ""
 
 def executar():
-    # 1. Carregar credenciais para Blogger e Drive
     creds = Credentials.from_authorized_user_file("token.json")
     if creds.expired and creds.refresh_token:
         creds.refresh(Request())
@@ -53,42 +51,42 @@ def executar():
     blogger = build("blogger", "v3", credentials=creds)
     drive = build("drive", "v3", credentials=creds)
 
-    # 2. Pegar notícia do Feed RSS
     feed = feedparser.parse("https://g1.globo.com/rss/g1/").entries[0]
     titulo = feed.title
-    print(f"📰 Notícia selecionada: {titulo}")
+    print(f"📰 Notícia: {titulo}")
     
-    # 3. Gerar texto usando o modelo novo: gemini-3-flash-preview
-    prompt = f"Escreva uma notícia jornalística completa sobre: {titulo}. Baseie-se no link: {feed.link}"
+    # Gerar Texto
+    prompt = f"Escreva uma notícia completa e profissional: {titulo}. Link base: {feed.link}"
     resposta = client_gemini.models.generate_content(
-        model="gemini-3-flash-preview", 
+        model="gemini-2.0-flash", # Usando a versão mais estável/recente
         contents=prompt
     )
     
     texto_html = resposta.text.replace('\n', '<br>')
     
-    # 4. Gerar e Salvar Imagem
+    # Gerar Imagem
     img_data = gerar_imagem_ia(titulo)
-    img_url = salvar_no_drive(drive, img_data, f"capa_noticia_{int(time.time())}.png") if img_data else ""
+    img_url = salvar_no_drive(drive, img_data, f"capa_{int(time.time())}.png") if img_data else ""
 
-    # 5. Montar o Post
     html_final = f"""<div style='font-family:Arial; text-align:justify;'>
         <h1 style='text-align:center;'>{titulo}</h1>
-        <img src='{img_url}' style='width:100%; border-radius:10px; margin:20px 0;'/>
-        <p>{texto_html}</p>
-        <p><i>Fonte original: <a href='{feed.link}'>G1</a></i></p>
+        <img src='{img_url}' style='width:100%; border-radius:10px; margin-bottom:20px;'/>
+        <div style='line-height:1.6;'>{texto_html}</div>
+        <p style='margin-top:20px;'><i>Fonte: <a href='{feed.link}'>G1</a></i></p>
         <hr>
         {BLOCO_FIXO_FINAL}
     </div>"""
 
-    # 6. Publicar no Blogger
-    blogger.posts().insert(blogId=BLOG_ID, body={
-        "title": titulo, 
-        "content": html_final,
-        "status": "LIVE"
-    }).execute()
-    
-    print("✅ POST PUBLICADO COM SUCESSO NO BLOGGER!")
+    # Publicar
+    try:
+        blogger.posts().insert(blogId=BLOG_ID, body={
+            "title": titulo, 
+            "content": html_final,
+            "status": "LIVE"
+        }).execute()
+        print("✅ SUCESSO! Confira seu blog.")
+    except Exception as e:
+        print(f"❌ Erro ao postar no Blogger: {e}")
 
 if __name__ == "__main__":
     executar()
