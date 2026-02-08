@@ -1,171 +1,136 @@
-import os, time, io, feedparser, random, json, re
-from datetime import datetime
-import pytz
+import os
+import json
+import feedparser
+import time
 from google.oauth2.credentials import Credentials
 from google.auth.transport.requests import Request
 from googleapiclient.discovery import build
-from googleapiclient.http import MediaIoBaseUpload
+from googleapiclient.http import MediaFileUpload
 from google import genai
 from google.genai import types
+import datetime
+import pytz
 
-# --- IMPORTAÇÃO DE MÓDULOS LOCAIS ---
+# Configuração de Importação do seu Template
 try:
+    from Template_blog import obter_esqueleto_html
+except ImportError:
+    # Caso o arquivo esteja com 't' minúsculo no GitHub
     from template_blog import obter_esqueleto_html
-    from configuracoes import BLOCO_FIXO_FINAL
-except ImportError as e:
-    print(f"❌ Erro ao importar arquivos locais: {e}")
-    BLOCO_FIXO_FINAL = "© Marco Daher 2026"
 
 # --- CONFIGURAÇÕES ---
-BLOG_ID = "7605688984374445860"
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-client_gemini = genai.Client(api_key=GEMINI_API_KEY)
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
+BLOG_ID = "3884849132228514800" # ID do Diário de Notícias
 
-# Sua lista completa de fontes restaurada
-RSS_FEEDS = [
-   "https://g1.globo.com/rss/g1/",
-   "https://feeds.uol.com.br/home.xml",
-   "https://rss.uol.com.br/feed/noticias.xml",
-   "https://feeds.folha.uol.com.br/emcimadahora/rss091.xml",
-   "https://agenciabrasil.ebc.com.br/rss",
-   "https://feeds.bbci.co.uk/portuguese/rss.xml",
-   "https://www.gazetadopovo.com.br/feed/rss/brasil.xml",
-   "https://reporterbrasil.org.br/feed/",
-   "https://www.cnnbrasil.com.br/feed/",
-   "https://www.estadao.com.br/arc/outboundfeeds/rss/category/brasil/",
-   "https://g1.globo.com/rss/g1/economia/"
+# Escopos EXATAMENTE iguais ao seu token.json
+SCOPES = [
+    "https://www.googleapis.com/auth/blogger",
+    "https://www.googleapis.com/auth/drive.file"
 ]
 
-def definir_tema_por_horario():
-    fuso = pytz.timezone('America/Sao_Paulo')
-    hora = datetime.now(fuso).hour
-    if 5 <= hora <= 11:
-        return "Policial", "polícia, crime, prisão, investigação, segurança, homicídio, delegacia"
-    elif 12 <= hora <= 16:
-        return "Economia", "preços, inflação, mercado, emprego, impostos, salário, inss, dólar"
-    else:
-        return "Política", "governo, congresso, judiciário, leis, eleições, corrupção, ministério"
-
-def buscar_noticia_por_tema(tema, keywords):
-    print(f"🔍 Pesquisando notícias de {tema} em múltiplos portais...")
-    noticias_candidatas = []
-    palavras_chave = keywords.split(", ")
-    
-    for url in RSS_FEEDS:
-        try:
-            feed = feedparser.parse(url)
-            for entry in feed.entries:
-                texto_busca = (entry.title + " " + entry.get('summary', '')).lower()
-                if any(k in texto_busca for k in palavras_chave):
-                    noticias_candidatas.append(entry)
-        except: continue
-    
-    if noticias_candidatas:
-        return random.choice(noticias_candidatas)
-    # Se não achar nada específico, pega a mais recente do primeiro feed
-    return feedparser.parse(RSS_FEEDS[0]).entries[0]
-
-def gerar_imagem_ia(titulo, contexto, sufixo):
-    print(f"🎨 Gerando imagem IA 16:9 ({sufixo})...")
-    try:
-        res = client_gemini.models.generate_image(
-            model="imagen-3.0-generate-001",
-            prompt=f"Professional news photojournalism, realistic, cinematic lighting, 8k. Scene: {titulo}. Focus on: {contexto}",
-            config=types.GenerateImageConfig(aspect_ratio="16:9")
-        )
-        return res.generated_images[0].image_bytes if hasattr(res, 'generated_images') else res.image_bytes
-    except Exception as e:
-        print(f"❌ Erro na imagem {sufixo}: {e}")
-        return None
-
-def salvar_no_drive(drive_service, img_bytes, nome):
-    if not img_bytes: return ""
-    try:
-        media = MediaIoBaseUpload(io.BytesIO(img_bytes), mimetype='image/png')
-        file = drive_service.files().create(body={'name': nome}, media_body=media, fields='id').execute()
-        file_id = file.get('id')
-        drive_service.permissions().create(fileId=file_id, body={'type': 'anyone', 'role': 'viewer'}).execute()
-        return f"https://drive.google.com/uc?export=view&id={file_id}"
-    except: return ""
-
+# --- FUNÇÕES DE AUTENTICAÇÃO ---
 def renovar_token():
+    if not os.path.exists("token.json"):
+        raise FileNotFoundError("O arquivo token.json não foi encontrado!")
+    
     with open("token.json", "r") as f:
         info = json.load(f)
-    creds = Credentials.from_authorized_user_info(info, ["https://www.googleapis.com/auth/blogger", "https://www.googleapis.com/auth/drive"])
+    
+    creds = Credentials.from_authorized_user_info(info, SCOPES)
+    
     if creds.expired and creds.refresh_token:
         creds.refresh(Request())
+        with open("token.json", "w") as f:
+            f.write(creds.to_json())
     return creds
 
-def executar():
-    tema_nome, keywords = definir_tema_por_horario()
-    noticia = buscar_noticia_por_tema(tema_nome, keywords)
-    print(f"📰 Fonte encontrada: {noticia.title}")
+# --- FUNÇÕES DE IMAGEM E DRIVE ---
+def upload_para_drive(service_drive, caminho_arquivo, nome_arquivo):
+    file_metadata = {'name': nome_arquivo}
+    media = MediaFileUpload(caminho_arquivo, mimetype='image/png')
+    file = service_drive.files().create(body=file_metadata, media_body=media, fields='id, webContentLink').execute()
+    
+    # Torna a imagem pública para o Blogger conseguir ler
+    service_drive.permissions().create(fileId=file.get('id'), body={'type': 'anyone', 'role': 'reader'}).execute()
+    
+    # Retorna o link direto da imagem
+    return f"https://lh3.googleusercontent.com/u/0/d/{file.get('id')}"
 
-    # PROMPT ÉTICO ANALÍTICO (Foco 700-900 palavras)
-    prompt_jornalistico = (
-        f"Você é um Jornalista Analítico Sênior. Escreva uma postagem PROFUNDA (700 a 900 palavras) sobre: {noticia.title}.\n"
-        f"Use o fato da fonte apenas como base: {noticia.link}\n"
-        "REGRAS:\n"
-        "1. Tom neutro, imparcial, focado em causas e consequências.\n"
-        "2. Ignore referências a vídeos. Escreva um artigo completo.\n"
-        "3. PROIBIDO Markdown (# ou **). Proibido plágio.\n"
-        "4. Responda APENAS em JSON com as chaves: 'intro', 'sub1', 'texto1', 'sub2', 'texto2', 'sub3', 'texto3', 'texto_conclusao'.\n"
-        "5. Desenvolva cada parágrafo com riqueza de detalhes."
+def gerar_imagens_ia(titulo_noticia):
+    client = genai.Client(api_key=GEMINI_API_KEY)
+    imagens_links = []
+    
+    prompts = [
+        f"Crie uma imagem cinematográfica e realista para o topo de uma notícia sobre: {titulo_noticia}. Estilo fotojornalismo profissional, 16:9.",
+        f"Crie uma ilustração ou foto detalhada que complemente o contexto de: {titulo_noticia}. Estilo moderno, 16:9."
+    ]
+    
+    for i, p in enumerate(prompts):
+        nome_arq = f"img_{i}.png"
+        response = client.models.generate_images(
+            model='imagen-3.0-generate-002',
+            prompt=p,
+            config=types.GenerateImagesConfig(number_of_images=1, aspect_ratio="16:9")
+        )
+        for j, img in enumerate(response.generated_images):
+            img.image.save(nome_arq)
+            imagens_links.append(nome_arq)
+            
+    return imagens_links
+
+# --- NÚCLEO DO BOT ---
+def executar():
+    print("🚀 Iniciando Bot Diário de Notícias...")
+    creds = renovar_token()
+    service_blogger = build('blogger', 'v3', credentials=creds)
+    service_drive = build('drive', 'v3', credentials=creds)
+    client_gemini = genai.Client(api_key=GEMINI_API_KEY)
+
+    # 1. Busca Notícia (RSS G1 como exemplo)
+    feed = feedparser.parse("https://g1.globo.com/rss/g1/politica/")
+    if not feed.entries:
+        print("Nenhuma notícia encontrada.")
+        return
+    
+    noticia = feed.entries[0]
+    titulo = noticia.title
+    link_original = noticia.link
+
+    # 2. IA gera o texto analítico (800 palavras)
+    prompt_texto = f"""
+    Escreva um artigo de opinião e análise profunda sobre a notícia: '{titulo}'.
+    O texto deve ter entre 700 a 900 palavras. 
+    Use subtítulos (H2), parágrafos claros e uma conclusão forte.
+    Fale sobre os impactos disso para o Brasil e o cenário futuro.
+    Retorne apenas o corpo do texto em HTML (sem <html> ou <body>).
+    """
+    response_texto = client_gemini.models.generate_content(model="gemini-2.0-flash", contents=prompt_texto)
+    texto_analitico = response_texto.text
+
+    # 3. Gerar e fazer Upload das Imagens
+    arquivos_fotos = gerar_imagens_ia(titulo)
+    links_drive = []
+    for arq in arquivos_fotos:
+        link = upload_para_drive(service_drive, arq, arq)
+        links_drive.append(link)
+
+    # 4. Montar HTML final usando seu Template
+    html_final = obter_esqueleto_html(
+        titulo=titulo,
+        corpo_texto=texto_analitico,
+        img_topo=links_drive[0],
+        img_corpo=links_drive[1] if len(links_drive) > 1 else links_drive[0],
+        fonte_link=link_original
     )
 
-    try:
-        response = client_gemini.models.generate_content(
-            model="gemini-3-flash-preview",
-            contents=prompt_jornalistico,
-            config={'response_mime_type': 'application/json'}
-        )
-        conteudo = json.loads(response.text)
-        if isinstance(conteudo, list): conteudo = conteudo[0]
-    except Exception as e:
-        print(f"❌ Erro na IA: {e}")
-        return
-
-    creds = renovar_token()
-    drive_service = build("drive", "v3", credentials=creds)
-    blogger_service = build("blogger", "v3", credentials=creds)
-
-    # Imagens Contextualizadas
-    img_topo = gerar_imagem_ia(noticia.title, "Cenário principal do fato", "topo")
-    img_meio = gerar_imagem_ia(noticia.title, "Impacto social ou detalhe analítico", "meio")
-    
-    url_topo = salvar_no_drive(drive_service, img_topo, f"topo_{int(time.time())}.png")
-    url_meio = salvar_no_drive(drive_service, img_meio, f"meio_{int(time.time())}.png")
-
-    # Montagem no Template
-    dados_post = {
-        'titulo': noticia.title,
-        'img_topo': url_topo,
-        'img_meio': url_meio,
-        'intro': conteudo.get('intro', '').replace('\n', '<br/>'),
-        'sub1': conteudo.get('sub1', '').upper(),
-        'texto1': conteudo.get('texto1', '').replace('\n', '<br/>'),
-        'sub2': conteudo.get('sub2', '').upper(),
-        'texto2': conteudo.get('texto2', '').replace('\n', '<br/>'),
-        'sub3': conteudo.get('sub3', '').upper(),
-        'texto3': conteudo.get('texto3', '').replace('\n', '<br/>'),
-        'texto_conclusao': f"{conteudo.get('texto_conclusao', '')}<br/><br/><b>Referências e Fontes:</b><br/>• {noticia.link}".replace('\n', '<br/>'),
-        'assinatura': BLOCO_FIXO_FINAL
+    # 5. Publicar no Blogger
+    corpo_post = {
+        'kind': 'blogger#post',
+        'title': titulo,
+        'content': html_final
     }
-
-    html_final = obter_esqueleto_html(dados_post)
-
-    corpo_blogger = {
-        "title": noticia.title,
-        "content": html_final,
-        "labels": [tema_nome, "Notícias Brasil", "Análise Jornalística"],
-        "status": "LIVE"
-    }
-
-    try:
-        blogger_service.posts().insert(blogId=BLOG_ID, body=corpo_blogger).execute()
-        print(f"✅ SUCESSO! Post de {tema_nome} publicado via Multi-RSS.")
-    except Exception as e:
-        print(f"❌ Erro Blogger: {e}")
+    service_blogger.posts().insert(blogId=BLOG_ID, body=corpo_post).execute()
+    print(f"✅ Postado com sucesso: {titulo}")
 
 if __name__ == "__main__":
     executar()
