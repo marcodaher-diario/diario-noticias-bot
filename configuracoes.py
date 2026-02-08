@@ -8,7 +8,7 @@ BLOCO_FIXO_FINAL = """
 <div class="footer-marco-daher" style="background-color: #e1f5fe; border-radius: 15px; border: 1px solid rgb(179, 229, 252); color: #073763; font-family: Arial, Helvetica, sans-serif; line-height: 1.4; margin-top: 10px; padding: 25px; text-align: center;">
   
   <p style="font-size: x-small; font-weight: bold; margin-top: 0px; text-align: right;">
-    <i>Por: Marco Daher<br />Todos os Direitos Reservados<br />©MarcoDaher2025</i>
+    <i>Por: Marco Daher<br />Todos os Direitos Reservados<br />©MarcoDaher2026</i>
   </p>
 
   <div style="margin-bottom: 20px;">
