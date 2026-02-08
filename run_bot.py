@@ -13,7 +13,7 @@ import pytz
 
 # Configuração de Importação do seu Template
 try:
-    from Template_blog import obter_esqueleto_html
+    from template_blog import obter_esqueleto_html
 except ImportError:
     # Caso o arquivo esteja com 't' minúsculo no GitHub
     from template_blog import obter_esqueleto_html
