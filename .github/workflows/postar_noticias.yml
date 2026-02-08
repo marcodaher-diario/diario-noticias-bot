@@ -2,8 +2,8 @@ name: Bot Diario de Noticias
 
 on:
   schedule:
-    - cron: '0 11 * * *' # 08:00 Brasília
-    - cron: '0 15 * * *' # 12:00 Brasília
+    - cron: '0 12 * * *' # 09:00 Brasília
+    - cron: '0 17 * * *' # 14:00 Brasília
     - cron: '0 21 * * *' # 18:00 Brasília
   workflow_dispatch:
 
@@ -25,7 +25,7 @@ jobs:
 
       - name: Instalar Dependências
         run: |
-          pip install feedparser google-auth google-api-python-client google-auth-oauthlib google-auth-httplib2 google-genai
+          pip install feedparser google-api-python-client google-auth-oauthlib google-genai pytz
 
       - name: Rodar Bot de Noticias
         env:
