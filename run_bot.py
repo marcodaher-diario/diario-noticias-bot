@@ -58,7 +58,7 @@ def executar():
     # Gerar Texto
     prompt = f"Escreva uma notícia completa e profissional: {titulo}. Link base: {feed.link}"
     resposta = client_gemini.models.generate_content(
-        model="gemini-1.5-flash", # Usando a versão mais estável/recente
+        model="gemini-3-flash-preview" # Usando a versão mais estável/recente
         contents=prompt
     )
     
