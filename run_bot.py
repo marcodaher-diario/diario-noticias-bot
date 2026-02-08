@@ -8,13 +8,12 @@ from google.genai import types
 
 # --- CONFIGURAÇÕES ---
 BLOG_ID = "7605688984374445860"
-client_gemini = genai.Client() # Pega a chave do ambiente automaticamente
+client_gemini = genai.Client() 
 BLOCO_FIXO_FINAL = "<p>© Marco Daher 2026</p>"
 
 def gerar_imagem_ia(titulo):
     print(f"🎨 Criando imagem 16:9 para: {titulo}")
     try:
-        # CORREÇÃO: O comando correto na versão 1.0.0+ é client.models.imagen.generate_image
         res = client_gemini.models.imagen.generate_image(
             model="imagen-3.0-generate-001",
             prompt=f"Professional photojournalism, wide angle, high quality, realistic: {titulo}",
@@ -36,7 +35,6 @@ def salvar_no_drive(drive_service, img_bytes, nome):
         file_metadata = {'name': nome}
         file = drive_service.files().create(body=file_metadata, media_body=media, fields='id').execute()
         file_id = file.get('id')
-        # Torna visível para o blog
         drive_service.permissions().create(fileId=file_id, body={'type': 'anyone', 'role': 'viewer'}).execute()
         return f"https://drive.google.com/uc?export=view&id={file_id}"
     except Exception as e:
@@ -55,10 +53,10 @@ def executar():
     titulo = feed.title
     print(f"📰 Notícia: {titulo}")
     
-    # Gerar Texto
+    # Gerar Texto - REVISADO COM A VÍRGULA
     prompt = f"Escreva uma notícia completa e profissional: {titulo}. Link base: {feed.link}"
     resposta = client_gemini.models.generate_content(
-        model="gemini-3-flash-preview" # Usando a versão mais estável/recente
+        model="gemini-3-flash-preview", 
         contents=prompt
     )
     
