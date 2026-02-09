@@ -26,18 +26,17 @@ def renovar_token():
     return creds
 
 def gerar_texto_rest(titulo_noticia):
-    """Gera texto via REST com tratamento de erro detalhado"""
-    # Testando v1 (estável) diretamente
-    url = f"https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key={GEMINI_API_KEY}"
+    """Gera texto via REST com os nomes de campos corrigidos para o padrão Google"""
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={GEMINI_API_KEY}"
     
     payload = {
         "contents": [{
             "parts": [{
-                "text": f"Gere um JSON para a notícia '{titulo_noticia}' com as chaves: titulo, intro, sub1, texto1, sub2, texto2, sub3, texto3, texto_conclusao."
+                "text": f"Gere um JSON para a notícia '{titulo_noticia}' com as chaves: titulo, intro, sub1, texto1, sub2, texto2, sub3, texto3, texto_conclusao. Retorne APENAS o JSON puro, sem markdown."
             }]
         }],
         "generationConfig": {
-            "response_mime_type": "application/json"
+            "responseMimeType": "application/json"  # Nome correto para REST é este
         }
     }
     
@@ -46,7 +45,7 @@ def gerar_texto_rest(titulo_noticia):
     
     if "candidates" not in res_json:
         print(f"❌ Erro da API Google: {json.dumps(res_json, indent=2)}")
-        raise Exception("A API do Gemini não retornou conteúdo. Verifique o log acima.")
+        raise Exception("A API do Gemini não retornou conteúdo.")
         
     texto_puro = res_json['candidates'][0]['content']['parts'][0]['text']
     return json.loads(texto_puro)
