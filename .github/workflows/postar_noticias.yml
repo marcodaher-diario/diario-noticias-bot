@@ -26,6 +26,7 @@ jobs:
       - name: Instalar Dependências
         run: |
           pip install feedparser google-api-python-client google-auth-oauthlib google-genai pytz
+          pip install google-generativeai feedparser google-api-python-client google-auth-oauthlib pytz
 
       - name: Rodar Bot de Noticias
         env:
