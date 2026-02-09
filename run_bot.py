@@ -9,10 +9,10 @@ from googleapiclient.http import MediaFileUpload
 from google import genai
 from google.genai import types
 
-# --- IMPORTAÇÕES DE CONFIGURAÇÃO E TEMPLATE ---
+# --- IMPORTAÇÕES SEM ALTERAR NOMES ---
 try:
     from template_blog import obter_esqueleto_html
-    from configuracoes import ASSINATURA  # Importando sua assinatura oficial
+    from configuracoes import BLOCO_FIXO_FINAL  # Importando com o nome correto
 except ImportError as e:
     print(f"❌ ERRO de Importação: {e}")
     raise
@@ -25,7 +25,7 @@ SCOPES = [
     "https://www.googleapis.com/auth/drive.file"
 ]
 
-# --- FUNÇÕES DE APOIO ---
+# --- FUNÇÕES DE APOIO (MANTIDAS) ---
 
 def renovar_token():
     if not os.path.exists("token.json"):
@@ -81,7 +81,7 @@ def executar():
         feed = feedparser.parse("https://g1.globo.com/rss/g1/politica/")
         noticia_base = feed.entries[0]
         
-        # 2. Geração do Texto (Solicitando também os links de pesquisa)
+        # 2. Geração do Texto e Links de Pesquisa
         prompt_texto = (
             f"Com base na notícia '{noticia_base.title}', escreva um artigo analítico. "
             "Responda APENAS com um JSON usando estas chaves: "
@@ -98,29 +98,34 @@ def executar():
 
         # 3. Geração de Imagens
         arquivos_fotos = gerar_imagens_ia(client, dados['titulo'])
-        links_finais_fotos = [upload_para_drive(service_drive, arq, arq) for arq in arquivos_fotos]
+        links_finais_fotos = []
+        for arq in arquivos_fotos:
+            url = upload_para_drive(service_drive, arq, arq)
+            links_finais_fotos.append(url)
 
-        # 4. Montagem do dicionário 'dados' para o Template
-        dados['img_topo'] = links_finais_fotos[0] if len(links_finais_fotos) > 0 else ""
-        dados['img_meio'] = links_finais_fotos[1] if len(links_finais_fotos) > 1 else ""
+        # 4. Organização dos dados para o Template
+        dados['img_topo'] = links_finais_fotos[0] if len(links_finais_fotos) > 0 else "https://via.placeholder.com/1280x720"
+        dados['img_meio'] = links_finais_fotos[1] if len(links_finais_fotos) > 1 else dados['img_topo']
         
-        # --- AQUI ESTÁ A CORREÇÃO DA ASSINATURA ---
-        # Unimos os links gerados pela IA com a assinatura do seu arquivo configuracoes.py
+        # Montagem da assinatura: Links de Pesquisa + Bloco Fixo (da sua configuração)
         dados['assinatura'] = f"""
-            <div style="margin-top: 20px; border-top: 1px solid #ccc; padding-top: 10px;">
-                <p><strong>Links para aprofundamento:</strong></p>
+            <div style="margin-top: 25px; border-top: 1px solid #eee; padding-top: 15px;">
+                <p style="font-weight: bold; color: #003366;">Links para pesquisa e aprofundamento:</p>
                 {dados.get('links_pesquisa', '')}
-                <br>
-                {ASSINATURA}
             </div>
+            {BLOCO_FIXO_FINAL}
         """
 
         # 5. Publicação
         html_final = obter_esqueleto_html(dados)
-        corpo_post = {'kind': 'blogger#post', 'title': dados['titulo'], 'content': html_final}
+        corpo_post = {
+            'kind': 'blogger#post', 
+            'title': dados['titulo'], 
+            'content': html_final
+        }
         
         service_blogger.posts().insert(blogId=BLOG_ID, body=corpo_post).execute()
-        print(f"✅ SUCESSO! Postado com a assinatura de configuracoes.py")
+        print(f"✅ SUCESSO! Postado com a assinatura completa de configuracoes.py")
 
     except Exception as e:
         print(f"💥 Falha: {e}")
