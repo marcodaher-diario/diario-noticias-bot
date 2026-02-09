@@ -26,35 +26,47 @@ def renovar_token():
     return creds
 
 def gerar_texto_rest(titulo_noticia):
-    """Gera o texto estruturado via chamada REST usando a rota estável v1"""
-    # Mudança para v1 (estável) e modelo 'latest'
-    url = f"https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key={GEMINI_API_KEY}"
+    """Gera o texto seguindo rigorosamente o manual da API de 2026"""
+    # Em 2026, a URL REST estável exige o prefixo 'models/' e o sufixo ':generateContent'
+    # Vamos usar o modelo mais estável disponível para o Free Tier atual
+    modelo = "gemini-1.5-flash-latest" 
+    url = f"https://generativelanguage.googleapis.com/v1/models/{modelo}:generateContent?key={GEMINI_API_KEY}"
     
     payload = {
         "contents": [{
             "parts": [{
                 "text": (
-                    f"Com base na notícia '{titulo_noticia}', escreva um artigo analítico profundo. "
-                    "Responda APENAS com um objeto JSON puro, sem markdown, usando estas chaves: "
-                    "titulo, intro, sub1, texto1, sub2, texto2, sub3, texto3, texto_conclusao."
+                    f"Atue como um jornalista analítico. Com base na notícia '{titulo_noticia}', "
+                    "gere um JSON com estas chaves: titulo, intro, sub1, texto1, sub2, texto2, sub3, texto3, texto_conclusao. "
+                    "Retorne APENAS o JSON puro, sem blocos de código markdown."
                 )
             }]
         }]
-        # Removi o generationConfig para evitar o erro 400 na v1 caso o suporte seja instável
     }
     
-    response = requests.post(url, json=payload)
+    # Headers recomendados pelo manual
+    headers = {'Content-Type': 'application/json'}
+    
+    response = requests.post(url, json=payload, headers=headers)
     res_json = response.json()
     
     if "candidates" not in res_json:
-        print(f"❌ Erro detalhado da API: {json.dumps(res_json, indent=2)}")
-        raise Exception("Falha na comunicação com o Gemini.")
+        # Se ainda der 404 com o flash-latest, tentamos o gemini-pro (fallback universal)
+        if res_json.get("error", {}).get("code") == 404:
+            print("⚠️ Modelo Flash-Latest não encontrado, tentando fallback para Gemini-Pro...")
+            url_fallback = url.replace("gemini-1.5-flash-latest", "gemini-pro")
+            response = requests.post(url_fallback, json=payload, headers=headers)
+            res_json = response.json()
+
+    if "candidates" not in res_json:
+        print(f"❌ Erro Crítico na API: {json.dumps(res_json, indent=2)}")
+        raise Exception("O Google não reconheceu nenhum dos modelos disponíveis.")
         
     texto_puro = res_json['candidates'][0]['content']['parts'][0]['text']
     
-    # Limpeza extra caso o Gemini mande ```json ... ``` mesmo pedindo para não mandar
+    # Limpeza de Markdown (caso a IA ignore o comando de JSON puro)
     if "```" in texto_puro:
-        texto_puro = texto_puro.split("```json")[-1].split("```")[0].strip()
+        texto_puro = texto_puro.replace("```json", "").replace("```", "").strip()
         
     return json.loads(texto_puro)
 
