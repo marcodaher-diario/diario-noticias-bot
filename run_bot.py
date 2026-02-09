@@ -9,11 +9,12 @@ from googleapiclient.http import MediaFileUpload
 from google import genai
 from google.genai import types
 
-# --- IMPORTAÇÃO DO SEU TEMPLATE ---
+# --- IMPORTAÇÕES DE CONFIGURAÇÃO E TEMPLATE ---
 try:
     from template_blog import obter_esqueleto_html
-except ImportError:
-    print("❌ ERRO: Arquivo 'template_blog.py' não encontrado.")
+    from configuracoes import ASSINATURA  # Importando sua assinatura oficial
+except ImportError as e:
+    print(f"❌ ERRO de Importação: {e}")
     raise
 
 # --- CONFIGURAÇÕES ---
@@ -27,100 +28,65 @@ SCOPES = [
 # --- FUNÇÕES DE APOIO ---
 
 def renovar_token():
-    """Autentica o bot usando o token.json salvo."""
     if not os.path.exists("token.json"):
         raise FileNotFoundError("O arquivo token.json não foi encontrado!")
-    
     with open("token.json", "r") as f:
         info = json.load(f)
-    
     creds = Credentials.from_authorized_user_info(info, SCOPES)
-    
     if creds.expired and creds.refresh_token:
-        print("🔄 Renovando acesso ao Google Services...")
         creds.refresh(Request())
         with open("token.json", "w") as f:
             f.write(creds.to_json())
     return creds
 
 def upload_para_drive(service_drive, caminho_arquivo, nome_arquivo):
-    """Sobe a imagem para o Drive e retorna o link direto para o Blogger."""
     file_metadata = {'name': nome_arquivo}
     media = MediaFileUpload(caminho_arquivo, mimetype='image/png')
-    
-    # Cria o arquivo no Drive
-    file = service_drive.files().create(
-        body=file_metadata, 
-        media_body=media, 
-        fields='id'
-    ).execute()
-    
-    # Dá permissão de leitura pública para que a imagem apareça no blog
-    service_drive.permissions().create(
-        fileId=file.get('id'), 
-        body={'type': 'anyone', 'role': 'reader'}
-    ).execute()
-    
-    # Retorna o link de visualização direta (formato uc?export=view)
+    file = service_drive.files().create(body=file_metadata, media_body=media, fields='id').execute()
+    service_drive.permissions().create(fileId=file.get('id'), body={'type': 'anyone', 'role': 'reader'}).execute()
     return f"https://drive.google.com/uc?export=view&id={file.get('id')}"
 
 def gerar_imagens_ia(client, titulo_post):
-    """Gera duas imagens 16:9 usando a Imagen 3."""
     links_locais = []
-    # Prompts focados no estilo 16:9 solicitado
     prompts = [
-        f"Professional news photojournalism, cinematic wide shot, high resolution: {titulo_post}",
-        f"Conceptual political illustration, clean and modern, deep blue tones, symbolic: {titulo_post}"
+        f"Professional news photojournalism, cinematic wide shot, 16:9: {titulo_post}",
+        f"Conceptual political illustration, deep blue tones, 16:9: {titulo_post}"
     ]
-    
     for i, p in enumerate(prompts):
         nome_arq = f"imagem_{i}.png"
-        print(f"🎨 Gerando imagem {i+1}/2 via Imagen 3...")
         try:
             response = client.models.generate_images(
                 model='imagen-3.0-generate-002',
                 prompt=p,
-                config=types.GenerateImagesConfig(
-                    number_of_images=1, 
-                    aspect_ratio="16:9"
-                )
+                config=types.GenerateImagesConfig(number_of_images=1, aspect_ratio="16:9")
             )
-            # Salva localmente para o upload posterior
             response.generated_images[0].image.save(nome_arq)
             links_locais.append(nome_arq)
         except Exception as e:
-            print(f"⚠️ Erro ao gerar imagem {i}: {e}")
-            
+            print(f"⚠️ Erro imagem {i}: {e}")
     return links_locais
 
 # --- NÚCLEO DO BOT ---
 
 def executar():
-    print(f"🚀 Iniciando Bot Diário de Notícias - Blog ID: {BLOG_ID}")
+    print(f"🚀 Iniciando Bot - Blog ID: {BLOG_ID}")
     
     try:
-        # 1. Autenticação e Setup
         creds = renovar_token()
         service_blogger = build('blogger', 'v3', credentials=creds)
         service_drive = build('drive', 'v3', credentials=creds)
         client = genai.Client(api_key=GEMINI_API_KEY)
 
-        # 2. Captura da Notícia (G1 Política)
+        # 1. Captura da Notícia
         feed = feedparser.parse("https://g1.globo.com/rss/g1/politica/")
-        if not feed.entries:
-            print("⚠️ Feed RSS vazio.")
-            return
-        
         noticia_base = feed.entries[0]
-        print(f"📰 Notícia Base: {noticia_base.title}")
-
-        # 3. Geração do Texto Estruturado (Gemini 3 Flash)
-        print("✍️ Solicitando análise analítica ao Gemini 3...")
+        
+        # 2. Geração do Texto (Solicitando também os links de pesquisa)
         prompt_texto = (
-            f"Atue como um analista político. Com base na notícia '{noticia_base.title}', "
-            "escreva um artigo profundo em português. "
-            "Responda APENAS com um objeto JSON puro usando estas chaves: "
-            "titulo, intro, sub1, texto1, sub2, texto2, sub3, texto3, texto_conclusao."
+            f"Com base na notícia '{noticia_base.title}', escreva um artigo analítico. "
+            "Responda APENAS com um JSON usando estas chaves: "
+            "titulo, intro, sub1, texto1, sub2, texto2, sub3, texto3, texto_conclusao, links_pesquisa. "
+            "Em 'links_pesquisa', crie uma lista HTML <ul> com 3 links de termos relacionados para busca no Google."
         )
         
         res_texto = client.models.generate_content(
@@ -128,46 +94,36 @@ def executar():
             contents=prompt_texto,
             config=types.GenerateContentConfig(response_mime_type="application/json")
         )
-        
-        # Converte a resposta JSON da IA em dicionário Python
         dados = json.loads(res_texto.text)
 
-        # 4. Geração e Upload de Imagens
+        # 3. Geração de Imagens
         arquivos_fotos = gerar_imagens_ia(client, dados['titulo'])
-        links_finais_fotos = []
-        
-        for arq in arquivos_fotos:
-            print(f"☁️ Subindo {arq} para o Google Drive...")
-            url_drive = upload_para_drive(service_drive, arq, arq)
-            links_finais_fotos.append(url_drive)
+        links_finais_fotos = [upload_para_drive(service_drive, arq, arq) for arq in arquivos_fotos]
 
-        # 5. Organização dos dados para o Template MD
-        # Preenche os campos de imagem no dicionário
-        dados['img_topo'] = links_finais_fotos[0] if len(links_finais_fotos) > 0 else "https://via.placeholder.com/1280x720"
-        dados['img_meio'] = links_finais_fotos[1] if len(links_finais_fotos) > 1 else dados['img_topo']
+        # 4. Montagem do dicionário 'dados' para o Template
+        dados['img_topo'] = links_finais_fotos[0] if len(links_finais_fotos) > 0 else ""
+        dados['img_meio'] = links_finais_fotos[1] if len(links_finais_fotos) > 1 else ""
         
-        # Cria a assinatura com o link original
-        dados['assinatura'] = (
-            f"<hr><p style='text-align:right; font-size:small;'>"
-            f"Fonte Original: <a href='{noticia_base.link}'>G1 Política</a><br>"
-            f"Análise gerada por Inteligência Artificial em 2026</p>"
-        )
+        # --- AQUI ESTÁ A CORREÇÃO DA ASSINATURA ---
+        # Unimos os links gerados pela IA com a assinatura do seu arquivo configuracoes.py
+        dados['assinatura'] = f"""
+            <div style="margin-top: 20px; border-top: 1px solid #ccc; padding-top: 10px;">
+                <p><strong>Links para aprofundamento:</strong></p>
+                {dados.get('links_pesquisa', '')}
+                <br>
+                {ASSINATURA}
+            </div>
+        """
 
-        # 6. Renderização do HTML e Publicação
-        print("🏗️ Renderizando template e enviando para o Blogger...")
+        # 5. Publicação
         html_final = obter_esqueleto_html(dados)
-
-        corpo_post = {
-            'kind': 'blogger#post',
-            'title': dados['titulo'],
-            'content': html_final
-        }
+        corpo_post = {'kind': 'blogger#post', 'title': dados['titulo'], 'content': html_final}
         
         service_blogger.posts().insert(blogId=BLOG_ID, body=corpo_post).execute()
-        print(f"✅ SUCESSO! Artigo '{dados['titulo']}' publicado com imagens 16:9.")
+        print(f"✅ SUCESSO! Postado com a assinatura de configuracoes.py")
 
     except Exception as e:
-        print(f"💥 Falha crítica na execução: {e}")
+        print(f"💥 Falha: {e}")
 
 if __name__ == "__main__":
     executar()
