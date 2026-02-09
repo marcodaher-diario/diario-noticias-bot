@@ -26,13 +26,14 @@ def renovar_token():
     return creds
 
 def gerar_texto_rest(titulo_noticia):
-    """Gera texto via chamada REST direta para evitar erro 404 da biblioteca"""
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={GEMINI_API_KEY}"
+    """Gera texto via REST com tratamento de erro detalhado"""
+    # Testando v1 (estável) diretamente
+    url = f"https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key={GEMINI_API_KEY}"
     
     payload = {
         "contents": [{
             "parts": [{
-                "text": f"Baseado na notícia '{titulo_noticia}', retorne APENAS um JSON: {{\"titulo\": \"...\", \"intro\": \"...\", \"sub1\": \"...\", \"texto1\": \"...\", \"sub2\": \"...\", \"texto2\": \"...\", \"sub3\": \"...\", \"texto3\": \"...\", \"texto_conclusao\": \"...\"}}"
+                "text": f"Gere um JSON para a notícia '{titulo_noticia}' com as chaves: titulo, intro, sub1, texto1, sub2, texto2, sub3, texto3, texto_conclusao."
             }]
         }],
         "generationConfig": {
@@ -41,45 +42,50 @@ def gerar_texto_rest(titulo_noticia):
     }
     
     response = requests.post(url, json=payload)
-    if response.status_code != 200:
-        # Se v1beta falhar, tentamos v1 (Estável)
-        url_v1 = url.replace("v1beta", "v1")
-        response = requests.post(url_v1, json=payload)
-        
     res_json = response.json()
-    return json.loads(res_json['candidates'][0]['content']['parts'][0]['text'])
+    
+    if "candidates" not in res_json:
+        print(f"❌ Erro da API Google: {json.dumps(res_json, indent=2)}")
+        raise Exception("A API do Gemini não retornou conteúdo. Verifique o log acima.")
+        
+    texto_puro = res_json['candidates'][0]['content']['parts'][0]['text']
+    return json.loads(texto_puro)
 
 def executar():
-    print("🚀 Iniciando Bot Diário de Notícias (Modo Direct Link)...")
-    creds = renovar_token()
-    service_blogger = build('blogger', 'v3', credentials=creds)
+    print("🚀 Iniciando Bot Diário de Notícias...")
+    try:
+        creds = renovar_token()
+        service_blogger = build('blogger', 'v3', credentials=creds)
 
-    # 1. Busca Notícia
-    feed = feedparser.parse("https://g1.globo.com/rss/g1/politica/")
-    noticia = feed.entries[0]
-    print(f"📰 Notícia: {noticia.title}")
+        # 1. Busca Notícia
+        feed = feedparser.parse("https://g1.globo.com/rss/g1/politica/")
+        noticia = feed.entries[0]
+        print(f"📰 Notícia: {noticia.title}")
 
-    # 2. Gera Conteúdo (Usando a nova função REST)
-    print("✍️ Gerando texto estruturado via REST...")
-    dados = gerar_texto_rest(noticia.title)
+        # 2. Gera Conteúdo
+        print("✍️ Gerando texto estruturado...")
+        dados = gerar_texto_rest(noticia.title)
 
-    # 3. Preparar Imagens (Placeholder para garantir o post agora)
-    dados['img_topo'] = "https://via.placeholder.com/1280x720.png?text=Noticia+Principal"
-    dados['img_meio'] = "https://via.placeholder.com/1280x720.png?text=Analise+Detalhada"
-    dados['assinatura'] = f"<hr><p style='text-align:right;'><i>Fonte: <a href='{noticia.link}'>G1 Política</a></i></p>"
+        # 3. Preparar Campos do Template
+        dados['img_topo'] = "https://via.placeholder.com/1280x720.png?text=Noticia+Principal"
+        dados['img_meio'] = "https://via.placeholder.com/1280x720.png?text=Analise"
+        dados['assinatura'] = f"<p style='text-align:right;'>Fonte: {noticia.link}</p>"
 
-    # 4. Montar e Publicar
-    print("🏗️ Renderizando Template...")
-    html_final = obter_esqueleto_html(dados)
+        # 4. Montar e Publicar
+        print("🏗️ Renderizando Template...")
+        html_final = obter_esqueleto_html(dados)
 
-    corpo_post = {
-        'kind': 'blogger#post',
-        'title': dados['titulo'],
-        'content': html_final
-    }
-    
-    service_blogger.posts().insert(blogId=BLOG_ID, body=corpo_post).execute()
-    print(f"✅ SUCESSO ABSOLUTO! Postado no Blogger.")
+        corpo_post = {
+            'kind': 'blogger#post',
+            'title': dados['titulo'],
+            'content': html_final
+        }
+        
+        service_blogger.posts().insert(blogId=BLOG_ID, body=corpo_post).execute()
+        print(f"✅ SUCESSO! Postado no Blogger.")
+        
+    except Exception as e:
+        print(f"💥 Falha crítica no bot: {e}")
 
 if __name__ == "__main__":
     executar()
