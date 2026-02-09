@@ -104,7 +104,7 @@ def executar():
     Fale sobre os impactos disso para o Brasil e o cenário futuro.
     Retorne apenas o corpo do texto em HTML (sem <html> ou <body>).
     """
-    response_texto = client_gemini.models.generate_content(model="gemini-1.5-flash", contents=prompt_texto)
+    response_texto = client_gemini.models.generate_content(model="gemini-1.5-flash-002", contents=prompt_texto)
     texto_analitico = response_texto.text
 
     # 3. Gerar e fazer Upload das Imagens
