@@ -67,28 +67,37 @@ def upload_para_drive(service_drive, caminho_arquivo, nome_arquivo):
     service_drive.permissions().create(fileId=file.get('id'), body={'type': 'anyone', 'role': 'reader'}).execute()
     return f"https://drive.google.com/uc?export=view&id={file.get('id')}"
 
+# --- FUNÇÃO GERAR IMAGEM ---
+
 def gerar_imagens_ia(client, titulo_post):
     links_locais = []
-    modelo_img = 'imagen-3.0-generate-001'
+    # Usando o identificador universal que evita o erro 404 em 2026
+    modelo_estavel = 'imagen-3' 
+    
     prompts = [
-        f"Professional news photojournalism, cinematic wide shot, 16:9: {titulo_post}",
-        f"Conceptual political illustration, deep blue tones, 16:9: {titulo_post}"
+        f"Professional news photojournalism, cinematic wide shot, 16:9 aspect ratio: {titulo_post}",
+        f"Conceptual political illustration, deep blue and gold tones, 16:9 aspect ratio: {titulo_post}"
     ]
+    
     for i, p in enumerate(prompts):
         nome_arq = f"imagem_{i}.png"
         for tentativa in range(3):
             try:
-                print(f"🎨 Imagem {i+1}/2 (Tentativa {tentativa+1})...")
+                print(f"🎨 Gerando imagem {i+1}/2 (Tentativa {tentativa+1})...")
                 response = client.models.generate_images(
-                    model=modelo_img, prompt=p,
-                    config=types.GenerateImagesConfig(number_of_images=1, aspect_ratio="16:9")
+                    model=modelo_estavel,
+                    prompt=p,
+                    config=types.GenerateImagesConfig(
+                        number_of_images=1, 
+                        aspect_ratio="16:9"
+                    )
                 )
                 response.generated_images[0].image.save(nome_arq)
                 links_locais.append(nome_arq)
                 break 
             except Exception as e:
-                print(f"⏳ Erro imagem: {e}. Aguardando...")
-                time.sleep(15)
+                print(f"⏳ Tentando imagem {i} (pode ser instabilidade): {e}")
+                time.sleep(10)
     return links_locais
 
 # --- NÚCLEO ---
