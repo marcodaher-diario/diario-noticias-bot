@@ -4,7 +4,7 @@ import feedparser
 from google.oauth2.credentials import Credentials
 from google.auth.transport.requests import Request
 from googleapiclient.discovery import build
-from google import genai  # Biblioteca do seu manual
+from google import genai
 from google.genai import types
 
 # --- IMPORTAÇÃO DO SEU TEMPLATE ---
@@ -12,7 +12,9 @@ from template_blog import obter_esqueleto_html
 
 # --- CONFIGURAÇÕES ---
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
-BLOG_ID = "3884849132228514800"
+# ID ATUALIZADO CONFORME SUA URL:
+BLOG_ID = "7605688984374445860" 
+
 SCOPES = ["https://www.googleapis.com/auth/blogger", "https://www.googleapis.com/auth/drive.file"]
 
 def renovar_token():
@@ -26,52 +28,42 @@ def renovar_token():
     return creds
 
 def executar():
-    print("🚀 Iniciando Bot Diário de Notícias (Manual 2026)...")
+    print(f"🚀 Iniciando Bot no Blog ID: {BLOG_ID}")
     creds = renovar_token()
     service_blogger = build('blogger', 'v3', credentials=creds)
-    
-    # Inicializa o cliente conforme seu manual
     client = genai.Client(api_key=GEMINI_API_KEY)
 
     # 1. Busca Notícia
     feed = feedparser.parse("https://g1.globo.com/rss/g1/politica/")
+    if not feed.entries:
+        print("⚠️ Nenhum feed encontrado.")
+        return
+    
     noticia = feed.entries[0]
     print(f"📰 Notícia: {noticia.title}")
 
-    # 2. Gera Texto usando o modelo do seu manual (Gemini 3 Flash Preview)
+    # 2. IA gera o texto (Gemini 3 Flash - Sucesso comprovado no teste anterior)
     prompt = (
-        f"Com base na notícia '{noticia.title}', escreva um artigo analítico. "
+        f"Com base na notícia '{noticia.title}', escreva um artigo analítico profundo para um blog de política. "
         "Retorne APENAS um JSON com estas chaves: titulo, intro, sub1, texto1, sub2, texto2, sub3, texto3, texto_conclusao."
     )
     
-    print("✍️ Gerando texto estruturado com Gemini 3...")
-    try:
-        # Usando o modelo EXATO do seu manual
-        response = client.models.generate_content(
-            model="gemini-3-flash-preview", 
-            contents=prompt,
-            config=types.GenerateContentConfig(
-                response_mime_type="application/json"
-            )
-        )
-        dados = json.loads(response.text)
-    except Exception as e:
-        print(f"⚠️ Erro no Gemini 3, tentando 1.5-flash-002: {e}")
-        # Segunda tentativa com o nome técnico mais recente
-        response = client.models.generate_content(
-            model="gemini-1.5-flash-002", 
-            contents=prompt,
-            config=types.GenerateContentConfig(response_mime_type="application/json")
-        )
-        dados = json.loads(response.text)
+    print("✍️ Gerando conteúdo com Gemini 3...")
+    response = client.models.generate_content(
+        model="gemini-3-flash-preview", 
+        contents=prompt,
+        config=types.GenerateContentConfig(response_mime_type="application/json")
+    )
+    dados = json.loads(response.text)
 
     # 3. Preparar Campos do Template
-    dados['img_topo'] = "https://via.placeholder.com/1280x720.png?text=Noticia+Principal"
+    # Usando proporção 16:9 conforme sua preferência
+    dados['img_topo'] = "https://via.placeholder.com/1280x720.png?text=Noticia+do+Dia"
     dados['img_meio'] = "https://via.placeholder.com/1280x720.png?text=Analise+Politica"
-    dados['assinatura'] = f"<hr><p style='text-align:right;'>Fonte: <a href='{noticia.link}'>G1 Política</a></p>"
+    dados['assinatura'] = f"<hr><p style='text-align:right;'>Fonte: <a href='{noticia.link}'>G1 Política</a> | IA Bot 2026</p>"
 
     # 4. Montar e Publicar
-    print("🏗️ Renderizando Template...")
+    print("🏗️ Renderizando Template Azul Marinho...")
     html_final = obter_esqueleto_html(dados)
 
     corpo_post = {
@@ -80,8 +72,12 @@ def executar():
         'content': html_final
     }
     
-    service_blogger.posts().insert(blogId=BLOG_ID, body=corpo_post).execute()
-    print(f"✅ SUCESSO! Postado no Blogger via Gemini 3.")
+    print("📤 Enviando para o Blogger...")
+    try:
+        service_blogger.posts().insert(blogId=BLOG_ID, body=corpo_post).execute()
+        print(f"✅ SUCESSO ABSOLUTO! O post '{dados['titulo']}' já deve estar visível.")
+    except Exception as e:
+        print(f"❌ Erro na publicação final: {e}")
 
 if __name__ == "__main__":
     executar()
