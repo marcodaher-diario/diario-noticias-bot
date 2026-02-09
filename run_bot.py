@@ -26,28 +26,36 @@ def renovar_token():
     return creds
 
 def gerar_texto_rest(titulo_noticia):
-    """Gera texto via REST com os nomes de campos corrigidos para o padrão Google"""
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={GEMINI_API_KEY}"
+    """Gera o texto estruturado via chamada REST usando a rota estável v1"""
+    # Mudança para v1 (estável) e modelo 'latest'
+    url = f"https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key={GEMINI_API_KEY}"
     
     payload = {
         "contents": [{
             "parts": [{
-                "text": f"Gere um JSON para a notícia '{titulo_noticia}' com as chaves: titulo, intro, sub1, texto1, sub2, texto2, sub3, texto3, texto_conclusao. Retorne APENAS o JSON puro, sem markdown."
+                "text": (
+                    f"Com base na notícia '{titulo_noticia}', escreva um artigo analítico profundo. "
+                    "Responda APENAS com um objeto JSON puro, sem markdown, usando estas chaves: "
+                    "titulo, intro, sub1, texto1, sub2, texto2, sub3, texto3, texto_conclusao."
+                )
             }]
-        }],
-        "generationConfig": {
-            "responseMimeType": "application/json"  # Nome correto para REST é este
-        }
+        }]
+        # Removi o generationConfig para evitar o erro 400 na v1 caso o suporte seja instável
     }
     
     response = requests.post(url, json=payload)
     res_json = response.json()
     
     if "candidates" not in res_json:
-        print(f"❌ Erro da API Google: {json.dumps(res_json, indent=2)}")
-        raise Exception("A API do Gemini não retornou conteúdo.")
+        print(f"❌ Erro detalhado da API: {json.dumps(res_json, indent=2)}")
+        raise Exception("Falha na comunicação com o Gemini.")
         
     texto_puro = res_json['candidates'][0]['content']['parts'][0]['text']
+    
+    # Limpeza extra caso o Gemini mande ```json ... ``` mesmo pedindo para não mandar
+    if "```" in texto_puro:
+        texto_puro = texto_puro.split("```json")[-1].split("```")[0].strip()
+        
     return json.loads(texto_puro)
 
 def executar():
