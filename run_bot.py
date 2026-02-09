@@ -46,27 +46,55 @@ def upload_para_drive(service_drive, caminho_arquivo, nome_arquivo):
     service_drive.permissions().create(fileId=file.get('id'), body={'type': 'anyone', 'role': 'reader'}).execute()
     return f"https://drive.google.com/uc?export=view&id={file.get('id')}"
 
+#----------------------------------------------------------------------
+#      GERAR IMAGENS
+#----------------------------------------------------------------------
+
 def gerar_imagens_ia(client, titulo_post):
     links_locais = []
+    # Usando o nome do modelo estável conforme o manual atualizado
+    modelo_imagem = 'imagen-3.0-generate-001' 
+    
     prompts = [
-        f"Professional news photojournalism, cinematic wide shot, 16:9: {titulo_post}",
-        f"Conceptual political illustration, deep blue tones, 16:9: {titulo_post}"
+        f"Professional news photojournalism, cinematic wide shot, 16:9 aspect ratio: {titulo_post}",
+        f"Conceptual political illustration, deep blue and gold tones, 16:9 aspect ratio: {titulo_post}"
     ]
+    
     for i, p in enumerate(prompts):
         nome_arq = f"imagem_{i}.png"
         try:
+            print(f"🎨 Gerando imagem {i+1}/2...")
             response = client.models.generate_images(
-                model='imagen-3.0-generate-002',
+                model=modelo_imagem,
                 prompt=p,
-                config=types.GenerateImagesConfig(number_of_images=1, aspect_ratio="16:9")
+                config=types.GenerateImagesConfig(
+                    number_of_images=1, 
+                    aspect_ratio="16:9",
+                    add_watermark=False # Opcional, dependendo da sua conta
+                )
             )
             response.generated_images[0].image.save(nome_arq)
             links_locais.append(nome_arq)
         except Exception as e:
-            print(f"⚠️ Erro imagem {i}: {e}")
+            print(f"⚠️ Erro ao gerar imagem {i} com {modelo_imagem}: {e}")
+            # Fallback para o nome genérico se o específico falhar
+            if "404" in str(e):
+                try:
+                    print("🔄 Tentando modelo fallback 'imagen-3'...")
+                    response = client.models.generate_images(
+                        model='imagen-3',
+                        prompt=p,
+                        config=types.GenerateImagesConfig(number_of_images=1, aspect_ratio="16:9")
+                    )
+                    response.generated_images[0].image.save(nome_arq)
+                    links_locais.append(nome_arq)
+                except Exception as e2:
+                    print(f"❌ Falha total na imagem: {e2}")
     return links_locais
 
+#-----------------------
 # --- NÚCLEO DO BOT ---
+#----------------------
 
 def executar():
     print(f"🚀 Iniciando Bot - Blog ID: {BLOG_ID}")
