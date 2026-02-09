@@ -2,7 +2,7 @@ import os
 import json
 import feedparser
 import time
-import re  # Necessário para a função de tags
+import re
 from google.oauth2.credentials import Credentials
 from google.auth.transport.requests import Request
 from googleapiclient.discovery import build
@@ -23,8 +23,6 @@ GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
 BLOG_ID = "7605688984374445860" 
 SCOPES = ["https://www.googleapis.com/auth/blogger", "https://www.googleapis.com/auth/drive.file"]
 
-# --- FUNÇÕES DE APOIO ---
-
 def renovar_token():
     if not os.path.exists("token.json"):
         raise FileNotFoundError("O arquivo token.json não foi encontrado!")
@@ -38,7 +36,6 @@ def renovar_token():
     return creds
 
 def gerar_tags_seo(titulo, texto_completo):
-    """Gera tags inteligentes e insere a marca Marco Daher."""
     stopwords = ["com", "de", "do", "da", "em", "para", "um", "uma", "os", "as", "que", "no", "na", "ao", "aos", "o", "a", "e"]
     conteudo = f"{titulo} {texto_completo[:300]}"
     palavras = re.findall(r'\b\w{4,}\b', conteudo.lower())
@@ -46,11 +43,9 @@ def gerar_tags_seo(titulo, texto_completo):
     for p in palavras:
         if p not in stopwords and p not in tags:
             tags.append(p.capitalize())
-    
     tags_fixas = ["Emagrecer", "Saúde", "Marco Daher"]
     for tf in tags_fixas:
         if tf not in tags: tags.append(tf)
-    
     resultado = []
     tamanho_atual = 0
     for tag in tags:
@@ -67,16 +62,14 @@ def upload_para_drive(service_drive, caminho_arquivo, nome_arquivo):
     service_drive.permissions().create(fileId=file.get('id'), body={'type': 'anyone', 'role': 'reader'}).execute()
     return f"https://drive.google.com/uc?export=view&id={file.get('id')}"
 
-# --- FUNÇÃO GERAR IMAGEM ---
-
 def gerar_imagens_ia(client, titulo_post):
     links_locais = []
-    # Usando o identificador universal que evita o erro 404 em 2026
-    modelo_estavel = 'imagen-3' 
+    # Modelo corrigido para a nomenclatura estável de 2026
+    modelo_img = 'imagen-3.0-generate-001'
     
     prompts = [
-        f"Professional news photojournalism, cinematic wide shot, 16:9 aspect ratio: {titulo_post}",
-        f"Conceptual political illustration, deep blue and gold tones, 16:9 aspect ratio: {titulo_post}"
+        f"Professional news photojournalism, cinematic wide shot, 16:9 aspect ratio, high quality: {titulo_post}",
+        f"Conceptual political illustration, deep blue tones, 16:9 aspect ratio, digital art: {titulo_post}"
     ]
     
     for i, p in enumerate(prompts):
@@ -84,23 +77,23 @@ def gerar_imagens_ia(client, titulo_post):
         for tentativa in range(3):
             try:
                 print(f"🎨 Gerando imagem {i+1}/2 (Tentativa {tentativa+1})...")
+                # Em 2026, algumas contas exigem o uso da função generate_images diretamente
                 response = client.models.generate_images(
-                    model=modelo_estavel,
+                    model=modelo_img,
                     prompt=p,
                     config=types.GenerateImagesConfig(
-                        number_of_images=1, 
+                        number_of_images=1,
                         aspect_ratio="16:9"
                     )
                 )
-                response.generated_images[0].image.save(nome_arq)
-                links_locais.append(nome_arq)
-                break 
+                if response.generated_images:
+                    response.generated_images[0].image.save(nome_arq)
+                    links_locais.append(nome_arq)
+                    break
             except Exception as e:
-                print(f"⏳ Tentando imagem {i} (pode ser instabilidade): {e}")
-                time.sleep(10)
+                print(f"⏳ Erro imagem {i}: {e}")
+                time.sleep(12)
     return links_locais
-
-# --- NÚCLEO ---
 
 def executar():
     print(f"🚀 Iniciando Bot - Blog ID: {BLOG_ID}")
@@ -114,7 +107,7 @@ def executar():
         feed = feedparser.parse("https://g1.globo.com/rss/g1/politica/")
         noticia_base = feed.entries[0]
         
-        # 2. Texto (com Retry)
+        # 2. Texto
         dados = None
         for t in range(3):
             try:
@@ -122,7 +115,8 @@ def executar():
                 prompt = (f"Atue como analista político. Notícia: '{noticia_base.title}'. "
                          "Gere JSON: titulo, intro, sub1, texto1, sub2, texto2, sub3, texto3, texto_conclusao, links_pesquisa.")
                 res = client.models.generate_content(
-                    model="gemini-3-flash-preview", contents=prompt,
+                    model="gemini-2.0-flash", # Atualizado para o modelo estável mais recente
+                    contents=prompt,
                     config=types.GenerateContentConfig(response_mime_type="application/json")
                 )
                 dados = json.loads(res.text)
@@ -135,7 +129,7 @@ def executar():
 
         # 3. Tags SEO
         tags_geradas = gerar_tags_seo(dados['titulo'], dados['texto1'])
-        print(f"🏷️ Tags geradas: {', '.join(tags_geradas)}")
+        print(f"🏷️ Tags: {', '.join(tags_geradas)}")
 
         # 4. Imagens
         arquivos = gerar_imagens_ia(client, dados['titulo'])
@@ -146,17 +140,17 @@ def executar():
         dados['img_meio'] = links[1] if len(links) > 1 else dados['img_topo']
         dados['assinatura'] = f"<div style='margin-top:25px;'>{dados.get('links_pesquisa', '')}</div>{BLOCO_FIXO_FINAL}"
 
-        # 6. Publicação (Agora com Labels)
+        # 6. Publicação
         html_final = obter_esqueleto_html(dados)
         corpo_post = {
             'kind': 'blogger#post',
             'title': dados['titulo'],
             'content': html_final,
-            'labels': tags_geradas  # Inserindo as tags no post
+            'labels': tags_geradas
         }
         
         service_blogger.posts().insert(blogId=BLOG_ID, body=corpo_post).execute()
-        print(f"✅ SUCESSO TOTAL! Postado com Tags, Imagens e Assinatura.")
+        print(f"✅ SUCESSO TOTAL! Postado no Blog.")
 
     except Exception as e:
         print(f"💥 Falha: {e}")
