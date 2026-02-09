@@ -9,10 +9,10 @@ from googleapiclient.http import MediaFileUpload
 from google import genai
 from google.genai import types
 
-# --- IMPORTAÇÕES SEM ALTERAR NOMES ---
+# --- IMPORTAÇÕES ---
 try:
     from template_blog import obter_esqueleto_html
-    from configuracoes import BLOCO_FIXO_FINAL  # Importando com o nome correto
+    from configuracoes import BLOCO_FIXO_FINAL
 except ImportError as e:
     print(f"❌ ERRO de Importação: {e}")
     raise
@@ -24,8 +24,6 @@ SCOPES = [
     "https://www.googleapis.com/auth/blogger", 
     "https://www.googleapis.com/auth/drive.file"
 ]
-
-# --- FUNÇÕES DE APOIO (MANTIDAS) ---
 
 def renovar_token():
     if not os.path.exists("token.json"):
@@ -46,14 +44,10 @@ def upload_para_drive(service_drive, caminho_arquivo, nome_arquivo):
     service_drive.permissions().create(fileId=file.get('id'), body={'type': 'anyone', 'role': 'reader'}).execute()
     return f"https://drive.google.com/uc?export=view&id={file.get('id')}"
 
-#----------------------------------------------------------------------
-#      GERAR IMAGENS
-#----------------------------------------------------------------------
-
 def gerar_imagens_ia(client, titulo_post):
     links_locais = []
-    # Usando o nome do modelo estável conforme o manual atualizado
-    modelo_imagem = 'imagen-3.0-generate-001' 
+    # Modelo estável para 2026
+    modelo_img = 'imagen-3.0-generate-001'
     
     prompts = [
         f"Professional news photojournalism, cinematic wide shot, 16:9 aspect ratio: {titulo_post}",
@@ -64,37 +58,20 @@ def gerar_imagens_ia(client, titulo_post):
         nome_arq = f"imagem_{i}.png"
         try:
             print(f"🎨 Gerando imagem {i+1}/2...")
+            # Chamada limpa, sem parâmetros extras que causam erro
             response = client.models.generate_images(
-                model=modelo_imagem,
+                model=modelo_img,
                 prompt=p,
                 config=types.GenerateImagesConfig(
                     number_of_images=1, 
-                    aspect_ratio="16:9",
-                    add_watermark=False # Opcional, dependendo da sua conta
+                    aspect_ratio="16:9"
                 )
             )
             response.generated_images[0].image.save(nome_arq)
             links_locais.append(nome_arq)
         except Exception as e:
-            print(f"⚠️ Erro ao gerar imagem {i} com {modelo_imagem}: {e}")
-            # Fallback para o nome genérico se o específico falhar
-            if "404" in str(e):
-                try:
-                    print("🔄 Tentando modelo fallback 'imagen-3'...")
-                    response = client.models.generate_images(
-                        model='imagen-3',
-                        prompt=p,
-                        config=types.GenerateImagesConfig(number_of_images=1, aspect_ratio="16:9")
-                    )
-                    response.generated_images[0].image.save(nome_arq)
-                    links_locais.append(nome_arq)
-                except Exception as e2:
-                    print(f"❌ Falha total na imagem: {e2}")
+            print(f"⚠️ Erro imagem {i}: {e}")
     return links_locais
-
-#-----------------------
-# --- NÚCLEO DO BOT ---
-#----------------------
 
 def executar():
     print(f"🚀 Iniciando Bot - Blog ID: {BLOG_ID}")
@@ -105,11 +82,11 @@ def executar():
         service_drive = build('drive', 'v3', credentials=creds)
         client = genai.Client(api_key=GEMINI_API_KEY)
 
-        # 1. Captura da Notícia
+        # 1. Notícia
         feed = feedparser.parse("https://g1.globo.com/rss/g1/politica/")
         noticia_base = feed.entries[0]
         
-        # 2. Geração do Texto e Links de Pesquisa
+        # 2. Texto e Links de Pesquisa
         prompt_texto = (
             f"Com base na notícia '{noticia_base.title}', escreva um artigo analítico. "
             "Responda APENAS com um JSON usando estas chaves: "
@@ -124,18 +101,17 @@ def executar():
         )
         dados = json.loads(res_texto.text)
 
-        # 3. Geração de Imagens
+        # 3. Imagens Reais
         arquivos_fotos = gerar_imagens_ia(client, dados['titulo'])
         links_finais_fotos = []
         for arq in arquivos_fotos:
             url = upload_para_drive(service_drive, arq, arq)
             links_finais_fotos.append(url)
 
-        # 4. Organização dos dados para o Template
+        # 4. Organização do Template
         dados['img_topo'] = links_finais_fotos[0] if len(links_finais_fotos) > 0 else "https://via.placeholder.com/1280x720"
         dados['img_meio'] = links_finais_fotos[1] if len(links_finais_fotos) > 1 else dados['img_topo']
         
-        # Montagem da assinatura: Links de Pesquisa + Bloco Fixo (da sua configuração)
         dados['assinatura'] = f"""
             <div style="margin-top: 25px; border-top: 1px solid #eee; padding-top: 15px;">
                 <p style="font-weight: bold; color: #003366;">Links para pesquisa e aprofundamento:</p>
@@ -146,14 +122,10 @@ def executar():
 
         # 5. Publicação
         html_final = obter_esqueleto_html(dados)
-        corpo_post = {
-            'kind': 'blogger#post', 
-            'title': dados['titulo'], 
-            'content': html_final
-        }
+        corpo_post = {'kind': 'blogger#post', 'title': dados['titulo'], 'content': html_final}
         
         service_blogger.posts().insert(blogId=BLOG_ID, body=corpo_post).execute()
-        print(f"✅ SUCESSO! Postado com a assinatura completa de configuracoes.py")
+        print(f"✅ SUCESSO TOTAL! Artigo '{dados['titulo']}' postado com imagens e bloco final.")
 
     except Exception as e:
         print(f"💥 Falha: {e}")
