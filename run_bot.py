@@ -68,39 +68,37 @@ def upload_para_drive(service_drive, caminho_arquivo, nome_arquivo):
 
 def gerar_imagens_ia(client, titulo_post):
     links_locais = []
-    # Modelos recomendados para Fev/2026
-    modelos_img = ['gemini-2.5-flash-image', 'imagen-3.0-generate-001']
+    # Em fev/2026, o alias universal para o modelo Nano Banana que gera imagens é este:
+    modelo_img = 'imagen-3' 
     
     prompts = [
-        f"Professional news photojournalism, cinematic wide shot, 16:9 aspect ratio, high definition: {titulo_post}",
-        f"Political analysis conceptual illustration, elegant dark blue theme, 16:9 aspect ratio: {titulo_post}"
+        f"Professional news photojournalism, cinematic wide shot, 16:9 aspect ratio: {titulo_post}",
+        f"Conceptual political illustration, deep blue tones, 16:9 aspect ratio: {titulo_post}"
     ]
     
     for i, p in enumerate(prompts):
         nome_arq = f"imagem_{i}.png"
-        sucesso_img = False
-        
-        for m in modelos_img:
-            if sucesso_img: break
+        for tentativa in range(2):
             try:
-                print(f"🎨 Gerando imagem {i+1}/2 (Modelo: {m})...")
+                print(f"🎨 Gerando imagem {i+1}/2 (Tentativa {tentativa+1})...")
                 response = client.models.generate_images(
-                    model=m,
+                    model=modelo_img,
                     prompt=p,
                     config=types.GenerateImagesConfig(
                         number_of_images=1,
-                        aspect_ratio="16:9" # Configuração 16:9 obrigatória do Marco
+                        aspect_ratio="16:9"
                     )
                 )
                 if response.generated_images:
                     response.generated_images[0].image.save(nome_arq)
                     links_locais.append(nome_arq)
-                    sucesso_img = True
-                    print(f"✨ Imagem {i+1} criada com sucesso!")
+                    print(f"✨ Imagem {i+1} salva!")
+                    break
             except Exception as e:
-                print(f"⚠️ Erro no modelo {m}: {e}")
-                time.sleep(5)
-                
+                print(f"⚠️ Erro na imagem {i}: {e}")
+                # Fallback para o modelo que funcionou no texto se o imagen-3 falhar
+                modelo_img = 'gemini-3-flash-preview' 
+                time.sleep(2)
     return links_locais
 
 def executar():
