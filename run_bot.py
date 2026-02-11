@@ -64,35 +64,31 @@ def upload_para_drive(service_drive, caminho_arquivo, nome_arquivo):
 
 def gerar_imagens_ia(client, titulo_post):
     links_locais = []
-    # Modelo corrigido para a nomenclatura estável de 2026
+    # Tentaremos o modelo estável
     modelo_img = 'imagen-3.0-generate-001'
     
     prompts = [
-        f"Professional news photojournalism, cinematic wide shot, 16:9 aspect ratio, high quality: {titulo_post}",
-        f"Conceptual political illustration, deep blue tones, 16:9 aspect ratio, digital art: {titulo_post}"
+        f"Professional news photojournalism, cinematic wide shot, 16:9 aspect ratio: {titulo_post}",
+        f"Conceptual political illustration, deep blue tones, 16:9 aspect ratio: {titulo_post}"
     ]
     
     for i, p in enumerate(prompts):
         nome_arq = f"imagem_{i}.png"
-        for tentativa in range(3):
+        for tentativa in range(2):
             try:
-                print(f"🎨 Gerando imagem {i+1}/2 (Tentativa {tentativa+1})...")
-                # Em 2026, algumas contas exigem o uso da função generate_images diretamente
+                print(f"🎨 Imagem {i+1}/2 (Tentativa {tentativa+1})...")
                 response = client.models.generate_images(
                     model=modelo_img,
                     prompt=p,
-                    config=types.GenerateImagesConfig(
-                        number_of_images=1,
-                        aspect_ratio="16:9"
-                    )
+                    config=types.GenerateImagesConfig(number_of_images=1, aspect_ratio="16:9")
                 )
                 if response.generated_images:
                     response.generated_images[0].image.save(nome_arq)
                     links_locais.append(nome_arq)
                     break
             except Exception as e:
-                print(f"⏳ Erro imagem {i}: {e}")
-                time.sleep(12)
+                print(f"⏳ Erro imagem: {e}")
+                time.sleep(5)
     return links_locais
 
 def executar():
@@ -107,50 +103,46 @@ def executar():
         feed = feedparser.parse("https://g1.globo.com/rss/g1/politica/")
         noticia_base = feed.entries[0]
         
-        # 2. Texto
+        # 2. Texto com Fallback de Modelo (Escudo contra 429)
         dados = None
-        for t in range(3):
+        # Lista de modelos por prioridade
+        modelos_para_tentar = ["gemini-2.0-flash", "gemini-1.5-flash", "gemini-1.5-flash-002"]
+        
+        for m in modelos_para_tentar:
+            if dados: break
             try:
-                print(f"✍️ Gerando texto (Tentativa {t+1})...")
+                print(f"✍️ Tentando modelo {m}...")
                 prompt = (f"Atue como analista político. Notícia: '{noticia_base.title}'. "
                          "Gere JSON: titulo, intro, sub1, texto1, sub2, texto2, sub3, texto3, texto_conclusao, links_pesquisa.")
                 res = client.models.generate_content(
-                    model="gemini-2.0-flash", # Atualizado para o modelo estável mais recente
+                    model=m,
                     contents=prompt,
                     config=types.GenerateContentConfig(response_mime_type="application/json")
                 )
                 dados = json.loads(res.text)
-                break
+                print(f"✅ Sucesso com o modelo {m}!")
             except Exception as e:
-                print(f"⏳ Erro IA: {e}. Aguardando...")
-                time.sleep(15)
+                print(f"⚠️ Modelo {m} falhou (Cota ou Erro). Próximo...")
+                time.sleep(2)
 
-        if not dados: raise Exception("IA Indisponível.")
+        if not dados: raise Exception("Todos os modelos da IA excederam a cota. Tente novamente em alguns minutos.")
 
-        # 3. Tags SEO
-        tags_geradas = gerar_tags_seo(dados['titulo'], dados['texto1'])
-        print(f"🏷️ Tags: {', '.join(tags_geradas)}")
-
-        # 4. Imagens
+        # 3. SEO e Imagens
+        tags = gerar_tags_seo(dados['titulo'], dados['texto1'])
         arquivos = gerar_imagens_ia(client, dados['titulo'])
         links = [upload_para_drive(service_drive, f, f) for f in arquivos]
 
-        # 5. Organização
+        # 4. Organização
         dados['img_topo'] = links[0] if len(links) > 0 else "https://via.placeholder.com/1280x720"
-        dados['img_meio'] = links[1] if len(links) > 1 else dados['img_topo']
+        dados['img_meio'] = links[1] if len(links) > 1 else (links[0] if links else "")
         dados['assinatura'] = f"<div style='margin-top:25px;'>{dados.get('links_pesquisa', '')}</div>{BLOCO_FIXO_FINAL}"
 
-        # 6. Publicação
+        # 5. Publicação
         html_final = obter_esqueleto_html(dados)
-        corpo_post = {
-            'kind': 'blogger#post',
-            'title': dados['titulo'],
-            'content': html_final,
-            'labels': tags_geradas
-        }
+        corpo_post = {'kind': 'blogger#post', 'title': dados['titulo'], 'content': html_final, 'labels': tags}
         
         service_blogger.posts().insert(blogId=BLOG_ID, body=corpo_post).execute()
-        print(f"✅ SUCESSO TOTAL! Postado no Blog.")
+        print(f"✅ SUCESSO! Artigo '{dados['titulo']}' publicado.")
 
     except Exception as e:
         print(f"💥 Falha: {e}")
