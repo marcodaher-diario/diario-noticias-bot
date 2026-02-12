@@ -13,102 +13,78 @@ from google import genai
 from google.genai import types
 from PIL import Image
 
-# --- IMPORTAÇÕES LOCAIS ---
-try:
-    from template_blog import obter_esqueleto_html
-    from configuracoes import BLOCO_FIXO_FINAL
-except ImportError:
-    print("❌ Erro ao importar arquivos de suporte.")
-    raise
-
 # --- CONFIGURAÇÕES ---
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
 BLOG_ID = "7605688984374445860" 
 SCOPES = ["https://www.googleapis.com/auth/blogger", "https://www.googleapis.com/auth/drive.file"]
 
+# Importações locais
+try:
+    from template_blog import obter_esqueleto_html
+    from configuracoes import BLOCO_FIXO_FINAL
+except ImportError:
+    print("❌ Erro ao importar arquivos locais.")
+    raise
+
 def renovar_token():
-    if not os.path.exists("token.json"): raise FileNotFoundError("token.json ausente!")
     with open("token.json", "r") as f:
-        info = json.load(f)
-    creds = Credentials.from_authorized_user_info(info, SCOPES)
+        creds = Credentials.from_authorized_user_info(json.load(f), SCOPES)
     if creds.expired and creds.refresh_token:
         creds.refresh(Request())
         with open("token.json", "w") as f: f.write(creds.to_json())
     return creds
 
-def buscar_imagem_banco_real(keyword, index):
-    """ Busca imagens reais e gratuitas no Unsplash (sem precisar de API Key) """
-    print(f"🔍 Buscando imagem real para: {keyword}...")
-    # Usamos o Source do Unsplash que permite buscar por termos específicos
-    temas = "politics,brazil,government,news"
-    url = f"https://source.unsplash.com/1280x720/?{temas},{keyword.replace(' ', ',')}&sig={index}"
-    
+def buscar_imagem_reserva(index):
+    """ Banco de dados reserva INFALÍVEL (LoremFlickr) """
+    print(f"📸 IA falhou. Buscando foto real de política (Reserva {index+1})...")
+    url = f"https://loremflickr.com/1280/720/politics,brazil/all?lock={index + int(time.time()) % 100}"
     try:
-        headers = {'User-Agent': 'Mozilla/5.0'}
-        response = requests.get(url, headers=headers, timeout=15)
-        if response.status_code == 200:
-            with open(f"imagem_{index}.png", 'wb') as f:
-                f.write(response.content)
+        res = requests.get(url, timeout=15)
+        if res.status_code == 200:
+            with open(f"imagem_{index}.png", "wb") as f:
+                f.write(res.content)
             return True
-    except Exception as e:
-        print(f"⚠️ Falha ao buscar imagem real: {e}")
+    except: pass
     return False
 
-def buscar_imagem_reserva(keyword, index):
-    """ Busca imagens reais em um banco de dados estável (Pixabay/Pexels) """
-    print(f"🔍 Buscando imagem real para: {keyword}...")
-    
-    # Lista de termos genéricos de política para garantir que algo apareça
-    search_term = f"politics {keyword}".replace(" ", "+")
-    
-    # Usando o serviço de imagem do LoremFlickr (mais estável que Unsplash Source)
-    url = f"https://loremflickr.com/1280/720/politics,brazil,news/all?lock={index}"
-    
-    try:
-        headers = {'User-Agent': 'Mozilla/5.0'}
-        response = requests.get(url, headers=headers, timeout=20, allow_redirects=True)
-        if response.status_code == 200:
-            with open(f"imagem_{index}.png", 'wb') as f:
-                f.write(response.content)
-            return True
-    except Exception as e:
-        print(f"⚠️ Erro no banco reserva: {e}")
-    return False
-
-def gerar_imagens_ia_ou_real(client, titulo_post):
+def gerar_imagens(client, titulo_post):
     links_locais = []
+    # Usando os novos modelos da documentação
+    model_nome = "gemini-2.5-flash-image" 
     prompts = [
-        f"Realistic news photojournalism, wide shot, 16:9: {titulo_post}",
-        f"Political office cinematic photography, 16:9: {titulo_post}"
+        f"A professional photojournalism shot about: {titulo_post}. High quality, 16:9 aspect ratio.",
+        f"A cinematic political setting illustration, 16:9 aspect ratio, professional lighting."
     ]
     
     for i, p in enumerate(prompts):
         nome_arq = f"imagem_{i}.png"
         sucesso = False
         
-        # 1. TENTA IA
         try:
-            print(f"🎨 Gerando imagem {i+1}/2 via IA...")
-            res = client.models.generate_content(model="gemini-3-flash-preview", contents=p)
-            image_parts = [part for part in res.parts if part.inline_data]
-            if image_parts:
-                img = Image.open(io.BytesIO(image_parts[0].inline_data.data))
-                img.save(nome_arq)
-                links_locais.append(nome_arq)
-                print(f"✨ Sucesso com IA!")
-                sucesso = True
-        except: pass
+            print(f"🎨 Tentando gerar imagem {i+1} com {model_nome}...")
+            # Seguindo EXATAMENTE o exemplo da documentação que você enviose
+            response = client.models.generate_content(
+                model=model_nome,
+                contents=[p],
+            )
+            
+            for part in response.parts:
+                if part.inline_data is not None:
+                    # Usa o método part.as_image() ou processa os bytes
+                    image = Image.open(io.BytesIO(part.inline_data.data))
+                    image.save(nome_arq)
+                    links_locais.append(nome_arq)
+                    print(f"✨ Sucesso total com a IA!")
+                    sucesso = True
+                    break
+        except Exception as e:
+            print(f"⏳ IA ocupada ({e}). Partindo para banco de imagens real...")
 
-        # 2. TENTA BANCO REAL (Se IA falhar)
         if not sucesso:
-            # Pegamos palavras-chave do título para a busca
-            keywords = " ".join(re.sub(r'[^\w\s]', '', titulo_post).split()[:3])
-            if buscar_imagem_banco_real(keywords, i):
+            if buscar_imagem_reserva(i):
                 links_locais.append(nome_arq)
-                print(f"📸 Sucesso com IMAGEM REAL!")
-                sucesso = True
             else:
-                print(f"⚠️ Falha total na imagem {i+1}. Usando padrão.")
+                print(f"⚠️ Falha crítica na imagem {i+1}.")
                 
     return links_locais
 
@@ -120,54 +96,44 @@ def executar():
         service_drive = build('drive', 'v3', credentials=creds)
         client = genai.Client(api_key=GEMINI_API_KEY)
 
-        # 1. Notícia
+        # 1. RSS
         feed = feedparser.parse("https://g1.globo.com/rss/g1/politica/")
-        noticia_base = feed.entries[0]
+        noticia = feed.entries[0]
         
-        # 2. Texto
-        print(f"✍️ Analisando: {noticia_base.title}")
-        prompt_texto = (
-            f"Analise a notícia: '{noticia_base.title}'. Escreva um artigo de 850 palavras. "
-            "Responda em JSON: titulo, intro, sub1, texto1, sub2, texto2, sub3, texto3, texto_conclusao, links_pesquisa."
-        )
-        
-        res = client.models.generate_content(
-            model="gemini-3-flash-preview",
-            contents=prompt_texto,
+        # 2. Texto (Gemini 3 Flash para Texto)
+        print(f"✍️ Analisando: {noticia.title}")
+        prompt_txt = f"Escreva um artigo de 850 palavras em JSON (titulo, intro, sub1, texto1, sub2, texto2, sub3, texto3, texto_conclusao, links_pesquisa) sobre: {noticia.title}"
+        res_txt = client.models.generate_content(
+            model="gemini-3-flash-preview", 
+            contents=prompt_txt,
             config=types.GenerateContentConfig(response_mime_type="application/json")
         )
+        dados = json.loads(re.search(r'\{.*\}', res_txt.text, re.DOTALL).group(0))
+
+        # 3. Imagens (Gemini 2.5 Flash Image para Imagem)
+        arquivos = gerar_imagens(client, dados['titulo'])
         
-        # Limpeza do JSON
-        texto_raw = res.text.strip()
-        match = re.search(r'\{.*\}', texto_raw, re.DOTALL)
-        dados = json.loads(match.group(0)) if match else json.loads(texto_raw)
-        
-        # 3. Imagens (IA ou Real)
-        arquivos = gerar_imagens_ia_ou_real(client, dados['titulo'])
-        
-        # 4. Upload para Drive
+        # 4. Upload Drive
         links_drive = []
         for f in arquivos:
-            file_metadata = {'name': f}
             media = MediaFileUpload(f, mimetype='image/png')
-            file = service_drive.files().create(body=file_metadata, media_body=media, fields='id').execute()
+            file = service_drive.files().create(body={'name': f}, media_body=media, fields='id').execute()
             service_drive.permissions().create(fileId=file.get('id'), body={'type': 'anyone', 'role': 'reader'}).execute()
             links_drive.append(f"https://drive.google.com/uc?export=view&id={file.get('id')}")
 
-        # 5. Publicação
+        # 5. Montagem e Post
         dados['img_topo'] = links_drive[0] if len(links_drive) > 0 else "https://via.placeholder.com/1280x720"
         dados['img_meio'] = links_drive[1] if len(links_drive) > 1 else dados['img_topo']
-        dados['assinatura'] = f"<br><b>Pesquisa:</b> {dados.get('links_pesquisa', 'G1')}<br><br>{BLOCO_FIXO_FINAL}"
+        dados['assinatura'] = f"<br><b>Fontes:</b> {dados.get('links_pesquisa', 'G1')}<br><br>{BLOCO_FIXO_FINAL}"
 
-        corpo_post = {
-            'kind': 'blogger#post',
+        html = obter_esqueleto_html(dados)
+        service_blogger.posts().insert(blogId=BLOG_ID, body={
             'title': dados['titulo'],
-            'content': obter_esqueleto_html(dados),
-            'labels': ["Política", "Brasil", "Notícias"]
-        }
+            'content': html,
+            'labels': ["Política", "Brasil"]
+        }).execute()
         
-        service_blogger.posts().insert(blogId=BLOG_ID, body=corpo_post).execute()
-        print(f"🎉 SUCESSO! Post publicado com imagens garantidas.")
+        print(f"🎉 SUCESSO! Post publicado.")
 
     except Exception as e:
         print(f"💥 Erro: {e}")
