@@ -137,16 +137,18 @@ def executar():
         tema, keywords = definir_tema_por_horario()
         noticia = buscar_noticia_por_tema(tema, keywords)
         
-        # 2. TEXTO AUTORAL (CORRIGIDO PARA O MODELO CERTO)
+        # 2. TEXTO AUTORAL (NOME DO MODELO ATUALIZADO)
         print(f"✍️ [PONTO 2] Gerando artigo autoral sobre: {noticia.title}")
         prompt_txt = f"Escreva um artigo jornalístico autoral, sem plágio, entre 700 e 900 palavras. Responda em JSON: titulo, intro, sub1, texto1, sub2, texto2, sub3, texto3, texto_conclusao, links_pesquisa. Tema: {noticia.title}"
         
-        # AJUSTE DO MODELO AQUI:
+        # Usando o nome de modelo estável da biblioteca genai
         res_txt = client.models.generate_content(
-            model="gemini-1.5-flash", 
+            model="gemini-1.5-flash-002", 
             contents=prompt_txt,
             config=types.GenerateContentConfig(response_mime_type="application/json")
         )
+        
+        # Garante a extração correta do JSON
         dados = json.loads(re.search(r'\{.*\}', res_txt.text, re.DOTALL).group(0))
 
         # 3. IMAGENS REALISTAS 16:9 (Mantido seu código de upload)
