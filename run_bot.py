@@ -1,6 +1,7 @@
 import feedparser
 import re
 import os
+import random
 from datetime import datetime
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
@@ -10,6 +11,7 @@ from googleapiclient.discovery import build
 # =============================
 
 BLOG_ID = "7605688984374445860"
+
 RSS_FEEDS = [
     "https://g1.globo.com/rss/g1/",
     "https://feeds.uol.com.br/home.xml",
@@ -24,15 +26,27 @@ RSS_FEEDS = [
     "https://g1.globo.com/rss/g1/economia/"
 ]
 
-PALAVRAS_POLITICA = ["política", "governo", "presidente", "lula", "bolsonaro", "congresso", "senado", "stf", "eleição", "moraes", "toffoli", "fux", "Dino", "flavio", "eduardo", "depoimento", "magistrados", "juízes", "ex-presidente", "corrupção", "vereadores", "deputado", "senador", "PGR", "ministério público"]
-PALAVRAS_ECONOMIA = ["economia", "pib", "dólar", "euro", "inflação", "selic", "mercado", "bolsa de valores", "banco central"]
+PALAVRAS_POLITICA = [
+    "política", "governo", "presidente", "lula", "bolsonaro",
+    "congresso", "senado", "stf", "eleição", "moraes",
+    "toffoli", "fux", "dino", "flavio", "eduardo",
+    "depoimento", "magistrados", "juízes", "ex-presidente",
+    "corrupção", "vereadores", "deputado", "senador",
+    "pgr", "ministério público"
+]
+
+PALAVRAS_ECONOMIA = [
+    "economia", "pib", "dólar", "euro",
+    "inflação", "selic", "mercado",
+    "bolsa de valores", "banco central"
+]
 
 SCOPES = ["https://www.googleapis.com/auth/blogger"]
 IMAGEM_FALLBACK = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/News_icon.svg/800px-News_icon.svg.png"
 ARQUIVO_LOG = "posts_publicados.txt"
 
 # ====================================
-#      ASSINATURA COM BANNER E REDES 
+# ASSINATURA COM BANNER E REDES
 # ====================================
 
 BLOCO_FIXO_FINAL = """
@@ -114,10 +128,13 @@ def autenticar_blogger():
     creds = Credentials.from_authorized_user_file("token.json", SCOPES)
     return build("blogger", "v3", credentials=creds)
 
+
 def ja_publicado(link):
-    if not os.path.exists(ARQUIVO_LOG): return False
+    if not os.path.exists(ARQUIVO_LOG):
+        return False
     with open(ARQUIVO_LOG, "r", encoding="utf-8") as f:
         return link in f.read()
+
 
 def registrar_publicacao(link):
     with open(ARQUIVO_LOG, "a", encoding="utf-8") as f:
@@ -125,75 +142,106 @@ def registrar_publicacao(link):
 
 
 # =======================================
-#      GERAR TAGS RELACIONADAS 200 CHAR
+# GERAR TAGS RELACIONADAS 200 CHAR
 # =======================================
 
 def gerar_tags_seo(titulo, texto):
     stopwords = ["com", "de", "do", "da", "em", "para", "um", "uma", "os", "as", "que", "no", "na", "ao", "aos"]
     conteudo = f"{titulo} {texto[:100]}"
     palavras = re.findall(r'\b\w{4,}\b', conteudo.lower())
+
     tags = []
     for p in palavras:
         if p not in stopwords and p not in tags:
             tags.append(p.capitalize())
-    
+
     tags_fixas = ["Notícias", "Diário de Notícias", "Marco Daher"]
+
     for tf in tags_fixas:
-        if tf not in tags: tags.append(tf)
+        if tf not in tags:
+            tags.append(tf)
 
     resultado = []
     tamanho_atual = 0
+
     for tag in tags:
         if tamanho_atual + len(tag) + 2 <= 200:
             resultado.append(tag)
             tamanho_atual += len(tag) + 2
-        else: break
+        else:
+            break
+
     return resultado
 
+
 # ====================================
-#      GERAR IMAGENS E VÍDEOS
+# GERAR IMAGENS E VÍDEOS
 # ====================================
 
 def extrair_imagem(entry):
-    if "media_content" in entry: return entry.media_content[0].get("url")
-    if "media_thumbnail" in entry: return entry.media_thumbnail[0].get("url")
+    if "media_content" in entry:
+        return entry.media_content[0].get("url")
+
+    if "media_thumbnail" in entry:
+        return entry.media_thumbnail[0].get("url")
+
     summary = entry.get("summary", "")
     match = re.search(r'<img[^>]+src="([^">]+)"', summary)
-    if match: return match.group(1)
+
+    if match:
+        return match.group(1)
+
     return IMAGEM_FALLBACK
+
 
 def extrair_video_youtube(link):
     video_id = None
+
     if "youtube.com/watch" in link:
         video_id = link.split("watch?v=")[1].split("&")[0]
+
     elif "youtu.be/" in link:
         video_id = link.split("youtu.be/")[1]
-    
+
     if video_id:
         return f'<div style="text-align:center; margin: 20px 0;"><iframe width="680" height="383" src="https://www.youtube.com/embed/{video_id}" frameborder="0" allowfullscreen style="max-width:100%;"></iframe></div>'
+
     return None
 
+
 # ====================================
-#      QUEBRAR PARAGRAFOS 
+# QUEBRAR PARÁGRAFOS
 # ====================================
 
 def quebrar_paragrafos(texto):
     frases = re.split(r'(?<=[.!?]) +', texto)
+
     paragrafos = []
     bloco = []
+
     for frase in frases:
         bloco.append(frase)
         if len(bloco) >= 2:
             paragrafos.append(" ".join(bloco))
             bloco = []
-    if bloco: paragrafos.append(" ".join(bloco))
+
+    if bloco:
+        paragrafos.append(" ".join(bloco))
+
     return "".join(f"<p>{p}</p><br>" for p in paragrafos)
+
 
 def verificar_assunto(titulo, texto):
     conteudo = f"{titulo} {texto}".lower()
-    if any(p in conteudo for p in PALAVRAS_POLITICA): return "politica"
-    if any(p in conteudo for p in PALAVRAS_ECONOMIA): return "economia"
+
+    if any(p in conteudo for p in PALAVRAS_POLITICA):
+        return "politica"
+
+    if any(p in conteudo for p in PALAVRAS_ECONOMIA):
+        return "economia"
+
     return "geral"
+
 
 # =============================
 # GERAÇÃO DE CONTEÚDO
@@ -202,30 +250,44 @@ def verificar_assunto(titulo, texto):
 def gerar_conteudo(n):
     texto_limpo = quebrar_paragrafos(re.sub(r"<[^>]+>", "", n["texto"]))
     video_html = extrair_video_youtube(n["link"])
-    
+
     if not video_html:
         media_html = f"""
         <div style="text-align:center; margin: 20px 0;">
             <a href="{n['link']}" target="_blank" style="text-decoration:none;">
-                <img src="{n['imagem']}" width="680" height="383" style="max-width:100%; height:auto; border-radius:10px; border: 1px solid #ddd;">
-                <div style="margin-top:15px;">
-                    <span style="background-color: #cc0000; color: white; padding: 12px 25px; font-weight: bold; border-radius: 5px; font-family: Arial; display: inline-block;">▶ ASSISTIR VÍDEO COMPLETO NA FONTE</span>
-                </div>
+                <img src="{n['imagem']}" width="680" height="383"
+                style="max-width:100%; height:auto; border-radius:10px; border: 1px solid #ddd;">
             </a>
-        </div>"""
+        </div>
+        """
     else:
         media_html = video_html
 
-    return f"""<div style="font-family:Arial; color:#444; font-size:16px; text-align:justify; line-height:1.6;"><h2 style="font-size:26px; text-align:center; color:#073763;">{n['titulo']}</h2><hr style="border: 0; border-top: 1px solid #eee;">{media_html}<p><b>Fonte:</b> {n['fonte']}</p><div style="margin-top:20px;">{texto_limpo}</div><p style="text-align:center; margin-top:30px;"><a href="{n['link']}" target="_blank" style="color: #992211; font-weight: bold;">🔗 Clique aqui para ler a matéria original</a></p><br>{BLOCO_FIXO_FINAL}</div>"""
+    return f"""
+    <div style="font-family:Arial; color:#444; font-size:16px;
+    text-align:justify; line-height:1.6;">
+    <h2 style="font-size:26px; text-align:center; color:#073763;">
+    {n['titulo']}</h2>
+    <hr style="border: 0; border-top: 1px solid #eee;">
+    {media_html}
+    <p><b>Fonte:</b> {n['fonte']}</p>
+    <div style="margin-top:20px;">{texto_limpo}</div>
+    <p style="text-align:center; margin-top:30px;">
+    <a href="{n['link']}" target="_blank"
+    style="color: #992211; font-weight: bold;">
+    🔗 Clique aqui para ler a matéria original</a></p>
+    <br>{BLOCO_FIXO_FINAL}
+    </div>
+    """
+
 
 # =============================
-# FLUXO PRINCIPAL
+# BUSCAR NOTÍCIAS
 # =============================
-
-import random
 
 def buscar_noticias(tipo_alvo, limite=4):
     print(f"📰 Buscando notícias do tipo: {tipo_alvo}...")
+
     noticias = []
 
     for feed_url in RSS_FEEDS:
@@ -233,6 +295,7 @@ def buscar_noticias(tipo_alvo, limite=4):
         fonte = feed.feed.get("title", "Fonte")
 
         for entry in feed.entries:
+
             titulo = entry.get("title", "")
             texto = entry.get("summary", "")
             link = entry.get("link", "")
@@ -244,6 +307,7 @@ def buscar_noticias(tipo_alvo, limite=4):
                 continue
 
             tipo_detectado = verificar_assunto(titulo, texto)
+
             if tipo_detectado != tipo_alvo:
                 continue
 
@@ -256,12 +320,61 @@ def buscar_noticias(tipo_alvo, limite=4):
                 "labels": gerar_tags_seo(titulo, texto)
             })
 
-    # 🔀 embaralha todas as fontes
     random.shuffle(noticias)
 
-    # ✂️ corta no limite desejado
     return noticias[:limite]
+
+
+# =============================
+# PUBLICAR POST
+# =============================
+
+def publicar_post(service, noticia):
+
+    print(f"🚀 Publicando: {noticia['titulo']}")
+
+    conteudo_html = gerar_conteudo(noticia)
+
+    post = {
+        "title": noticia["titulo"],
+        "content": conteudo_html,
+        "labels": noticia["labels"]
+    }
+
+    service.posts().insert(
+        blogId=BLOG_ID,
+        body=post,
+        isDraft=False
+    ).execute()
+
+    registrar_publicacao(noticia["link"])
+
+    print("✅ Publicado com sucesso!\n")
+
+
+# =============================
+# EXECUÇÃO PRINCIPAL
+# =============================
+
 if __name__ == "__main__":
-    
 
+    try:
 
+        print("🚀 Iniciando robô...")
+
+        service = autenticar_blogger()
+
+        tipo = random.choice(["politica", "economia"])
+
+        noticias = buscar_noticias(tipo, limite=4)
+
+        if not noticias:
+            print("⚠️ Nenhuma notícia encontrada.")
+
+        for noticia in noticias:
+            publicar_post(service, noticia)
+
+        print("🏁 Processo finalizado com sucesso.")
+
+    except Exception as erro:
+        print("❌ Erro geral:", erro)
