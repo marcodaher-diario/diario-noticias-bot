@@ -1,3 +1,49 @@
+# ==========================================
+# CONFIGURAÇÕES GERAIS DO BLOG
+# ==========================================
+
+BLOG_ID = "7605688984374445860"
+
+RSS_FEEDS = [
+    "https://g1.globo.com/rss/g1/",
+    "https://feeds.uol.com.br/home.xml",
+    "https://rss.uol.com.br/feed/noticias.xml",
+    "https://feeds.folha.uol.com.br/emcimadahora/rss091.xml",
+    "https://agenciabrasil.ebc.com.br/rss",
+    "https://feeds.bbci.co.uk/portuguese/rss.xml",
+    "https://www.gazetadopovo.com.br/feed/rss/brasil.xml",
+    "https://reporterbrasil.org.br/feed/",
+    "https://www.cnnbrasil.com.br/feed/",
+    "https://www.estadao.com.br/arc/outboundfeeds/rss/category/brasil/",
+    "https://g1.globo.com/rss/g1/economia/"
+]
+
+PALAVRAS_POLICIAL = [
+    "polícia", "crime", "prisão", "assalto",
+    "homicídio", "tráfico", "investigação",
+    "suspeito", "acusado", "operação",
+    "flagrante", "violência", "mandado"
+]
+
+PALAVRAS_POLITICA = [
+    "política", "governo", "presidente",
+    "congresso", "senado", "stf",
+    "eleição", "ministro", "deputado",
+    "senador", "planalto", "judiciário"
+]
+
+PALAVRAS_ECONOMIA = [
+    "economia", "pib", "dólar",
+    "inflação", "selic", "mercado",
+    "banco", "investimento",
+    "financeiro", "bolsa"
+]
+
+
+# ==========================================
+# BLOCO FIXO FINAL 
+# ==========================================
+
 BLOCO_FIXO_FINAL = """
 <div class="footer-marco-daher" style="background-color: #e1f5fe; border-radius: 15px; border: 1px solid rgb(179, 229, 252); color: #073763; font-family: Arial, Helvetica, sans-serif; line-height: 1.4; margin-top: 10px; padding: 25px; text-align: center;">
   
