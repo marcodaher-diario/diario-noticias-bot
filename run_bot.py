@@ -137,25 +137,22 @@ def executar():
         tema, keywords = definir_tema_por_horario()
         noticia = buscar_noticia_por_tema(tema, keywords)
         
-        # 2. TEXTO AUTORAL (AJUSTE DE SINTAXE)
+        # 2. TEXTO AUTORAL (VERSÃO SIMPLIFICADA SEM ERRO 400)
         print(f"✍️ [PONTO 2] Gerando artigo autoral sobre: {noticia.title}")
-        prompt_txt = f"Escreva um artigo jornalístico autoral, sem plágio, entre 700 e 900 palavras. Responda em JSON: titulo, intro, sub1, texto1, sub2, texto2, sub3, texto3, texto_conclusao, links_pesquisa. Tema: {noticia.title}"
+        prompt_txt = f"Escreva um artigo jornalístico autoral, sem plágio, entre 700 e 900 palavras. Responda em JSON com as chaves: titulo, intro, sub1, texto1, sub2, texto2, sub3, texto3, texto_conclusao, links_pesquisa. Tema: {noticia.title}"
         
-        # Correção da configuração do JSON para o SDK Google-Genai
+        # Chamada direta sem o GenerationConfig que causa o erro 400
         res_txt = client.models.generate_content(
             model="gemini-1.5-flash", 
-            contents=prompt_txt,
-            config=types.GenerateContentConfig(
-                response_mime_type="application/json"
-            )
+            contents=prompt_txt
         )
         
-        # Tente capturar o texto direto, se falhar, usa o Regex
-        try:
-            dados = json.loads(res_txt.text)
-        except:
-            dados = json.loads(re.search(r'\{.*\}', res_txt.text, re.DOTALL).group(0))
-
+        # O Regex abaixo vai encontrar o JSON dentro da resposta da IA de qualquer jeito
+        match = re.search(r'\{.*\}', res_txt.text, re.DOTALL)
+        if match:
+            dados = json.loads(match.group(0))
+        else:
+            raise Exception("A IA não retornou um formato JSON válido.")
         # 3. IMAGENS REALISTAS 16:9 (Mantido seu código de upload)
         arquivos = gerar_imagens(client, dados['titulo'])
         links_drive = []
