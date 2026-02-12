@@ -64,9 +64,9 @@ def registrar_publicacao(link):
 def definir_tema_por_horario():
     fuso = pytz.timezone('America/Sao_Paulo')
     hora = datetime.now(fuso).hour
-    if 5 <= hora <= 11: return "Policial", "polícia, crime, prisão, investigação, segurança"
-    elif 12 <= hora <= 17: return "Economia", "preços, mercado, emprego, impostos, dólar"
-    else: return "Política", "governo, congresso, stf, leis, presidente"
+    if 5 <= hora <= 11: return "Policial", "notícias policiais, polícia militar, polícia civil, investigação criminal, operação policial, flagrante, prisão em flagrante, mandado de prisão, mandado de busca e apreensão, operação da PF, polícia federal, crime organizado, tráfico de drogas, apreensão de drogas, apreensão de armas, homicídio, tentativa de homicídio, latrocínio, assalto à mão armada, roubo, furto, sequestro, cárcere privado, estelionato, golpe virtual, fraude eletrônica, violência doméstica, lei maria da penha, feminicídio, tribunal do júri, audiência de custódia"
+    elif 12 <= hora <= 17: return "Economia", "economia brasileira, notícias de economia, mercado financeiro, bolsa de valores, Ibovespa hoje, dólar hoje, cotação do dólar, euro hoje, inflação no Brasil, IPCA acumulado, taxa Selic, juros do Banco Central, Banco Central do Brasil, PIB brasileiro, crescimento econômico, recessão econômica, desemprego no Brasil, taxa de desemprego, geração de empregos, reforma tributária, carga tributária, impostos no Brasil, imposto de renda, orçamento federal, déficit público, superávit primário, dívida pública, gastos do governo, política fiscal, política monetária"
+    else: return "Política", "notícias de política, política brasileira, congresso nacional, câmara dos deputados, senado federal, planalto, presidência da república, governo federal, oposição política, base aliada, votação no plenário, sessão deliberativa, projeto de lei, proposta de emenda à constituição, medida provisória, decreto presidencial, reforma administrativa, reforma tributária, reforma política, comissão parlamentar de inquérito, CPI no congresso, tribunal superior eleitoral, supremo tribunal federal, ministério público, decisões do STF, eleições municipais, eleições presidenciais, campanha eleitoral, propaganda partidária, pesquisa eleitoral, intenção de voto, coligações partidárias, partidos políticos, crise política, articulação política, impeachment"
 
 # =============================
 # GERAÇÃO DE IMAGENS (IMAGEN 3)
