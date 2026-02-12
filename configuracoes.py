@@ -19,24 +19,28 @@ RSS_FEEDS = [
 ]
 
 PALAVRAS_POLICIAL = [
-    "polícia", "crime", "prisão", "assalto",
-    "homicídio", "tráfico", "investigação",
-    "suspeito", "acusado", "operação",
-    "flagrante", "violência", "mandado"
+    "polícia", "crime", "prisão", "assalto", "homicídio", "tráfico", "investigação", 
+    "corrupção", "suspeito", "acusado", "operação", "flagrante", "violência", "mandado", 
+    "força-tarefa", "custódia", "preventiva", "busca", "inquérito", "sentença", "quadrilha", 
+    "lavagem", "facção", "sigilosa", "confronto", "latrocínio", "feminicídio", "cárcere", 
+    "arsenal", "golpe", "fraude", "perícia", "cibernético", "plantão", "foragido", 
+    "intervenção", "ocorrência"
 ]
 
 PALAVRAS_POLITICA = [
-    "política", "governo", "presidente",
-    "congresso", "senado", "stf",
-    "eleição", "ministro", "deputado",
-    "senador", "planalto", "judiciário"
+    "política", "governo", "presidente", "congresso", "senado", "stf", "eleição", "ministro", 
+    "deputado", "senador", "planalto", "judiciário", "Congresso", "Planalto", "Senado", "Oposição", 
+    "Votação", "Plenário", "Constituição", "Decreto", "Reforma", "Parlamentar", "Inquérito", "Eitoral", 
+    "Supremo", "STF", "Impeachment", "Cassação", "Orçamento", "Transparência", "Diplomacia", 
+    "Articulação", "Coligação", "Mandato", "Legislação", "Democracia", "Governabilidade"
 ]
 
 PALAVRAS_ECONOMIA = [
-    "economia", "pib", "dólar",
-    "inflação", "selic", "mercado",
-    "banco", "investimento",
-    "financeiro", "bolsa"
+    "economia", "pib", "dólar", "inflação", "selic", "mercado", "banco", "investimento", 
+    "financeiro", "bolsa", "consumo", "ibovespa", "cotação", "ipca", "juros", "recessão", 
+    "desemprego", "tributária", "impostos", "orçamento", "déficit", "superávit", "fiscal", 
+    "monetária", "crédito", "agronegócio", "exportação", "investimentos", "criptomoedas", 
+    "varejo", "combustíveis"
 ]
 
 
