@@ -137,17 +137,19 @@ def executar():
         tema, keywords = definir_tema_por_horario()
         noticia = buscar_noticia_por_tema(tema, keywords)
         
-        # 2. TEXTO AUTORAL (600-900 PALAVRAS)
+        # 2. TEXTO AUTORAL (CORRIGIDO PARA O MODELO CERTO)
         print(f"✍️ [PONTO 2] Gerando artigo autoral sobre: {noticia.title}")
         prompt_txt = f"Escreva um artigo jornalístico autoral, sem plágio, entre 700 e 900 palavras. Responda em JSON: titulo, intro, sub1, texto1, sub2, texto2, sub3, texto3, texto_conclusao, links_pesquisa. Tema: {noticia.title}"
+        
+        # AJUSTE DO MODELO AQUI:
         res_txt = client.models.generate_content(
-            model="gemini-1.5-flash-latest",
+            model="gemini-1.5-flash", 
             contents=prompt_txt,
             config=types.GenerateContentConfig(response_mime_type="application/json")
         )
         dados = json.loads(re.search(r'\{.*\}', res_txt.text, re.DOTALL).group(0))
 
-        # 3. IMAGENS REALISTAS 16:9
+        # 3. IMAGENS REALISTAS 16:9 (Mantido seu código de upload)
         arquivos = gerar_imagens(client, dados['titulo'])
         links_drive = []
         for f in arquivos:
@@ -156,8 +158,9 @@ def executar():
             service_drive.permissions().create(fileId=file.get('id'), body={'type': 'anyone', 'role': 'reader'}).execute()
             links_drive.append(f"https://drive.google.com/uc?export=view&id={file.get('id')}")
 
-        # --- BLOCO FUSIONADO: MECÂNICA EMAGRECER + LÓGICA DIÁRIO ---
-        # 4. PREPARAÇÃO DOS DADOS (Tratamento contra estouro de largura)
+        # --- FUSÃO COM A LÓGICA DO EMAGRECER (RESOLVE LARGURA E POSTAGEM) ---
+        
+        # Limpeza de texto para não estufar a largura (O SEGREDO DO EMAGRECER)
         dados_post = {
             'titulo': dados['titulo'],
             'img_topo': links_drive[0] if len(links_drive) > 0 else "",
@@ -173,22 +176,25 @@ def executar():
             'assinatura': f"<br><b>Fontes:</b> {dados.get('links_pesquisa', 'G1')}<br><br>{BLOCO_FIXO_FINAL}"
         }
 
-        # 5. GERAÇÃO DE HTML E TAGS (Respeitando sua função SEO original)
         html_final = obter_esqueleto_html(dados_post)
         tags_geradas = gerar_tags_seo(dados['titulo'], f"{dados['intro']} {dados['texto1']}")
 
-        # 6. PUBLICAÇÃO (Usando a estrutura rigorosa do Blogger que funcionou no outro blog)
+        # PUBLICAÇÃO COM ESTRUTURA DO EMAGRECER
         corpo_post = {
             "kind": "blogger#post",
-            "title": dados['titulo'].title(),
+            "title": dados['titulo'].upper(),
             "content": html_final,
             "labels": tags_geradas,
             "status": "LIVE"
         }
         
-        service_blogger.posts().insert(blogId=BLOG_ID, isDraft=False, body=corpo_post).execute()
+        service_blogger.posts().insert(
+            blogId=BLOG_ID, 
+            isDraft=False, 
+            body=corpo_post
+        ).execute()
         
-        print(f"🎉 [FIM] Post publicado com sucesso seguindo todos os 7 pontos.")
+        print(f"🎉 [FIM] Post publicado com sucesso! Largura protegida e IA ativa.")
 
     except Exception as e:
         print(f"💥 Erro: {e}")
