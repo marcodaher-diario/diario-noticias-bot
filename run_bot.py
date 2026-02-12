@@ -166,14 +166,15 @@ def executar():
         # PONTO 5 E 7: O esqueleto HTML garante o respeito à largura do Blogger
         html_final = obter_esqueleto_html(dados)
         
-        # PUBLICAÇÃO FORÇADA COMO PÚBLICA
+       # PUBLICAÇÃO GARANTIDA
         service_blogger.posts().insert(
             blogId=BLOG_ID, 
-            isDraft=False,  # <--- FORÇA A PUBLICAÇÃO IMEDIATA
+            isDraft=False, # Garante que não vá para rascunho
             body={
                 'title': dados['titulo'],
                 'content': html_final,
-                'labels': tags_finais
+                'labels': tags_finais,
+                'status': 'LIVE' # Força o status ativo
             }
         ).execute()
         
