@@ -24,7 +24,7 @@ from template_blog import obter_esqueleto_html
 
 
 # ==========================================
-# CONFIGURAÇÕES DE AGENDA (BLINDADA)
+# CONFIGURAÇÃO DE AGENDA BLINDADA
 # ==========================================
 
 FUSO_BRASILIA = pytz.timezone("America/Sao_Paulo")
@@ -88,7 +88,6 @@ def ja_postou_neste_horario(horario):
             data, hora = linha.strip().split("|")
             if data == hoje and hora == horario:
                 return True
-
     return False
 
 
@@ -128,7 +127,6 @@ def assunto_ja_usado(assunto):
             data, assunto_salvo = linha.strip().split("|", 1)
             if data == hoje and assunto in assunto_salvo:
                 return True
-
     return False
 
 
@@ -138,6 +136,52 @@ def registrar_assunto(assunto):
     hoje = datetime.now(FUSO_BRASILIA).strftime("%Y-%m-%d")
     with open(ARQUIVO_CONTROLE_ASSUNTOS, "a", encoding="utf-8") as f:
         f.write(f"{hoje}|{assunto}\n")
+
+
+# ==========================================
+# GERAR TAGS (LIMITE TOTAL 200 CARACTERES)
+# ==========================================
+
+def gerar_tags_seo(titulo, texto):
+
+    stopwords = [
+        "com", "para", "sobre", "entre", "após",
+        "caso", "contra", "diz", "afirma",
+        "governo", "brasil"
+    ]
+
+    conteudo = f"{titulo} {texto[:200]}"
+    palavras = re.findall(r'\b\w{4,}\b', conteudo.lower())
+
+    tags = []
+
+    for p in palavras:
+        if p not in stopwords:
+            tag = p.capitalize()
+            tag = re.sub(r'[^a-zA-ZÀ-ÿ0-9 ]', '', tag)
+
+            if tag and tag not in tags and len(tag) <= 30:
+                tags.append(tag)
+
+    tags_fixas = ["Noticias", "Diario De Noticias", "Marco Daher"]
+
+    for tf in tags_fixas:
+        if tf not in tags:
+            tags.append(tf)
+
+    resultado = []
+    total = 0
+
+    for tag in tags:
+        adicional = len(tag) + (2 if resultado else 0)
+
+        if total + adicional <= 200:
+            resultado.append(tag)
+            total += adicional
+        else:
+            break
+
+    return resultado
 
 
 # ==========================================
@@ -184,150 +228,9 @@ def buscar_noticias(tipo_alvo, limite=1):
                 continue
 
             tipo_detectado = verificar_assunto(titulo, texto)
-
             if tipo_detectado != tipo_alvo:
                 continue
 
             assunto = extrair_assunto_principal(titulo)
-
             if assunto_ja_usado(assunto):
-                continue
-
-            noticias.append({
-                "titulo": titulo,
-                "texto": texto,
-                "link": link,
-                "fonte": fonte,
-                "imagem": entry.get("media_content", [{}])[0].get("url", ""),
-                "assunto": assunto
-            })
-
-    random.shuffle(noticias)
-
-    return noticias[:limite]
-
-
-# ==========================================
-# GERAR CONTEÚDO HTML
-# ==========================================
-
-def gerar_conteudo(n):
-
-    texto_limpo = re.sub(r"<[^>]+>", "", n["texto"])[:4000]
-
-    dados = {
-        "titulo": n["titulo"],
-        "img_topo": n["imagem"],
-        "intro": texto_limpo[:500],
-        "sub1": "Contexto",
-        "texto1": texto_limpo[500:1200],
-        "img_meio": n["imagem"],
-        "sub2": "Desdobramentos",
-        "texto2": texto_limpo[1200:2000],
-        "sub3": "Impactos",
-        "texto3": texto_limpo[2000:3000],
-        "texto_conclusao": texto_limpo[3000:3800],
-        "assinatura": BLOCO_FIXO_FINAL
-    }
-
-    html_final = obter_esqueleto_html(dados)
-
-    if len(html_final) > 900000:
-        html_final = html_final[:900000]
-
-    return html_final
-
-
-# ==========================================
-# PUBLICAR POST
-# ==========================================
-
-def publicar_post(service, noticia):
-
-    conteudo_html = gerar_conteudo(noticia)
-
-    post = {
-        "title": str(noticia["titulo"])[:150],
-        "content": conteudo_html
-    }
-
-    service.posts().insert(
-        blogId=BLOG_ID,
-        body=post,
-        isDraft=False
-    ).execute()
-
-    registrar_publicacao(noticia["link"])
-    registrar_assunto(noticia["assunto"])
-
-
-# ==========================================
-# SALVAR ESTADO NO GITHUB
-# ==========================================
-
-def salvar_estado_github():
-    try:
-        subprocess.run(["git", "config", "--global", "user.name", "github-actions"], check=True)
-        subprocess.run(["git", "config", "--global", "user.email", "github-actions@github.com"], check=True)
-        subprocess.run(["git", "add", "."], check=True)
-        subprocess.run(["git", "commit", "-m", "Atualiza controle automático"], check=True)
-        subprocess.run(["git", "push"], check=True)
-    except Exception:
-        pass
-
-
-# ==========================================
-# VERIFICAR JANELA DE PUBLICAÇÃO
-# ==========================================
-
-def verificar_janela_publicacao():
-    agora = datetime.now(FUSO_BRASILIA)
-
-    for horario_str, tema in AGENDA_POSTAGENS.items():
-        hora_agendada = datetime.strptime(horario_str, "%H:%M")
-        hora_agendada = FUSO_BRASILIA.localize(
-            agora.replace(hour=hora_agendada.hour,
-                          minute=hora_agendada.minute,
-                          second=0,
-                          microsecond=0)
-        )
-
-        diferenca = abs((agora - hora_agendada).total_seconds() / 60)
-
-        if diferenca <= TOLERANCIA_MINUTOS:
-            return horario_str, tema
-
-    return None, None
-
-
-# ==========================================
-# EXECUÇÃO PRINCIPAL
-# ==========================================
-
-if __name__ == "__main__":
-
-    try:
-
-        horario_str, tema = verificar_janela_publicacao()
-
-        if not tema:
-            exit()
-
-        if ja_postou_neste_horario(horario_str):
-            exit()
-
-        service = autenticar_blogger()
-
-        noticias = buscar_noticias(tema, limite=1)
-
-        if not noticias:
-            exit()
-
-        publicar_post(service, noticias[0])
-
-        registrar_postagem_diaria(horario_str)
-
-        salvar_estado_github()
-
-    except Exception as erro:
-        print("Erro:", erro)
+                conti
