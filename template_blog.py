@@ -1,14 +1,14 @@
 def obter_esqueleto_html(dados):
     cor_base = "#003366"  # Azul Marinho MD
-       
+        
     html = f"""
-    <div style="color: {cor_base}; font-family: Arial, sans-serif; line-height: 1.6;">
+    <div style="color: {cor_base}; font-family: Arial, sans-serif; line-height: 1.6; max-width: 100%; overflow-x: hidden;">
         <h1 style="font-weight: bold; margin-bottom: 20px; text-align: center; font-size: x-large;">
             {dados['titulo'].upper()}
         </h1>
 
         <div style='text-align:center; margin-bottom:20px;'>
-            <img src='{dados['img_topo']}' style='width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);'/>
+            <img src='{dados['img_topo']}' style='width:100%; max-width:100%; height:auto; aspect-ratio:16/9; object-fit:cover; border-radius:10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);'/>
         </div>
 
         <div style='font-size: medium; text-align:justify; margin:10px 0;'>
@@ -23,7 +23,7 @@ def obter_esqueleto_html(dados):
         </div>
 
         <div style='text-align:center; margin:30px 0;'>
-            <img src='{dados['img_meio']}' style='width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);'/>
+            <img src='{dados['img_meio']}' style='width:100%; max-width:100%; height:auto; aspect-ratio:16/9; object-fit:cover; border-radius:10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);'/>
         </div>
 
         <p style='font-size: large; font-weight:bold; text-align:left; margin:25px 0 5px 0;'>
