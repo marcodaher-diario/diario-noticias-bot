@@ -151,28 +151,25 @@ def gerar_tags_seo(titulo, texto):
     palavras = re.findall(r'\b\w{4,}\b', conteudo.lower())
 
     tags = []
-    for p in palavras:
-        if p not in stopwords and p not in tags:
-            tags.append(p.capitalize())
 
-    tags_fixas = ["Notícias", "Diário de Notícias", "Marco Daher"]
+    for p in palavras:
+        if p not in stopwords:
+            tag = p.capitalize()
+
+            # remove caracteres inválidos
+            tag = re.sub(r'[^a-zA-ZÀ-ÿ0-9 ]', '', tag)
+
+            if tag and tag not in tags and len(tag) <= 30:
+                tags.append(tag)
+
+    tags_fixas = ["Noticias", "Diario de Noticias", "Marco Daher"]
 
     for tf in tags_fixas:
         if tf not in tags:
             tags.append(tf)
 
-    resultado = []
-    tamanho_atual = 0
-
-    for tag in tags:
-        if tamanho_atual + len(tag) + 2 <= 200:
-            resultado.append(tag)
-            tamanho_atual += len(tag) + 2
-        else:
-            break
-
-    return resultado
-
+    # Limita a 10 labels (seguro para Blogger)
+    return tags[:10]
 
 # ====================================
 # GERAR IMAGENS E VÍDEOS
