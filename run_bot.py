@@ -71,43 +71,54 @@ def gerar_imagens_ia(client, titulo_post):
         nome_arq = f"imagem_{i}.png"
         sucesso = False
         
-        # 1. TENTA PRO
-        try:
-            print(f"🎨 Gerando imagem {i+1}/2 com Gemini 3 Pro...")
-            res = client.models.generate_content(
-                model="gemini-3-pro-image-preview",
-                contents=p,
-                config=types.GenerateContentConfig(
-                    image_config=types.ImageConfig(aspect_ratio="16:9", image_size="2K")
-                )
-            )
-            image_parts = [part for part in res.parts if part.inline_data]
-            if image_parts:
-                img = Image.open(io.BytesIO(image_parts[0].inline_data.data))
-                img.save(nome_arq)
-                links_locais.append(nome_arq)
-                print(f"✨ Sucesso com modelo PRO!")
-                sucesso = True
-        except:
-            pass
-
-        # 2. TENTA FLASH (Reserva)
-        if not sucesso:
+        # O bot vai tentar 3 vezes para cada imagem se o servidor der 503
+        for tentativa in range(3):
+            if sucesso: break
+            
+            # Tenta o modelo PRO primeiro
             try:
-                print(f"🎨 Gerando imagem {i+1}/2 com Gemini 3 Flash...")
+                print(f"🎨 Tentando imagem {i+1}/2 (Tentativa {tentativa+1}) com Pro...")
                 res = client.models.generate_content(
-                    model="gemini-3-flash-preview",
-                    contents=f"{p}. Ensure the image is in 16:9 widescreen format."
+                    model="gemini-3-pro-image-preview",
+                    contents=p,
+                    config=types.GenerateContentConfig(
+                        image_config=types.ImageConfig(aspect_ratio="16:9", image_size="2K")
+                    )
                 )
                 image_parts = [part for part in res.parts if part.inline_data]
                 if image_parts:
                     img = Image.open(io.BytesIO(image_parts[0].inline_data.data))
                     img.save(nome_arq)
                     links_locais.append(nome_arq)
-                    print(f"✨ Sucesso com modelo FLASH!")
+                    print(f"✨ Sucesso com Pro!")
                     sucesso = True
-            except Exception as e:
-                print(f"⚠️ Falha na imagem {i}: {e}")
+                    break
+            except:
+                pass
+
+            # Tenta o modelo FLASH se o Pro falhar
+            if not sucesso:
+                try:
+                    print(f"🎨 Tentando imagem {i+1}/2 (Tentativa {tentativa+1}) com Flash...")
+                    res = client.models.generate_content(
+                        model="gemini-3-flash-preview",
+                        contents=f"{p}. Ensure the image is in 16:9 widescreen format."
+                    )
+                    image_parts = [part for part in res.parts if part.inline_data]
+                    if image_parts:
+                        img = Image.open(io.BytesIO(image_parts[0].inline_data.data))
+                        img.save(nome_arq)
+                        links_locais.append(nome_arq)
+                        print(f"✨ Sucesso com Flash!")
+                        sucesso = True
+                        break
+                except Exception as e:
+                    if "503" in str(e):
+                        print(f"⏳ Servidor de imagem lotado. Esperando 20s...")
+                        time.sleep(20)
+                    else:
+                        print(f"⚠️ Erro na imagem: {e}")
+                        break
                 
     return links_locais
 
