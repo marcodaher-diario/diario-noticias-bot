@@ -156,27 +156,37 @@ def executar():
             service_drive.permissions().create(fileId=file.get('id'), body={'type': 'anyone', 'role': 'reader'}).execute()
             links_drive.append(f"https://drive.google.com/uc?export=view&id={file.get('id')}")
 
-        # 4, 5, 6 e 7. MONTAGEM, TAGS, HTML E ASSINATURA
-        dados['img_topo'] = links_drive[0] if len(links_drive) > 0 else ""
-        dados['img_meio'] = links_drive[1] if len(links_drive) > 1 else dados['img_topo']
-        dados['assinatura'] = f"<br><b>Fontes:</b> {dados.get('links_pesquisa', 'G1')}<br><br>{BLOCO_FIXO_FINAL}"
+        # --- BLOCO FUSIONADO: MECÂNICA EMAGRECER + LÓGICA DIÁRIO ---
+        # 4. PREPARAÇÃO DOS DADOS (Tratamento contra estouro de largura)
+        dados_post = {
+            'titulo': dados['titulo'],
+            'img_topo': links_drive[0] if len(links_drive) > 0 else "",
+            'img_meio': links_drive[1] if len(links_drive) > 1 else (links_drive[0] if len(links_drive) > 0 else ""),
+            'intro': dados.get('intro', '').replace('\n', '<br/>'),
+            'sub1': dados.get('sub1', 'Destaque'),
+            'texto1': dados.get('texto1', '').replace('\n', '<br/>'),
+            'sub2': dados.get('sub2', 'Saiba Mais'),
+            'texto2': dados.get('texto2', '').replace('\n', '<br/>'),
+            'sub3': dados.get('sub3', 'Dica Prática'),
+            'texto3': dados.get('texto3', '').replace('\n', '<br/>'),
+            'texto_conclusao': dados.get('texto_conclusao', '').replace('\n', '<br/>'),
+            'assinatura': f"<br><b>Fontes:</b> {dados.get('links_pesquisa', 'G1')}<br><br>{BLOCO_FIXO_FINAL}"
+        }
+
+        # 5. GERAÇÃO DE HTML E TAGS (Respeitando sua função SEO original)
+        html_final = obter_esqueleto_html(dados_post)
+        tags_geradas = gerar_tags_seo(dados['titulo'], f"{dados['intro']} {dados['texto1']}")
+
+        # 6. PUBLICAÇÃO (Usando a estrutura rigorosa do Blogger que funcionou no outro blog)
+        corpo_post = {
+            "kind": "blogger#post",
+            "title": dados['titulo'].title(),
+            "content": html_final,
+            "labels": tags_geradas,
+            "status": "LIVE"
+        }
         
-        tags_finais = gerar_tags_seo(dados['titulo'], f"{dados['intro']} {dados['texto1']}")
-        
-        # PONTO 5 E 7: O esqueleto HTML garante o respeito à largura do Blogger
-        html_final = obter_esqueleto_html(dados)
-        
-       # PUBLICAÇÃO GARANTIDA
-        service_blogger.posts().insert(
-            blogId=BLOG_ID, 
-            isDraft=False, # Garante que não vá para rascunho
-            body={
-                'title': dados['titulo'],
-                'content': html_final,
-                'labels': tags_finais,
-                'status': 'LIVE' # Força o status ativo
-            }
-        ).execute()
+        service_blogger.posts().insert(blogId=BLOG_ID, isDraft=False, body=corpo_post).execute()
         
         print(f"🎉 [FIM] Post publicado com sucesso seguindo todos os 7 pontos.")
 
