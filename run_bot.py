@@ -54,7 +54,6 @@ def upload_para_drive(service_drive, caminho_arquivo, nome_arquivo):
 
 def gerar_imagens_ia(client, titulo_post):
     links_locais = []
-    
     prompts = [
         f"Professional news photojournalism image, cinematic wide shot, 16:9 ratio: {titulo_post}",
         f"Political analysis conceptual illustration, professional blue tones, 16:9 ratio: {titulo_post}"
@@ -64,7 +63,7 @@ def gerar_imagens_ia(client, titulo_post):
         nome_arq = f"imagem_{i}.png"
         sucesso = False
         
-        # TENTATIVA 1: Modelo PRO (Com Parâmetros de Alta Qualidade)
+        # TENTATIVA 1: Modelo PRO
         try:
             print(f"🎨 Gerando imagem {i+1}/2 com Gemini 3 Pro...")
             res = client.models.generate_content(
@@ -81,16 +80,14 @@ def gerar_imagens_ia(client, titulo_post):
                 img = Image.open(io.BytesIO(image_parts[0].inline_data.data))
                 img.save(nome_arq)
                 links_locais.append(nome_arq)
-                print(f"✨ Sucesso no modelo PRO!")
                 sucesso = True
-        except Exception as e:
-            print(f"⚠️ Pro sem cota ou erro. Tentando Flash...")
+        except:
+            pass
 
-        # TENTATIVA 2: Modelo FLASH (Resiliente, sem parâmetros extras que causam erro 400)
+        # TENTATIVA 2: Modelo FLASH (Resiliente)
         if not sucesso:
             try:
-                print(f"🎨 Gerando imagem {i+1}/2 com Gemini 3 Flash (Reserva)...")
-                # No Flash, pedimos o 16:9 DENTRO do texto do prompt
+                print(f"🎨 Gerando imagem {i+1}/2 com Gemini 3 Flash...")
                 res = client.models.generate_content(
                     model="gemini-3-flash-preview",
                     contents=f"{p}. Ensure the image is in 16:9 widescreen format."
@@ -102,10 +99,9 @@ def gerar_imagens_ia(client, titulo_post):
                     img = Image.open(io.BytesIO(image_parts[0].inline_data.data))
                     img.save(nome_arq)
                     links_locais.append(nome_arq)
-                    print(f"✨ Sucesso no modelo FLASH!")
                     sucesso = True
             except Exception as e:
-                print(f"⚠️ Falha total na imagem {i}: {e}")
+                print(f"⚠️ Falha na imagem {i}: {e}")
                 
     return links_locais
 
@@ -117,11 +113,11 @@ def executar():
         service_drive = build('drive', 'v3', credentials=creds)
         client = genai.Client(api_key=GEMINI_API_KEY)
 
-        # 1. Notícia
+        # 1. Busca Notícia
         feed = feedparser.parse("https://g1.globo.com/rss/g1/politica/")
         noticia_base = feed.entries[0]
         
-        # 2. Texto Longo (600-900 palavras)
+        # 2. Gera Artigo com RETRY para erro 503
         print(f"✍️ Analisando: {noticia_base.title}")
         prompt_texto = (
             f"Analise a notícia: '{noticia_base.title}'. Escreva um artigo de 850 palavras. "
@@ -131,13 +127,25 @@ def executar():
             "texto_conclusao (100 palavras), links_pesquisa."
         )
         
-        res = client.models.generate_content(
-            model="gemini-3-flash-preview",
-            contents=prompt_texto,
-            config=types.GenerateContentConfig(response_mime_type="application/json")
-        )
-        dados = json.loads(res.text)
-        print(f"✅ Artigo longo gerado.")
+        dados = None
+        for tentativa in range(3):
+            try:
+                res = client.models.generate_content(
+                    model="gemini-3-flash-preview",
+                    contents=prompt_texto,
+                    config=types.GenerateContentConfig(response_mime_type="application/json")
+                )
+                dados = json.loads(res.text)
+                print(f"✅ Artigo longo gerado.")
+                break
+            except Exception as e:
+                if "503" in str(e):
+                    print(f"⏳ Servidor lotado (503). Tentativa {tentativa+1}/3 em 10s...")
+                    time.sleep(10)
+                else:
+                    raise e
+
+        if not dados: raise Exception("Google Gemini indisponível no momento.")
 
         # 3. Imagens
         arquivos = gerar_imagens_ia(client, dados['titulo'])
@@ -155,7 +163,7 @@ def executar():
         corpo_post = {'kind': 'blogger#post', 'title': dados['titulo'], 'content': html_final, 'labels': tags}
         
         service_blogger.posts().insert(blogId=BLOG_ID, body=corpo_post).execute()
-        print(f"🎉 SUCESSO TOTAL! Texto e Imagens integrados.")
+        print(f"🎉 SUCESSO TOTAL!")
 
     except Exception as e:
         print(f"💥 Erro: {e}")
