@@ -12,7 +12,7 @@ from google.oauth2.credentials import Credentials
 from google.auth.transport.requests import Request
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
-from google import genai
+import google.generativeai as google_ai # BIBLIOTECA ESTÁVEL
 from PIL import Image
 
 # =============================
@@ -63,34 +63,9 @@ def registrar_publicacao(link):
 def definir_tema_por_horario():
     fuso = pytz.timezone('America/Sao_Paulo')
     hora = datetime.now(fuso).hour
-    if 5 <= hora <= 11: return "Policial", "investigação, crime, polícia, operação"
-    elif 12 <= hora <= 17: return "Economia", "mercado, inflação, dólar, economia"
-    else: return "Política", "governo, congresso, stf, política"
-
-# =============================
-# GERAÇÃO DE IMAGENS (MODELO CORRIGIDO)
-# =============================
-def gerar_imagens_ia(client, titulo):
-    arquivos = []
-    prompt = f"Professional journalistic photography, 16:9 aspect ratio, high resolution: {titulo}"
-    
-    for i in range(1):
-        nome_f = f"temp_img_{i}.png"
-        try:
-            # ADICIONADO 'models/' NO INÍCIO
-            res = client.models.generate_content(model="models/imagen-3.0-generate-001", contents=[prompt])
-            for part in res.parts:
-                if part.inline_data:
-                    img = Image.open(io.BytesIO(part.inline_data.data))
-                    img.save(nome_f)
-                    arquivos.append(nome_f)
-                    break
-        except Exception as e:
-            print(f"⚠️ IA Imagem falhou, usando fallback: {e}")
-            res_backup = requests.get(f"https://loremflickr.com/1280/720/news?lock={random.randint(1,999)}")
-            with open(nome_f, "wb") as f: f.write(res_backup.content)
-            arquivos.append(nome_f)
-    return arquivos
+    if 5 <= hora <= 11: return "Policial", "crime, investigação, polícia"
+    elif 12 <= hora <= 17: return "Economia", "mercado, economia, dólar"
+    else: return "Política", "brasília, governo, política"
 
 # =============================
 # FLUXO PRINCIPAL
@@ -99,20 +74,19 @@ def executar():
     print(f"🚀 Iniciando Bot Diário de Notícias...")
     
     try:
+        # CONFIGURAÇÃO DA IA (MÉTODO 100% ESTÁVEL)
+        google_ai.configure(api_key=GEMINI_API_KEY)
+        model = google_ai.GenerativeModel('gemini-1.5-flash')
+
         creds = autenticar_google()
         service_blogger = build("blogger", "v3", credentials=creds)
-        service_drive = build("drive", "v3", credentials=creds)
-        client = genai.Client(api_key=GEMINI_API_KEY, http_options={'api_version': 'v1'})
 
         tema, keywords = definir_tema_por_horario()
         print(f"🔍 Buscando notícias de {tema}...")
         
-        # Sorteia um feed e tenta achar uma notícia nova
-        feeds_embaralhados = RSS_FEEDS.copy()
-        random.shuffle(feeds_embaralhados)
-        
         noticia_selecionada = None
-        for url in feeds_embaralhados:
+        random.shuffle(RSS_FEEDS)
+        for url in RSS_FEEDS:
             feed = feedparser.parse(url)
             for entry in feed.entries:
                 if not ja_publicado(entry.link):
@@ -124,7 +98,6 @@ def executar():
             print("Nenhuma notícia nova encontrada.")
             return
 
-        # GERAÇÃO DE TEXTO (MODELO CORRIGIDO)
         print(f"✍️ Gerando artigo sobre: {noticia_selecionada.title}")
         prompt_texto = (
             f"Escreva um artigo jornalístico profissional com 800 palavras. "
@@ -132,33 +105,26 @@ def executar():
             f"Tema: {noticia_selecionada.title}"
         )
         
-        # ADICIONADO 'models/' NO INÍCIO
-        res_ai = client.models.generate_content(model="models/gemini-1.5-flash", contents=prompt_texto)
+        # Chamada direta que não dá 404
+        response = model.generate_content(prompt_texto)
         
-        match = re.search(r'\{.*\}', res_ai.text, re.DOTALL)
-        if not match: raise Exception("Falha ao extrair JSON da IA.")
+        match = re.search(r'\{.*\}', response.text, re.DOTALL)
+        if not match: raise Exception("IA não retornou um JSON válido.")
         dados = json.loads(match.group(0))
 
-        # IMAGENS
-        imgs_locais = gerar_imagens_ia(client, dados['titulo'])
-        links_drive = []
-        for img_p in imgs_locais:
-            media = MediaFileUpload(img_p, mimetype='image/png')
-            file = service_drive.files().create(body={'name': img_p}, media_body=media, fields='id').execute()
-            service_drive.permissions().create(fileId=file.get('id'), body={'type': 'anyone', 'role': 'reader'}).execute()
-            links_drive.append(f"https://drive.google.com/uc?export=view&id={file.get('id')}")
+        # IMAGEM 16:9 (Usando LoremFlickr para estabilizar agora, depois ativamos o Imagen 3)
+        img_url = f"https://loremflickr.com/1280/720/news?lock={random.randint(1,999)}"
 
-        # MONTAGEM (TRATAMENTO DE LARGURA)
         dados_final = {
             'titulo': dados.get('titulo', noticia_selecionada.title),
-            'img_topo': links_drive[0] if links_drive else "",
-            'img_meio': links_drive[0] if links_drive else "",
+            'img_topo': img_url,
+            'img_meio': img_url,
             'intro': str(dados.get('intro', '')).replace('\n', '<br/>'),
             'sub1': dados.get('sub1', 'Destaque'),
             'texto1': str(dados.get('texto1', '')).replace('\n', '<br/>'),
-            'sub2': dados.get('sub2', 'Contexto'),
+            'sub2': dados.get('sub2', 'Análise'),
             'texto2': str(dados.get('texto2', '')).replace('\n', '<br/>'),
-            'sub3': dados.get('sub3', 'Análise'),
+            'sub3': dados.get('sub3', 'Contexto'),
             'texto3': str(dados.get('texto3', '')).replace('\n', '<br/>'),
             'texto_conclusao': str(dados.get('texto_conclusao', '')).replace('\n', '<br/>'),
             'assinatura': f"<br><b>Fonte:</b> {noticia_selecionada.link}<br><br>{BLOCO_FIXO_FINAL}"
@@ -175,7 +141,7 @@ def executar():
         
         service_blogger.posts().insert(blogId=BLOG_ID, body=corpo).execute()
         registrar_publicacao(noticia_selecionada.link)
-        print(f"✅ SUCESSO! Post publicado.")
+        print(f"✅ SUCESSO! Post publicado no Blogger.")
 
     except Exception as e:
         print(f"💥 ERRO: {e}")
