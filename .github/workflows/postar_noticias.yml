@@ -27,6 +27,7 @@ jobs:
         run: |
           pip install feedparser google-api-python-client google-auth-oauthlib google-genai pytz
           pip install google-generativeai feedparser google-api-python-client google-auth-oauthlib pytz
+          pip install google-genai google-api-python-client google-auth-oauthlib feedparser Pillow
 
       - name: Rodar Bot de Noticias
         env:
