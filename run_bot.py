@@ -97,7 +97,7 @@ def buscar_imagem_reserva(index):
 def gerar_imagens(client, titulo_post):
     links_locais = []
     # Modelo específico para imagem conforme documentação
-    model_nome = "gemini-2.5-flash-image" 
+    model_nome = "imagen-3.0-generate-001"
     prompts = [
         f"Professional photojournalism, 16:9, realistic: {titulo_post}",
         f"News scene photography, 16:9, cinematic lighting: {titulo_post}"
@@ -141,7 +141,7 @@ def executar():
         print(f"✍️ [PONTO 2] Gerando artigo autoral sobre: {noticia.title}")
         prompt_txt = f"Escreva um artigo jornalístico autoral, sem plágio, entre 700 e 900 palavras. Responda em JSON: titulo, intro, sub1, texto1, sub2, texto2, sub3, texto3, texto_conclusao, links_pesquisa. Tema: {noticia.title}"
         res_txt = client.models.generate_content(
-            model="gemini-1.5-flash", 
+            model="gemini-1.5-flash-latest",
             contents=prompt_txt,
             config=types.GenerateContentConfig(response_mime_type="application/json")
         )
