@@ -10,14 +10,20 @@ from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 from google import genai
 from google.genai import types
-from PIL import Image
+
+# Tenta importar o Pillow, essencial para salvar as imagens da IA
+try:
+    from PIL import Image
+except ImportError:
+    print("❌ ERRO: A biblioteca 'Pillow' não está instalada. Execute: pip install Pillow")
+    raise
 
 # --- IMPORTAÇÕES DOS SEUS ARQUIVOS LOCAIS ---
 try:
     from template_blog import obter_esqueleto_html
     from configuracoes import BLOCO_FIXO_FINAL
 except ImportError as e:
-    print(f"❌ ERRO de Importação: Verifique se template_blog.py e configuracoes.py estão na mesma pasta. Erro: {e}")
+    print(f"❌ ERRO de Importação: Verifique template_blog.py e configuracoes.py. Erro: {e}")
     raise
 
 # --- CONFIGURAÇÕES ---
@@ -65,7 +71,7 @@ def gerar_imagens_ia(client, titulo_post):
         nome_arq = f"imagem_{i}.png"
         sucesso = False
         
-        # 1. TENTA PRO (Cota zero no free tier mas deixamos o código pronto)
+        # 1. TENTA PRO
         try:
             print(f"🎨 Gerando imagem {i+1}/2 com Gemini 3 Pro...")
             res = client.models.generate_content(
@@ -85,7 +91,7 @@ def gerar_imagens_ia(client, titulo_post):
         except:
             pass
 
-        # 2. TENTA FLASH (Reserva estável)
+        # 2. TENTA FLASH (Reserva)
         if not sucesso:
             try:
                 print(f"🎨 Gerando imagem {i+1}/2 com Gemini 3 Flash...")
@@ -113,14 +119,10 @@ def executar():
         service_drive = build('drive', 'v3', credentials=creds)
         client = genai.Client(api_key=GEMINI_API_KEY)
 
-        # 1. BUSCA NOTÍCIA
         feed = feedparser.parse("https://g1.globo.com/rss/g1/politica/")
-        if not feed.entries:
-            print("❌ Nenhum feed encontrado.")
-            return
+        if not feed.entries: return
         noticia_base = feed.entries[0]
         
-        # 2. GERAÇÃO DE TEXTO LONGO (RETRY + CLEANUP)
         print(f"✍️ Analisando: {noticia_base.title}")
         prompt_texto = (
             f"Analise a notícia: '{noticia_base.title}'. Escreva um artigo de 850 palavras. "
@@ -137,48 +139,35 @@ def executar():
                     config=types.GenerateContentConfig(response_mime_type="application/json")
                 )
                 
-                # Tratamento para evitar erro 'Extra Data'
                 texto_raw = res.text.strip()
                 match = re.search(r'\{.*\}', texto_raw, re.DOTALL)
-                if match:
-                    texto_raw = match.group(0)
+                if match: texto_raw = match.group(0)
                 
                 dados = json.loads(texto_raw)
                 print(f"✅ Artigo gerado com sucesso.")
                 break
             except Exception as e:
-                print(f"⏳ Erro ou Servidor ocupado. Tentativa {tentativa+1}/3. Aguardando 15s...")
+                print(f"⏳ Tentativa {tentativa+1}/3. Aguardando 15s...")
                 time.sleep(15)
 
-        if not dados:
-            print("❌ Não foi possível obter os dados da IA.")
-            return
+        if not dados: return
 
-        # 3. IMAGENS
         arquivos = gerar_imagens_ia(client, dados['titulo'])
         links_drive = [upload_para_drive(service_drive, f, f) for f in arquivos]
 
-        # 4. TAGS E MONTAGEM
         tags = gerar_tags_seo(dados['titulo'], dados['texto1'])
-        
         dados['img_topo'] = links_drive[0] if len(links_drive) > 0 else "https://via.placeholder.com/1280x720"
         dados['img_meio'] = links_drive[1] if len(links_drive) > 1 else dados['img_topo']
-        dados['assinatura'] = f"<br><b>Fontes de pesquisa:</b> {dados.get('links_pesquisa', 'G1')}<br><br>{BLOCO_FIXO_FINAL}"
+        dados['assinatura'] = f"<br><b>Fontes:</b> {dados.get('links_pesquisa', 'G1')}<br><br>{BLOCO_FIXO_FINAL}"
 
-        # 5. PUBLICAÇÃO
         html_final = obter_esqueleto_html(dados)
-        corpo_post = {
-            'kind': 'blogger#post',
-            'title': dados['titulo'],
-            'content': html_final,
-            'labels': tags
-        }
+        corpo_post = {'kind': 'blogger#post', 'title': dados['titulo'], 'content': html_final, 'labels': tags}
         
         service_blogger.posts().insert(blogId=BLOG_ID, body=corpo_post).execute()
-        print(f"🎉 SUCESSO TOTAL! Postagem publicada com sucesso.")
+        print(f"🎉 SUCESSO TOTAL! Postagem publicada.")
 
     except Exception as e:
-        print(f"💥 Erro na execução principal: {e}")
+        print(f"💥 Erro: {e}")
 
 if __name__ == "__main__":
     executar()
