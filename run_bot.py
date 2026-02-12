@@ -131,7 +131,7 @@ def executar():
             
         service_blogger = build('blogger', 'v3', credentials=creds)
         service_drive = build('drive', 'v3', credentials=creds)
-        client = genai.Client(api_key=GEMINI_API_KEY)
+        client = genai.Client(api_key=GEMINI_API_KEY, http_options={'api_version': 'v1'})
 
         # 1. RSS POR HORÁRIO
         tema, keywords = definir_tema_por_horario()
