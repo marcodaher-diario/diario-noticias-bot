@@ -36,17 +36,14 @@ def renovar_token():
     return creds
 
 def gerar_tags_seo(titulo, texto_completo):
-    stopwords = ["com", "de", "do", "da", "em", "para", "um", "uma", "os", "as", "que", "no", "na", "ao", "aos", "o", "a", "e", "dos", "das"]
+    stopwords = ["com", "de", "do", "da", "em", "para", "um", "uma", "os", "as", "que", "no", "na", "ao", "aos", "o", "a", "e"]
     conteudo = f"{titulo} {texto_completo[:500]}"
     palavras = re.findall(r'\b\w{4,}\b', conteudo.lower())
-    tags = []
-    for p in palavras:
-        if p not in stopwords and p not in tags:
-            tags.append(p.capitalize())
-    tags_fixas = ["Emagrecer", "Saúde", "Marco Daher", "Política", "Brasil"]
+    tags = [p.capitalize() for p in palavras if p not in stopwords]
+    tags_fixas = ["Emagrecer", "Saúde", "Marco Daher", "Política"]
     for tf in tags_fixas:
         if tf not in tags: tags.append(tf)
-    return tags[:15]
+    return list(dict.fromkeys(tags))[:15]
 
 def upload_para_drive(service_drive, caminho_arquivo, nome_arquivo):
     file_metadata = {'name': nome_arquivo}
@@ -57,28 +54,42 @@ def upload_para_drive(service_drive, caminho_arquivo, nome_arquivo):
 
 def gerar_imagens_ia(client, titulo_post):
     links_locais = []
-    modelo_img = 'imagen-3' 
+    # Usando o modelo EXATO da documentação que você enviou
+    modelo_img = "gemini-3-pro-image-preview"
     
     prompts = [
-        f"Cinematic wide shot, professional political journalism photo, 16:9 aspect ratio, high resolution: {titulo_post}",
-        f"High quality professional illustration for news blog, 16:9 aspect ratio, blue tones: {titulo_post}"
+        f"Generate a professional photojournalism image for a news blog about: {titulo_post}. Cinematic lighting, 16:9.",
+        f"Generate a professional political conceptual illustration, blue and gold tones, 16:9: {titulo_post}"
     ]
     
     for i, p in enumerate(prompts):
         nome_arq = f"imagem_{i}.png"
         try:
-            print(f"🎨 Gerando imagem {i+1}/2...")
-            response = client.models.generate_images(
+            print(f"🎨 Gerando imagem {i+1}/2 com {modelo_img}...")
+            # Implementação baseada no código que você enviou
+            response = client.models.generate_content(
                 model=modelo_img,
-                prompt=p,
-                config=types.GenerateImagesConfig(number_of_images=1, aspect_ratio="16:9")
+                contents=p,
+                config=types.GenerateContentConfig(
+                    image_config=types.ImageConfig(
+                        aspect_ratio="16:9",
+                        image_size="2K" # 2K é mais rápido que 4K para o bot
+                    )
+                )
             )
-            if response.generated_images:
-                response.generated_images[0].image.save(nome_arq)
+            
+            # Captura a imagem dos parts da resposta
+            image_parts = [part for part in response.parts if part.inline_data]
+            if image_parts:
+                from PIL import Image
+                import io
+                image_data = image_parts[0].inline_data.data
+                img = Image.open(io.BytesIO(image_data))
+                img.save(nome_arq)
                 links_locais.append(nome_arq)
-                print(f"✨ Imagem {i+1} salva!")
+                print(f"✨ Imagem {i+1} salva com sucesso!")
         except Exception as e:
-            print(f"⚠️ Erro imagem {i}: {e}")
+            print(f"⚠️ Falha na imagem {i}: {e}")
     return links_locais
 
 def executar():
@@ -89,63 +100,54 @@ def executar():
         service_drive = build('drive', 'v3', credentials=creds)
         client = genai.Client(api_key=GEMINI_API_KEY)
 
-        # 1. Notícia
+        # 1. Busca Notícia
         feed = feedparser.parse("https://g1.globo.com/rss/g1/politica/")
         noticia_base = feed.entries[0]
         
-        # 2. Conteúdo Longo (600-900 palavras)
-        dados = None
-        print(f"✍️ Gerando artigo detalhado...")
-        
-        prompt = (
-            f"Atue como um analista político experiente. Com base na notícia: '{noticia_base.title}'. "
-            "Escreva um artigo profundo, com tom jornalístico sério, contendo entre 600 e 900 palavras. "
-            "Estruture o texto para que cada seção (texto1, texto2, texto3) seja longa e rica em detalhes. "
-            "Responda estritamente em JSON com as chaves: "
-            "titulo, intro (mínimo 100 palavras), sub1, texto1 (mínimo 200 palavras), "
-            "sub2, texto2 (mínimo 200 palavras), sub3, texto3 (mínimo 200 palavras), "
-            "texto_conclusao (mínimo 100 palavras), links_pesquisa."
+        # 2. Gera Artigo Longo (600-900 palavras)
+        print(f"✍️ Analisando: {noticia_base.title}")
+        prompt_texto = (
+            f"Analise a notícia: '{noticia_base.title}'. Escreva um artigo de 800 palavras. "
+            "Seja detalhado e crítico. Responda em JSON: "
+            "titulo, intro (150 palavras), sub1, texto1 (250 palavras), "
+            "sub2, texto2 (250 palavras), sub3, texto3 (150 palavras), "
+            "texto_conclusao (100 palavras), links_pesquisa."
         )
-
-        try:
-            res = client.models.generate_content(
-                model="gemini-3-flash-preview",
-                contents=prompt,
-                config=types.GenerateContentConfig(response_mime_type="application/json")
-            )
-            dados = json.loads(res.text)
-            print(f"✅ Texto longo gerado com sucesso!")
-        except Exception as e:
-            print(f"❌ Erro na geração do texto: {e}")
-            return
-
-        # 3. SEO e Imagens
-        tags_geradas = gerar_tags_seo(dados['titulo'], dados['texto1'])
-        arquivos = gerar_imagens_ia(client, dados['titulo'])
-        links = [upload_para_drive(service_drive, f, f) for f in arquivos]
-
-        # 4. Organização do Conteúdo
-        dados['img_topo'] = links[0] if len(links) > 0 else "https://via.placeholder.com/1280x720"
-        dados['img_meio'] = links[1] if len(links) > 1 else dados['img_topo']
         
-        # Links de pesquisa + Assinatura fixa
-        links_html = f"<br><br><b>Fontes para pesquisa:</b><br>{dados.get('links_pesquisa', 'G1, Folha, CNN Brasil')}"
-        dados['assinatura'] = f"{links_html}<br><br>{BLOCO_FIXO_FINAL}"
+        res = client.models.generate_content(
+            model="gemini-3-flash-preview",
+            contents=prompt_texto,
+            config=types.GenerateContentConfig(response_mime_type="application/json")
+        )
+        dados = json.loads(res.text)
+        print(f"✅ Artigo longo gerado ({len(res.text.split())} palavras).")
 
-        # 5. Publicação
+        # 3. Gera Imagens (Novo Método)
+        arquivos = gerar_imagens_ia(client, dados['titulo'])
+        links_drive = [upload_para_drive(service_drive, f, f) for f in arquivos]
+
+        # 4. Tags e SEO
+        tags = gerar_tags_seo(dados['titulo'], dados['texto1'])
+
+        # 5. Montagem Final
+        dados['img_topo'] = links_drive[0] if len(links_drive) > 0 else "https://via.placeholder.com/1280x720"
+        dados['img_meio'] = links_drive[1] if len(links_drive) > 1 else dados['img_topo']
+        dados['assinatura'] = f"<br><b>Fontes:</b> {dados.get('links_pesquisa', 'G1')}<br><br>{BLOCO_FIXO_FINAL}"
+
         html_final = obter_esqueleto_html(dados)
+        
         corpo_post = {
             'kind': 'blogger#post',
             'title': dados['titulo'],
             'content': html_final,
-            'labels': tags_geradas
+            'labels': tags
         }
         
         service_blogger.posts().insert(blogId=BLOG_ID, body=corpo_post).execute()
-        print(f"✅ SUCESSO TOTAL! Artigo publicado com {len(html_final.split())} palavras estimadas.")
+        print(f"🎉 SUCESSO! Artigo completo no ar.")
 
     except Exception as e:
-        print(f"💥 Erro na execução: {e}")
+        print(f"💥 Erro: {e}")
 
 if __name__ == "__main__":
     executar()
