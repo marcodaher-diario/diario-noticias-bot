@@ -36,17 +36,17 @@ def renovar_token():
     return creds
 
 def gerar_tags_seo(titulo, texto_completo):
-    stopwords = ["com", "de", "do", "da", "em", "para", "um", "uma", "os", "as", "que", "no", "na", "ao", "aos", "o", "a", "e"]
-    conteudo = f"{titulo} {texto_completo[:300]}"
+    stopwords = ["com", "de", "do", "da", "em", "para", "um", "uma", "os", "as", "que", "no", "na", "ao", "aos", "o", "a", "e", "dos", "das"]
+    conteudo = f"{titulo} {texto_completo[:500]}"
     palavras = re.findall(r'\b\w{4,}\b', conteudo.lower())
     tags = []
     for p in palavras:
         if p not in stopwords and p not in tags:
             tags.append(p.capitalize())
-    tags_fixas = ["Emagrecer", "Saúde", "Marco Daher"]
+    tags_fixas = ["Emagrecer", "Saúde", "Marco Daher", "Política", "Brasil"]
     for tf in tags_fixas:
         if tf not in tags: tags.append(tf)
-    return tags[:15] # Limite de 15 tags para não estourar o Blogger
+    return tags[:15]
 
 def upload_para_drive(service_drive, caminho_arquivo, nome_arquivo):
     file_metadata = {'name': nome_arquivo}
@@ -57,12 +57,11 @@ def upload_para_drive(service_drive, caminho_arquivo, nome_arquivo):
 
 def gerar_imagens_ia(client, titulo_post):
     links_locais = []
-    # Usando o modelo que tem maior probabilidade de estar ativo na v1beta
-    modelo_img = 'imagen-3.0-generate-001'
+    modelo_img = 'imagen-3' 
     
     prompts = [
-        f"Professional news photojournalism, cinematic wide shot, 16:9 aspect ratio: {titulo_post}",
-        f"Conceptual political illustration, 16:9 aspect ratio: {titulo_post}"
+        f"Cinematic wide shot, professional political journalism photo, 16:9 aspect ratio, high resolution: {titulo_post}",
+        f"High quality professional illustration for news blog, 16:9 aspect ratio, blue tones: {titulo_post}"
     ]
     
     for i, p in enumerate(prompts):
@@ -88,35 +87,36 @@ def executar():
         creds = renovar_token()
         service_blogger = build('blogger', 'v3', credentials=creds)
         service_drive = build('drive', 'v3', credentials=creds)
-        
-        # Voltando ao padrão estável do SDK 2.0
         client = genai.Client(api_key=GEMINI_API_KEY)
 
         # 1. Notícia
         feed = feedparser.parse("https://g1.globo.com/rss/g1/politica/")
         noticia_base = feed.entries[0]
         
-        # 2. Conteúdo com diagnóstico de erro
+        # 2. Conteúdo Longo (600-900 palavras)
         dados = None
-        # Focando no modelo que funcionou anteriormente antes da cota estourar
-        for m in ["gemini-3-flash-preview", "gemini-2.0-flash"]:
-            try:
-                print(f"✍️ Tentando modelo {m}...")
-                prompt = (f"Atue como analista político. Notícia: '{noticia_base.title}'. "
-                         "Gere JSON: titulo, intro, sub1, texto1, sub2, texto2, sub3, texto3, texto_conclusao, links_pesquisa.")
-                res = client.models.generate_content(
-                    model=m, contents=prompt,
-                    config=types.GenerateContentConfig(response_mime_type="application/json")
-                )
-                dados = json.loads(res.text)
-                print(f"✅ Sucesso com {m}!")
-                break
-            except Exception as e:
-                print(f"❌ Erro detalhado no modelo {m}: {e}")
-                time.sleep(5)
+        print(f"✍️ Gerando artigo detalhado...")
+        
+        prompt = (
+            f"Atue como um analista político experiente. Com base na notícia: '{noticia_base.title}'. "
+            "Escreva um artigo profundo, com tom jornalístico sério, contendo entre 600 e 900 palavras. "
+            "Estruture o texto para que cada seção (texto1, texto2, texto3) seja longa e rica em detalhes. "
+            "Responda estritamente em JSON com as chaves: "
+            "titulo, intro (mínimo 100 palavras), sub1, texto1 (mínimo 200 palavras), "
+            "sub2, texto2 (mínimo 200 palavras), sub3, texto3 (mínimo 200 palavras), "
+            "texto_conclusao (mínimo 100 palavras), links_pesquisa."
+        )
 
-        if not dados:
-            print("💥 FALHA CRÍTICA: Nenhum modelo respondeu. Verifique se a API Key está ativa no Google AI Studio.")
+        try:
+            res = client.models.generate_content(
+                model="gemini-3-flash-preview",
+                contents=prompt,
+                config=types.GenerateContentConfig(response_mime_type="application/json")
+            )
+            dados = json.loads(res.text)
+            print(f"✅ Texto longo gerado com sucesso!")
+        except Exception as e:
+            print(f"❌ Erro na geração do texto: {e}")
             return
 
         # 3. SEO e Imagens
@@ -124,16 +124,25 @@ def executar():
         arquivos = gerar_imagens_ia(client, dados['titulo'])
         links = [upload_para_drive(service_drive, f, f) for f in arquivos]
 
-        # 4. Postagem
+        # 4. Organização do Conteúdo
         dados['img_topo'] = links[0] if len(links) > 0 else "https://via.placeholder.com/1280x720"
         dados['img_meio'] = links[1] if len(links) > 1 else dados['img_topo']
-        dados['assinatura'] = f"<div style='margin-top:25px;'>{dados.get('links_pesquisa', '')}</div>{BLOCO_FIXO_FINAL}"
+        
+        # Links de pesquisa + Assinatura fixa
+        links_html = f"<br><br><b>Fontes para pesquisa:</b><br>{dados.get('links_pesquisa', 'G1, Folha, CNN Brasil')}"
+        dados['assinatura'] = f"{links_html}<br><br>{BLOCO_FIXO_FINAL}"
 
+        # 5. Publicação
         html_final = obter_esqueleto_html(dados)
-        corpo_post = {'kind': 'blogger#post', 'title': dados['titulo'], 'content': html_final, 'labels': tags_geradas}
+        corpo_post = {
+            'kind': 'blogger#post',
+            'title': dados['titulo'],
+            'content': html_final,
+            'labels': tags_geradas
+        }
         
         service_blogger.posts().insert(blogId=BLOG_ID, body=corpo_post).execute()
-        print(f"✅ SUCESSO TOTAL!")
+        print(f"✅ SUCESSO TOTAL! Artigo publicado com {len(html_final.split())} palavras estimadas.")
 
     except Exception as e:
         print(f"💥 Erro na execução: {e}")
