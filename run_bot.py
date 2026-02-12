@@ -32,15 +32,14 @@ RSS_FEEDS = [
     "https://g1.globo.com/rss/g1/economia/"
 ]
 
-# Importação do seu Bloco Fixo e Template
 try:
     from configuracoes import BLOCO_FIXO_FINAL
     from template_blog import obter_esqueleto_html
 except:
-    BLOCO_FIXO_FINAL = "<footer>Diário de Notícias</footer>" # Fallback
+    BLOCO_FIXO_FINAL = "<footer>Diário de Notícias</footer>"
 
 # =============================
-# FUNÇÕES DE APOIO (DO ORIGINAL)
+# FUNÇÕES DE APOIO
 # =============================
 def autenticar_google():
     if not os.path.exists("token.json"):
@@ -64,23 +63,22 @@ def registrar_publicacao(link):
 def definir_tema_por_horario():
     fuso = pytz.timezone('America/Sao_Paulo')
     hora = datetime.now(fuso).hour
-    if 5 <= hora <= 11: return "Policial", "notícias policiais, polícia militar, polícia civil, investigação criminal, operação policial, flagrante, prisão em flagrante, mandado de prisão, mandado de busca e apreensão, operação da PF, polícia federal, crime organizado, tráfico de drogas, apreensão de drogas, apreensão de armas, homicídio, tentativa de homicídio, latrocínio, assalto à mão armada, roubo, furto, sequestro, cárcere privado, estelionato, golpe virtual, fraude eletrônica, violência doméstica, lei maria da penha, feminicídio, tribunal do júri, audiência de custódia"
-    elif 12 <= hora <= 17: return "Economia", "economia brasileira, notícias de economia, mercado financeiro, bolsa de valores, Ibovespa hoje, dólar hoje, cotação do dólar, euro hoje, inflação no Brasil, IPCA acumulado, taxa Selic, juros do Banco Central, Banco Central do Brasil, PIB brasileiro, crescimento econômico, recessão econômica, desemprego no Brasil, taxa de desemprego, geração de empregos, reforma tributária, carga tributária, impostos no Brasil, imposto de renda, orçamento federal, déficit público, superávit primário, dívida pública, gastos do governo, política fiscal, política monetária"
-    else: return "Política", "notícias de política, política brasileira, congresso nacional, câmara dos deputados, senado federal, planalto, presidência da república, governo federal, oposição política, base aliada, votação no plenário, sessão deliberativa, projeto de lei, proposta de emenda à constituição, medida provisória, decreto presidencial, reforma administrativa, reforma tributária, reforma política, comissão parlamentar de inquérito, CPI no congresso, tribunal superior eleitoral, supremo tribunal federal, ministério público, decisões do STF, eleições municipais, eleições presidenciais, campanha eleitoral, propaganda partidária, pesquisa eleitoral, intenção de voto, coligações partidárias, partidos políticos, crise política, articulação política, impeachment"
+    if 5 <= hora <= 11: return "Policial", "investigação, crime, polícia, operação"
+    elif 12 <= hora <= 17: return "Economia", "mercado, inflação, dólar, economia"
+    else: return "Política", "governo, congresso, stf, política"
 
 # =============================
-# GERAÇÃO DE IMAGENS (IMAGEN 3)
+# GERAÇÃO DE IMAGENS (MODELO CORRIGIDO)
 # =============================
 def gerar_imagens_ia(client, titulo):
     arquivos = []
-    # Prompt focado em 16:9 como você solicitou
-    prompt = f"Professional journalistic photography, 16:9 aspect ratio, high resolution, realistic style for news: {titulo}"
+    prompt = f"Professional journalistic photography, 16:9 aspect ratio, high resolution: {titulo}"
     
-    for i in range(1): # Gera 1 imagem principal
+    for i in range(1):
         nome_f = f"temp_img_{i}.png"
         try:
-            # Chama o modelo Imagen 3 que você pagou
-            res = client.models.generate_content(model="imagen-3.0-generate-001", contents=[prompt])
+            # ADICIONADO 'models/' NO INÍCIO
+            res = client.models.generate_content(model="models/imagen-3.0-generate-001", contents=[prompt])
             for part in res.parts:
                 if part.inline_data:
                     img = Image.open(io.BytesIO(part.inline_data.data))
@@ -88,54 +86,60 @@ def gerar_imagens_ia(client, titulo):
                     arquivos.append(nome_f)
                     break
         except Exception as e:
-            print(f"⚠️ Erro Imagen 3: {e}. Usando fallback.")
+            print(f"⚠️ IA Imagem falhou, usando fallback: {e}")
             res_backup = requests.get(f"https://loremflickr.com/1280/720/news?lock={random.randint(1,999)}")
             with open(nome_f, "wb") as f: f.write(res_backup.content)
             arquivos.append(nome_f)
     return arquivos
 
 # =============================
-# FLUXO PRINCIPAL (FUSÃO)
+# FLUXO PRINCIPAL
 # =============================
 def executar():
     print(f"🚀 Iniciando Bot Diário de Notícias...")
     
     try:
-        # 1. Autenticação
         creds = autenticar_google()
         service_blogger = build("blogger", "v3", credentials=creds)
         service_drive = build("drive", "v3", credentials=creds)
-        # FORÇANDO V1 PARA EVITAR ERRO 404
         client = genai.Client(api_key=GEMINI_API_KEY, http_options={'api_version': 'v1'})
 
-        # 2. Busca de Notícia (Lógica do seu Original)
         tema, keywords = definir_tema_por_horario()
         print(f"🔍 Buscando notícias de {tema}...")
-        feed = feedparser.parse(random.choice(RSS_FEEDS))
-        noticia_selecionada = None
         
-        for entry in feed.entries:
-            if not ja_publicado(entry.link):
-                noticia_selecionada = entry
-                break
+        # Sorteia um feed e tenta achar uma notícia nova
+        feeds_embaralhados = RSS_FEEDS.copy()
+        random.shuffle(feeds_embaralhados)
+        
+        noticia_selecionada = None
+        for url in feeds_embaralhados:
+            feed = feedparser.parse(url)
+            for entry in feed.entries:
+                if not ja_publicado(entry.link):
+                    noticia_selecionada = entry
+                    break
+            if noticia_selecionada: break
         
         if not noticia_selecionada:
             print("Nenhuma notícia nova encontrada.")
             return
 
-        # 3. IA: Geração de Texto Longo (700-900 palavras)
-        print(f"✍️ Gerando artigo autoral sobre: {noticia_selecionada.title}")
+        # GERAÇÃO DE TEXTO (MODELO CORRIGIDO)
+        print(f"✍️ Gerando artigo sobre: {noticia_selecionada.title}")
         prompt_texto = (
-            f"Escreva um artigo jornalístico profissional, autoral e detalhado com 800 palavras. "
-            f"Use um tom sério. Divida em introdução, três subtítulos e conclusão. "
+            f"Escreva um artigo jornalístico profissional com 800 palavras. "
             f"Responda APENAS em JSON com as chaves: titulo, intro, sub1, texto1, sub2, texto2, sub3, texto3, texto_conclusao. "
             f"Tema: {noticia_selecionada.title}"
         )
         
-        res_ai = client.models.generate_content(model="gemini-1.5-flash", contents=prompt_texto)
-        dados = json.loads(re.search(r'\{.*\}', res_ai.text, re.DOTALL).group(0))
+        # ADICIONADO 'models/' NO INÍCIO
+        res_ai = client.models.generate_content(model="models/gemini-1.5-flash", contents=prompt_texto)
+        
+        match = re.search(r'\{.*\}', res_ai.text, re.DOTALL)
+        if not match: raise Exception("Falha ao extrair JSON da IA.")
+        dados = json.loads(match.group(0))
 
-        # 4. IA: Gerar Imagem 16:9
+        # IMAGENS
         imgs_locais = gerar_imagens_ia(client, dados['titulo'])
         links_drive = []
         for img_p in imgs_locais:
@@ -144,36 +148,34 @@ def executar():
             service_drive.permissions().create(fileId=file.get('id'), body={'type': 'anyone', 'role': 'reader'}).execute()
             links_drive.append(f"https://drive.google.com/uc?export=view&id={file.get('id')}")
 
-        # 5. Montagem do Post (Respeitando a LARGURA do Blog)
-        # O .replace('\n', '<br/>') é essencial para não estourar o layout
+        # MONTAGEM (TRATAMENTO DE LARGURA)
         dados_final = {
-            'titulo': dados['titulo'],
+            'titulo': dados.get('titulo', noticia_selecionada.title),
             'img_topo': links_drive[0] if links_drive else "",
             'img_meio': links_drive[0] if links_drive else "",
-            'intro': str(dados['intro']).replace('\n', '<br/>'),
-            'sub1': dados['sub1'],
-            'texto1': str(dados['texto1']).replace('\n', '<br/>'),
-            'sub2': dados['sub2'],
-            'texto2': str(dados['texto2']).replace('\n', '<br/>'),
-            'sub3': dados['sub3'],
-            'texto3': str(dados['texto3']).replace('\n', '<br/>'),
-            'texto_conclusao': str(dados['texto_conclusao']).replace('\n', '<br/>'),
+            'intro': str(dados.get('intro', '')).replace('\n', '<br/>'),
+            'sub1': dados.get('sub1', 'Destaque'),
+            'texto1': str(dados.get('texto1', '')).replace('\n', '<br/>'),
+            'sub2': dados.get('sub2', 'Contexto'),
+            'texto2': str(dados.get('texto2', '')).replace('\n', '<br/>'),
+            'sub3': dados.get('sub3', 'Análise'),
+            'texto3': str(dados.get('texto3', '')).replace('\n', '<br/>'),
+            'texto_conclusao': str(dados.get('texto_conclusao', '')).replace('\n', '<br/>'),
             'assinatura': f"<br><b>Fonte:</b> {noticia_selecionada.link}<br><br>{BLOCO_FIXO_FINAL}"
         }
 
         html_conteudo = obter_esqueleto_html(dados_final)
         
-        # 6. Publicação
         corpo = {
-            "title": dados['titulo'].upper(),
+            "title": dados_final['titulo'].upper(),
             "content": html_conteudo,
-            "labels": [tema, "Notícias", "Brasil"],
+            "labels": [tema, "Notícias"],
             "status": "LIVE"
         }
         
         service_blogger.posts().insert(blogId=BLOG_ID, body=corpo).execute()
         registrar_publicacao(noticia_selecionada.link)
-        print(f"✅ SUCESSO! Post '{dados['titulo']}' publicado.")
+        print(f"✅ SUCESSO! Post publicado.")
 
     except Exception as e:
         print(f"💥 ERRO: {e}")
