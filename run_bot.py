@@ -54,42 +54,50 @@ def upload_para_drive(service_drive, caminho_arquivo, nome_arquivo):
 
 def gerar_imagens_ia(client, titulo_post):
     links_locais = []
-    # Usando o modelo EXATO da documentação que você enviou
-    modelo_img = "gemini-3-pro-image-preview"
+    # Lista de modelos por prioridade: Pro (o que você enviou) e Flash (o reserva)
+    modelos_tentar = ["gemini-3-pro-image-preview", "gemini-3-flash-preview"]
     
     prompts = [
-        f"Generate a professional photojournalism image for a news blog about: {titulo_post}. Cinematic lighting, 16:9.",
-        f"Generate a professional political conceptual illustration, blue and gold tones, 16:9: {titulo_post}"
+        f"Professional news photojournalism, cinematic wide shot, 16:9 aspect ratio: {titulo_post}",
+        f"Political analysis conceptual illustration, 16:9 aspect ratio, blue theme: {titulo_post}"
     ]
     
     for i, p in enumerate(prompts):
         nome_arq = f"imagem_{i}.png"
-        try:
-            print(f"🎨 Gerando imagem {i+1}/2 com {modelo_img}...")
-            # Implementação baseada no código que você enviou
-            response = client.models.generate_content(
-                model=modelo_img,
-                contents=p,
-                config=types.GenerateContentConfig(
-                    image_config=types.ImageConfig(
-                        aspect_ratio="16:9",
-                        image_size="2K" # 2K é mais rápido que 4K para o bot
+        sucesso_nesta_img = False
+        
+        for modelo in modelos_tentar:
+            if sucesso_nesta_img: break
+            try:
+                print(f"🎨 Tentando gerar imagem {i+1}/2 com {modelo}...")
+                response = client.models.generate_content(
+                    model=modelo,
+                    contents=p,
+                    config=types.GenerateContentConfig(
+                        image_config=types.ImageConfig(
+                            aspect_ratio="16:9",
+                            image_size="2K" if "pro" in modelo else "1080p"
+                        )
                     )
                 )
-            )
-            
-            # Captura a imagem dos parts da resposta
-            image_parts = [part for part in response.parts if part.inline_data]
-            if image_parts:
-                from PIL import Image
-                import io
-                image_data = image_parts[0].inline_data.data
-                img = Image.open(io.BytesIO(image_data))
-                img.save(nome_arq)
-                links_locais.append(nome_arq)
-                print(f"✨ Imagem {i+1} salva com sucesso!")
-        except Exception as e:
-            print(f"⚠️ Falha na imagem {i}: {e}")
+                
+                image_parts = [part for part in response.parts if part.inline_data]
+                if image_parts:
+                    from PIL import Image
+                    import io
+                    image_data = image_parts[0].inline_data.data
+                    img = Image.open(io.BytesIO(image_data))
+                    img.save(nome_arq)
+                    links_locais.append(nome_arq)
+                    print(f"✨ Sucesso com {modelo}!")
+                    sucesso_nesta_img = True
+            except Exception as e:
+                if "429" in str(e):
+                    print(f"⚠️ Cota esgotada para {modelo}, tentando próximo...")
+                else:
+                    print(f"⚠️ Erro com {modelo}: {e}")
+                time.sleep(2) # Pequena pausa para respirar a API
+                
     return links_locais
 
 def executar():
