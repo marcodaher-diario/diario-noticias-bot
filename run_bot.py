@@ -12,7 +12,7 @@ from google.oauth2.credentials import Credentials
 from google.auth.transport.requests import Request
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
-import google.generativeai as google_ai # BIBLIOTECA ESTÁVEL
+from google import genai # A BIBLIOTECA NOVA
 from PIL import Image
 
 # =============================
@@ -63,9 +63,9 @@ def registrar_publicacao(link):
 def definir_tema_por_horario():
     fuso = pytz.timezone('America/Sao_Paulo')
     hora = datetime.now(fuso).hour
-    if 5 <= hora <= 11: return "Policial", "crime, investigação, polícia"
-    elif 12 <= hora <= 17: return "Economia", "mercado, economia, dólar"
-    else: return "Política", "brasília, governo, política"
+    if 5 <= hora <= 11: return "Policial", "crime, investigação"
+    elif 12 <= hora <= 17: return "Economia", "mercado, pib"
+    else: return "Política", "brasília, governo"
 
 # =============================
 # FLUXO PRINCIPAL
@@ -74,10 +74,9 @@ def executar():
     print(f"🚀 Iniciando Bot Diário de Notícias...")
     
     try:
-        # CONFIGURAÇÃO DA IA (MÉTODO 100% ESTÁVEL)
-        google_ai.configure(api_key=GEMINI_API_KEY)
-        model = google_ai.GenerativeModel('gemini-1.5-flash')
-
+        # CLIENTE NOVO DO GOOGLE (v1)
+        client = genai.Client(api_key=GEMINI_API_KEY, http_options={'api_version': 'v1'})
+        
         creds = autenticar_google()
         service_blogger = build("blogger", "v3", credentials=creds)
 
@@ -85,8 +84,10 @@ def executar():
         print(f"🔍 Buscando notícias de {tema}...")
         
         noticia_selecionada = None
-        random.shuffle(RSS_FEEDS)
-        for url in RSS_FEEDS:
+        feeds_embaralhados = RSS_FEEDS.copy()
+        random.shuffle(feeds_embaralhados)
+        
+        for url in feeds_embaralhados:
             feed = feedparser.parse(url)
             for entry in feed.entries:
                 if not ja_publicado(entry.link):
@@ -98,6 +99,7 @@ def executar():
             print("Nenhuma notícia nova encontrada.")
             return
 
+        # GERAÇÃO DE TEXTO (Atenção: nome do modelo SEM o prefixo 'models/')
         print(f"✍️ Gerando artigo sobre: {noticia_selecionada.title}")
         prompt_texto = (
             f"Escreva um artigo jornalístico profissional com 800 palavras. "
@@ -105,14 +107,17 @@ def executar():
             f"Tema: {noticia_selecionada.title}"
         )
         
-        # Chamada direta que não dá 404
-        response = model.generate_content(prompt_texto)
+        # AQUI ESTAVA O ERRO: Para a API v1, usamos apenas o ID do modelo
+        response = client.models.generate_content(
+            model="gemini-1.5-flash", 
+            contents=prompt_texto
+        )
         
         match = re.search(r'\{.*\}', response.text, re.DOTALL)
-        if not match: raise Exception("IA não retornou um JSON válido.")
+        if not match: raise Exception("IA não retornou JSON.")
         dados = json.loads(match.group(0))
 
-        # IMAGEM 16:9 (Usando LoremFlickr para estabilizar agora, depois ativamos o Imagen 3)
+        # IMAGEM (Usando LoremFlickr para o post sair logo, já já ativamos o Imagen 3)
         img_url = f"https://loremflickr.com/1280/720/news?lock={random.randint(1,999)}"
 
         dados_final = {
