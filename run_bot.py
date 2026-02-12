@@ -124,6 +124,7 @@ def gerar_imagens(client, titulo_post):
 def executar():
     print(f"🚀 Iniciando Bot - Blog ID: {BLOG_ID}")
     try:
+        # 1. AUTENTICAÇÃO E SETUP
         creds = Credentials.from_authorized_user_info(json.load(open("token.json")), SCOPES)
         if creds.expired and creds.refresh_token:
             creds.refresh(Request())
@@ -131,29 +132,26 @@ def executar():
             
         service_blogger = build('blogger', 'v3', credentials=creds)
         service_drive = build('drive', 'v3', credentials=creds)
-        client = genai.Client(api_key=GEMINI_API_KEY, http_options={'api_version': 'v1'})
+        client = genai.Client(api_key=GEMINI_API_KEY)
 
-        # 1. RSS POR HORÁRIO
+        # 2. PESQUISA DE NOTÍCIA
         tema, keywords = definir_tema_por_horario()
         noticia = buscar_noticia_por_tema(tema, keywords)
         
-        # 2. TEXTO AUTORAL (VERSÃO SIMPLIFICADA SEM ERRO 400)
+        # 3. GERAÇÃO DE CONTEÚDO (Sem o erro 400 de MimeType)
         print(f"✍️ [PONTO 2] Gerando artigo autoral sobre: {noticia.title}")
-        prompt_txt = f"Escreva um artigo jornalístico autoral, sem plágio, entre 700 e 900 palavras. Responda em JSON com as chaves: titulo, intro, sub1, texto1, sub2, texto2, sub3, texto3, texto_conclusao, links_pesquisa. Tema: {noticia.title}"
+        prompt_txt = f"Escreva um artigo jornalístico autoral, entre 700 e 900 palavras. Responda estritamente em formato JSON com estas chaves: titulo, intro, sub1, texto1, sub2, texto2, sub3, texto3, texto_conclusao, links_pesquisa. Tema: {noticia.title}"
         
-        # Chamada direta sem o GenerationConfig que causa o erro 400
-        res_txt = client.models.generate_content(
-            model="gemini-1.5-flash", 
-            contents=prompt_txt
-        )
+        # Chamada limpa que funciona na API Paga
+        res_txt = client.models.generate_content(model="gemini-1.5-flash", contents=prompt_txt)
         
-        # O Regex abaixo vai encontrar o JSON dentro da resposta da IA de qualquer jeito
-        match = re.search(r'\{.*\}', res_txt.text, re.DOTALL)
-        if match:
-            dados = json.loads(match.group(0))
-        else:
-            raise Exception("A IA não retornou um formato JSON válido.")
-        # 3. IMAGENS REALISTAS 16:9 (Mantido seu código de upload)
+        # Extração Robusta do JSON
+        json_match = re.search(r'\{.*\}', res_txt.text, re.DOTALL)
+        if not json_match:
+            raise Exception("A IA não gerou um JSON válido.")
+        dados = json.loads(json_match.group(0))
+
+        # 4. IMAGENS 16:9 COM IA PAGA (Imagen 3)
         arquivos = gerar_imagens(client, dados['titulo'])
         links_drive = []
         for f in arquivos:
@@ -162,46 +160,41 @@ def executar():
             service_drive.permissions().create(fileId=file.get('id'), body={'type': 'anyone', 'role': 'reader'}).execute()
             links_drive.append(f"https://drive.google.com/uc?export=view&id={file.get('id')}")
 
-        # --- FUSÃO COM A LÓGICA DO EMAGRECER (RESOLVE LARGURA E POSTAGEM) ---
-        
-        # Limpeza de texto para não estufar a largura (O SEGREDO DO EMAGRECER)
+        # 5. TRATAMENTO DE LARGURA (A técnica do "Emagrecer")
+        # Substituímos as quebras de linha por <br/> para o Blogger não alargar o post
         dados_post = {
             'titulo': dados['titulo'],
             'img_topo': links_drive[0] if len(links_drive) > 0 else "",
             'img_meio': links_drive[1] if len(links_drive) > 1 else (links_drive[0] if len(links_drive) > 0 else ""),
-            'intro': dados.get('intro', '').replace('\n', '<br/>'),
+            'intro': str(dados.get('intro', '')).replace('\n', '<br/>'),
             'sub1': dados.get('sub1', 'Destaque'),
-            'texto1': dados.get('texto1', '').replace('\n', '<br/>'),
+            'texto1': str(dados.get('texto1', '')).replace('\n', '<br/>'),
             'sub2': dados.get('sub2', 'Saiba Mais'),
-            'texto2': dados.get('texto2', '').replace('\n', '<br/>'),
+            'texto2': str(dados.get('texto2', '')).replace('\n', '<br/>'),
             'sub3': dados.get('sub3', 'Dica Prática'),
-            'texto3': dados.get('texto3', '').replace('\n', '<br/>'),
-            'texto_conclusao': dados.get('texto_conclusao', '').replace('\n', '<br/>'),
+            'texto3': str(dados.get('texto3', '')).replace('\n', '<br/>'),
+            'texto_conclusao': str(dados.get('texto_conclusao', '')).replace('\n', '<br/>'),
             'assinatura': f"<br><b>Fontes:</b> {dados.get('links_pesquisa', 'G1')}<br><br>{BLOCO_FIXO_FINAL}"
         }
 
+        # 6. MONTAGEM DO HTML E PUBLICAÇÃO
         html_final = obter_esqueleto_html(dados_post)
-        tags_geradas = gerar_tags_seo(dados['titulo'], f"{dados['intro']} {dados['texto1']}")
-
-        # PUBLICAÇÃO COM ESTRUTURA DO EMAGRECER
+        tags_finais = gerar_tags_seo(dados['titulo'], f"{dados['intro']} {dados['texto1']}")
+        
         corpo_post = {
             "kind": "blogger#post",
-            "title": dados['titulo'].upper(),
+            "title": dados['titulo'],
             "content": html_final,
-            "labels": tags_geradas,
+            "labels": tags_finais,
             "status": "LIVE"
         }
         
-        service_blogger.posts().insert(
-            blogId=BLOG_ID, 
-            isDraft=False, 
-            body=corpo_post
-        ).execute()
+        service_blogger.posts().insert(blogId=BLOG_ID, isDraft=False, body=corpo_post).execute()
         
-        print(f"🎉 [FIM] Post publicado com sucesso! Largura protegida e IA ativa.")
+        print(f"🎉 [SUCESSO] Post publicado no Diário de Notícias!")
 
     except Exception as e:
-        print(f"💥 Erro: {e}")
+        print(f"💥 Erro Fatal: {e}")
 
 if __name__ == "__main__":
     executar()
