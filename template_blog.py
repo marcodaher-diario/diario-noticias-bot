@@ -2,8 +2,8 @@ def obter_esqueleto_html(dados):
     cor_base = "#003366"  # Azul Marinho MD
         
     html = f"""
-    <div style="color: {cor_base}; font-family: Arial, sans-serif; line-height: 1.6; max-width: 100%; overflow-x: hidden;">
-        <h1 style="font-weight: bold; margin-bottom: 20px; text-align: center; font-size: x-large;">
+    <div style="color: {cor_base}; font-family: Arial, sans-serif; line-height: 1.6; width: 100%; max-width: 100%; box-sizing: border-box; overflow-wrap: break-word; word-wrap: break-word; table-layout: fixed;">
+        <h1 style="font-weight: bold; margin-bottom: 20px; text-align: center; font-size: x-large; width: 100%;">
             {dados['titulo'].upper()}
         </h1>
 
