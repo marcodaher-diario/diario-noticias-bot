@@ -1,19 +1,19 @@
 BLOCO_FIXO_FINAL = """
-<div class="separator" style="clear: both; text-align: center; margin: 10px 0;">
-  <a href="https://s.shopee.com.br/9zs5JZLPNm">
-    <img border="0" height="132" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhHYBTRiztv4UNKBsiwX8nQn1M00BUz-LtO58gTZ6hEsU3VPClePhQwPWw0NyUJGqXvm3vWbRPP6LPQS6m5iyI0UQBBKmdIkNYNuXmGaxv5eMac9R6i2e9MIU7_YmWeMKntQ1ZWlzplYlDYNJr5lGHiUvwJ1CuvQOLzbOT61kF3LQ0-nD4j3Xo4HJWeOG4/w640-h132/Banner%20Shopee%20Rodap%C3%A9.gif" width="640" />
-  </a>
-</div>
-
 <div class="footer-marco-daher" style="background-color: #e1f5fe; border-radius: 15px; border: 1px solid rgb(179, 229, 252); color: #073763; font-family: Arial, Helvetica, sans-serif; line-height: 1.4; margin-top: 10px; padding: 25px; text-align: center;">
   
   <p style="font-size: x-small; font-weight: bold; margin-top: 0px; text-align: right;">
     <i>Por: Marco Daher<br />Todos os Direitos Reservados<br />©MarcoDaher2026</i>
   </p>
 
+  <div class="separator" style="clear: both; margin: 15px 0px; text-align: center;">
+    <a href="https://s.shopee.com.br/9zs5JZLPNm">
+      <img border="0" height="132" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhHYBTRiztv4UNKBsiwX8nQn1M00BUz-LtO58gTZ6hEsU3VPClePhQwPWw0NyUJGqXvm3vWbRPP6LPQS6m5iyI0UQBBKmdIkNYNuXmGaxv5eMac9R6i2e9MIU7_YmWeMKntQ1ZWlzplYlDYNJr5lGHiUvwJ1CuvQOLzbOT61kF3LQ0-nD4j3Xo4HJWeOG4/w640-h132/Banner%20Shopee%20Rodap%C3%A9.gif" style="height: auto; max-width: 100%;" width="640" />
+    </a>
+  </div>
+
   <div style="margin-bottom: 20px;">
     <p style="font-weight: bold; margin-bottom: 10px;">🚀 Gostou deste conteúdo? Não guarde só para você!</p>
-    <a href="https://api.whatsapp.com/send?text=Confira este artigo incrível no blog do Marco Daher!" target="_blank" style="background-color: #25D366; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block;">
+    <a href="https://api.whatsapp.com/send?text=Confira este artigo incrível no blog do Marco Daher!" style="background-color: #25d366; border-radius: 5px; color: white; display: inline-block; font-weight: bold; padding: 10px 20px; text-decoration: none;" target="_blank">
         Compartilhar no WhatsApp
     </a>
   </div>
@@ -45,7 +45,7 @@ BLOCO_FIXO_FINAL = """
     </div>
     <div style="border-right: 1px solid rgba(7, 55, 99, 0.2); min-width: 120px; padding: 10px;">
       <div style="color: #b45f06; font-size: 13px; font-weight: bold; margin-bottom: 5px;">Emagrecer com Saúde</div>
-      <a href="https://emagrecendo100crise.blogspot.com/" target="_blank"><img src="https://img.icons8.com/color/48/000000/blogger.png" style="height: 32px; width: 32px;" /></a>&nbsp;<a href="https://www.youtube.com/@Saude-Bem-Estar-51" target="_blank"><img src="https://img.icons8.com/color/48/000000/youtube-play.png" style="height: 32px; width: 32px;" /></a>&nbsp;<a href="https://www.facebook.com/marcocuidese" target="_blank"><img src="https://img.icons8.com/color/48/000000/facebook-new.png" style="height: 32px; width: 32px;" /></a>
+      <a href="https://emagrecendo100crise.blogspot.com/" target="_blank"><img src="https://img.icons8.com/color/48/000000/blogger.png" style="height: 32px; width: 32px;" /></a>&nbsp;<a href="https://www.youtube.com/@Saude-Bem-Estar-51" target="_blank"><img src="https://img.icons8.com/color/48/000000/youtube-play.png" style="height: 32px; width: 32px;" /></a>&nbsp;<a href="https://www.facebook.com/marcocuidese" target="_blank"><img src="https://img.icons8.com/color/48/000000/facebook-new.png" style="height: 32px; width: 32px;" title="Facebook" /></a>
     </div>
     <div style="border-right: 1px solid rgba(7, 55, 99, 0.2); min-width: 120px; padding: 10px;">
       <div style="color: #b45f06; font-size: 13px; font-weight: bold; margin-bottom: 5px;">Relaxamento</div>
@@ -57,10 +57,11 @@ BLOCO_FIXO_FINAL = """
     </div>
   </div>
 
-  <hr style="border: 0; border-top: 1px solid rgba(7, 55, 99, 0.133); margin: 20px 0px;" />
+  <hr style="border-bottom: 0px; border-image: initial; border-left: 0px; border-right: 0px; border-top: 1px solid rgba(7, 55, 99, 0.133); border: 0px; margin: 20px 0px;" />
   <p style="font-size: 14px; font-weight: bold; margin-bottom: 10px;">Caso queira contribuir com o meu Trabalho, use a CHAVE PIX abaixo:</p>
-  <button onclick="navigator.clipboard.writeText('marco.caixa104@gmail.com'); alert('Chave PIX copiada!');" style="background-color: #0288d1; border: none; border-radius: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px; color: white; cursor: pointer; font-size: 14px; font-weight: bold; padding: 12px 20px;">
-    Copiar Chave PIX: marco.caixa104@gmail.com
+  <button style="background-color: #0288d1; border-radius: 8px; border: none; box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px; color: white; cursor: pointer; font-size: 14px; font-weight: bold; padding: 12px 20px;">
+    Chave PIX: marco.caixa104@gmail.com
   </button>
 </div>
+</div></div>
 """
