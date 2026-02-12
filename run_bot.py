@@ -146,17 +146,21 @@ def registrar_publicacao(link):
 # =======================================
 
 def gerar_tags_seo(titulo, texto):
-    stopwords = ["com", "de", "do", "da", "em", "para", "um", "uma", "os", "as", "que", "no", "na", "ao", "aos"]
-    conteudo = f"{titulo} {texto[:100]}"
+
+    stopwords = ["com", "de", "do", "da", "em", "para", "um", "uma",
+                 "os", "as", "que", "no", "na", "ao", "aos"]
+
+    conteudo = f"{titulo} {texto[:150]}"
     palavras = re.findall(r'\b\w{4,}\b', conteudo.lower())
 
     tags = []
 
     for p in palavras:
         if p not in stopwords:
+
             tag = p.capitalize()
 
-            # remove caracteres inválidos
+            # Remove caracteres inválidos
             tag = re.sub(r'[^a-zA-ZÀ-ÿ0-9 ]', '', tag)
 
             if tag and tag not in tags and len(tag) <= 30:
@@ -168,8 +172,23 @@ def gerar_tags_seo(titulo, texto):
         if tf not in tags:
             tags.append(tf)
 
-    # Limita a 10 labels (seguro para Blogger)
-    return tags[:10]
+    # 🔥 CONTROLE TOTAL DE 200 CARACTERES
+    resultado = []
+    total = 0
+
+    for tag in tags:
+        if resultado:
+            adicional = len(tag) + 2  # vírgula + espaço
+        else:
+            adicional = len(tag)
+
+        if total + adicional <= 200:
+            resultado.append(tag)
+            total += adicional
+        else:
+            break
+
+    return resultado
 
 # ====================================
 # GERAR IMAGENS E VÍDEOS
