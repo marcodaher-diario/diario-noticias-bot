@@ -1,5 +1,3 @@
-Código completo ORIGINAL do ROBO Diário de Notícias (quase funcional)
-
 import feedparser
 import re
 import os
