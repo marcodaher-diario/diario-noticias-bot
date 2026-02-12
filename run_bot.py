@@ -196,5 +196,8 @@ def executar():
     except Exception as e:
         print(f"💥 Erro Fatal: {e}")
 
+    except Exception as e:
+        print(f"💥 Erro Fatal: {e}")
+
 if __name__ == "__main__":
     executar()
