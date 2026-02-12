@@ -54,49 +54,58 @@ def upload_para_drive(service_drive, caminho_arquivo, nome_arquivo):
 
 def gerar_imagens_ia(client, titulo_post):
     links_locais = []
-    # Lista de modelos por prioridade: Pro (o que você enviou) e Flash (o reserva)
-    modelos_tentar = ["gemini-3-pro-image-preview", "gemini-3-flash-preview"]
     
     prompts = [
-        f"Professional news photojournalism, cinematic wide shot, 16:9 aspect ratio: {titulo_post}",
-        f"Political analysis conceptual illustration, 16:9 aspect ratio, blue theme: {titulo_post}"
+        f"Professional news photojournalism image, cinematic wide shot, 16:9 ratio: {titulo_post}",
+        f"Political analysis conceptual illustration, professional blue tones, 16:9 ratio: {titulo_post}"
     ]
     
     for i, p in enumerate(prompts):
         nome_arq = f"imagem_{i}.png"
-        sucesso_nesta_img = False
+        sucesso = False
         
-        for modelo in modelos_tentar:
-            if sucesso_nesta_img: break
-            try:
-                print(f"🎨 Tentando gerar imagem {i+1}/2 com {modelo}...")
-                response = client.models.generate_content(
-                    model=modelo,
-                    contents=p,
-                    config=types.GenerateContentConfig(
-                        image_config=types.ImageConfig(
-                            aspect_ratio="16:9",
-                            image_size="2K" if "pro" in modelo else "1080p"
-                        )
-                    )
+        # TENTATIVA 1: Modelo PRO (Com Parâmetros de Alta Qualidade)
+        try:
+            print(f"🎨 Gerando imagem {i+1}/2 com Gemini 3 Pro...")
+            res = client.models.generate_content(
+                model="gemini-3-pro-image-preview",
+                contents=p,
+                config=types.GenerateContentConfig(
+                    image_config=types.ImageConfig(aspect_ratio="16:9", image_size="2K")
                 )
-                
-                image_parts = [part for part in response.parts if part.inline_data]
+            )
+            image_parts = [part for part in res.parts if part.inline_data]
+            if image_parts:
+                from PIL import Image
+                import io
+                img = Image.open(io.BytesIO(image_parts[0].inline_data.data))
+                img.save(nome_arq)
+                links_locais.append(nome_arq)
+                print(f"✨ Sucesso no modelo PRO!")
+                sucesso = True
+        except Exception as e:
+            print(f"⚠️ Pro sem cota ou erro. Tentando Flash...")
+
+        # TENTATIVA 2: Modelo FLASH (Resiliente, sem parâmetros extras que causam erro 400)
+        if not sucesso:
+            try:
+                print(f"🎨 Gerando imagem {i+1}/2 com Gemini 3 Flash (Reserva)...")
+                # No Flash, pedimos o 16:9 DENTRO do texto do prompt
+                res = client.models.generate_content(
+                    model="gemini-3-flash-preview",
+                    contents=f"{p}. Ensure the image is in 16:9 widescreen format."
+                )
+                image_parts = [part for part in res.parts if part.inline_data]
                 if image_parts:
                     from PIL import Image
                     import io
-                    image_data = image_parts[0].inline_data.data
-                    img = Image.open(io.BytesIO(image_data))
+                    img = Image.open(io.BytesIO(image_parts[0].inline_data.data))
                     img.save(nome_arq)
                     links_locais.append(nome_arq)
-                    print(f"✨ Sucesso com {modelo}!")
-                    sucesso_nesta_img = True
+                    print(f"✨ Sucesso no modelo FLASH!")
+                    sucesso = True
             except Exception as e:
-                if "429" in str(e):
-                    print(f"⚠️ Cota esgotada para {modelo}, tentando próximo...")
-                else:
-                    print(f"⚠️ Erro com {modelo}: {e}")
-                time.sleep(2) # Pequena pausa para respirar a API
+                print(f"⚠️ Falha total na imagem {i}: {e}")
                 
     return links_locais
 
@@ -108,15 +117,15 @@ def executar():
         service_drive = build('drive', 'v3', credentials=creds)
         client = genai.Client(api_key=GEMINI_API_KEY)
 
-        # 1. Busca Notícia
+        # 1. Notícia
         feed = feedparser.parse("https://g1.globo.com/rss/g1/politica/")
         noticia_base = feed.entries[0]
         
-        # 2. Gera Artigo Longo (600-900 palavras)
+        # 2. Texto Longo (600-900 palavras)
         print(f"✍️ Analisando: {noticia_base.title}")
         prompt_texto = (
-            f"Analise a notícia: '{noticia_base.title}'. Escreva um artigo de 800 palavras. "
-            "Seja detalhado e crítico. Responda em JSON: "
+            f"Analise a notícia: '{noticia_base.title}'. Escreva um artigo de 850 palavras. "
+            "Seja profundo e acadêmico-jornalístico. Responda em JSON: "
             "titulo, intro (150 palavras), sub1, texto1 (250 palavras), "
             "sub2, texto2 (250 palavras), sub3, texto3 (150 palavras), "
             "texto_conclusao (100 palavras), links_pesquisa."
@@ -128,31 +137,25 @@ def executar():
             config=types.GenerateContentConfig(response_mime_type="application/json")
         )
         dados = json.loads(res.text)
-        print(f"✅ Artigo longo gerado ({len(res.text.split())} palavras).")
+        print(f"✅ Artigo longo gerado.")
 
-        # 3. Gera Imagens (Novo Método)
+        # 3. Imagens
         arquivos = gerar_imagens_ia(client, dados['titulo'])
         links_drive = [upload_para_drive(service_drive, f, f) for f in arquivos]
 
-        # 4. Tags e SEO
+        # 4. Tags
         tags = gerar_tags_seo(dados['titulo'], dados['texto1'])
 
-        # 5. Montagem Final
+        # 5. Publicação
         dados['img_topo'] = links_drive[0] if len(links_drive) > 0 else "https://via.placeholder.com/1280x720"
         dados['img_meio'] = links_drive[1] if len(links_drive) > 1 else dados['img_topo']
-        dados['assinatura'] = f"<br><b>Fontes:</b> {dados.get('links_pesquisa', 'G1')}<br><br>{BLOCO_FIXO_FINAL}"
+        dados['assinatura'] = f"<br><b>Pesquisa:</b> {dados.get('links_pesquisa', 'G1')}<br><br>{BLOCO_FIXO_FINAL}"
 
         html_final = obter_esqueleto_html(dados)
-        
-        corpo_post = {
-            'kind': 'blogger#post',
-            'title': dados['titulo'],
-            'content': html_final,
-            'labels': tags
-        }
+        corpo_post = {'kind': 'blogger#post', 'title': dados['titulo'], 'content': html_final, 'labels': tags}
         
         service_blogger.posts().insert(blogId=BLOG_ID, body=corpo_post).execute()
-        print(f"🎉 SUCESSO! Artigo completo no ar.")
+        print(f"🎉 SUCESSO TOTAL! Texto e Imagens integrados.")
 
     except Exception as e:
         print(f"💥 Erro: {e}")
