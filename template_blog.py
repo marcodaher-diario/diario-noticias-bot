@@ -1,13 +1,14 @@
 def obter_esqueleto_html(dados):
     cor_base = "#003366"  # Azul Marinho MD
         
+    # Trava de segurança para respeitar os 1070px e não empurrar a sidebar
     html = f"""
-    <div style="color: {cor_base}; font-family: Arial, sans-serif; line-height: 1.6; width: 100%; max-width: 100%; box-sizing: border-box; overflow-wrap: break-word; word-wrap: break-word; table-layout: fixed;">
-        <h1 style="font-weight: bold; margin-bottom: 20px; text-align: center; font-size: x-large; width: 100%;">
+    <div style="color: {cor_base}; font-family: Arial, sans-serif; line-height: 1.6; max-width: 100%; box-sizing: border-box; overflow-x: hidden; word-wrap: break-word;">
+        <h1 style="font-weight: bold; margin-bottom: 20px; text-align: center; font-size: x-large; max-width: 100%;">
             {dados['titulo'].upper()}
         </h1>
 
-        <div style='text-align:center; margin-bottom:20px;'>
+        <div style='text-align:center; margin-bottom:20px; max-width: 100%;'>
             <img src='{dados['img_topo']}' style='width:100%; max-width:100%; height:auto; aspect-ratio:16/9; object-fit:cover; border-radius:10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);'/>
         </div>
 
