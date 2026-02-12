@@ -233,4 +233,147 @@ def buscar_noticias(tipo_alvo, limite=1):
 
             assunto = extrair_assunto_principal(titulo)
             if assunto_ja_usado(assunto):
-                conti
+                continue
+
+            noticias.append({
+                "titulo": titulo,
+                "texto": texto,
+                "link": link,
+                "fonte": fonte,
+                "imagem": entry.get("media_content", [{}])[0].get("url", ""),
+                "assunto": assunto,
+                "labels": gerar_tags_seo(titulo, texto)
+            })
+
+    random.shuffle(noticias)
+
+    return noticias[:limite]
+
+
+# ==========================================
+# GERAR CONTEÚDO HTML
+# ==========================================
+
+def gerar_conteudo(n):
+
+    texto_limpo = re.sub(r"<[^>]+>", "", n["texto"])[:4000]
+
+    dados = {
+        "titulo": n["titulo"],
+        "img_topo": n["imagem"],
+        "intro": texto_limpo[:500],
+        "sub1": "Contexto",
+        "texto1": texto_limpo[500:1200],
+        "img_meio": n["imagem"],
+        "sub2": "Desdobramentos",
+        "texto2": texto_limpo[1200:2000],
+        "sub3": "Impactos",
+        "texto3": texto_limpo[2000:3000],
+        "texto_conclusao": texto_limpo[3000:3800],
+        "assinatura": BLOCO_FIXO_FINAL
+    }
+
+    html_final = obter_esqueleto_html(dados)
+
+    if len(html_final) > 900000:
+        html_final = html_final[:900000]
+
+    return html_final
+
+
+# ==========================================
+# PUBLICAR POST
+# ==========================================
+
+def publicar_post(service, noticia):
+
+    conteudo_html = gerar_conteudo(noticia)
+
+    labels_seguras = [str(l).strip() for l in noticia.get("labels", []) if l]
+
+    post = {
+        "title": str(noticia["titulo"])[:150],
+        "content": conteudo_html,
+        "labels": labels_seguras
+    }
+
+    service.posts().insert(
+        blogId=BLOG_ID,
+        body=post,
+        isDraft=False
+    ).execute()
+
+    registrar_publicacao(noticia["link"])
+    registrar_assunto(noticia["assunto"])
+
+
+# ==========================================
+# SALVAR ESTADO NO GITHUB
+# ==========================================
+
+def salvar_estado_github():
+    try:
+        subprocess.run(["git", "config", "--global", "user.name", "github-actions"], check=True)
+        subprocess.run(["git", "config", "--global", "user.email", "github-actions@github.com"], check=True)
+        subprocess.run(["git", "add", "."], check=True)
+        subprocess.run(["git", "commit", "-m", "Atualiza controle automático"], check=True)
+        subprocess.run(["git", "push"], check=True)
+    except Exception:
+        pass
+
+
+# ==========================================
+# VERIFICAR JANELA DE PUBLICAÇÃO
+# ==========================================
+
+def verificar_janela_publicacao():
+    agora = datetime.now(FUSO_BRASILIA)
+
+    for horario_str, tema in AGENDA_POSTAGENS.items():
+        hora_agendada = datetime.strptime(horario_str, "%H:%M")
+        hora_agendada = FUSO_BRASILIA.localize(
+            agora.replace(hour=hora_agendada.hour,
+                          minute=hora_agendada.minute,
+                          second=0,
+                          microsecond=0)
+        )
+
+        diferenca = abs((agora - hora_agendada).total_seconds() / 60)
+
+        if diferenca <= TOLERANCIA_MINUTOS:
+            return horario_str, tema
+
+    return None, None
+
+
+# ==========================================
+# EXECUÇÃO PRINCIPAL
+# ==========================================
+
+if __name__ == "__main__":
+
+    try:
+
+        horario_str, tema = verificar_janela_publicacao()
+
+        if not tema:
+            exit()
+
+        if ja_postou_neste_horario(horario_str):
+            exit()
+
+        service = autenticar_blogger()
+
+        noticias = buscar_noticias(tema, limite=1)
+
+        if not noticias:
+            exit()
+
+        publicar_post(service, noticias[0])
+
+        registrar_postagem_diaria(horario_str)
+
+        salvar_estado_github()
+
+    except Exception as erro:
+        print("Erro:", erro)
