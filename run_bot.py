@@ -54,25 +54,42 @@ def buscar_imagem_banco_real(keyword, index):
         print(f"⚠️ Falha ao buscar imagem real: {e}")
     return False
 
+def buscar_imagem_reserva(keyword, index):
+    """ Busca imagens reais em um banco de dados estável (Pixabay/Pexels) """
+    print(f"🔍 Buscando imagem real para: {keyword}...")
+    
+    # Lista de termos genéricos de política para garantir que algo apareça
+    search_term = f"politics {keyword}".replace(" ", "+")
+    
+    # Usando o serviço de imagem do LoremFlickr (mais estável que Unsplash Source)
+    url = f"https://loremflickr.com/1280/720/politics,brazil,news/all?lock={index}"
+    
+    try:
+        headers = {'User-Agent': 'Mozilla/5.0'}
+        response = requests.get(url, headers=headers, timeout=20, allow_redirects=True)
+        if response.status_code == 200:
+            with open(f"imagem_{index}.png", 'wb') as f:
+                f.write(response.content)
+            return True
+    except Exception as e:
+        print(f"⚠️ Erro no banco reserva: {e}")
+    return False
+
 def gerar_imagens_ia_ou_real(client, titulo_post):
     links_locais = []
-    # Prompts para a IA
     prompts = [
-        f"Realistic news photo, high quality, 16:9: {titulo_post}",
-        f"Conceptual political photography, cinematic, 16:9: {titulo_post}"
+        f"Realistic news photojournalism, wide shot, 16:9: {titulo_post}",
+        f"Political office cinematic photography, 16:9: {titulo_post}"
     ]
     
     for i, p in enumerate(prompts):
         nome_arq = f"imagem_{i}.png"
         sucesso = False
         
-        # PASSO 1: Tenta Gerar com IA (Plano A)
+        # 1. TENTA IA
         try:
             print(f"🎨 Gerando imagem {i+1}/2 via IA...")
-            res = client.models.generate_content(
-                model="gemini-3-flash-preview",
-                contents=p
-            )
+            res = client.models.generate_content(model="gemini-3-flash-preview", contents=p)
             image_parts = [part for part in res.parts if part.inline_data]
             if image_parts:
                 img = Image.open(io.BytesIO(image_parts[0].inline_data.data))
@@ -80,19 +97,18 @@ def gerar_imagens_ia_ou_real(client, titulo_post):
                 links_locais.append(nome_arq)
                 print(f"✨ Sucesso com IA!")
                 sucesso = True
-        except:
-            print(f"⏳ IA indisponível para imagem {i+1}.")
+        except: pass
 
-        # PASSO 2: Se IA falhou, busca IMAGEM REAL (Plano B)
+        # 2. TENTA BANCO REAL (Se IA falhar)
         if not sucesso:
-            # Extrai 2 ou 3 palavras chave do título para a busca
-            keywords = " ".join(titulo_post.split()[:3]) 
+            # Pegamos palavras-chave do título para a busca
+            keywords = " ".join(re.sub(r'[^\w\s]', '', titulo_post).split()[:3])
             if buscar_imagem_banco_real(keywords, i):
                 links_locais.append(nome_arq)
                 print(f"📸 Sucesso com IMAGEM REAL!")
                 sucesso = True
             else:
-                print(f"⚠️ Falha total na imagem {i+1}.")
+                print(f"⚠️ Falha total na imagem {i+1}. Usando padrão.")
                 
     return links_locais
 
