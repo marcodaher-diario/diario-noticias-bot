@@ -106,12 +106,15 @@ BLOCO_FIXO_FINAL = """
       <a href="https://cursosnegocioseoportunidades.blogspot.com/" target="_blank"><img src="https://img.icons8.com/color/48/000000/blogger.png" style="height: 32px; width: 32px;" /></a>&nbsp;<a href="https://www.youtube.com/@CursoseNegociosMD" target="_blank"><img src="https://img.icons8.com/color/48/000000/youtube-play.png" style="height: 32px; width: 32px;" /></a>&nbsp;<a href="https://www.facebook.com/CursosNegociosOportunidades" target="_blank"><img src="https://img.icons8.com/color/48/000000/facebook-new.png" style="height: 32px; width: 32px;" /></a>
     </div>
   </div>
-
-  <hr style="border-bottom: 0px; border-image: initial; border-left: 0px; border-right: 0px; border-top: 1px solid rgba(7, 55, 99, 0.133); border: 0px; margin: 20px 0px;" />
-  <p style="font-size: 14px; font-weight: bold; margin-bottom: 10px;">Caso queira contribuir com o meu Trabalho, use a CHAVE PIX abaixo:</p>
-  <button style="background-color: #0288d1; border-radius: 8px; border: none; box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px; color: white; cursor: pointer; font-size: 14px; font-weight: bold; padding: 12px 20px;">
-    Chave PIX: marco.caixa104@gmail.com
+<hr style="border-bottom: 0px; border-image: initial; border-left: 0px; border-right: 0px; border-top: 1px solid rgba(7, 55, 99, 0.133); border: 0px; margin: 20px 0px;" />
+  <p style="font-size: 14px; font-weight: bold; margin-bottom: 10px;">
+    Caso queira contribuir com o meu Trabalho, use a CHAVE PIX abaixo:
+  </p>
+  <button onclick="navigator.clipboard.writeText('marco.caixa104@gmail.com'); alert('Chave PIX copiada!');" style="background-color: #0288d1; border-color: initial; border-radius: 8px; border-style: none; border-width: initial; box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px; color: white; cursor: pointer; font-size: 14px; font-weight: bold; padding: 12px 20px; transition: 0.3s;">
+    Copiar Chave PIX: marco.caixa104@gmail.com
   </button>
 </div>
+<hr data-end="883" data-start="880" style="text-align: justify;" />
+<h2 data-end="913" data-start="885" style="text-align: justify;"><br /></h2>
 </div></div>
 """
