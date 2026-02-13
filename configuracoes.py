@@ -18,6 +18,10 @@ RSS_FEEDS = [
     "https://g1.globo.com/rss/g1/economia/"
 ]
 
+# ==========================================
+# TEMAS PARA POSTAGEM
+# ==========================================
+
 PALAVRAS_POLICIAL = [
     "polícia", "crime", "prisão", "assalto", "homicídio", "tráfico", "investigação", 
     "corrupção", "suspeito", "acusado", "operação", "flagrante", "violência", "mandado", 
@@ -43,9 +47,8 @@ PALAVRAS_ECONOMIA = [
     "varejo", "combustíveis"
 ]
 
-
 # ==========================================
-# BLOCO FIXO FINAL 
+# BLOCO FIXO FINAL -  ASSINATURA
 # ==========================================
 
 BLOCO_FIXO_FINAL = """
@@ -61,14 +64,14 @@ BLOCO_FIXO_FINAL = """
     </a>
   </div>
 
-  <div style="margin-bottom: 20px;">
-    <p style="font-weight: bold; margin-bottom: 10px;">🚀 Gostou deste conteúdo? Não guarde só para você!</p>
+  <div style="margin-bottom: 20px; text-align: center;">
+    <p style="font-weight: bold; margin-bottom: 10px; text-align: center;">🚀 Gostou deste conteúdo? Não guarde só para você!</p>
     <a href="https://api.whatsapp.com/send?text=Confira este artigo incrível no blog do Marco Daher!" style="background-color: #25d366; border-radius: 5px; color: white; display: inline-block; font-weight: bold; padding: 10px 20px; text-decoration: none;" target="_blank">
         Compartilhar no WhatsApp
     </a>
   </div>
 
-  <p style="font-size: 16px; font-weight: bold; margin-bottom: 20px;">
+  <p style="font-size: 16px; font-weight: bold; margin-bottom: 20px; text-align: center;">
     O conhecimento é o combustível para o Sucesso. Não pesa e não ocupa espaço.
   </p>
 
