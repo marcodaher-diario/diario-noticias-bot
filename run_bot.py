@@ -5,8 +5,7 @@ import re
 import os
 import random
 import subprocess
-from datetime import datetime
-import pytz
+from datetime import datetime, timedelta
 
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
@@ -24,10 +23,8 @@ from template_blog import obter_esqueleto_html
 
 
 # ==========================================
-# CONFIGURAÇÃO DE AGENDA BLINDADA
+# CONFIGURAÇÃO DE AGENDA FIXA
 # ==========================================
-
-FUSO_BRASILIA = pytz.timezone("America/Sao_Paulo")
 
 AGENDA_POSTAGENS = {
     "09:00": "policial",
@@ -37,8 +34,6 @@ AGENDA_POSTAGENS = {
     "17:00": "economia",
     "18:00": "politica"
 }
-
-TOLERANCIA_MINUTOS = 10
 
 
 # ==========================================
@@ -65,6 +60,12 @@ def autenticar_blogger():
 # CONTROLE DE PUBLICAÇÃO
 # ==========================================
 
+def obter_horario_brasilia():
+    agora_utc = datetime.utcnow()
+    agora_brasilia = agora_utc - timedelta(hours=3)
+    return agora_brasilia.strftime("%H:%M"), agora_brasilia.strftime("%Y-%m-%d")
+
+
 def ja_publicado(link):
     if not os.path.exists(ARQUIVO_LOG):
         return False
@@ -81,7 +82,7 @@ def ja_postou_neste_horario(horario):
     if not os.path.exists(ARQUIVO_CONTROLE_DIARIO):
         return False
 
-    hoje = datetime.now(FUSO_BRASILIA).strftime("%Y-%m-%d")
+    _, hoje = obter_horario_brasilia()
 
     with open(ARQUIVO_CONTROLE_DIARIO, "r", encoding="utf-8") as f:
         for linha in f:
@@ -92,7 +93,7 @@ def ja_postou_neste_horario(horario):
 
 
 def registrar_postagem_diaria(horario):
-    hoje = datetime.now(FUSO_BRASILIA).strftime("%Y-%m-%d")
+    _, hoje = obter_horario_brasilia()
     with open(ARQUIVO_CONTROLE_DIARIO, "a", encoding="utf-8") as f:
         f.write(f"{hoje}|{horario}\n")
 
@@ -120,7 +121,7 @@ def assunto_ja_usado(assunto):
     if not os.path.exists(ARQUIVO_CONTROLE_ASSUNTOS):
         return False
 
-    hoje = datetime.now(FUSO_BRASILIA).strftime("%Y-%m-%d")
+    _, hoje = obter_horario_brasilia()
 
     with open(ARQUIVO_CONTROLE_ASSUNTOS, "r", encoding="utf-8") as f:
         for linha in f:
@@ -133,7 +134,7 @@ def assunto_ja_usado(assunto):
 def registrar_assunto(assunto):
     if not assunto:
         return
-    hoje = datetime.now(FUSO_BRASILIA).strftime("%Y-%m-%d")
+    _, hoje = obter_horario_brasilia()
     with open(ARQUIVO_CONTROLE_ASSUNTOS, "a", encoding="utf-8") as f:
         f.write(f"{hoje}|{assunto}\n")
 
@@ -323,30 +324,6 @@ def salvar_estado_github():
 
 
 # ==========================================
-# VERIFICAR JANELA DE PUBLICAÇÃO
-# ==========================================
-
-def verificar_janela_publicacao():
-    agora = datetime.now(FUSO_BRASILIA)
-
-    for horario_str, tema in AGENDA_POSTAGENS.items():
-        hora_agendada = datetime.strptime(horario_str, "%H:%M")
-        hora_agendada = FUSO_BRASILIA.localize(
-            agora.replace(hour=hora_agendada.hour,
-                          minute=hora_agendada.minute,
-                          second=0,
-                          microsecond=0)
-        )
-
-        diferenca = abs((agora - hora_agendada).total_seconds() / 60)
-
-        if diferenca <= TOLERANCIA_MINUTOS:
-            return horario_str, tema
-
-    return None, None
-
-
-# ==========================================
 # EXECUÇÃO PRINCIPAL
 # ==========================================
 
@@ -354,12 +331,14 @@ if __name__ == "__main__":
 
     try:
 
-        horario_str, tema = verificar_janela_publicacao()
+        horario_atual, _ = obter_horario_brasilia()
 
-        if not tema:
+        if horario_atual not in AGENDA_POSTAGENS:
             exit()
 
-        if ja_postou_neste_horario(horario_str):
+        tema = AGENDA_POSTAGENS[horario_atual]
+
+        if ja_postou_neste_horario(horario_atual):
             exit()
 
         service = autenticar_blogger()
@@ -371,7 +350,7 @@ if __name__ == "__main__":
 
         publicar_post(service, noticias[0])
 
-        registrar_postagem_diaria(horario_str)
+        registrar_postagem_diaria(horario_atual)
 
         salvar_estado_github()
 
