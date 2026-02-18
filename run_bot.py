@@ -331,26 +331,25 @@ if __name__ == "__main__":
 
     try:
 
-        horario_atual, _ = obter_horario_brasilia()
-
-        if horario_atual not in AGENDA_POSTAGENS:
-            exit()
-
-        tema = AGENDA_POSTAGENS[horario_atual]
-
-        if ja_postou_neste_horario(horario_atual):
-            exit()
+        print("===== MODO TESTE FORÇADO ATIVO =====")
 
         service = autenticar_blogger()
 
-        noticias = buscar_noticias(tema, limite=1)
+        # Escolha manual do tipo
+        tipo_teste = "economia"  # pode trocar para: policial / politica / economia
+
+        print(f"Buscando notícia do tipo: {tipo_teste}")
+
+        noticias = buscar_noticias(tipo_teste, limite=1)
 
         if not noticias:
+            print("Nenhuma notícia encontrada.")
             exit()
 
+        print("Publicando notícia de teste...")
         publicar_post(service, noticias[0])
 
-        registrar_postagem_diaria(horario_atual)
+        print("✅ POST PUBLICADO COM SUCESSO!")
 
         salvar_estado_github()
 
