@@ -13,29 +13,31 @@ class GeminiEngine:
 
         self.client = genai.Client(api_key=self.api_key)
 
-        # Modelo confirmado como disponível na sua conta
+        # Modelo confirmado disponível na sua conta
         self.model = "models/gemini-2.5-flash"
 
 
     def gerar_analise_jornalistica(self, titulo, conteudo_original, categoria):
 
         prompt = f"""
-Você é um jornalista profissional, imparcial e analista político experiente.
+Você é um jornalista profissional, analista político experiente e redator especializado em blogs de notícias.
 
-Com base na notícia abaixo, escreva uma análise jornalística estruturada.
+Escreva uma análise jornalística com no mínimo 500 palavras.
 
 Regras obrigatórias:
 
-Texto mínimo 500 palavras
-Linguagem clara
-Sem sensacionalismo
-Sem opinião pessoal
-Sem marcadores especiais como # ou *
-Sem plágio
-SEO natural
-Texto profissional
+Não use Markdown.
+Não use símbolos como #, ##, ###.
+Não use asteriscos.
+Não use listas.
+Não use marcadores.
+Não use negrito.
+Não use itálico.
+Não use qualquer tipo de formatação especial.
 
-Estrutura obrigatória:
+O texto deve ser completamente limpo, apenas parágrafos normais.
+
+A estrutura obrigatória deve conter exatamente estes subtítulos, escritos apenas como texto simples, sem símbolos:
 
 Contexto
 
@@ -45,26 +47,4 @@ Impactos
 
 Considerações Finais
 
-Categoria: {categoria}
-
-Título da notícia:
-{titulo}
-
-Conteúdo da notícia:
-{conteudo_original}
-"""
-
-        response = self.client.models.generate_content(
-            model=self.model,
-            contents=prompt,
-            config=types.GenerateContentConfig(
-                temperature=0.7,
-                top_p=0.9,
-                max_output_tokens=2048
-            )
-        )
-
-        if not response or not response.text:
-            raise ValueError("Resposta vazia do Gemini.")
-
-        return response.text.strip()
+Os subtítulos devem aparecer isolados em linha própr
