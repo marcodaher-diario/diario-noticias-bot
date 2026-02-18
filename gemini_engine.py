@@ -13,7 +13,7 @@ class GeminiEngine:
 
         self.client = genai.Client(api_key=self.api_key)
 
-        # Modelo confirmado disponível na sua conta
+        # Modelo confirmado como disponível na sua conta
         self.model = "models/gemini-2.5-flash"
 
 
