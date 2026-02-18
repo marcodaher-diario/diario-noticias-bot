@@ -5,6 +5,29 @@ import re
 import os
 import random
 import subprocess
+
+import google.generativeai as genai
+
+print("🔎 TESTE GEMINI INICIADO")
+
+api_key = os.getenv("GEMINI_API_KEY")
+
+if not api_key:
+    print("❌ GEMINI_API_KEY NÃO ENCONTRADA")
+else:
+    print("✅ GEMINI_API_KEY ENCONTRADA")
+
+    genai.configure(api_key=api_key)
+    model = genai.GenerativeModel("gemini-pro")
+
+    resposta = model.generate_content("Escreva um parágrafo de teste com 50 palavras.")
+
+    print("🧠 RESPOSTA DO GEMINI:")
+    print(resposta.text)
+
+print("🔎 FIM TESTE GEMINI")
+exit()
+
 from datetime import datetime, timedelta
 
 from google.oauth2.credentials import Credentials
