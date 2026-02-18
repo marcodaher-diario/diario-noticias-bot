@@ -206,9 +206,10 @@ if __name__ == "__main__":
     imagem_engine = ImageEngine()
 
     texto_ia = gemini.gerar_analise_jornalistica(
-        noticia["titulo"],
-        noticia["texto"]
-    )
+    noticia["titulo"],
+    noticia["texto"],
+    tema_escolhido
+)
 
     blocos = separar_blocos(texto_ia)
 
