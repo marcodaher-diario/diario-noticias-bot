@@ -27,7 +27,7 @@ from template_blog import obter_esqueleto_html
 # ==========================================
 
 AGENDA_POSTAGENS = {
-    "09:00": "policial",
+    "08:45": "policial",
     "10:00": "economia",
     "11:00": "politica",
     "16:00": "policial",
