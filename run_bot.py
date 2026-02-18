@@ -4,7 +4,6 @@ import feedparser
 import re
 import os
 import random
-import subprocess
 
 from datetime import datetime, timedelta
 
@@ -22,35 +21,33 @@ from configuracoes import (
 
 from template_blog import obter_esqueleto_html
 from gemini_engine import GeminiEngine
+from imagem_engine import ImageEngine
 
 
-# ==========================================
-# CONFIGURAÇÃO DE AGENDA FIXA
-# ==========================================
+# ==========================================================
+# CONFIGURAÇÃO DE AGENDA
+# ==========================================================
 
 AGENDA_POSTAGENS = {
-    "09:00": "policial",
-    "10:00": "economia",
-    "14:10": "politica",
+    "14:10": "politica",  # ajuste conforme necessário
     "16:00": "policial",
     "17:00": "economia",
     "18:00": "politica"
 }
 
-JANELA_MINUTOS = 10  # tolerância de ±10 minutos
+JANELA_MINUTOS = 10
 
 
-# ==========================================
+# ==========================================================
 # ARQUIVOS DE CONTROLE
-# ==========================================
+# ==========================================================
 
-ARQUIVO_LOG = "posts_publicados.txt"
 ARQUIVO_CONTROLE_DIARIO = "controle_diario.txt"
 
 
-# ==========================================
+# ==========================================================
 # AUTENTICAÇÃO BLOGGER
-# ==========================================
+# ==========================================================
 
 def autenticar_blogger():
     if not os.path.exists("token.json"):
@@ -59,9 +56,9 @@ def autenticar_blogger():
     return build("blogger", "v3", credentials=creds)
 
 
-# ==========================================
+# ==========================================================
 # CONTROLE DE TEMPO
-# ==========================================
+# ==========================================================
 
 def obter_horario_brasilia():
     agora_utc = datetime.utcnow()
@@ -95,9 +92,9 @@ def registrar_postagem(data_str, horario_agenda):
         f.write(f"{data_str}|{horario_agenda}\n")
 
 
-# ==========================================
+# ==========================================================
 # VERIFICAR TEMA
-# ==========================================
+# ==========================================================
 
 def verificar_assunto(titulo, texto):
     conteudo = f"{titulo} {texto}".lower()
@@ -114,9 +111,9 @@ def verificar_assunto(titulo, texto):
     return "geral"
 
 
-# ==========================================
+# ==========================================================
 # BUSCAR NOTÍCIAS
-# ==========================================
+# ==========================================================
 
 def buscar_noticias(tipo_alvo, limite=1):
 
@@ -130,6 +127,7 @@ def buscar_noticias(tipo_alvo, limite=1):
             titulo = entry.get("title", "")
             texto = entry.get("summary", "")
             link = entry.get("link", "")
+            imagem = entry.get("media_content", [{}])[0].get("url", "")
 
             if not titulo or not link:
                 continue
@@ -141,20 +139,22 @@ def buscar_noticias(tipo_alvo, limite=1):
             noticias.append({
                 "titulo": titulo,
                 "texto": texto,
-                "link": link
+                "link": link,
+                "imagem": imagem
             })
 
     random.shuffle(noticias)
     return noticias[:limite]
 
 
-# ==========================================
-# GERAR CONTEÚDO COM IA
-# ==========================================
+# ==========================================================
+# GERAR CONTEÚDO
+# ==========================================================
 
 def gerar_conteudo(noticia, tema):
 
     gemini = GeminiEngine()
+    image_engine = ImageEngine()
 
     texto_original = re.sub(r"<[^>]+>", "", noticia["texto"])[:4000]
 
@@ -164,13 +164,15 @@ def gerar_conteudo(noticia, tema):
         categoria=tema
     )
 
+    imagem_final = image_engine.obter_imagem(noticia, tema)
+
     dados = {
         "titulo": noticia["titulo"],
-        "img_topo": "",
+        "img_topo": imagem_final,
         "intro": analise[:800],
         "sub1": "Contexto",
         "texto1": analise,
-        "img_meio": "",
+        "img_meio": "",  # NÃO usamos segunda imagem
         "sub2": "",
         "texto2": "",
         "sub3": "",
@@ -182,9 +184,9 @@ def gerar_conteudo(noticia, tema):
     return obter_esqueleto_html(dados)
 
 
-# ==========================================
+# ==========================================================
 # EXECUÇÃO PRINCIPAL
-# ==========================================
+# ==========================================================
 
 if __name__ == "__main__":
 
@@ -232,6 +234,8 @@ if __name__ == "__main__":
         ).execute()
 
         registrar_postagem(data_hoje, horario_escolhido)
+
+        print("Post publicado com sucesso.")
 
     except Exception as erro:
         print("Erro:", erro)
