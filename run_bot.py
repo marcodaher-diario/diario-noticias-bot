@@ -5,9 +5,11 @@ import re
 import os
 import random
 import subprocess
+import json
 from datetime import datetime, timedelta
 
 from google.oauth2.credentials import Credentials
+from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 
 from configuracoes import (
@@ -46,13 +48,37 @@ ARQUIVO_CONTROLE_ASSUNTOS = "controle_assuntos.txt"
 
 
 # ==========================================
-# AUTENTICAÇÃO BLOGGER
+# AUTENTICAÇÃO BLOGGER (ATUALIZADO)
 # ==========================================
 
 def autenticar_blogger():
-    if not os.path.exists("token.json"):
-        raise FileNotFoundError("token.json não encontrado.")
-    creds = Credentials.from_authorized_user_file("token.json")
+
+    SCOPES = ["https://www.googleapis.com/auth/blogger"]
+
+    # Cria credentials.json a partir do Secret
+    if not os.path.exists("credentials.json"):
+        cred_json = os.getenv("GOOGLE_CREDENTIALS")
+        if not cred_json:
+            raise Exception("Secret GOOGLE_CREDENTIALS não encontrado.")
+        with open("credentials.json", "w", encoding="utf-8") as f:
+            f.write(cred_json)
+
+    creds = None
+
+    # Se já existir token.json válido
+    if os.path.exists("token.json"):
+        creds = Credentials.from_authorized_user_file("token.json", SCOPES)
+
+    # Se não existir ou estiver inválido, gera novo
+    if not creds or not creds.valid:
+        flow = InstalledAppFlow.from_client_secrets_file(
+            "credentials.json", SCOPES
+        )
+        creds = flow.run_console()
+
+        with open("token.json", "w", encoding="utf-8") as token:
+            token.write(creds.to_json())
+
     return build("blogger", "v3", credentials=creds)
 
 
@@ -335,8 +361,7 @@ if __name__ == "__main__":
 
         service = autenticar_blogger()
 
-        # Escolha manual do tipo
-        tipo_teste = "economia"  # pode trocar para: policial / politica / economia
+        tipo_teste = "economia"
 
         print(f"Buscando notícia do tipo: {tipo_teste}")
 
