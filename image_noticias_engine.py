@@ -1,61 +1,56 @@
 # -*- coding: utf-8 -*-
 
-import requests
 import os
-import re
+import requests
+import random
+from datetime import datetime, timedelta
 
-
+ARQUIVO_IMAGENS = "imagens_usadas.txt"
 PEXELS_API_KEY = os.getenv("PEXELS_API_KEY")
 
-
 # ==========================================
-# VALIDAR IMAGEM RSS
-# ==========================================
-
-def imagem_rss_valida(url):
-
-    if not url:
-        return False
-
-    if not url.startswith("http"):
-        return False
-
-    try:
-        response = requests.head(url, timeout=5)
-
-        if response.status_code != 200:
-            return False
-
-        content_type = response.headers.get("Content-Type", "")
-
-        if "image" not in content_type:
-            return False
-
-        return True
-
-    except Exception:
-        return False
-
-
-# ==========================================
-# LIMPAR TÍTULO PARA BUSCA
+# CONTROLE DE IMAGENS USADAS (30 DIAS)
 # ==========================================
 
-def limpar_titulo_para_busca(titulo):
+def carregar_imagens_usadas():
+    imagens = {}
 
-    titulo = re.sub(r"[^\w\s]", "", titulo)
-    titulo = titulo.lower()
+    if not os.path.exists(ARQUIVO_IMAGENS):
+        return imagens
 
-    palavras = re.findall(r"\b\w{4,}\b", titulo)
+    with open(ARQUIVO_IMAGENS, "r", encoding="utf-8") as f:
+        for linha in f:
+            try:
+                url, data_str = linha.strip().split("|")
+                data = datetime.strptime(data_str, "%Y-%m-%d")
+                imagens[url] = data
+            except:
+                continue
 
-    stopwords = [
-        "sobre", "entre", "após", "para",
-        "governo", "brasil", "caso"
-    ]
+    return imagens
 
-    palavras = [p for p in palavras if p not in stopwords]
 
-    return " ".join(palavras[:3])
+def limpar_imagens_antigas(imagens):
+    hoje = datetime.now()
+    limite = hoje - timedelta(days=30)
+
+    imagens_filtradas = {
+        url: data for url, data in imagens.items()
+        if data >= limite
+    }
+
+    with open(ARQUIVO_IMAGENS, "w", encoding="utf-8") as f:
+        for url, data in imagens_filtradas.items():
+            f.write(f"{url}|{data.strftime('%Y-%m-%d')}\n")
+
+    return imagens_filtradas
+
+
+def registrar_imagem(url):
+    hoje = datetime.now().strftime("%Y-%m-%d")
+
+    with open(ARQUIVO_IMAGENS, "a", encoding="utf-8") as f:
+        f.write(f"{url}|{hoje}\n")
 
 
 # ==========================================
@@ -67,46 +62,75 @@ def buscar_imagem_pexels(query):
     if not PEXELS_API_KEY:
         return None
 
-    url = "https://api.pexels.com/v1/search"
-
     headers = {
         "Authorization": PEXELS_API_KEY
     }
 
     params = {
         "query": query,
-        "per_page": 10,
-        "orientation": "landscape"
+        "orientation": "landscape",
+        "size": "large",
+        "per_page": 15
     }
 
     try:
-        response = requests.get(url, headers=headers, params=params, timeout=10)
-        data = response.json()
+        response = requests.get(
+            "https://api.pexels.com/v1/search",
+            headers=headers,
+            params=params,
+            timeout=10
+        )
 
+        if response.status_code != 200:
+            return None
+
+        data = response.json()
         fotos = data.get("photos", [])
 
         if not fotos:
             return None
 
-        return fotos[0]["src"]["large2x"]
+        imagens_usadas = carregar_imagens_usadas()
+        imagens_usadas = limpar_imagens_antigas(imagens_usadas)
+
+        candidatos = []
+
+        for foto in fotos:
+            url = foto.get("src", {}).get("large")
+
+            if url and url not in imagens_usadas:
+                candidatos.append(url)
+
+        if not candidatos:
+            return None
+
+        imagem_escolhida = random.choice(candidatos)
+
+        registrar_imagem(imagem_escolhida)
+
+        return imagem_escolhida
 
     except Exception:
         return None
 
 
 # ==========================================
-# MOTOR PRINCIPAL
+# FUNÇÃO PRINCIPAL
 # ==========================================
 
-def obter_imagem_inteligente(titulo, imagem_rss):
+def obter_imagem_para_noticia(titulo, tipo):
 
-    # 1️⃣ Tenta usar imagem RSS
-    if imagem_rss_valida(imagem_rss):
-        return imagem_rss
+    # Prioridade 1: usar título
+    imagem = buscar_imagem_pexels(titulo)
 
-    # 2️⃣ Se não for válida → busca no Pexels
-    query = limpar_titulo_para_busca(titulo)
+    if imagem:
+        return imagem
 
-    imagem_pexels = buscar_imagem_pexels(query)
+    # Prioridade 2: usar categoria
+    imagem = buscar_imagem_pexels(tipo)
 
-    return imagem_pexels
+    if imagem:
+        return imagem
+
+    # Fallback absoluto
+    return "https://images.pexels.com/photos/518543/pexels-photo-518543.jpeg"
