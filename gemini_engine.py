@@ -13,8 +13,8 @@ class GeminiEngine:
 
         self.client = genai.Client(api_key=self.api_key)
 
-        # Modelo universal compatível
-        self.model = "gemini-1.0-pro"
+        # Modelo confirmado disponível na sua conta
+        self.model = "models/gemini-2.5-flash"
 
 
     def gerar_analise_jornalistica(self, titulo, conteudo_original, categoria):
