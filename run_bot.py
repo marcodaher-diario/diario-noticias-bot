@@ -1,12 +1,9 @@
 # -*- coding: utf-8 -*-
 
-import feedparser
-import re
 import os
-import random
-
+import re
+import feedparser
 from datetime import datetime, timedelta
-
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 
@@ -24,218 +21,154 @@ from gemini_engine import GeminiEngine
 from imagem_engine import ImageEngine
 
 
-# ==========================================================
-# CONFIGURAÇÃO DE AGENDA
-# ==========================================================
-
 AGENDA_POSTAGENS = {
-    "20:05": "politica",  # ajuste conforme necessário
-    "16:00": "policial",
-    "17:00": "economia",
-    "18:00": "politica"
+    "13:40": "policial",
+    "14:05": "economia",
+    "14:10": "politica"
 }
 
-JANELA_MINUTOS = 10
-
-
-# ==========================================================
-# ARQUIVOS DE CONTROLE
-# ==========================================================
-
-ARQUIVO_CONTROLE_DIARIO = "controle_diario.txt"
-
-
-# ==========================================================
-# AUTENTICAÇÃO BLOGGER
-# ==========================================================
 
 def autenticar_blogger():
-    if not os.path.exists("token.json"):
-        raise FileNotFoundError("token.json não encontrado.")
     creds = Credentials.from_authorized_user_file("token.json")
     return build("blogger", "v3", credentials=creds)
 
 
-# ==========================================================
-# CONTROLE DE TEMPO
-# ==========================================================
-
 def obter_horario_brasilia():
-    agora_utc = datetime.utcnow()
-    agora_brasilia = agora_utc - timedelta(hours=3)
-    return agora_brasilia
+    agora = datetime.utcnow() - timedelta(hours=3)
+    return agora.strftime("%H:%M")
 
-
-def horario_para_minutos(hhmm):
-    h, m = map(int, hhmm.split(":"))
-    return h * 60 + m
-
-
-def dentro_da_janela(horario_atual_min, horario_agenda_min):
-    return abs(horario_atual_min - horario_agenda_min) <= JANELA_MINUTOS
-
-
-def ja_postou_neste_horario(data_str, horario_agenda):
-    if not os.path.exists(ARQUIVO_CONTROLE_DIARIO):
-        return False
-
-    with open(ARQUIVO_CONTROLE_DIARIO, "r", encoding="utf-8") as f:
-        for linha in f:
-            data, hora = linha.strip().split("|")
-            if data == data_str and hora == horario_agenda:
-                return True
-    return False
-
-
-def registrar_postagem(data_str, horario_agenda):
-    with open(ARQUIVO_CONTROLE_DIARIO, "a", encoding="utf-8") as f:
-        f.write(f"{data_str}|{horario_agenda}\n")
-
-
-# ==========================================================
-# VERIFICAR TEMA
-# ==========================================================
 
 def verificar_assunto(titulo, texto):
     conteudo = f"{titulo} {texto}".lower()
 
     if any(p in conteudo for p in PALAVRAS_POLICIAL):
         return "policial"
-
     if any(p in conteudo for p in PALAVRAS_POLITICA):
         return "politica"
-
     if any(p in conteudo for p in PALAVRAS_ECONOMIA):
         return "economia"
 
     return "geral"
 
 
-# ==========================================================
-# BUSCAR NOTÍCIAS
-# ==========================================================
-
-def buscar_noticias(tipo_alvo, limite=1):
-
-    noticias = []
+def buscar_noticia(tipo):
 
     for feed_url in RSS_FEEDS:
         feed = feedparser.parse(feed_url)
 
         for entry in feed.entries:
-
             titulo = entry.get("title", "")
-            texto = entry.get("summary", "")
+            resumo = entry.get("summary", "")
             link = entry.get("link", "")
             imagem = entry.get("media_content", [{}])[0].get("url", "")
 
             if not titulo or not link:
                 continue
 
-            tipo_detectado = verificar_assunto(titulo, texto)
-            if tipo_detectado != tipo_alvo:
+            if verificar_assunto(titulo, resumo) != tipo:
                 continue
 
-            noticias.append({
+            return {
                 "titulo": titulo,
-                "texto": texto,
+                "texto": resumo,
                 "link": link,
                 "imagem": imagem
-            })
+            }
 
-    random.shuffle(noticias)
-    return noticias[:limite]
+    return None
 
 
-# ==========================================================
-# GERAR CONTEÚDO
-# ==========================================================
+def separar_blocos(texto):
 
-def gerar_conteudo(noticia, tema):
-
-    gemini = GeminiEngine()
-    image_engine = ImageEngine()
-
-    texto_original = re.sub(r"<[^>]+>", "", noticia["texto"])[:4000]
-
-    analise = gemini.gerar_analise_jornalistica(
-        titulo=noticia["titulo"],
-        conteudo_original=texto_original,
-        categoria=tema
-    )
-
-    imagem_final = image_engine.obter_imagem(noticia, tema)
-
-    dados = {
-        "titulo": noticia["titulo"],
-        "img_topo": imagem_final,
-        "intro": analise[:800],
-        "sub1": "Contexto",
-        "texto1": analise,
-        "img_meio": "",  # NÃO usamos segunda imagem
-        "sub2": "",
-        "texto2": "",
-        "sub3": "",
-        "texto3": "",
-        "texto_conclusao": "",
-        "assinatura": BLOCO_FIXO_FINAL
+    secoes = {
+        "contexto": "",
+        "desdobramentos": "",
+        "impactos": "",
+        "conclusao": ""
     }
 
-    return obter_esqueleto_html(dados)
+    atual = None
+
+    for linha in texto.split("\n"):
+        l = linha.strip()
+
+        if l.lower().startswith("contexto"):
+            atual = "contexto"
+            continue
+        if l.lower().startswith("desdobramentos"):
+            atual = "desdobramentos"
+            continue
+        if l.lower().startswith("impactos"):
+            atual = "impactos"
+            continue
+        if l.lower().startswith("considerações finais"):
+            atual = "conclusao"
+            continue
+
+        if atual:
+            secoes[atual] += l + "\n"
+
+    for chave in secoes:
+        if not secoes[chave].strip():
+            secoes[chave] = "Não há informações adicionais disponíveis neste momento."
+
+    return secoes
 
 
-# ==========================================================
-# EXECUÇÃO PRINCIPAL
-# ==========================================================
+def publicar_post(service, titulo, html):
+
+    post = {
+        "title": titulo,
+        "content": html
+    }
+
+    service.posts().insert(
+        blogId=BLOG_ID,
+        body=post,
+        isDraft=False
+    ).execute()
+
 
 if __name__ == "__main__":
 
-    try:
+    horario = obter_horario_brasilia()
 
-        agora = obter_horario_brasilia()
-        horario_atual_min = agora.hour * 60 + agora.minute
-        data_hoje = agora.strftime("%Y-%m-%d")
+    if horario not in AGENDA_POSTAGENS:
+        exit()
 
-        horario_escolhido = None
-        tema_escolhido = None
+    tema = AGENDA_POSTAGENS[horario]
 
-        for horario_agenda, tema in AGENDA_POSTAGENS.items():
+    noticia = buscar_noticia(tema)
 
-            horario_agenda_min = horario_para_minutos(horario_agenda)
+    if not noticia:
+        exit()
 
-            if dentro_da_janela(horario_atual_min, horario_agenda_min):
+    gemini = GeminiEngine()
+    imagem_engine = ImageEngine()
 
-                if not ja_postou_neste_horario(data_hoje, horario_agenda):
-                    horario_escolhido = horario_agenda
-                    tema_escolhido = tema
-                    break
+    texto_ia = gemini.gerar_analise_jornalistica(
+        noticia["titulo"],
+        noticia["texto"]
+    )
 
-        if not horario_escolhido:
-            exit()
+    blocos = separar_blocos(texto_ia)
 
-        service = autenticar_blogger()
+    imagem_final = imagem_engine.obter_imagem(noticia, tema)
 
-        noticias = buscar_noticias(tema_escolhido, limite=1)
+    dados = {
+        "titulo": noticia["titulo"],
+        "imagem": imagem_final,
+        "contexto": blocos["contexto"],
+        "desdobramentos": blocos["desdobramentos"],
+        "impactos": blocos["impactos"],
+        "conclusao": blocos["conclusao"],
+        "assinatura": BLOCO_FIXO_FINAL
+    }
 
-        if not noticias:
-            exit()
+    html = obter_esqueleto_html(dados)
 
-        conteudo_html = gerar_conteudo(noticias[0], tema_escolhido)
+    service = autenticar_blogger()
 
-        post = {
-            "title": noticias[0]["titulo"][:150],
-            "content": conteudo_html
-        }
+    publicar_post(service, noticia["titulo"], html)
 
-        service.posts().insert(
-            blogId=BLOG_ID,
-            body=post,
-            isDraft=False
-        ).execute()
-
-        registrar_postagem(data_hoje, horario_escolhido)
-
-        print("Post publicado com sucesso.")
-
-    except Exception as erro:
-        print("Erro:", erro)
+    print("Post publicado com sucesso.")
