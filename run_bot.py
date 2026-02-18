@@ -21,22 +21,70 @@ from gemini_engine import GeminiEngine
 from imagem_engine import ImageEngine
 
 
+# ==========================================================
+# CONFIGURAÇÃO
+# ==========================================================
+
 AGENDA_POSTAGENS = {
-    "20:18": "policial",
+    "20:34": "policial",
     "14:05": "economia",
     "14:10": "politica"
 }
 
+JANELA_MINUTOS = 10
+ARQUIVO_CONTROLE_DIARIO = "controle_diario.txt"
+
+
+# ==========================================================
+# UTILIDADES DE TEMPO
+# ==========================================================
+
+def obter_horario_brasilia():
+    return datetime.utcnow() - timedelta(hours=3)
+
+
+def horario_para_minutos(hhmm):
+    h, m = map(int, hhmm.split(":"))
+    return h * 60 + m
+
+
+def dentro_da_janela(min_atual, min_agenda):
+    return abs(min_atual - min_agenda) <= JANELA_MINUTOS
+
+
+# ==========================================================
+# CONTROLE DE PUBLICAÇÃO
+# ==========================================================
+
+def ja_postou(data_str, horario_agenda):
+    if not os.path.exists(ARQUIVO_CONTROLE_DIARIO):
+        return False
+
+    with open(ARQUIVO_CONTROLE_DIARIO, "r", encoding="utf-8") as f:
+        for linha in f:
+            data, hora = linha.strip().split("|")
+            if data == data_str and hora == horario_agenda:
+                return True
+    return False
+
+
+def registrar_postagem(data_str, horario_agenda):
+    with open(ARQUIVO_CONTROLE_DIARIO, "a", encoding="utf-8") as f:
+        f.write(f"{data_str}|{horario_agenda}\n")
+
+
+# ==========================================================
+# AUTENTICAÇÃO BLOGGER
+# ==========================================================
 
 def autenticar_blogger():
     creds = Credentials.from_authorized_user_file("token.json")
     return build("blogger", "v3", credentials=creds)
 
 
-def obter_horario_brasilia():
-    agora = datetime.utcnow() - timedelta(hours=3)
-    return agora.strftime("%H:%M")
-
+# ==========================================================
+# VERIFICAR TEMA
+# ==========================================================
 
 def verificar_assunto(titulo, texto):
     conteudo = f"{titulo} {texto}".lower()
@@ -50,6 +98,10 @@ def verificar_assunto(titulo, texto):
 
     return "geral"
 
+
+# ==========================================================
+# BUSCAR NOTÍCIA
+# ==========================================================
 
 def buscar_noticia(tipo):
 
@@ -77,6 +129,10 @@ def buscar_noticia(tipo):
 
     return None
 
+
+# ==========================================================
+# SEPARAR BLOCOS DO GEMINI
+# ==========================================================
 
 def separar_blocos(texto):
 
@@ -115,30 +171,33 @@ def separar_blocos(texto):
     return secoes
 
 
-def publicar_post(service, titulo, html):
-
-    post = {
-        "title": titulo,
-        "content": html
-    }
-
-    service.posts().insert(
-        blogId=BLOG_ID,
-        body=post,
-        isDraft=False
-    ).execute()
-
+# ==========================================================
+# EXECUÇÃO PRINCIPAL
+# ==========================================================
 
 if __name__ == "__main__":
 
-    horario = obter_horario_brasilia()
+    agora = obter_horario_brasilia()
+    min_atual = agora.hour * 60 + agora.minute
+    data_hoje = agora.strftime("%Y-%m-%d")
 
-    if horario not in AGENDA_POSTAGENS:
+    horario_escolhido = None
+    tema_escolhido = None
+
+    for horario_agenda, tema in AGENDA_POSTAGENS.items():
+
+        min_agenda = horario_para_minutos(horario_agenda)
+
+        if dentro_da_janela(min_atual, min_agenda):
+            if not ja_postou(data_hoje, horario_agenda):
+                horario_escolhido = horario_agenda
+                tema_escolhido = tema
+                break
+
+    if not horario_escolhido:
         exit()
 
-    tema = AGENDA_POSTAGENS[horario]
-
-    noticia = buscar_noticia(tema)
+    noticia = buscar_noticia(tema_escolhido)
 
     if not noticia:
         exit()
@@ -153,7 +212,7 @@ if __name__ == "__main__":
 
     blocos = separar_blocos(texto_ia)
 
-    imagem_final = imagem_engine.obter_imagem(noticia, tema)
+    imagem_final = imagem_engine.obter_imagem(noticia, tema_escolhido)
 
     dados = {
         "titulo": noticia["titulo"],
@@ -169,6 +228,12 @@ if __name__ == "__main__":
 
     service = autenticar_blogger()
 
-    publicar_post(service, noticia["titulo"], html)
+    service.posts().insert(
+        blogId=BLOG_ID,
+        body={"title": noticia["titulo"], "content": html},
+        isDraft=False
+    ).execute()
+
+    registrar_postagem(data_hoje, horario_escolhido)
 
     print("Post publicado com sucesso.")
