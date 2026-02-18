@@ -1,55 +1,48 @@
+# -*- coding: utf-8 -*-
+
+def formatar_paragrafos(texto):
+    paragrafos = [p.strip() for p in texto.split("\n") if p.strip()]
+    return "".join([f"<p>{p}</p>" for p in paragrafos])
+
+
 def obter_esqueleto_html(dados):
-    cor_base = "#003366"  # Azul Marinho MD
-        
+
+    titulo = dados.get("titulo", "")
+    imagem = dados.get("imagem", "")
+    contexto = formatar_paragrafos(dados.get("contexto", ""))
+    desdobramentos = formatar_paragrafos(dados.get("desdobramentos", ""))
+    impactos = formatar_paragrafos(dados.get("impactos", ""))
+    conclusao = formatar_paragrafos(dados.get("conclusao", ""))
+    assinatura = dados.get("assinatura", "")
+
     html = f"""
-    <div style="color: {cor_base}; font-family: Arial, sans-serif; line-height: 1.6; width: 100%; max-width: 100%; box-sizing: border-box; overflow-wrap: break-word;">
-        <h1 style="font-weight: bold; margin-bottom: 20px; text-align: center; font-size: x-large;">
-            {dados['titulo'].upper()}
+    <div style="max-width:900px;margin:auto;font-family:Arial,Helvetica,sans-serif;color:#1a1a1a;line-height:1.6;">
+
+        <h1 style="text-align:center;font-size:26px;margin-bottom:20px;">
+            {titulo}
         </h1>
 
-        <div style='text-align:center; margin-bottom:20px; max-width: 100%;'>
-            <img src='{dados['img_topo']}' style='width:100%; max-width:100%; height:auto; aspect-ratio:16/9; object-fit:cover; border-radius:10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);'/>
+        <div style="text-align:center;margin-bottom:25px;">
+            <img src="{imagem}" style="width:100%;border-radius:8px;">
         </div>
 
-        <div style='font-size: medium; text-align:justify; margin:10px 0;'>
-            {dados['intro']}
+        <h2 style="margin-top:30px;">Contexto</h2>
+        {contexto}
+
+        <h2 style="margin-top:30px;">Desdobramentos</h2>
+        {desdobramentos}
+
+        <h2 style="margin-top:30px;">Impactos</h2>
+        {impactos}
+
+        <h2 style="margin-top:30px;">Considerações Finais</h2>
+        {conclusao}
+
+        <div style="margin-top:40px;padding-top:20px;border-top:1px solid #ddd;">
+            {assinatura}
         </div>
 
-        <p style='font-size: large; font-weight:bold; text-align:left; margin:25px 0 5px 0;'>
-            {dados['sub1']}
-        </p>
-        <div style='font-size: medium; text-align:justify; margin:10px 0;'>
-            {dados['texto1']}
-        </div>
-
-        <div style='text-align:center; margin:30px 0;'>
-            <img src='{dados['img_meio']}' style='width:100%; max-width:100%; height:auto; aspect-ratio:16/9; object-fit:cover; border-radius:10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);'/>
-        </div>
-
-        <p style='font-size: large; font-weight:bold; text-align:left; margin:25px 0 5px 0;'>
-            {dados['sub2']}
-        </p>
-        <div style='font-size: medium; text-align:justify; margin:10px 0;'>
-            {dados['texto2']}
-        </div>
-
-        <p style='font-size: large; font-weight:bold; text-align:left; margin:25px 0 5px 0;'>
-            {dados['sub3']}
-        </p>
-        <div style='font-size: medium; text-align:justify; margin:10px 0;'>
-            {dados['texto3']}
-        </div>
-
-        <p style='font-size: large; font-weight:bold; text-align:left; margin:25px 0 5px 0;'>
-            CONSIDERAÇÕES FINAIS
-        </p>
-        <div style='font-size: medium; text-align:justify; margin:10px 0;'>
-            {dados['texto_conclusao']}
-        </div>
-
-        <div style='margin-top: 10px; padding-top: 0;'>
-            {dados['assinatura']}
-        </div>
     </div>
     """
+
     return html
