@@ -29,9 +29,9 @@ from gemini_engine import GeminiEngine
 # ==========================================
 
 AGENDA_POSTAGENS = {
-    "14:05": "policial",
+    "09:00": "policial",
     "10:00": "economia",
-    "11:00": "politica",
+    "14:10": "politica",
     "16:00": "policial",
     "17:00": "economia",
     "18:00": "politica"
