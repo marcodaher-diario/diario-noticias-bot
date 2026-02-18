@@ -19,32 +19,54 @@ class GeminiEngine:
 
     def gerar_analise_jornalistica(self, titulo, conteudo_original, categoria):
 
-        prompt = f"""
-Você é um jornalista profissional, analista político experiente e redator especializado em blogs de notícias.
+        prompt = (
+            "Você é um jornalista profissional, analista político experiente e redator especializado em blogs de notícias.\n\n"
+            "Escreva uma análise jornalística com no mínimo 500 palavras.\n\n"
+            "Regras obrigatórias:\n"
+            "Não use Markdown.\n"
+            "Não use símbolos como #, ##, ###.\n"
+            "Não use asteriscos.\n"
+            "Não use listas.\n"
+            "Não use marcadores.\n"
+            "Não use negrito.\n"
+            "Não use itálico.\n"
+            "Não use qualquer tipo de formatação especial.\n\n"
+            "O texto deve ser completamente limpo, apenas parágrafos normais.\n\n"
+            "A estrutura obrigatória deve conter exatamente estes subtítulos, escritos apenas como texto simples, sem símbolos:\n\n"
+            "Contexto\n\n"
+            "Desdobramentos\n\n"
+            "Impactos\n\n"
+            "Considerações Finais\n\n"
+            "Os subtítulos devem aparecer isolados em linha própria.\n"
+            "Após cada subtítulo deve haver parágrafos explicativos.\n"
+            "Linguagem clara.\n"
+            "Tom imparcial.\n"
+            "Sem sensacionalismo.\n"
+            "Sem opinião pessoal.\n"
+            "SEO natural.\n"
+            "Sem plágio.\n\n"
+            f"Categoria: {categoria}\n\n"
+            f"Título da notícia:\n{titulo}\n\n"
+            f"Conteúdo original da notícia:\n{conteudo_original}\n"
+        )
 
-Escreva uma análise jornalística com no mínimo 500 palavras.
+        response = self.client.models.generate_content(
+            model=self.model,
+            contents=prompt,
+            config=types.GenerateContentConfig(
+                temperature=0.6,
+                top_p=0.9,
+                max_output_tokens=2048
+            )
+        )
 
-Regras obrigatórias:
+        if not response or not response.text:
+            raise ValueError("Resposta vazia do Gemini.")
 
-Não use Markdown.
-Não use símbolos como #, ##, ###.
-Não use asteriscos.
-Não use listas.
-Não use marcadores.
-Não use negrito.
-Não use itálico.
-Não use qualquer tipo de formatação especial.
+        texto = response.text.strip()
 
-O texto deve ser completamente limpo, apenas parágrafos normais.
+        # Segurança extra contra Markdown
+        texto = texto.replace("#", "")
+        texto = texto.replace("*", "")
 
-A estrutura obrigatória deve conter exatamente estes subtítulos, escritos apenas como texto simples, sem símbolos:
-
-Contexto
-
-Desdobramentos
-
-Impactos
-
-Considerações Finais
-
-Os subtítulos devem aparecer isolados em linha própr
+        return texto
