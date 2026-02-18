@@ -29,6 +29,9 @@ jobs:
       - name: Instalar Dependências
         run: pip install -r requirements.txt
 
+      - name: Criar token.json a partir do Secret
+        run: echo "${{ secrets.BLOGGER_TOKEN_BASE64 }}" | base64 --decode > token.json
+
       - name: Rodar Bot de Noticias
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
