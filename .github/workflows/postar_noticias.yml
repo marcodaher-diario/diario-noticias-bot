@@ -29,7 +29,7 @@ jobs:
       - name: Instalar Dependências
         run: pip install -r requirements.txt
 
-      - name: Testar Gemini isolado
+      - name: Rodar Bot de Noticias
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: python test_gemini.py
+        run: python run_bot.py
