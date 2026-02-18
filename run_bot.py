@@ -6,28 +6,6 @@ import os
 import random
 import subprocess
 
-import google.generativeai as genai
-
-print("🔎 TESTE GEMINI INICIADO")
-
-api_key = os.getenv("GEMINI_API_KEY")
-
-if not api_key:
-    print("❌ GEMINI_API_KEY NÃO ENCONTRADA")
-else:
-    print("✅ GEMINI_API_KEY ENCONTRADA")
-
-    genai.configure(api_key=api_key)
-    model = genai.GenerativeModel("gemini-pro")
-
-    resposta = model.generate_content("Escreva um parágrafo de teste com 50 palavras.")
-
-    print("🧠 RESPOSTA DO GEMINI:")
-    print(resposta.text)
-
-print("🔎 FIM TESTE GEMINI")
-exit()
-
 from datetime import datetime, timedelta
 
 from google.oauth2.credentials import Credentials
@@ -43,6 +21,7 @@ from configuracoes import (
 )
 
 from template_blog import obter_esqueleto_html
+from gemini_engine import GeminiEngine
 
 
 # ==========================================
@@ -122,93 +101,6 @@ def registrar_postagem_diaria(horario):
 
 
 # ==========================================
-# CONTROLE DE ASSUNTO
-# ==========================================
-
-def extrair_assunto_principal(titulo):
-    palavras = re.findall(r'\b\w{4,}\b', titulo.lower())
-    stopwords = ["sobre", "para", "entre", "após", "caso", "governo", "brasil"]
-
-    palavras = [p for p in palavras if p not in stopwords]
-
-    if not palavras:
-        return None
-
-    return " ".join(palavras[:2])
-
-
-def assunto_ja_usado(assunto):
-    if not assunto:
-        return False
-
-    if not os.path.exists(ARQUIVO_CONTROLE_ASSUNTOS):
-        return False
-
-    _, hoje = obter_horario_brasilia()
-
-    with open(ARQUIVO_CONTROLE_ASSUNTOS, "r", encoding="utf-8") as f:
-        for linha in f:
-            data, assunto_salvo = linha.strip().split("|", 1)
-            if data == hoje and assunto in assunto_salvo:
-                return True
-    return False
-
-
-def registrar_assunto(assunto):
-    if not assunto:
-        return
-    _, hoje = obter_horario_brasilia()
-    with open(ARQUIVO_CONTROLE_ASSUNTOS, "a", encoding="utf-8") as f:
-        f.write(f"{hoje}|{assunto}\n")
-
-
-# ==========================================
-# GERAR TAGS (LIMITE TOTAL 200 CARACTERES)
-# ==========================================
-
-def gerar_tags_seo(titulo, texto):
-
-    stopwords = [
-        "com", "para", "sobre", "entre", "após",
-        "caso", "contra", "diz", "afirma",
-        "governo", "brasil"
-    ]
-
-    conteudo = f"{titulo} {texto[:200]}"
-    palavras = re.findall(r'\b\w{4,}\b', conteudo.lower())
-
-    tags = []
-
-    for p in palavras:
-        if p not in stopwords:
-            tag = p.capitalize()
-            tag = re.sub(r'[^a-zA-ZÀ-ÿ0-9 ]', '', tag)
-
-            if tag and tag not in tags and len(tag) <= 30:
-                tags.append(tag)
-
-    tags_fixas = ["Noticias", "Diario De Noticias", "Marco Daher"]
-
-    for tf in tags_fixas:
-        if tf not in tags:
-            tags.append(tf)
-
-    resultado = []
-    total = 0
-
-    for tag in tags:
-        adicional = len(tag) + (2 if resultado else 0)
-
-        if total + adicional <= 200:
-            resultado.append(tag)
-            total += adicional
-        else:
-            break
-
-    return resultado
-
-
-# ==========================================
 # VERIFICAR TEMA
 # ==========================================
 
@@ -255,18 +147,11 @@ def buscar_noticias(tipo_alvo, limite=1):
             if tipo_detectado != tipo_alvo:
                 continue
 
-            assunto = extrair_assunto_principal(titulo)
-            if assunto_ja_usado(assunto):
-                continue
-
             noticias.append({
                 "titulo": titulo,
                 "texto": texto,
                 "link": link,
-                "fonte": fonte,
-                "imagem": entry.get("media_content", [{}])[0].get("url", ""),
-                "assunto": assunto,
-                "labels": gerar_tags_seo(titulo, texto)
+                "fonte": fonte
             })
 
     random.shuffle(noticias)
@@ -275,32 +160,37 @@ def buscar_noticias(tipo_alvo, limite=1):
 
 
 # ==========================================
-# GERAR CONTEÚDO HTML
+# GERAR CONTEÚDO HTML COM IA
 # ==========================================
 
-def gerar_conteudo(n):
+def gerar_conteudo(n, tema):
 
-    texto_limpo = re.sub(r"<[^>]+>", "", n["texto"])[:4000]
+    gemini = GeminiEngine()
+
+    texto_original = re.sub(r"<[^>]+>", "", n["texto"])[:4000]
+
+    analise = gemini.gerar_analise_jornalistica(
+        titulo=n["titulo"],
+        conteudo_original=texto_original,
+        categoria=tema
+    )
 
     dados = {
         "titulo": n["titulo"],
-        "img_topo": n["imagem"],
-        "intro": texto_limpo[:500],
+        "img_topo": "",
+        "intro": analise[:800],
         "sub1": "Contexto",
-        "texto1": texto_limpo[500:1200],
-        "img_meio": n["imagem"],
-        "sub2": "Desdobramentos",
-        "texto2": texto_limpo[1200:2000],
-        "sub3": "Impactos",
-        "texto3": texto_limpo[2000:3000],
-        "texto_conclusao": texto_limpo[3000:3800],
+        "texto1": analise,
+        "img_meio": "",
+        "sub2": "",
+        "texto2": "",
+        "sub3": "",
+        "texto3": "",
+        "texto_conclusao": "",
         "assinatura": BLOCO_FIXO_FINAL
     }
 
     html_final = obter_esqueleto_html(dados)
-
-    if len(html_final) > 900000:
-        html_final = html_final[:900000]
 
     return html_final
 
@@ -309,16 +199,13 @@ def gerar_conteudo(n):
 # PUBLICAR POST
 # ==========================================
 
-def publicar_post(service, noticia):
+def publicar_post(service, noticia, tema):
 
-    conteudo_html = gerar_conteudo(noticia)
-
-    labels_seguras = [str(l).strip() for l in noticia.get("labels", []) if l]
+    conteudo_html = gerar_conteudo(noticia, tema)
 
     post = {
         "title": str(noticia["titulo"])[:150],
-        "content": conteudo_html,
-        "labels": labels_seguras
+        "content": conteudo_html
     }
 
     service.posts().insert(
@@ -328,22 +215,6 @@ def publicar_post(service, noticia):
     ).execute()
 
     registrar_publicacao(noticia["link"])
-    registrar_assunto(noticia["assunto"])
-
-
-# ==========================================
-# SALVAR ESTADO NO GITHUB
-# ==========================================
-
-def salvar_estado_github():
-    try:
-        subprocess.run(["git", "config", "--global", "user.name", "github-actions"], check=True)
-        subprocess.run(["git", "config", "--global", "user.email", "github-actions@github.com"], check=True)
-        subprocess.run(["git", "add", "."], check=True)
-        subprocess.run(["git", "commit", "-m", "Atualiza controle automático"], check=True)
-        subprocess.run(["git", "push"], check=True)
-    except Exception:
-        pass
 
 
 # ==========================================
@@ -371,11 +242,9 @@ if __name__ == "__main__":
         if not noticias:
             exit()
 
-        publicar_post(service, noticias[0])
+        publicar_post(service, noticias[0], tema)
 
         registrar_postagem_diaria(horario_atual)
-
-        salvar_estado_github()
 
     except Exception as erro:
         print("Erro:", erro)
