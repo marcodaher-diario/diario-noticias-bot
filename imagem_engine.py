@@ -169,9 +169,12 @@ class ImageEngine:
 
         caminho_relativo = f"{PASTA_ASSETS}/{tema}/{proximo}"
 
-        self._registrar_imagem(tema, caminho_relativo)
+        url_publica = f"https://marcodaher-diario.github.io/diario-noticias-bot/{caminho_relativo}"
 
-        return caminho_relativo
+        self._registrar_imagem(tema, url_publica)
+
+        return url_publica
+
 
 
     # ==========================================================
