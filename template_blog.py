@@ -1,36 +1,35 @@
 # -*- coding: utf-8 -*-
 
 def formatar_texto(texto):
-
+    # Divide em linhas e limpa espaços vazios
     linhas = [l.strip() for l in texto.split("\n") if l.strip()]
     html_final = ""
 
     for linha in linhas:
-
-        # Remover markdown
+        # Verifica se a linha original começa com marcação de título
+        e_titulo_markdown = linha.startswith("#")
+        
+        # Limpa markdown para o conteúdo final
         linha_limpa = linha.lstrip("#").lstrip("*").strip()
 
-        # Detectar subtítulo (linha curta ou que veio com ##)
-        if linha.startswith("#") or len(linha_limpa.split()) <= 8:
+        # NOVA LÓGICA DE DETECÇÃO:
+        # 1. Se tiver # no início (Prioridade Máxima)
+        # 2. OU se for curta (até 18 palavras agora, para cobrir títulos longos)
+        # 3. E não terminar com ponto final (característica comum de parágrafos)
+        if e_titulo_markdown or (len(linha_limpa.split()) <= 18 and not linha_limpa.endswith(".")):
 
             if "considerações finais" in linha_limpa.lower():
-
-                html_final += f"""
-                <h2 style="text-align:left;font-family:Arial;color:rgb(7,55,99);font-size:large;font-weight:bold;margin-top:30px;">
-                Considerações Finais
-                </h2>
-                """
-
+                titulo_texto = "Considerações Finais"
             else:
+                titulo_texto = linha_limpa
 
-                html_final += f"""
-                <h2 style="text-align:left;font-family:Arial;color:rgb(7,55,99);font-size:large;font-weight:bold;margin-top:30px;">
-                {linha_limpa}
-                </h2>
-                """
-
+            html_final += f"""
+            <h2 style="text-align:left;font-family:Arial;color:rgb(7,55,99);font-size:large;font-weight:bold;margin-top:30px;">
+            {titulo_texto}
+            </h2>
+            """
         else:
-
+            # Parágrafo comum
             html_final += f"""
             <p style="text-align:justify;font-family:Arial;color:rgb(7,55,99);font-size:medium;margin-bottom:15px;">
             {linha_limpa}
