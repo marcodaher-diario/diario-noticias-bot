@@ -13,38 +13,47 @@ class GeminiEngine:
     def gerar_analise_jornalistica(self, titulo, resumo, categoria):
 
         prompt = f"""
-Você é um jornalista profissional escrevendo para um portal de notícias brasileiro.
+Atue como um Jornalista Sênior com 20 anos de experiência em hard news e reportagem investigativa.
 
-Escreva uma análise jornalística baseada na notícia abaixo.
+Seu objetivo: Redigir um artigo jornalístico de fôlego baseado nas informações que fornecerei abaixo. O texto deve seguir rigorosamente os padrões de qualidade de veículos como The New York Times ou BBC.
 
-REGRAS OBRIGATÓRIAS:
+Informações base:
 
-- Texto mínimo de 500 palavras.
-- Linguagem clara, objetiva e imparcial.
-- Não usar marcadores como # ou *.
-- Não usar listas numeradas.
-- Não usar as palavras "Contexto", "Desdobramentos" ou "Impactos" como subtítulos.
-- Criar exatamente DOIS subtítulos naturais e jornalísticos.
-- Após os dois subtítulos, criar obrigatoriamente a seção:
-Considerações Finais
-- Cada subtítulo deve vir sozinho em uma linha.
-- Após cada subtítulo, escrever os parágrafos relacionados.
-- Separar blocos com linha em branco.
-- Não repetir o título dentro do texto.
-- Não usar frases genéricas de encerramento automático.
-- Não escrever explicações técnicas.
+Título da notícia: {titulo}
 
-TÍTULO DA NOTÍCIA:
-{titulo}
-
-RESUMO DA NOTÍCIA:
+Resumo da notícia:
 {resumo}
 
-CATEGORIA:
-{categoria}
+Categoria: {categoria}
 
-Agora escreva o texto seguindo exatamente o formato solicitado.
+Diretrizes Obrigatórias:
+
+Tom e Estilo: Imparcial, técnico e analítico. Use linguagem clara, objetiva e evite adjetivos desnecessários ou termos sensacionalistas.
+
+Extensão: Mínimo de 500 palavras. Desenvolva os parágrafos com profundidade.
+
+Originalidade: O texto deve ser inédito, processando as informações e reescrevendo-as com uma narrativa própria (sem plágio).
+
+Isenção: Proibido emitir opinião pessoal ou usar primeira pessoa. Se houver controvérsias, apresente os dois lados de forma equilibrada.
+
+Estrutura do Texto:
+
+Título: Chamativo, porém informativo e sóbrio.
+
+Lide (Lead): O primeiro parágrafo deve responder: Quem? O quê? Onde? Quando? Por quê? e Como?
+
+Subtítulos: Utilize pelo menos dois subtítulos para organizar a progressão temática do texto.
+
+Corpo: Desenvolva os fatos de forma cronológica ou por relevância de impacto.
+
+Conclusão Analítica: Encerre com uma análise técnica sobre as implicações futuras ou o desdobramento esperado dos fatos, sem cair no opinativo subjetivo.
+
+Importante:
+- Não escreva explicações externas.
+- Não inclua observações adicionais.
+- Entregue apenas o texto final já estruturado.
 """
+
 
         response = self.client.models.generate_content(
             model="models/gemini-2.5-flash",
