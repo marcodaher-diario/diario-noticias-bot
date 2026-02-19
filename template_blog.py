@@ -4,34 +4,41 @@ def formatar_texto(texto):
 
     linhas = [l.strip() for l in texto.split("\n") if l.strip()]
     html_final = ""
-    modo_subtitulo = True
 
     for linha in linhas:
 
-        if linha.lower().startswith("considerações finais"):
-            html_final += f"""
-            <h2 style="text-align:left;font-family:Arial;color:rgb(7,55,99);font-size:large;font-weight:bold;margin-top:30px;">
-            Considerações Finais
-            </h2>
-            """
-            modo_subtitulo = False
-            continue
+        # Remover markdown
+        linha_limpa = linha.lstrip("#").lstrip("*").strip()
 
-        if modo_subtitulo:
-            html_final += f"""
-            <h2 style="text-align:left;font-family:Arial;color:rgb(7,55,99);font-size:large;font-weight:bold;margin-top:30px;">
-            {linha}
-            </h2>
-            """
-            modo_subtitulo = False
+        # Detectar subtítulo (linha curta ou que veio com ##)
+        if linha.startswith("#") or len(linha_limpa.split()) <= 8:
+
+            if "considerações finais" in linha_limpa.lower():
+
+                html_final += f"""
+                <h2 style="text-align:left;font-family:Arial;color:rgb(7,55,99);font-size:large;font-weight:bold;margin-top:30px;">
+                Considerações Finais
+                </h2>
+                """
+
+            else:
+
+                html_final += f"""
+                <h2 style="text-align:left;font-family:Arial;color:rgb(7,55,99);font-size:large;font-weight:bold;margin-top:30px;">
+                {linha_limpa}
+                </h2>
+                """
+
         else:
+
             html_final += f"""
             <p style="text-align:justify;font-family:Arial;color:rgb(7,55,99);font-size:medium;margin-bottom:15px;">
-            {linha}
+            {linha_limpa}
             </p>
             """
 
     return html_final
+
 
 
 def obter_esqueleto_html(dados):
