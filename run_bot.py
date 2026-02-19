@@ -91,8 +91,10 @@ def verificar_assunto(titulo, texto):
 
     if any(p in conteudo for p in PALAVRAS_POLICIAL):
         return "policial"
+
     if any(p in conteudo for p in PALAVRAS_POLITICA):
         return "politica"
+
     if any(p in conteudo for p in PALAVRAS_ECONOMIA):
         return "economia"
 
@@ -131,47 +133,6 @@ def buscar_noticia(tipo):
 
 
 # ==========================================================
-# SEPARAR BLOCOS DO GEMINI
-# ==========================================================
-
-def separar_blocos(texto):
-
-    secoes = {
-        "contexto": "",
-        "desdobramentos": "",
-        "impactos": "",
-        "conclusao": ""
-    }
-
-    atual = None
-
-    for linha in texto.split("\n"):
-        l = linha.strip()
-
-        if l.lower().startswith("contexto"):
-            atual = "contexto"
-            continue
-        if l.lower().startswith("desdobramentos"):
-            atual = "desdobramentos"
-            continue
-        if l.lower().startswith("impactos"):
-            atual = "impactos"
-            continue
-        if l.lower().startswith("considerações finais"):
-            atual = "conclusao"
-            continue
-
-        if atual:
-            secoes[atual] += l + "\n"
-
-    for chave in secoes:
-        if not secoes[chave].strip():
-            secoes[chave] = "Não há informações adicionais disponíveis neste momento."
-
-    return secoes
-
-
-# ==========================================================
 # EXECUÇÃO PRINCIPAL
 # ==========================================================
 
@@ -206,22 +167,17 @@ if __name__ == "__main__":
     imagem_engine = ImageEngine()
 
     texto_ia = gemini.gerar_analise_jornalistica(
-    noticia["titulo"],
-    noticia["texto"],
-    tema_escolhido
-)
-
-    blocos = separar_blocos(texto_ia)
+        noticia["titulo"],
+        noticia["texto"],
+        tema_escolhido
+    )
 
     imagem_final = imagem_engine.obter_imagem(noticia, tema_escolhido)
 
     dados = {
         "titulo": noticia["titulo"],
         "imagem": imagem_final,
-        "contexto": blocos["contexto"],
-        "desdobramentos": blocos["desdobramentos"],
-        "impactos": blocos["impactos"],
-        "conclusao": blocos["conclusao"],
+        "texto_completo": texto_ia,
         "assinatura": BLOCO_FIXO_FINAL
     }
 
@@ -231,7 +187,10 @@ if __name__ == "__main__":
 
     service.posts().insert(
         blogId=BLOG_ID,
-        body={"title": noticia["titulo"], "content": html},
+        body={
+            "title": noticia["titulo"],
+            "content": html
+        },
         isDraft=False
     ).execute()
 
