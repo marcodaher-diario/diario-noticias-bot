@@ -1,23 +1,19 @@
 # -*- coding: utf-8 -*-
 
 def formatar_texto(texto):
-    # Divide em linhas e limpa espaços vazios
     linhas = [l.strip() for l in texto.split("\n") if l.strip()]
     html_final = ""
 
     for linha in linhas:
-        # Verifica se a linha original começa com marcação de título
+        # Detectar se é título (pelo # ou pelas regras de tamanho/ponto)
         e_titulo_markdown = linha.startswith("#")
         
-        # Limpa markdown para o conteúdo final
-        linha_limpa = linha.lstrip("#").lstrip("*").strip()
+        # --- O AJUSTE ESTÁ AQUI ---
+        # .strip("#* ") remove hashtags e asteriscos de AMBOS os lados (início e fim)
+        linha_limpa = linha.strip("#* ").strip()
 
-        # NOVA LÓGICA DE DETECÇÃO:
-        # 1. Se tiver # no início (Prioridade Máxima)
-        # 2. OU se for curta (até 18 palavras agora, para cobrir títulos longos)
-        # 3. E não terminar com ponto final (característica comum de parágrafos)
         if e_titulo_markdown or (len(linha_limpa.split()) <= 18 and not linha_limpa.endswith(".")):
-
+            # Formatação de Título
             if "considerações finais" in linha_limpa.lower():
                 titulo_texto = "Considerações Finais"
             else:
@@ -29,7 +25,7 @@ def formatar_texto(texto):
             </h2>
             """
         else:
-            # Parágrafo comum
+            # Formatação de Parágrafo
             html_final += f"""
             <p style="text-align:justify;font-family:Arial;color:rgb(7,55,99);font-size:medium;margin-bottom:15px;">
             {linha_limpa}
@@ -37,7 +33,6 @@ def formatar_texto(texto):
             """
 
     return html_final
-
 
 
 def obter_esqueleto_html(dados):
