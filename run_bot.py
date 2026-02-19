@@ -26,7 +26,7 @@ from imagem_engine import ImageEngine
 # ==========================================================
 
 AGENDA_POSTAGENS = {
-    "21:10": "policial",
+    "21:40": "policial",
     "14:05": "economia",
     "14:10": "politica"
 }
@@ -102,6 +102,52 @@ def verificar_assunto(titulo, texto):
 
 
 # ==========================================================
+# GERAR TAGS SEO (LIMITE TOTAL 200 CARACTERES)
+# ==========================================================
+
+def gerar_tags_seo(titulo, texto):
+
+    stopwords = [
+        "com", "para", "sobre", "entre", "após",
+        "caso", "contra", "diz", "afirma",
+        "governo", "brasil"
+    ]
+
+    conteudo = f"{titulo} {texto[:200]}"
+    palavras = re.findall(r'\b\w{4,}\b', conteudo.lower())
+
+    tags = []
+
+    for p in palavras:
+        if p not in stopwords:
+            tag = p.capitalize()
+            tag = re.sub(r'[^a-zA-ZÀ-ÿ0-9 ]', '', tag)
+
+            if tag and tag not in tags and len(tag) <= 30:
+                tags.append(tag)
+
+    tags_fixas = ["Noticias", "Diario De Noticias", "Marco Daher"]
+
+    for tf in tags_fixas:
+        if tf not in tags:
+            tags.append(tf)
+
+    resultado = []
+    total = 0
+
+    for tag in tags:
+        adicional = len(tag) + (2 if resultado else 0)
+
+        if total + adicional <= 200:
+            resultado.append(tag)
+            total += adicional
+        else:
+            break
+
+    return resultado
+
+
+# ==========================================================
 # BUSCAR NOTÍCIA
 # ==========================================================
 
@@ -174,6 +220,8 @@ if __name__ == "__main__":
 
     imagem_final = imagem_engine.obter_imagem(noticia, tema_escolhido)
 
+    tags = gerar_tags_seo(noticia["titulo"], texto_ia)
+
     dados = {
         "titulo": noticia["titulo"],
         "imagem": imagem_final,
@@ -189,7 +237,8 @@ if __name__ == "__main__":
         blogId=BLOG_ID,
         body={
             "title": noticia["titulo"],
-            "content": html
+            "content": html,
+            "labels": tags
         },
         isDraft=False
     ).execute()
