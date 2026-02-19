@@ -26,7 +26,7 @@ from imagem_engine import ImageEngine
 # ==========================================================
 
 AGENDA_POSTAGENS = {
-    "21:40": "policial",
+    "21:10": "policial",
     "14:05": "economia",
     "14:10": "politica"
 }
@@ -74,15 +74,6 @@ def registrar_postagem(data_str, horario_agenda):
 
 
 # ==========================================================
-# AUTENTICAÇÃO BLOGGER
-# ==========================================================
-
-def autenticar_blogger():
-    creds = Credentials.from_authorized_user_file("token.json")
-    return build("blogger", "v3", credentials=creds)
-
-
-# ==========================================================
 # VERIFICAR TEMA
 # ==========================================================
 
@@ -102,48 +93,31 @@ def verificar_assunto(titulo, texto):
 
 
 # ==========================================================
-# GERAR TAGS SEO (LIMITE TOTAL 200 CARACTERES)
+# GERAR TAGS SEO (CÓDIGO ORIGINAL FUNCIONANDO)
 # ==========================================================
 
 def gerar_tags_seo(titulo, texto):
-
-    stopwords = [
-        "com", "para", "sobre", "entre", "após",
-        "caso", "contra", "diz", "afirma",
-        "governo", "brasil"
-    ]
-
-    conteudo = f"{titulo} {texto[:200]}"
+    stopwords = ["com", "de", "do", "da", "em", "para", "um", "uma", "os", "as", "que", "no", "na", "ao", "aos"]
+    conteudo = f"{titulo} {texto[:100]}"
     palavras = re.findall(r'\b\w{4,}\b', conteudo.lower())
-
     tags = []
-
     for p in palavras:
-        if p not in stopwords:
-            tag = p.capitalize()
-            tag = re.sub(r'[^a-zA-ZÀ-ÿ0-9 ]', '', tag)
-
-            if tag and tag not in tags and len(tag) <= 30:
-                tags.append(tag)
-
-    tags_fixas = ["Noticias", "Diario De Noticias", "Marco Daher"]
-
+        if p not in stopwords and p not in tags:
+            tags.append(p.capitalize())
+    
+    tags_fixas = ["Notícias", "Diário de Notícias", "Marco Daher"]
     for tf in tags_fixas:
         if tf not in tags:
             tags.append(tf)
 
     resultado = []
-    total = 0
-
+    tamanho_atual = 0
     for tag in tags:
-        adicional = len(tag) + (2 if resultado else 0)
-
-        if total + adicional <= 200:
+        if tamanho_atual + len(tag) + 2 <= 200:
             resultado.append(tag)
-            total += adicional
+            tamanho_atual += len(tag) + 2
         else:
             break
-
     return resultado
 
 
@@ -231,7 +205,8 @@ if __name__ == "__main__":
 
     html = obter_esqueleto_html(dados)
 
-    service = autenticar_blogger()
+    service = Credentials.from_authorized_user_file("token.json")
+    service = build("blogger", "v3", credentials=service)
 
     service.posts().insert(
         blogId=BLOG_ID,
