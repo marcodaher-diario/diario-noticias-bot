@@ -44,24 +44,28 @@ def obter_esqueleto_html(dados):
 
     conteudo_formatado = formatar_texto(texto_completo)
 
-    html = f"""
-    <div style="max-width:900px;margin:auto;">
+    FONTE_GERAL = "Arial, sans-serif"
+    COR_MD = "rgb(7, 55, 99)"
 
-        <h3 style="text-align:center;font-family:Arial;color:rgb(7,55,99);font-size:x-large;font-weight:bold;margin-bottom:20px;">
-            {titulo}
-        </h3>
+html = f"""
+<div style="max-width:900px !important; margin:auto !important; font-family:{FONTE_GERAL} !important; color:{COR_MD} !important; line-height:1.7 !important; text-align:justify !important;">
 
-        <div style="text-align:center;margin-bottom:25px;">
-            <img src="{imagem}" style="width:100%;border-radius:8px;">
-        </div>
+    <h3 style="text-align:center !important; font-family:{FONTE_GERAL} !important; color:{COR_MD} !important; font-size:28px !important; font-weight:bold !important; margin-bottom:20px !important; display:block !important; text-transform:uppercase !important;">
+        {titulo}
+    </h3>
 
-        {conteudo_formatado}
-
-        <div style="margin-top:40px;padding-top:20px;border-top:1px solid #ddd;font-family:Arial;color:rgb(7,55,99);">
-            {assinatura}
-        </div>
-
+    <div style="text-align:center !important; margin-bottom:25px !important;">
+        <img src="{imagem}" style="width:100% !important; max-width:100% !important; border-radius:8px !important; box-shadow: 0 4px 8px rgba(0,0,0,0.1) !important; height:auto !important; aspect-ratio:16/9 !important; object-fit:cover !important;">
     </div>
-    """
 
+    <div class="conteudo-post" style="font-size:17px !important; color:{COR_MD} !important;">
+        {conteudo_formatado}
+    </div>
+
+    <div style="margin-top:40px !important; padding-top:20px !important; border-top:1px solid #ddd !important; font-family:{FONTE_GERAL} !important; color:{COR_MD} !important; font-size: 15px !important; font-style: italic !important;">
+        {assinatura}
+    </div>
+
+</div>
+"""
     return html
