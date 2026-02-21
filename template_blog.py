@@ -50,6 +50,10 @@ def obter_esqueleto_html(dados):
     COR_MD = "rgb(7, 55, 99)"
 
     html = f"""
+<style>
+    /* Esconde o título padrão do Blogger (H3) para não duplicar com o seu H1 */
+    h3.post-title, .post-title { { display: none !important; } }
+</style>    
 <div style="max-width:900px !important; margin:auto !important; font-family:{FONTE_GERAL} !important; color:{COR_MD} !important; line-height:1.7 !important; text-align:justify !important;">
 
     <h1 style="text-align:center !important; font-family:{FONTE_GERAL} !important; color:{COR_MD} !important; font-size:28px !important; font-weight:bold !important; margin-bottom:20px !important; display:block !important; text-transform:uppercase !important;">
