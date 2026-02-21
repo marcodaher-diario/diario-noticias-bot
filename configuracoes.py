@@ -59,7 +59,7 @@ BLOCO_FIXO_FINAL = """
   </p>
 
   <div class="separator" style="clear: both; margin: 15px 0px; text-align: center;">
-    <a href="https://s.shopee.com.br/9zs5JZLPNm">
+    <a href="https://s.shopee.com.br/9zs5JZLPNm" target="_blank">
       <img border="0" height="132" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhHYBTRiztv4UNKBsiwX8nQn1M00BUz-LtO58gTZ6hEsU3VPClePhQwPWw0NyUJGqXvm3vWbRPP6LPQS6m5iyI0UQBBKmdIkNYNuXmGaxv5eMac9R6i2e9MIU7_YmWeMKntQ1ZWlzplYlDYNJr5lGHiUvwJ1CuvQOLzbOT61kF3LQ0-nD4j3Xo4HJWeOG4/w640-h132/Banner%20Shopee%20Rodap%C3%A9.gif" style="height: auto; max-width: 100%;" width="640" />
     </a>
   </div>
