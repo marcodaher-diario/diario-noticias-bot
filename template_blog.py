@@ -68,4 +68,4 @@ html = f"""
 
 </div>
 """
-    return html
+return html
