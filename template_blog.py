@@ -47,7 +47,7 @@ def obter_esqueleto_html(dados):
     FONTE_GERAL = "Arial, sans-serif"
     COR_MD = "rgb(7, 55, 99)"
 
-html = f"""
+    html = f"""
 <div style="max-width:900px !important; margin:auto !important; font-family:{FONTE_GERAL} !important; color:{COR_MD} !important; line-height:1.7 !important; text-align:justify !important;">
 
     <h3 style="text-align:center !important; font-family:{FONTE_GERAL} !important; color:{COR_MD} !important; font-size:28px !important; font-weight:bold !important; margin-bottom:20px !important; display:block !important; text-transform:uppercase !important;">
@@ -68,4 +68,4 @@ html = f"""
 
 </div>
 """
-return html
+    return html
