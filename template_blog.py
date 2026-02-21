@@ -52,7 +52,7 @@ def obter_esqueleto_html(dados):
     html = f"""
 <style>
     /* Esconde o título padrão do Blogger (H3) para não duplicar com o seu H1 */
-    h3.post-title, .post-title { { display: none !important; } }
+    h3.post-title, .post-title {{ display: none !important; visibility: hidden !important; }}
 </style>    
 <div style="max-width:900px !important; margin:auto !important; font-family:{FONTE_GERAL} !important; color:{COR_MD} !important; line-height:1.7 !important; text-align:justify !important;">
 
