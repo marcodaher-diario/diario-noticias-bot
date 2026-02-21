@@ -6,8 +6,8 @@ def formatar_texto(texto):
     
     # Configurações de comando centralizado (Alterando aqui, muda em todos os robôs)
     COR_MD = "rgb(7, 55, 99)"
-    TAMANHO_H2 = "20px"
-    TAMANHO_TEXTO = "16px"
+    TAMANHO_H2 = "24px"
+    TAMANHO_TEXTO = "18px"
 
     for linha in linhas:
         e_titulo_markdown = linha.startswith("#")
@@ -52,9 +52,9 @@ def obter_esqueleto_html(dados):
     html = f"""
 <div style="max-width:900px !important; margin:auto !important; font-family:{FONTE_GERAL} !important; color:{COR_MD} !important; line-height:1.7 !important; text-align:justify !important;">
 
-    <h3 style="text-align:center !important; font-family:{FONTE_GERAL} !important; color:{COR_MD} !important; font-size:28px !important; font-weight:bold !important; margin-bottom:20px !important; display:block !important; text-transform:uppercase !important;">
+    <h1 style="text-align:center !important; font-family:{FONTE_GERAL} !important; color:{COR_MD} !important; font-size:28px !important; font-weight:bold !important; margin-bottom:20px !important; display:block !important; text-transform:uppercase !important;">
         {titulo}
-    </h3>
+    </h1>
 
     <div style="text-align:center !important; margin-bottom:25px !important;">
         <img src="{imagem}" style="width:100% !important; max-width:100% !important; border-radius:8px !important; box-shadow: 0 4px 8px rgba(0,0,0,0.1) !important; height:auto !important; aspect-ratio:16/9 !important; object-fit:cover !important;">
