@@ -47,9 +47,9 @@ def obter_esqueleto_html(dados):
     html = f"""
     <div style="max-width:900px;margin:auto;">
 
-        <h1 style="text-align:center;font-family:Arial;color:rgb(7,55,99);font-size:x-large;font-weight:bold;margin-bottom:20px;">
+        <h3 style="text-align:center;font-family:Arial;color:rgb(7,55,99);font-size:x-large;font-weight:bold;margin-bottom:20px;">
             {titulo}
-        </h1>
+        </h3>
 
         <div style="text-align:center;margin-bottom:25px;">
             <img src="{imagem}" style="width:100%;border-radius:8px;">
