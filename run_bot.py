@@ -26,12 +26,12 @@ from imagem_engine import ImageEngine
 # ==========================================================
 
 AGENDA_POSTAGENS = {
-    "10:35": "policial",
-    "14:00": "economia",
-    "18:00": "politica"
+    "09:30": "policial",
+    "14:30": "economia",
+    "18:30": "politica"
 }
 
-JANELA_MINUTOS = 10
+JANELA_MINUTOS = 15
 ARQUIVO_CONTROLE_DIARIO = "controle_diario.txt"
 
 
