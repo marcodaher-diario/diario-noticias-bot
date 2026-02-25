@@ -18,7 +18,8 @@ RSS_FEEDS = [
     "https://g1.globo.com/rss/g1/economia/",
     "https://www.camara.leg.br/noticias/rss/ultimas-noticias",
     "https://www.camara.leg.br/noticias/rss/dinamico/POLITICA",
-    "https://www12.senado.leg.br/noticias/ultimas"    
+    "https://www12.senado.leg.br/noticias/ultimas",
+    "https://news.google.com/rss/search?q=site:metropoles.com+intitle:política&hl=pt-BR&gl=BR&ceid=BR:pt-419"
 ]
 
 # ==========================================
