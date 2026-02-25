@@ -31,7 +31,7 @@ AGENDA_POSTAGENS = {
     "18:30": "politica"
 }
 
-JANELA_MINUTOS = 15
+JANELA_MINUTOS = 10
 ARQUIVO_CONTROLE_DIARIO = "controle_diario.txt"
 
 
