@@ -2,10 +2,9 @@
 
 import os
 import re
-import json
 import feedparser
 from datetime import datetime, timedelta
-from google.oauth2 import service_account
+from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 
 from configuracoes import (
@@ -206,24 +205,8 @@ if __name__ == "__main__":
 
     html = obter_esqueleto_html(dados)
 
-    # ==========================================================
-    # AUTENTICAÇÃO VIA SERVICE ACCOUNT
-    # ==========================================================
-
-    SCOPES = ["https://www.googleapis.com/auth/blogger"]
-
-    service_account_info = json.loads(os.environ["GOOGLE_SERVICE_ACCOUNT"])
-
-    credentials = service_account.Credentials.from_service_account_info(
-        service_account_info,
-        scopes=SCOPES
-    )
-
-    service = build("blogger", "v3", credentials=credentials)
-
-    # ==========================================================
-    # PUBLICAÇÃO
-    # ==========================================================
+    service = Credentials.from_authorized_user_file("token.json")
+    service = build("blogger", "v3", credentials=service)
 
     service.posts().insert(
         blogId=BLOG_ID,
