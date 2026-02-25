@@ -15,7 +15,10 @@ RSS_FEEDS = [
     "https://reporterbrasil.org.br/feed/",
     "https://www.cnnbrasil.com.br/feed/",
     "https://www.estadao.com.br/arc/outboundfeeds/rss/category/brasil/",
-    "https://g1.globo.com/rss/g1/economia/"
+    "https://g1.globo.com/rss/g1/economia/",
+    "https://www.camara.leg.br/noticias/rss/ultimas-noticias",
+    "https://www.camara.leg.br/noticias/rss/dinamico/POLITICA",
+    "https://www12.senado.leg.br/noticias/ultimas"    
 ]
 
 # ==========================================
@@ -32,7 +35,7 @@ PALAVRAS_POLICIAL = [
 ]
 
 PALAVRAS_POLITICA = [
-    "política", "governo", "presidente", "congresso", "senado", "stf", "eleição", "ministro", 
+    "CPI", "CPMI", "política", "governo", "presidente", "congresso", "senado", "stf", "eleição", "ministro", 
     "deputado", "senador", "planalto", "judiciário", "Congresso", "Planalto", "Senado", "Oposição", 
     "Votação", "Plenário", "Constituição", "Decreto", "Reforma", "Parlamentar", "Inquérito", "Eitoral", 
     "Supremo", "STF", "Impeachment", "Cassação", "Orçamento", "Transparência", "Diplomacia", 
