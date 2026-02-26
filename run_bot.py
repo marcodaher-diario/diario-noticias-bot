@@ -26,7 +26,7 @@ from imagem_engine import ImageEngine
 # ==========================================================
 
 AGENDA_POSTAGENS = {
-    "09:45": "policial",
+    "09:30": "policial",
     "13:30": "economia",
     "19:00": "politica"
 }
