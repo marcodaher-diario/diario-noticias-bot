@@ -2,8 +2,24 @@ name: Bot Diario de Noticias
 
 on:
   schedule:
-    - cron: '*/10 * * * *'
+    - cron: '30 12 * * *'  # 09:30 Brasil
+    - cron: '30 16 * * *'  # 13:30 Brasil
+    - cron: '00 22 * * *'  # 19:00 Brasil
+
   workflow_dispatch:
+    inputs:
+      test_mode:
+        description: "Ativar modo teste? (true ou false)"
+        required: false
+        default: "false"
+      test_tema:
+        description: "Tema para teste (policial, politica, economia)"
+        required: false
+        default: "policial"
+      test_publicar:
+        description: "Publicar ao vivo? (true ou false)"
+        required: false
+        default: "false"
 
 permissions:
   contents: write
@@ -35,4 +51,25 @@ jobs:
       - name: Rodar Bot de Noticias
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+          UNSPLASH_API_KEY: ${{ secrets.UNSPLASH_API_KEY }}
+          TEST_MODE: ${{ github.event.inputs.test_mode }}
+          TEST_TEMA: ${{ github.event.inputs.test_tema }}
+          TEST_PUBLICAR: ${{ github.event.inputs.test_publicar }}
         run: python run_bot.py
+
+      - name: Commitar arquivos de controle automaticamente
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          [ -f posts_publicados.txt ] && git add posts_publicados.txt
+          [ -f controle_diario.txt ] && git add controle_diario.txt
+          [ -f controle_imagens.txt ] && git add controle_imagens.txt
+
+          if git diff --staged --quiet; then
+            echo "Nenhuma alteração para commit."
+          else
+            git commit -m "Atualiza arquivos de controle automaticamente"
+            git push
+          fi
