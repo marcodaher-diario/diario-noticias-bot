@@ -20,7 +20,7 @@ class ImageEngine:
 
 
     # ==========================================================
-    # CONTROLE DE REPETIÇÃO POR TEMA (30 DIAS)
+    # CONTROLE DE REPETIÇÃO POR TEMA (30 DIAS) - BLINDADO
     # ==========================================================
 
     def _imagem_usada_recentemente(self, tema, url):
@@ -31,12 +31,30 @@ class ImageEngine:
 
         with open(ARQUIVO_CONTROLE_IMAGENS, "r", encoding="utf-8") as f:
             for linha in f:
-                data_str, tema_salvo, url_salva = linha.strip().split("|")
+                linha = linha.strip()
+
+                # Ignora linha vazia
+                if not linha:
+                    continue
+
+                # Ignora linha inválida
+                if "|" not in linha:
+                    continue
+
+                partes = linha.split("|")
+
+                if len(partes) != 3:
+                    continue
+
+                data_str, tema_salvo, url_salva = partes
 
                 if tema_salvo != tema:
                     continue
 
-                data_img = datetime.strptime(data_str, "%Y-%m-%d")
+                try:
+                    data_img = datetime.strptime(data_str, "%Y-%m-%d")
+                except:
+                    continue
 
                 if url_salva == url and (hoje - data_img).days < DIAS_BLOQUEIO:
                     return True
@@ -151,8 +169,19 @@ class ImageEngine:
 
         if os.path.exists(ARQUIVO_CONTROLE_IMAGENS):
             with open(ARQUIVO_CONTROLE_IMAGENS, "r", encoding="utf-8") as f:
-                linhas = [l.strip().split("|") for l in f.readlines()]
-                for data_str, tema_salvo, url_salva in reversed(linhas):
+                for linha in reversed(f.readlines()):
+                    linha = linha.strip()
+
+                    if not linha or "|" not in linha:
+                        continue
+
+                    partes = linha.split("|")
+
+                    if len(partes) != 3:
+                        continue
+
+                    data_str, tema_salvo, url_salva = partes
+
                     if tema_salvo == tema and "assets" in url_salva:
                         ultimo_usado = os.path.basename(url_salva)
                         break
@@ -174,7 +203,6 @@ class ImageEngine:
         self._registrar_imagem(tema, url_publica)
 
         return url_publica
-
 
 
     # ==========================================================
