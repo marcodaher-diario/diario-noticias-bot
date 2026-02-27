@@ -2,135 +2,238 @@
 
 import os
 import requests
-import random
 from datetime import datetime, timedelta
-
-ARQUIVO_IMAGENS = "imagens_usadas.txt"
-PEXELS_API_KEY = os.getenv("PEXELS_API_KEY")
-
-# ==========================================
-# CONTROLE DE IMAGENS USADAS (30 DIAS)
-# ==========================================
-
-def carregar_imagens_usadas():
-    imagens = {}
-
-    if not os.path.exists(ARQUIVO_IMAGENS):
-        return imagens
-
-    with open(ARQUIVO_IMAGENS, "r", encoding="utf-8") as f:
-        for linha in f:
-            try:
-                url, data_str = linha.strip().split("|")
-                data = datetime.strptime(data_str, "%Y-%m-%d")
-                imagens[url] = data
-            except:
-                continue
-
-    return imagens
+from PIL import Image
+from io import BytesIO
 
 
-def limpar_imagens_antigas(imagens):
-    hoje = datetime.now()
-    limite = hoje - timedelta(days=30)
-
-    imagens_filtradas = {
-        url: data for url, data in imagens.items()
-        if data >= limite
-    }
-
-    with open(ARQUIVO_IMAGENS, "w", encoding="utf-8") as f:
-        for url, data in imagens_filtradas.items():
-            f.write(f"{url}|{data.strftime('%Y-%m-%d')}\n")
-
-    return imagens_filtradas
+ARQUIVO_CONTROLE_IMAGENS = "controle_imagens.txt"
+PASTA_ASSETS = "assets"
+DIAS_BLOQUEIO = 30
 
 
-def registrar_imagem(url):
-    hoje = datetime.now().strftime("%Y-%m-%d")
+class ImageEngine:
 
-    with open(ARQUIVO_IMAGENS, "a", encoding="utf-8") as f:
-        f.write(f"{url}|{hoje}\n")
+    def __init__(self):
+        self.pexels_key = os.getenv("PEXELS_API_KEY")
+        self.unsplash_key = os.getenv("UNSPLASH_API_KEY")
 
 
-# ==========================================
-# BUSCAR IMAGEM NO PEXELS
-# ==========================================
+    # ==========================================================
+    # CONTROLE DE REPETIÇÃO POR TEMA (30 DIAS) - BLINDADO
+    # ==========================================================
 
-def buscar_imagem_pexels(query):
+    def _imagem_usada_recentemente(self, tema, url):
+        if not os.path.exists(ARQUIVO_CONTROLE_IMAGENS):
+            return False
 
-    if not PEXELS_API_KEY:
+        hoje = datetime.utcnow()
+
+        with open(ARQUIVO_CONTROLE_IMAGENS, "r", encoding="utf-8") as f:
+            for linha in f:
+                linha = linha.strip()
+
+                # Ignora linha vazia
+                if not linha:
+                    continue
+
+                # Ignora linha inválida
+                if "|" not in linha:
+                    continue
+
+                partes = linha.split("|")
+
+                if len(partes) != 3:
+                    continue
+
+                data_str, tema_salvo, url_salva = partes
+
+                if tema_salvo != tema:
+                    continue
+
+                try:
+                    data_img = datetime.strptime(data_str, "%Y-%m-%d")
+                except:
+                    continue
+
+                if url_salva == url and (hoje - data_img).days < DIAS_BLOQUEIO:
+                    return True
+
+        return False
+
+
+    def _registrar_imagem(self, tema, url):
+        hoje = datetime.utcnow().strftime("%Y-%m-%d")
+
+        with open(ARQUIVO_CONTROLE_IMAGENS, "a", encoding="utf-8") as f:
+            f.write(f"{hoje}|{tema}|{url}\n")
+
+
+    # ==========================================================
+    # VERIFICAR TAMANHO RSS (>= 600px)
+    # ==========================================================
+
+    def _rss_valida(self, url):
+        try:
+            response = requests.get(url, timeout=5)
+            img = Image.open(BytesIO(response.content))
+            largura, _ = img.size
+            return largura >= 600
+        except:
+            return False
+
+
+    # ==========================================================
+    # BUSCA PEXELS
+    # ==========================================================
+
+    def _buscar_pexels(self, query, tema):
+
+        headers = {"Authorization": self.pexels_key}
+
+        url = "https://api.pexels.com/v1/search"
+
+        params = {
+            "query": query,
+            "orientation": "landscape",
+            "size": "large",
+            "per_page": 10
+        }
+
+        r = requests.get(url, headers=headers, params=params)
+
+        if r.status_code != 200:
+            return None
+
+        data = r.json()
+
+        for foto in data.get("photos", []):
+            img_url = foto["src"]["large"]
+
+            if not self._imagem_usada_recentemente(tema, img_url):
+                self._registrar_imagem(tema, img_url)
+                return img_url
+
         return None
 
-    headers = {
-        "Authorization": PEXELS_API_KEY
-    }
 
-    params = {
-        "query": query,
-        "orientation": "landscape",
-        "size": "large",
-        "per_page": 15
-    }
+    # ==========================================================
+    # BUSCA UNSPLASH
+    # ==========================================================
 
-    try:
-        response = requests.get(
-            "https://api.pexels.com/v1/search",
-            headers=headers,
-            params=params,
-            timeout=10
-        )
+    def _buscar_unsplash(self, query, tema):
 
-        if response.status_code != 200:
+        url = "https://api.unsplash.com/search/photos"
+
+        params = {
+            "query": query,
+            "orientation": "landscape",
+            "per_page": 10,
+            "client_id": self.unsplash_key
+        }
+
+        r = requests.get(url, params=params)
+
+        if r.status_code != 200:
             return None
 
-        data = response.json()
-        fotos = data.get("photos", [])
+        data = r.json()
 
-        if not fotos:
-            return None
+        for foto in data.get("results", []):
+            img_url = foto["urls"]["regular"]
 
-        imagens_usadas = carregar_imagens_usadas()
-        imagens_usadas = limpar_imagens_antigas(imagens_usadas)
+            if not self._imagem_usada_recentemente(tema, img_url):
+                self._registrar_imagem(tema, img_url)
+                return img_url
 
-        candidatos = []
-
-        for foto in fotos:
-            url = foto.get("src", {}).get("large")
-
-            if url and url not in imagens_usadas:
-                candidatos.append(url)
-
-        if not candidatos:
-            return None
-
-        imagem_escolhida = random.choice(candidatos)
-
-        registrar_imagem(imagem_escolhida)
-
-        return imagem_escolhida
-
-    except Exception:
         return None
 
 
-# ==========================================
-# FUNÇÃO PRINCIPAL
-# ==========================================
+    # ==========================================================
+    # IMAGEM INSTITUCIONAL SEQUENCIAL
+    # ==========================================================
 
-def obter_imagem_para_noticia(titulo, tipo):
+    def _buscar_institucional(self, tema):
 
-    # Prioridade 1: usar título
-    imagem = buscar_imagem_pexels(titulo)
+        pasta_tema = os.path.join(PASTA_ASSETS, tema)
 
-    if imagem:
-        return imagem
+        if not os.path.exists(pasta_tema):
+            return None
 
-    # Prioridade 2: usar categoria
-    imagem = buscar_imagem_pexels(tipo)
+        arquivos = sorted([f for f in os.listdir(pasta_tema) if f.lower().endswith(".jpg")])
 
-    if imagem:
-        return imagem
+        if not arquivos:
+            return None
 
-    # Fallback absoluto
-    return "https://images.pexels.com/photos/518543/pexels-photo-518543.jpeg"
+        ultimo_usado = None
+
+        if os.path.exists(ARQUIVO_CONTROLE_IMAGENS):
+            with open(ARQUIVO_CONTROLE_IMAGENS, "r", encoding="utf-8") as f:
+                for linha in reversed(f.readlines()):
+                    linha = linha.strip()
+
+                    if not linha or "|" not in linha:
+                        continue
+
+                    partes = linha.split("|")
+
+                    if len(partes) != 3:
+                        continue
+
+                    data_str, tema_salvo, url_salva = partes
+
+                    if tema_salvo == tema and "assets" in url_salva:
+                        ultimo_usado = os.path.basename(url_salva)
+                        break
+
+        if ultimo_usado and ultimo_usado in arquivos:
+            indice = arquivos.index(ultimo_usado) + 1
+        else:
+            indice = 0
+
+        if indice >= len(arquivos):
+            indice = 0
+
+        proximo = arquivos[indice]
+
+        caminho_relativo = f"{PASTA_ASSETS}/{tema}/{proximo}"
+
+        url_publica = f"https://marcodaher-diario.github.io/diario-noticias-bot/{caminho_relativo}"
+
+        self._registrar_imagem(tema, url_publica)
+
+        return url_publica
+
+
+    # ==========================================================
+    # FUNÇÃO PRINCIPAL
+    # ==========================================================
+
+    def obter_imagem(self, noticia, tema):
+
+        # 1️⃣ RSS
+        rss_img = noticia.get("imagem", "")
+
+        if rss_img and self._rss_valida(rss_img):
+            if not self._imagem_usada_recentemente(tema, rss_img):
+                self._registrar_imagem(tema, rss_img)
+                return rss_img
+
+        # Query refinada Brasil
+        titulo = noticia.get("titulo", "")
+        query = f"{tema} Brasil {titulo}"
+
+        # 2️⃣ Pexels
+        if self.pexels_key:
+            img = self._buscar_pexels(query, tema)
+            if img:
+                return img
+
+        # 3️⃣ Unsplash
+        if self.unsplash_key:
+            img = self._buscar_unsplash(query, tema)
+            if img:
+                return img
+
+        # 4️⃣ Institucional
+        return self._buscar_institucional(tema)
