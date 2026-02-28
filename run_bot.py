@@ -64,9 +64,11 @@ def ja_postou(data_str, horario_agenda):
 
     with open(ARQUIVO_CONTROLE_DIARIO, "r", encoding="utf-8") as f:
         for linha in f:
-            data, hora = linha.strip().split("|")
-            if data == data_str and hora == horario_agenda:
-                return True
+            partes = linha.strip().split("|")
+            if len(partes) == 2:
+                data, hora = partes
+                if data == data_str and hora == horario_agenda:
+                    return True
     return False
 
 
@@ -150,47 +152,9 @@ def gerar_tags_seo(titulo, texto):
 def buscar_noticia(tipo):
 
     pesos_por_tema = {
-
-        "policial": {
-            "homicídio": 12,
-            "prisão": 10,
-            "operação": 9,
-            "flagrante": 9,
-            "crime": 8,
-            "suspeito": 7,
-            "acusado": 7,
-            "investigação": 7,
-            "facção": 6,
-            "corrupção": 6,
-            "violência": 6
-        },
-
-        "politica": {
-            "stf": 12,
-            "supremo": 12,
-            "congresso": 10,
-            "senado": 9,
-            "cpi": 9,
-            "presidente": 8,
-            "eleição": 8,
-            "governo": 7,
-            "planalto": 7,
-            "reforma": 6,
-            "impeachment": 6
-        },
-
-        "economia": {
-            "inflação": 12,
-            "dólar": 10,
-            "pib": 9,
-            "selic": 9,
-            "juros": 8,
-            "mercado": 7,
-            "desemprego": 7,
-            "orçamento": 6,
-            "déficit": 6,
-            "ibovespa": 6
-        }
+        "policial": {"homicídio": 12, "prisão": 10, "operação": 9, "flagrante": 9, "crime": 8, "suspeito": 7},
+        "politica": {"stf": 12, "supremo": 12, "congresso": 10, "senado": 9, "cpi": 9, "presidente": 8},
+        "economia": {"inflação": 12, "dólar": 10, "pib": 9, "selic": 9, "juros": 8, "mercado": 7}
     }
 
     palavras_peso = pesos_por_tema.get(tipo, {})
@@ -201,11 +165,10 @@ def buscar_noticia(tipo):
         feed = feedparser.parse(feed_url)
 
         for entry in feed.entries[:15]:
-
             titulo = entry.get("title", "")
             resumo = entry.get("summary", "")
             link = entry.get("link", "")
-             = entry.get("media_content", [{}])[0].get("url", "")
+            imagem = entry.get("media_content", [{}])[0].get("url", "") # Corrigido aqui
 
             if not titulo or not link:
                 continue
@@ -222,8 +185,7 @@ def buscar_noticia(tipo):
                     data_publicacao = parsedate_to_datetime(entry.published)
                     if data_publicacao.tzinfo is not None:
                         data_publicacao = data_publicacao.astimezone(tz=None).replace(tzinfo=None)
-                except:
-                    pass
+                except: pass
 
             if data_publicacao:
                 if (agora - data_publicacao).days > 1:
@@ -231,7 +193,6 @@ def buscar_noticia(tipo):
 
             conteudo = f"{titulo} {resumo}".lower()
             score = 0
-
             for palavra, peso in palavras_peso.items():
                 if palavra in conteudo:
                     score += peso
@@ -245,7 +206,7 @@ def buscar_noticia(tipo):
                 "titulo": titulo,
                 "texto": resumo,
                 "link": link,
-                "": ,
+                "imagem": imagem, # Corrigido aqui
                 "score": score
             })
 
@@ -258,7 +219,7 @@ def buscar_noticia(tipo):
         "titulo": noticia_escolhida["titulo"],
         "texto": noticia_escolhida["texto"],
         "link": noticia_escolhida["link"],
-        "": noticia_escolhida[""]
+        "imagem": noticia_escolhida["imagem"] # Corrigido aqui
     }
 
 
@@ -282,14 +243,11 @@ def executar_modo_teste(tema_forcado=None, publicar=False):
     gemini = GeminiEngine()
     imagem_engine = ImageEngine()
 
-    texto_ia = gemini.gerar_analise_jornalistica(
-        noticia["titulo"],
-        noticia["texto"],
-        tema_forcado
-    )
+    texto_ia = gemini.gerar_analise_jornalistica(noticia["titulo"], noticia["texto"], tema_forcado)
 
+    # Busca visual inteligente no Modo Teste também
     query_visual = gemini.gerar_query_visual(noticia["titulo"], noticia["texto"])
-    imagem_final = imagem_engine.obter_imagem(noticia, tema_escolhido, query_ia=query_visual)
+    imagem_final = imagem_engine.obter_imagem(noticia, tema_forcado, query_ia=query_visual)
 
     tags = gerar_tags_seo(noticia["titulo"], texto_ia)
 
@@ -325,15 +283,9 @@ def executar_modo_teste(tema_forcado=None, publicar=False):
 if __name__ == "__main__":
 
     if os.getenv("TEST_MODE") == "true":
-
         tema_teste = os.getenv("TEST_TEMA", "policial")
         publicar_teste = os.getenv("TEST_PUBLICAR", "false") == "true"
-
-        executar_modo_teste(
-            tema_forcado=tema_teste,
-            publicar=publicar_teste
-        )
-
+        executar_modo_teste(tema_forcado=tema_teste, publicar=publicar_teste)
         exit()
 
     agora = obter_horario_brasilia()
@@ -344,9 +296,7 @@ if __name__ == "__main__":
     tema_escolhido = None
 
     for horario_agenda, tema in AGENDA_POSTAGENS.items():
-
         min_agenda = horario_para_minutos(horario_agenda)
-
         if dentro_da_janela(min_atual, min_agenda):
             if not ja_postou(data_hoje, horario_agenda):
                 horario_escolhido = horario_agenda
@@ -357,21 +307,18 @@ if __name__ == "__main__":
         exit()
 
     noticia = buscar_noticia(tema_escolhido)
-
     if not noticia:
         exit()
 
     gemini = GeminiEngine()
     imagem_engine = ImageEngine()
 
-    texto_ia = gemini.gerar_analise_jornalistica(
-        noticia["titulo"],
-        noticia["texto"],
-        tema_escolhido
-    )
-
-    imagem_final = imagem_engine.obter_imagem(noticia, tema_escolhido)
-
+    texto_ia = gemini.gerar_analise_jornalistica(noticia["titulo"], noticia["texto"], tema_escolhido)
+    
+    # Nova lógica de busca visual inteligente
+    query_visual = gemini.gerar_query_visual(noticia["titulo"], noticia["texto"])
+    imagem_final = imagem_engine.obter_imagem(noticia, tema_escolhido, query_ia=query_visual)
+    
     tags = gerar_tags_seo(noticia["titulo"], texto_ia)
 
     dados = {
@@ -399,4 +346,4 @@ if __name__ == "__main__":
     registrar_postagem(data_hoje, horario_escolhido)
     registrar_link_publicado(noticia["link"])
 
-    print("Post publicado com sucesso.")
+    print(f"Post publicado com sucesso: {noticia['titulo']}")
