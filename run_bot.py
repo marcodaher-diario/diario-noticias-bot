@@ -205,7 +205,7 @@ def buscar_noticia(tipo):
             titulo = entry.get("title", "")
             resumo = entry.get("summary", "")
             link = entry.get("link", "")
-            imagem = entry.get("media_content", [{}])[0].get("url", "")
+             = entry.get("media_content", [{}])[0].get("url", "")
 
             if not titulo or not link:
                 continue
@@ -245,7 +245,7 @@ def buscar_noticia(tipo):
                 "titulo": titulo,
                 "texto": resumo,
                 "link": link,
-                "imagem": imagem,
+                "": ,
                 "score": score
             })
 
@@ -258,7 +258,7 @@ def buscar_noticia(tipo):
         "titulo": noticia_escolhida["titulo"],
         "texto": noticia_escolhida["texto"],
         "link": noticia_escolhida["link"],
-        "imagem": noticia_escolhida["imagem"]
+        "": noticia_escolhida[""]
     }
 
 
@@ -288,7 +288,8 @@ def executar_modo_teste(tema_forcado=None, publicar=False):
         tema_forcado
     )
 
-    imagem_final = imagem_engine.obter_imagem(noticia, tema_forcado)
+    query_visual = gemini.gerar_query_visual(noticia["titulo"], noticia["texto"])
+    imagem_final = imagem_engine.obter_imagem(noticia, tema_escolhido, query_ia=query_visual)
 
     tags = gerar_tags_seo(noticia["titulo"], texto_ia)
 
