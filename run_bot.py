@@ -109,6 +109,12 @@ def registrar_link_publicado(link):
     with open(ARQUIVO_POSTS_PUBLICADOS, "w", encoding="utf-8") as f:
         f.writelines(linhas)
 
+def link_ja_publicado(link):
+    if not os.path.exists(ARQUIVO_POSTS_PUBLICADOS):
+        return False
+    with open(ARQUIVO_POSTS_PUBLICADOS, "r", encoding="utf-8") as f:
+        return any(link.strip() == l.strip() for l in f)
+
 
 # ==========================================================
 # CONTROLE DE IMAGENS (ADICIONAL - SE VOCÊ USAR)
