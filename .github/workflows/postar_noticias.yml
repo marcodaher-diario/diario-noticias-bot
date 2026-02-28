@@ -53,9 +53,10 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
           UNSPLASH_API_KEY: ${{ secrets.UNSPLASH_API_KEY }}
-          TEST_MODE: ${{ github.event.inputs.test_mode }}
-          TEST_TEMA: ${{ github.event.inputs.test_tema }}
-          TEST_PUBLICAR: ${{ github.event.inputs.test_publicar }}
+          # Adicione o operador "||" ou garanta o padrão para evitar strings vazias
+          TEST_MODE: ${{ github.event.inputs.test_mode || 'false' }}
+          TEST_TEMA: ${{ github.event.inputs.test_tema || 'policial' }}
+          TEST_PUBLICAR: ${{ github.event.inputs.test_publicar || 'false' }}
         run: python run_bot.py
 
       - name: Commitar arquivos de controle automaticamente
