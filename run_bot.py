@@ -55,49 +55,66 @@ def dentro_da_janela(min_atual, min_agenda):
 
 
 # ==========================================================
-# CONTROLE DE PUBLICAÇÃO
+# CONTROLE DE PUBLICAÇÃO (COM RODÍZIO DE 15 LINHAS)
 # ==========================================================
-
-def ja_postou(data_str, horario_agenda):
-    if not os.path.exists(ARQUIVO_CONTROLE_DIARIO):
-        return False
-
-    with open(ARQUIVO_CONTROLE_DIARIO, "r", encoding="utf-8") as f:
-        for linha in f:
-            linha = linha.strip()
-            if not linha or "|" not in linha: continue # Pula linhas vazias
-            partes = linha.split("|")
-            if len(partes) == 2:
-                data, hora = partes
-                if data == data_str and hora == horario_agenda:
-                    return True
-    return False
-
 
 def registrar_postagem(data_str, horario_agenda):
-    with open(ARQUIVO_CONTROLE_DIARIO, "a", encoding="utf-8") as f:
-        f.write(f"{data_str}|{horario_agenda}\n")
+    linhas = []
+    if os.path.exists(ARQUIVO_CONTROLE_DIARIO):
+        with open(ARQUIVO_CONTROLE_DIARIO, "r", encoding="utf-8") as f:
+            linhas = f.readlines()
+
+    # Adiciona o novo registro e mantém apenas os últimos 15
+    nova_linha = f"{data_str}|{horario_agenda}\n"
+    if nova_linha not in linhas:
+        linhas.append(nova_linha)
+    
+    linhas = linhas[-15:] # Mantém o arquivo leve (aprox. 5 dias de histórico)
+
+    with open(ARQUIVO_CONTROLE_DIARIO, "w", encoding="utf-8") as f:
+        f.writelines(linhas)
 
 
 # ==========================================================
-# CONTROLE DE LINK JÁ PUBLICADO
+# CONTROLE DE LINKS (COM RODÍZIO DE 100 LINHAS)
 # ==========================================================
-
-def link_ja_publicado(link):
-    if not os.path.exists(ARQUIVO_POSTS_PUBLICADOS):
-        return False
-
-    with open(ARQUIVO_POSTS_PUBLICADOS, "r", encoding="utf-8") as f:
-        for linha in f:
-            if linha.strip() == link:
-                return True
-    return False
-
 
 def registrar_link_publicado(link):
-    with open(ARQUIVO_POSTS_PUBLICADOS, "a", encoding="utf-8") as f:
-        f.write(f"{link}\n")
+    linhas = []
+    if os.path.exists(ARQUIVO_POSTS_PUBLICADOS):
+        with open(ARQUIVO_POSTS_PUBLICADOS, "r", encoding="utf-8") as f:
+            linhas = f.readlines()
 
+    # Adiciona o link e mantém os últimos 100 para evitar repetições recentes
+    nova_linha = f"{link}\n"
+    if nova_linha not in linhas:
+        linhas.append(nova_linha)
+    
+    linhas = linhas[-100:] 
+
+    with open(ARQUIVO_POSTS_PUBLICADOS, "w", encoding="utf-8") as f:
+        f.writelines(linhas)
+
+
+# ==========================================================
+# CONTROLE DE IMAGENS (ADICIONAL - SE VOCÊ USAR)
+# ==========================================================
+
+def registrar_imagem_usada(url_imagem):
+    ARQUIVO_IMAGENS = "imagens_usadas.txt"
+    linhas = []
+    if os.path.exists(ARQUIVO_IMAGENS):
+        with open(ARQUIVO_IMAGENS, "r", encoding="utf-8") as f:
+            linhas = f.readlines()
+
+    nova_linha = f"{url_imagem}\n"
+    if nova_linha not in linhas:
+        linhas.append(nova_linha)
+    
+    linhas = linhas[-50:] # Mantém as últimas 50 URLs para variar o visual
+
+    with open(ARQUIVO_IMAGENS, "w", encoding="utf-8") as f:
+        f.writelines(linhas)
 
 # ==========================================================
 # VERIFICAR TEMA
