@@ -64,7 +64,9 @@ def ja_postou(data_str, horario_agenda):
 
     with open(ARQUIVO_CONTROLE_DIARIO, "r", encoding="utf-8") as f:
         for linha in f:
-            partes = linha.strip().split("|")
+            linha = linha.strip()
+            if not linha or "|" not in linha: continue # Pula linhas vazias
+            partes = linha.split("|")
             if len(partes) == 2:
                 data, hora = partes
                 if data == data_str and hora == horario_agenda:
