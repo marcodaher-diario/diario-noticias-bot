@@ -58,6 +58,20 @@ def dentro_da_janela(min_atual, min_agenda):
 # CONTROLE DE PUBLICAÇÃO (COM RODÍZIO DE 15 LINHAS)
 # ==========================================================
 
+def ja_postou(data_str, horario_agenda):
+    if not os.path.exists(ARQUIVO_CONTROLE_DIARIO):
+        return False
+    with open(ARQUIVO_CONTROLE_DIARIO, "r", encoding="utf-8") as f:
+        for linha in f:
+            linha = linha.strip()
+            if not linha or "|" not in linha: continue
+            partes = linha.split("|")
+            if len(partes) == 2:
+                data, hora = partes
+                if data == data_str and hora == horario_agenda:
+                    return True
+    return False
+
 def registrar_postagem(data_str, horario_agenda):
     linhas = []
     if os.path.exists(ARQUIVO_CONTROLE_DIARIO):
