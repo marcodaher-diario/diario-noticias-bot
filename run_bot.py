@@ -148,15 +148,41 @@ def gerar_tags_seo(titulo, texto):
 
 
 # ==========================================================
-# BUSCAR NOTÍCIA COM RANKING EDITORIAL
+# BUSCAR NOTÍCIA COM RANKING EDITORIAL (ESTRATÉGICO)
 # ==========================================================
 
 def buscar_noticia(tipo):
 
     pesos_por_tema = {
-        "policial": {"homicídio": 12, "prisão": 10, "operação": 9, "flagrante": 9, "crime": 8, "suspeito": 7},
-        "politica": {"stf": 12, "supremo": 12, "congresso": 10, "senado": 9, "cpi": 9, "presidente": 8},
-        "economia": {"inflação": 12, "dólar": 10, "pib": 9, "selic": 9, "juros": 8, "mercado": 7}
+        "policial": {
+            # Crimes e Operações
+            "homicídio": 12, "prisão": 10, "operação": 9, "flagrante": 9, "crime": 8,
+            # Segurança e Investigação
+            "pf": 11, "polícia": 10, "suspeito": 7, "investigação": 7, "apreensão": 8,
+            # Eventos de Impacto
+            "ataque": 12, "explosão": 12, "tiroteio": 10, "facção": 8, "tráfico": 8,
+            "morte": 9, "vítima": 8, "assalto": 7, "sequestro": 9
+        },
+
+        "politica": {
+            # Instituições de Poder
+            "stf": 12, "supremo": 12, "congresso": 10, "senado": 9, "planalto": 10,
+            # Personagens e Processos
+            "presidente": 10, "ministro": 9, "eleição": 8, "votação": 9, "câmara": 8,
+            # Geopolítica e Crises (Onde entra a "Guerra")
+            "guerra": 15, "míssil": 15, "conflito": 12, "itamaraty": 10, "diplomacia": 9,
+            "tensão": 8, "ataque": 11, "israel": 10, "irã": 10, "rússia": 10, "uae": 9
+        },
+
+        "economia": {
+            # Indicadores de Bolso
+            "inflação": 12, "dólar": 12, "pib": 9, "selic": 10, "juros": 9,
+            # Mercado e Grandes Empresas
+            "mercado": 8, "bolsa": 9, "ibovespa": 8, "petrobras": 10, "vale": 8,
+            # Impacto no Consumo
+            "preço": 9, "combustível": 10, "gasolina": 9, "tarifas": 8, "imposto": 9,
+            "petróleo": 11, "reforma tributária": 10, "arcabouço": 9
+        }
     }
 
     palavras_peso = pesos_por_tema.get(tipo, {})
@@ -170,7 +196,11 @@ def buscar_noticia(tipo):
             titulo = entry.get("title", "")
             resumo = entry.get("summary", "")
             link = entry.get("link", "")
-            imagem = entry.get("media_content", [{}])[0].get("url", "") # Corrigido aqui
+            
+            # Tenta capturar imagem do feed com segurança
+            imagem = ""
+            if "media_content" in entry and len(entry.media_content) > 0:
+                imagem = entry.media_content[0].get("url", "")
 
             if not titulo or not link:
                 continue
@@ -187,7 +217,8 @@ def buscar_noticia(tipo):
                     data_publicacao = parsedate_to_datetime(entry.published)
                     if data_publicacao.tzinfo is not None:
                         data_publicacao = data_publicacao.astimezone(tz=None).replace(tzinfo=None)
-                except: pass
+                except:
+                    pass
 
             if data_publicacao:
                 if (agora - data_publicacao).days > 1:
@@ -195,10 +226,13 @@ def buscar_noticia(tipo):
 
             conteudo = f"{titulo} {resumo}".lower()
             score = 0
+
+            # Pontuação por Palavras-Chave
             for palavra, peso in palavras_peso.items():
                 if palavra in conteudo:
                     score += peso
 
+            # Bônus de Recência (Prioriza o que saiu agora)
             if data_publicacao:
                 minutos_passados = (agora - data_publicacao).total_seconds() / 60
                 bonus_recencia = max(0, 1000 - minutos_passados) / 1000
@@ -208,20 +242,21 @@ def buscar_noticia(tipo):
                 "titulo": titulo,
                 "texto": resumo,
                 "link": link,
-                "imagem": imagem, # Corrigido aqui
+                "imagem": imagem,
                 "score": score
             })
 
     if not noticias_validas:
         return None
 
+    # Seleciona a notícia com a maior pontuação editorial
     noticia_escolhida = max(noticias_validas, key=lambda x: x["score"])
 
     return {
         "titulo": noticia_escolhida["titulo"],
         "texto": noticia_escolhida["texto"],
         "link": noticia_escolhida["link"],
-        "imagem": noticia_escolhida["imagem"] # Corrigido aqui
+        "imagem": noticia_escolhida["imagem"]
     }
 
 
