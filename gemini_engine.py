@@ -54,10 +54,37 @@ Importante:
 - Entregue apenas o texto final já estruturado.
 """
 
-
         response = self.client.models.generate_content(
-            model="models/gemini-2.5-flash",
+            model="models/gemini-2.0-flash",
             contents=prompt
         )
 
         return response.text.strip()
+
+    def gerar_query_visual(self, titulo, resumo):
+        """
+        Gera uma query de busca em inglês otimizada para Pexels/Unsplash 
+        com base no contexto da notícia.
+        """
+        prompt = f"""
+Com base no título e resumo da notícia abaixo, gere APENAS uma sequência de 3 a 4 palavras-chave 
+em INGLÊS que descrevam uma imagem fotográfica ideal para ilustrar esta matéria em um blog de notícias.
+
+Diretrizes:
+- Use apenas substantivos e adjetivos visuais.
+- Foque no cenário, objetos ou clima da notícia (ex: "police lights night", "stock market glow", "city explosion smoke").
+- Não use verbos ou frases completas.
+- Retorne APENAS as palavras em inglês, sem pontuação extra.
+
+Notícia: {titulo}
+Resumo: {resumo}
+"""
+
+        try:
+            response = self.client.models.generate_content(
+                model="models/gemini-2.0-flash",
+                contents=prompt
+            )
+            return response.text.strip().replace('"', '').replace("'", "")
+        except:
+            return None
