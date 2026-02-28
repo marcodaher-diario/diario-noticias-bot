@@ -100,19 +100,21 @@ class ImageEngine:
             "per_page": 10
         }
 
-        r = requests.get(url, headers=headers, params=params)
+        try:
+            r = requests.get(url, headers=headers, params=params)
+            if r.status_code != 200:
+                return None
 
-        if r.status_code != 200:
-            return None
+            data = r.json()
 
-        data = r.json()
+            for foto in data.get("photos", []):
+                img_url = foto["src"]["large"]
 
-        for foto in data.get("photos", []):
-            img_url = foto["src"]["large"]
-
-            if not self._imagem_usada_recentemente(tema, img_url):
-                self._registrar_imagem(tema, img_url)
-                return img_url
+                if not self._imagem_usada_recentemente(tema, img_url):
+                    self._registrar_imagem(tema, img_url)
+                    return img_url
+        except:
+            pass
 
         return None
 
@@ -132,19 +134,21 @@ class ImageEngine:
             "client_id": self.unsplash_key
         }
 
-        r = requests.get(url, params=params)
+        try:
+            r = requests.get(url, params=params)
+            if r.status_code != 200:
+                return None
 
-        if r.status_code != 200:
-            return None
+            data = r.json()
 
-        data = r.json()
+            for foto in data.get("results", []):
+                img_url = foto["urls"]["regular"]
 
-        for foto in data.get("results", []):
-            img_url = foto["urls"]["regular"]
-
-            if not self._imagem_usada_recentemente(tema, img_url):
-                self._registrar_imagem(tema, img_url)
-                return img_url
+                if not self._imagem_usada_recentemente(tema, img_url):
+                    self._registrar_imagem(tema, img_url)
+                    return img_url
+        except:
+            pass
 
         return None
 
@@ -206,12 +210,12 @@ class ImageEngine:
 
 
     # ==========================================================
-    # FUNÇÃO PRINCIPAL
+    # FUNÇÃO PRINCIPAL (ATUALIZADA)
     # ==========================================================
 
-    def obter_imagem(self, noticia, tema):
+    def obter_imagem(self, noticia, tema, query_ia=None):
 
-        # 1️⃣ RSS
+        # 1️⃣ Tenta Imagem do RSS primeiro (Sempre preferível por ser a real da notícia)
         rss_img = noticia.get("imagem", "")
 
         if rss_img and self._rss_valida(rss_img):
@@ -219,21 +223,31 @@ class ImageEngine:
                 self._registrar_imagem(tema, rss_img)
                 return rss_img
 
-        # Query refinada Brasil
-        titulo = noticia.get("titulo", "")
-        query = f"{tema} Brasil {titulo}"
+        # 2️⃣ Define a Query de Busca
+        # Se a IA enviou uma query traduzida (ex: "Dubai skyline night"), usamos ela.
+        # Caso contrário, usamos a lógica antiga traduzida para inglês para evitar erros.
+        if query_ia:
+            query = query_ia
+        else:
+            # Fallback seguro em inglês caso a IA falhe
+            fallbacks = {
+                "policial": "police patrol car lights",
+                "politica": "brazil congress building",
+                "economia": "financial stock market charts"
+            }
+            query = fallbacks.get(tema, "news reporter")
 
-        # 2️⃣ Pexels
+        # 3️⃣ Busca Pexels
         if self.pexels_key:
             img = self._buscar_pexels(query, tema)
             if img:
                 return img
 
-        # 3️⃣ Unsplash
+        # 4️⃣ Busca Unsplash
         if self.unsplash_key:
             img = self._buscar_unsplash(query, tema)
             if img:
                 return img
 
-        # 4️⃣ Institucional
+        # 5️⃣ Fallback final: Imagem Institucional local
         return self._buscar_institucional(tema)
