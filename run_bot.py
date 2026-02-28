@@ -301,7 +301,7 @@ def executar_modo_teste(tema_forcado=None, publicar=False):
 
     # Busca visual inteligente no Modo Teste também
     query_visual = gemini.gerar_query_visual(noticia["titulo"], noticia["texto"])
-    imagem_final = imagem_engine.obter_imagem(noticia, tema_escolhido, query_ia=query_visual)
+    imagem_final = imagem_engine.obter_imagem(noticia, tema_forcado, query_ia=query_visual)
 
     tags = gerar_tags_seo(noticia["titulo"], texto_ia)
 
@@ -371,7 +371,7 @@ if __name__ == "__main__":
     
     # Nova lógica de busca visual inteligente
     query_visual = gemini.gerar_query_visual(noticia["titulo"], noticia["texto"])
-    imagem_final = imagem_engine.obter_imagem(noticia, tema_forcado, query_ia=query_visual)
+    imagem_final = imagem_engine.obter_imagem(noticia, tema_escolhido, query_ia=query_visual)
     
     tags = gerar_tags_seo(noticia["titulo"], texto_ia)
 
