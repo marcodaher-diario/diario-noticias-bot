@@ -2,9 +2,9 @@ name: Bot Diario de Noticias
 
 on:
   schedule:
-    - cron: '30 12 * * *'  # 09:30 Brasil
-    - cron: '30 16 * * *'  # 13:30 Brasil
-    - cron: '00 22 * * *'  # 19:00 Brasil
+    - cron: '0 12 * * *'  # 09:00 Brasil
+    - cron: '0 16 * * *'  # 13:00 Brasil
+    - cron: '0 22 * * *'  # 19:00 Brasil
 
   workflow_dispatch:
     inputs:
