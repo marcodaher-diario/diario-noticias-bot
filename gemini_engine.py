@@ -81,7 +81,7 @@ Resumo: {resumo}
 
         try:
             response = self.client.models.generate_content(
-                model="models/gemini-2.0-flash",
+                model="models/Gemini 2.5 Pro",
                 contents=prompt
             )
             return response.text.strip().replace('"', '').replace("'", "")
