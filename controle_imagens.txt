@@ -3,3 +3,4 @@
 2026-02-28|policial|https://s2-g1.glbimg.com/-6n_cO6ZoNU_TDM6xRrYPYAbOYA=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/M/Z/CyNt2aQ5AImDH3VfMSBw/arte-eca.jpg
 2026-02-28|politica|https://s2-g1.glbimg.com/ohMa1A1zz3MYnaylIo-_HzkFNRg=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2025/0/q/1dWuAXTwu6VxwuNwoY0Q/fta20250929129.jpg
 2026-02-28|economia|https://images.pexels.com/photos/19901858/pexels-photo-19901858.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
+2026-03-01|politica|https://s2-g1.glbimg.com/zRnZqvG_bWhhxwGLiPTP3DZyGRw=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2025/G/e/WNfrenQcSLEffUsRlRBQ/fotojet-2025-06-13t091935.826.jpg
