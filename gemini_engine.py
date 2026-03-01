@@ -54,7 +54,7 @@ Importante:
 """
 
         response = self.client.models.generate_content(
-            model="models/Gemini 2.5 Flash",
+            model="models/gemini-3-flash-preview",
             contents=prompt
         )
 
@@ -81,7 +81,7 @@ Resumo: {resumo}
 
         try:
             response = self.client.models.generate_content(
-                model="models/Gemini 2.5 Flash",
+                model="models/gemini-3-flash-preview",
                 contents=prompt
             )
             return response.text.strip().replace('"', '').replace("'", "")
