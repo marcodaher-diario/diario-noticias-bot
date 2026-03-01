@@ -21,8 +21,7 @@ Informações base:
 
 Título da notícia: {titulo}
 
-Resumo da notícia:
-{resumo}
+Resumo da notícia: {resumo}
 
 Categoria: {categoria}
 
@@ -55,7 +54,7 @@ Importante:
 """
 
         response = self.client.models.generate_content(
-            model="models/gemini-2.0-flash",
+            model="models/Gemini 2.5 Pro",
             contents=prompt
         )
 
