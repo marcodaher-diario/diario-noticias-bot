@@ -205,7 +205,7 @@ def buscar_noticia(tipo):
             # Instituições de Poder
             "stf": 12, "supremo": 12, "congresso": 10, "senado": 9, "planalto": 10,
             # Personagens e Processos
-            "presidente": 10, "ministro": 9, "eleição": 8, "votação": 9, "câmara": 8,
+            "presidente": 9, "ministro": 8, "eleição": 8, "votação": 7, "câmara": 5, "CPMI": 10, "lulinha": 9,
             # Geopolítica e Crises (Onde entra a "Guerra")
             "guerra": 15, "míssil": 15, "conflito": 12, "itamaraty": 10, "diplomacia": 9,
             "tensão": 8, "ataque": 11, "israel": 10, "irã": 10, "rússia": 10, "uae": 9
