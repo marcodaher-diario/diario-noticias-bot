@@ -147,3 +147,4 @@ BLOCO_FIXO_FINAL = """
 </div>
 <hr style="text-align: justify;" />
 <h2 style="text-align: justify;"><br /></h2>
+"""
