@@ -12,3 +12,4 @@
 2026-03-02|economia|https://images.pexels.com/photos/14377363/pexels-photo-14377363.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
 2026-03-02|politica|https://s2-g1.glbimg.com/UoYFz_rkRR-UL8KmNeNV30FlhSk=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2025/R/S/IU397hQRms8ce308aS4g/g4lqth7wgaanm-c.jpg
 2026-03-02|politica|https://s2-g1.glbimg.com/wD8hHqVcqExRXPjmwz-HHVtSAuU=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2025/B/M/1ARsNoRxyx7OBBBpJ2bQ/ato20250409037.jpg
+2026-03-02|politica|https://images.pexels.com/photos/13344830/pexels-photo-13344830.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
