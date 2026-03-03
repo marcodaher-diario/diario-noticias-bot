@@ -53,10 +53,22 @@ Importante:
 - Entregue apenas o texto final já estruturado.
 """
 
-        response = self.client.models.generate_content(
-            model="gemini-3-flash-preview",
-            contents=prompt
-        )
+        try:
+            response = self.client.models.generate_content(
+                model="gemini-3-flash-preview",
+                contents=prompt
+            )
+        except Exception:
+            try:
+                response = self.client.models.generate_content(
+                    model="gemini-1.5-pro",
+                    contents=prompt
+                )
+            except Exception:
+                response = self.client.models.generate_content(
+                    model="gemini-1.5-flash",
+                    contents=prompt
+                )
 
         return response.text.strip()
 
@@ -85,5 +97,19 @@ Resumo: {resumo}
                 contents=prompt
             )
             return response.text.strip().replace('"', '').replace("'", "")
-        except:
-            return None
+        except Exception:
+            try:
+                response = self.client.models.generate_content(
+                    model="gemini-1.5-pro",
+                    contents=prompt
+                )
+                return response.text.strip().replace('"', '').replace("'", "")
+            except Exception:
+                try:
+                    response = self.client.models.generate_content(
+                        model="gemini-1.5-flash",
+                        contents=prompt
+                    )
+                    return response.text.strip().replace('"', '').replace("'", "")
+                except Exception:
+                    return None
