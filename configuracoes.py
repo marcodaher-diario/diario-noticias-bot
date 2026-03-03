@@ -56,9 +56,9 @@ PALAVRAS_ECONOMIA = [
 # ==========================================
 
 BLOCO_FIXO_FINAL = """
-<div class="footer-marco-daher" style="background-color: #e1f5fe; border-radius: 15px; border: 1px solid rgb(179, 229, 252); color: #073763 !important; font-family: Arial, Helvetica, sans-serif !important; font-size: 14px !important; font-weight: normal !important; line-height: 1.4 !important; margin-top: 10px; padding: 25px; text-align: center;">
+<div class="footer-marco-daher" style="background-color: #e7d6c4; border-radius: 15px; border: 1px solid rgb(179, 229, 252); color: #725e48 !important; font-family: Arial, Helvetica, sans-serif !important; font-size: 14px !important; font-weight: normal !important; line-height: 1.4 !important; margin-top: 10px; padding: 25px; text-align: center;">
   
-  <p style="font-size: x-small !important; font-weight: bold !important; font-family: Arial, Helvetica, sans-serif !important; color: #073763 !important; margin-top: 0px; text-align: right;">
+  <p style="font-size: x-small !important; font-weight: bold !important; font-family: Arial, Helvetica, sans-serif !important; color: #725e48 !important; margin-top: 0px; text-align: right;">
     <i>Por: Marco Daher<br />Todos os Direitos Reservados<br />©MarcoDaher2026</i>
   </p>
 
@@ -69,13 +69,13 @@ BLOCO_FIXO_FINAL = """
   </div>
 
   <div style="margin-bottom: 20px; text-align: center;">
-    <p style="font-weight: bold !important; font-size: 15px !important; font-family: Arial, Helvetica, sans-serif !important; color: #073763 !important; margin-bottom: 10px; text-align: center;">🚀 Gostou deste conteúdo? Não guarde só para você!</p>
+    <p style="font-weight: bold !important; font-size: 15px !important; font-family: Arial, Helvetica, sans-serif !important; color: #725e48 !important; margin-bottom: 10px; text-align: center;">🚀 Gostou deste conteúdo? Não guarde só para você!</p>
     <a href="https://api.whatsapp.com/send?text=Confira este artigo incrível no blog do Marco Daher!" style="background-color: #25d366; border-radius: 5px; color: white !important; display: inline-block; font-weight: bold !important; font-size: 14px !important; font-family: Arial, Helvetica, sans-serif !important; padding: 10px 20px; text-decoration: none;" target="_blank">
         Compartilhar no WhatsApp
     </a>
   </div>
 
-  <p style="font-size: 16px !important; font-weight: bold !important; font-family: Arial, Helvetica, sans-serif !important; color: #073763 !important; margin-bottom: 20px; text-align: center;">
+  <p style="font-size: 16px !important; font-weight: bold !important; font-family: Arial, Helvetica, sans-serif !important; color: #725e48 !important; margin-bottom: 20px; text-align: center;">
     O conhecimento é o combustível para o Sucesso. Não pesa e não ocupa espaço.
   </p>
 
@@ -136,7 +136,7 @@ BLOCO_FIXO_FINAL = """
 
   <hr style="border-top: 1px solid rgba(7, 55, 99, 0.133); margin: 20px 0px;" />
 
-  <p style="font-size: 14px !important; font-weight: bold !important; font-family: Arial, Helvetica, sans-serif !important; color: #073763 !important; margin-bottom: 10px;">
+  <p style="font-size: 14px !important; font-weight: bold !important; font-family: Arial, Helvetica, sans-serif !important; color: #725e48 !important; margin-bottom: 10px;">
     Caso queira contribuir com o meu Trabalho, use a CHAVE PIX abaixo:
   </p>
 
