@@ -23,33 +23,29 @@ RSS_FEEDS = [
 ]
 
 # ==========================================
-# TEMAS PARA POSTAGEM
+# TEMAS PARA POSTAGEM (SISTEMA DE PESOS)
 # ==========================================
 
-PALAVRAS_POLICIAL = [
-    "polícia", "crime", "prisão", "assalto", "homicídio", "tráfico", "investigação", 
-    "corrupção", "suspeito", "acusado", "operação", "flagrante", "violência", "mandado", 
-    "força-tarefa", "custódia", "preventiva", "busca", "inquérito", "sentença", "quadrilha", 
-    "lavagem", "facção", "sigilosa", "confronto", "latrocínio", "feminicídio", "cárcere", 
-    "arsenal", "golpe", "fraude", "perícia", "cibernético", "plantão", "foragido", 
-    "intervenção", "ocorrência"
-]
-
-PALAVRAS_POLITICA = [
-    "CPI", "CPMI", "política", "governo", "presidente", "congresso", "senado", "stf", "eleição", "ministro", 
-    "deputado", "senador", "planalto", "judiciário", "Congresso", "Planalto", "Senado", "Oposição", 
-    "Votação", "Plenário", "Constituição", "Decreto", "Reforma", "Parlamentar", "Inquérito", "Eitoral", 
-    "Supremo", "STF", "Impeachment", "Cassação", "Orçamento", "Transparência", "Diplomacia", 
-    "Articulação", "Coligação", "Mandato", "Legislação", "Democracia", "Governabilidade"
-]
-
-PALAVRAS_ECONOMIA = [
-    "economia", "pib", "dólar", "inflação", "selic", "mercado", "banco", "investimento", 
-    "financeiro", "bolsa", "consumo", "ibovespa", "cotação", "ipca", "juros", "recessão", 
-    "desemprego", "tributária", "impostos", "orçamento", "déficit", "superávit", "fiscal", 
-    "monetária", "crédito", "agronegócio", "exportação", "investimentos", "criptomoedas", 
-    "varejo", "combustíveis"
-]
+PESOS_POR_TEMA = {
+    "policial": {
+        "chacina": 12, "homicídio": 12, "assassinato": 11, "latrocínio": 11,
+        "operação": 10, "prisão": 10, "preso": 9, "fuzil": 10, "tráfico": 9,
+        "investigação": 8, "mandado": 8, "flagrante": 9, "confronto": 8,
+        "crime": 5, "suspeito": 5, "delegacia": 4, "ocorrência": 4, "polícia": 5
+    },
+    "politica": {
+        "stf": 12, "supremo": 12, "impeachment": 12, "planalto": 10, 
+        "congresso": 10, "senado": 9, "câmara": 9, "ministro": 10,
+        "votação": 8, "reforma": 9, "partido": 7, "eleição": 10,
+        "governo": 6, "oposição": 6, "política": 5, "base": 4, "cpi": 11
+    },
+    "economia": {
+        "inflação": 12, "selic": 12, "juros": 10, "dólar": 11, 
+        "pib": 10, "recessão": 12, "bolsa": 9, "ibovespa": 9,
+        "ipca": 11, "deficit": 10, "mercado": 7, "investimento": 7,
+        "economia": 5, "banco": 6, "consumo": 4, "varejo": 4
+    }
+}
 
 # ==========================================
 # BLOCO FIXO FINAL -  ASSINATURA
