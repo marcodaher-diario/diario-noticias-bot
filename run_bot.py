@@ -11,9 +11,7 @@ from email.utils import parsedate_to_datetime
 from configuracoes import (
     BLOG_ID,
     RSS_FEEDS,
-    PALAVRAS_POLICIAL,
-    PALAVRAS_POLITICA,
-    PALAVRAS_ECONOMIA,
+    PESOS_POR_TEMA,
     BLOCO_FIXO_FINAL
 )
 
@@ -155,20 +153,28 @@ def registrar_imagem_usada(url_imagem):
 
 
 # ==========================================================
-# VERIFICAR TEMA
+# VERIFICAR TEMA (ATUALIZADO COM SISTEMA DE PESOS)
 # ==========================================================
 
 def verificar_assunto(titulo, texto):
     conteudo = f"{titulo} {texto}".lower()
+    
+    melhor_tema = "geral"
+    maior_score = 0
 
-    if any(p in conteudo for p in PALAVRAS_POLICIAL):
-        return "policial"
+    for tema, palavras_chave in PESOS_POR_TEMA.items():
+        score_atual = 0
+        for palavra, peso in palavras_chave.items():
+            if palavra in conteudo:
+                score_atual += peso
+        
+        if score_atual > maior_score:
+            maior_score = score_atual
+            melhor_tema = tema
 
-    if any(p in conteudo for p in PALAVRAS_POLITICA):
-        return "politica"
-
-    if any(p in conteudo for p in PALAVRAS_ECONOMIA):
-        return "economia"
+    # Exige um mínimo de 8 pontos para classificar no tema, senão cai em geral
+    if maior_score >= 8:
+        return melhor_tema
 
     return "geral"
 
@@ -212,53 +218,13 @@ def gerar_tags_seo(titulo, texto):
 
 
 # ==========================================================
-# BUSCAR NOTÍCIA
+# BUSCAR NOTÍCIA (ATUALIZADO PARA USAR CONFIGURACOES.PY)
 # ==========================================================
 
 def buscar_noticia(tipo):
 
-    pesos_por_tema = {
-    "policial": {
-        # Impacto Imediato (Pesos 10-12)
-        "chacina": 12, "homicídio": 12, "assassinato": 11, "latrocínio": 11,
-        "operação": 10, "prisão": 10, "preso": 9, "fuzil": 10,
-        
-        # Investigação e Meio de Campo (Pesos 6-8)
-        "investigação": 8, "mandado": 8, "flagrante": 9, "tráfico": 8, 
-        "apreensão": 7, "disparo": 7, "confronto": 8, "milícia": 8,
-        
-        # Termos Genéricos (Pesos 3-5)
-        "crime": 5, "ocorrência": 4, "suspeito": 5, "viatura": 3, "delegacia": 4
-    },
-    
-    "politica": {
-        # Institucional Alta Relevância (Pesos 10-12)
-        "stf": 12, "supremo": 12, "impeachment": 12, "planalto": 10, 
-        "presidência": 10, "ministro": 10, "eleição": 10,
-        
-        # Legislativo e Articulação (Pesos 7-9)
-        "congresso": 10, "senado": 9, "câmara": 9, "projeto de lei": 8, 
-        "votação": 8, "reforma": 9, "partido": 7, "relator": 7,
-        
-        # Termos de Contexto (Pesos 3-6)
-        "política": 5, "governo": 6, "oposição": 6, "aliados": 5, "base": 4
-    },
-    
-    "economia": {
-        # Indicadores Críticos (Pesos 10-12)
-        "inflação": 12, "ipca": 11, "selic": 12, "juros": 10, 
-        "dólar": 11, "pib": 10, "deficit": 10, "recessão": 12,
-        
-        # Mercado e Finanças (Pesos 7-9)
-        "bolsa": 9, "ibovespa": 9, "ações": 8, "mercado": 7, 
-        "investimento": 7, "copom": 10, "dividendos": 7,
-        
-        # Termos Gerais (Pesos 3-6)
-        "economia": 5, "moeda": 5, "banco": 6, "comércio": 4, "consumo": 4
-    }
-}
-
-    palavras_peso = pesos_por_tema.get(tipo, {})
+    # Agora consome diretamente do que foi importado do configuracoes.py
+    palavras_peso = PESOS_POR_TEMA.get(tipo, {})
 
     noticias_validas = []
 
