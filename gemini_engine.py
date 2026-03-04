@@ -2,6 +2,7 @@
 
 import os
 from google import genai
+from configuracoes import MODELO_GEMINI
 
 
 class GeminiEngine:
@@ -9,6 +10,10 @@ class GeminiEngine:
     def __init__(self):
         api_key = os.getenv("GEMINI_API_KEY")
         self.client = genai.Client(api_key=api_key)
+
+    # ==========================================================
+    # GERAR TEMA DINÂMICO BASEADO NA CATEGORIA
+    # ==========================================================
 
     def gerar_analise_jornalistica(self, titulo, resumo, categoria):
 
@@ -53,24 +58,16 @@ Importante:
 - Entregue apenas o texto final já estruturado.
 """
 
-        try:
-            response = self.client.models.generate_content(
-                model="gemini-3-flash-preview",
-                contents=prompt
-            )
-        except Exception:
-            try:
-                response = self.client.models.generate_content(
-                    model="gemini-1.5-pro",
-                    contents=prompt
-                )
-            except Exception:
-                response = self.client.models.generate_content(
-                    model="gemini-1.5-flash",
-                    contents=prompt
-                )
+         response = self.client.models.generate_content(
+            model=MODELO_GEMINI,
+            contents=prompt
+        )
 
-        return response.text.strip()
+        return response.text.strip().replace('"', '')
+        
+    # ==========================================================
+    # GERAR ARTIGO COMPLETO
+    # ==========================================================
 
     def gerar_query_visual(self, titulo, resumo):
         """
@@ -91,25 +88,10 @@ Notícia: {titulo}
 Resumo: {resumo}
 """
 
-        try:
-            response = self.client.models.generate_content(
-                model="gemini-3-flash-preview",
-                contents=prompt
-            )
-            return response.text.strip().replace('"', '').replace("'", "")
-        except Exception:
-            try:
-                response = self.client.models.generate_content(
-                    model="gemini-1.5-pro",
-                    contents=prompt
-                )
-                return response.text.strip().replace('"', '').replace("'", "")
-            except Exception:
-                try:
-                    response = self.client.models.generate_content(
-                        model="gemini-1.5-flash",
-                        contents=prompt
-                    )
-                    return response.text.strip().replace('"', '').replace("'", "")
-                except Exception:
-                    return None
+        response = self.client.models.generate_content(
+            model=MODELO_GEMINI,
+            contents=prompt
+        )
+
+        return response.text.strip()
+       
