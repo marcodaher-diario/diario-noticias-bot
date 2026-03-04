@@ -20,3 +20,4 @@
 2026-03-04|politica|https://s2-g1.glbimg.com/_gulYyR8xlSOKVPIFD3B0CJ1oew=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/X/w/XQIuPpSnety6gIibWsuA/globo-canal-4-20260128-2000-frame-10716.jpeg
 2026-03-04|policial|https://s2-g1.glbimg.com/udX2lVnqdx4tovNdgfo9M7otjS8=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/w/J/YDTE46TqGNQylFALbBOA/material-apreendido.jpeg
 2026-03-04|economia|https://s2-g1.glbimg.com/Pu8q2I3AmWPlml4OQVNVOEm8ODA=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2025/i/s/ZC3RRqSGiYbHLwfgfCvA/ap25100227604373-1-.jpg
+2026-03-04|politica|https://images.pexels.com/photos/32008337/pexels-photo-32008337.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
