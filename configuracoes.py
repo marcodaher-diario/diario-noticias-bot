@@ -51,8 +51,6 @@ PESOS_POR_TEMA = {
 # CONFIGURAÇÃO DE CONTROLE
 # ==========================================
 
-ARQUIVO_CONTROLE_AGENDAMENTO = "controle_agendamentos.txt"
-ARQUIVO_CONTROLE_TEMAS = "controle_temas_usados.txt"
 ARQUIVO_CONTROLE_IMAGENS = "controle_imagens.txt"
 
 DIAS_BLOQUEIO_TEMA = 20
