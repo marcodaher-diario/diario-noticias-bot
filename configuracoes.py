@@ -48,6 +48,31 @@ PESOS_POR_TEMA = {
 }
 
 # ==========================================
+# CONFIGURAÇÃO DE CONTROLE
+# ==========================================
+
+ARQUIVO_CONTROLE_AGENDAMENTO = "controle_agendamentos.txt"
+ARQUIVO_CONTROLE_TEMAS = "controle_temas_usados.txt"
+ARQUIVO_CONTROLE_IMAGENS = "controle_imagens.txt"
+
+DIAS_BLOQUEIO_TEMA = 20
+DIAS_BLOQUEIO_IMAGEM = 30
+
+# ==========================================
+# CONFIGURAÇÃO GEMINI
+# ==========================================
+
+MODELO_GEMINI = "gemini-3-flash-preview"
+
+# Parâmetros de Redação
+MIN_PALAVRAS = 600
+MAX_PALAVRAS = 800
+
+# Parâmetros de Resiliência (Evitar erro 429 - Muitos Acessos)
+MAX_TENTATIVAS = 4          # Tenta 4 vezes antes de desistir do modelo atual
+TEMPO_ESPERA_SEGUNDOS = 30  # Espera 30 segundos entre cada tentativa
+
+# ==========================================
 # BLOCO FIXO FINAL -  ASSINATURA
 # ==========================================
 
