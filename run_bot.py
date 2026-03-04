@@ -218,10 +218,45 @@ def gerar_tags_seo(titulo, texto):
 def buscar_noticia(tipo):
 
     pesos_por_tema = {
-        "policial": {"homicídio":12,"prisão":10,"operação":9,"flagrante":9,"crime":8},
-        "politica": {"stf":12,"supremo":12,"congresso":10,"senado":9,"planalto":10},
-        "economia": {"inflação":12,"dólar":12,"pib":9,"selic":10,"juros":9}
+    "policial": {
+        # Impacto Imediato (Pesos 10-12)
+        "chacina": 12, "homicídio": 12, "assassinato": 11, "latrocínio": 11,
+        "operação": 10, "prisão": 10, "preso": 9, "fuzil": 10,
+        
+        # Investigação e Meio de Campo (Pesos 6-8)
+        "investigação": 8, "mandado": 8, "flagrante": 9, "tráfico": 8, 
+        "apreensão": 7, "disparo": 7, "confronto": 8, "milícia": 8,
+        
+        # Termos Genéricos (Pesos 3-5)
+        "crime": 5, "ocorrência": 4, "suspeito": 5, "viatura": 3, "delegacia": 4
+    },
+    
+    "politica": {
+        # Institucional Alta Relevância (Pesos 10-12)
+        "stf": 12, "supremo": 12, "impeachment": 12, "planalto": 10, 
+        "presidência": 10, "ministro": 10, "eleição": 10,
+        
+        # Legislativo e Articulação (Pesos 7-9)
+        "congresso": 10, "senado": 9, "câmara": 9, "projeto de lei": 8, 
+        "votação": 8, "reforma": 9, "partido": 7, "relator": 7,
+        
+        # Termos de Contexto (Pesos 3-6)
+        "política": 5, "governo": 6, "oposição": 6, "aliados": 5, "base": 4
+    },
+    
+    "economia": {
+        # Indicadores Críticos (Pesos 10-12)
+        "inflação": 12, "ipca": 11, "selic": 12, "juros": 10, 
+        "dólar": 11, "pib": 10, "deficit": 10, "recessão": 12,
+        
+        # Mercado e Finanças (Pesos 7-9)
+        "bolsa": 9, "ibovespa": 9, "ações": 8, "mercado": 7, 
+        "investimento": 7, "copom": 10, "dividendos": 7,
+        
+        # Termos Gerais (Pesos 3-6)
+        "economia": 5, "moeda": 5, "banco": 6, "comércio": 4, "consumo": 4
     }
+}
 
     palavras_peso = pesos_por_tema.get(tipo, {})
 
