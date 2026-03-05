@@ -58,13 +58,13 @@ Importante:
 - Entregue apenas o texto final já estruturado.
 """
 
-            response = self.client.models.generate_content(
-                model=MODELO_GEMINI,
-                contents=prompt
-            )
-        
-            return response.text.strip().replace('"', '')
-        
+        response = self.client.models.generate_content(
+            model=MODELO_GEMINI,
+            contents=prompt
+        )
+
+        return response.text.strip().replace('"', '')
+
     # ==========================================================
     # GERAR ARTIGO COMPLETO
     # ==========================================================
