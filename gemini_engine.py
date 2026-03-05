@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+import time
 from google import genai
 
 class GeminiEngine:
@@ -50,8 +51,8 @@ Importante:
 - Não inclua observações adicionais.
 - Entregue apenas o texto final já estruturado.
 """
-        # Lista de modelos para fallback (tentativas em sequência)
-        modelos = ["gemini-2.0-flash", "gemini-1.5-pro", "gemini-1.5-flash"]
+        # Lista de modelos mantendo o Gemini 3 como prioridade
+        modelos = ["gemini-3-flash-preview", "gemini-1.5-pro", "gemini-1.5-flash"]
         
         for modelo in modelos:
             try:
@@ -59,17 +60,24 @@ Importante:
                     model=modelo,
                     contents=prompt
                 )
-                # Verifica se a resposta existe e tem texto
+                # Verifica se a resposta e o texto existem antes do .strip()
                 if response and hasattr(response, 'text') and response.text:
                     return response.text.strip()
+                
+                print(f"Aviso: Modelo {modelo} retornou vazio. Tentando próximo...")
             except Exception as e:
-                print(f"Erro ao usar modelo {modelo}: {e}")
-                continue # Tenta o próximo modelo da lista
+                print(f"Erro no modelo {modelo}: {e}")
+                if "429" in str(e):
+                    time.sleep(2) # Pausa curta se for erro de cota
+                continue
         
-        # Se todos falharem ou retornarem vazio
-        return "Erro: A IA não conseguiu gerar o conteúdo após várias tentativas ou o conteúdo foi bloqueado."
+        return "Erro: Não foi possível gerar a análise jornalística."
 
     def gerar_query_visual(self, titulo, resumo):
+        """
+        Gera uma query de busca em inglês otimizada para Pexels/Unsplash 
+        com base no contexto da notícia.
+        """
         prompt = f"""
 Com base no título e resumo da notícia abaixo, gere APENAS uma sequência de 3 a 4 palavras-chave 
 em INGLÊS que descrevam uma imagem fotográfica ideal para ilustrar esta matéria em um blog de notícias.
@@ -83,8 +91,7 @@ Diretrizes:
 Notícia: {titulo}
 Resumo: {resumo}
 """
-
-        modelos = ["gemini-2.0-flash", "gemini-1.5-pro", "gemini-1.5-flash"]
+        modelos = ["gemini-3-flash-preview", "gemini-1.5-pro", "gemini-1.5-flash"]
 
         for modelo in modelos:
             try:
@@ -97,4 +104,4 @@ Resumo: {resumo}
             except Exception:
                 continue
 
-        return "news concept professional" # Fallback genérico em vez de None
+        return "news journalism professional" # Fallback de segurança caso tudo falhe
