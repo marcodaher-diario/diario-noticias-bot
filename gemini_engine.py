@@ -3,7 +3,6 @@
 import os
 from google import genai
 
-
 class GeminiEngine:
 
     def __init__(self):
@@ -11,7 +10,6 @@ class GeminiEngine:
         self.client = genai.Client(api_key=api_key)
 
     def gerar_analise_jornalistica(self, titulo, resumo, categoria):
-
         prompt = f"""
 Atue como um Jornalista Sênior com 20 anos de experiência em hard news e reportagem investigativa.
 
@@ -52,31 +50,26 @@ Importante:
 - Não inclua observações adicionais.
 - Entregue apenas o texto final já estruturado.
 """
-
-        try:
-            response = self.client.models.generate_content(
-                model="gemini-3-flash-preview",
-                contents=prompt
-            )
-        except Exception:
+        # Lista de modelos para fallback (tentativas em sequência)
+        modelos = ["gemini-2.0-flash", "gemini-1.5-pro", "gemini-1.5-flash"]
+        
+        for modelo in modelos:
             try:
                 response = self.client.models.generate_content(
-                    model="gemini-1.5-pro",
+                    model=modelo,
                     contents=prompt
                 )
-            except Exception:
-                response = self.client.models.generate_content(
-                    model="gemini-1.5-flash",
-                    contents=prompt
-                )
-
-        return response.text.strip()
+                # Verifica se a resposta existe e tem texto
+                if response and hasattr(response, 'text') and response.text:
+                    return response.text.strip()
+            except Exception as e:
+                print(f"Erro ao usar modelo {modelo}: {e}")
+                continue # Tenta o próximo modelo da lista
+        
+        # Se todos falharem ou retornarem vazio
+        return "Erro: A IA não conseguiu gerar o conteúdo após várias tentativas ou o conteúdo foi bloqueado."
 
     def gerar_query_visual(self, titulo, resumo):
-        """
-        Gera uma query de busca em inglês otimizada para Pexels/Unsplash 
-        com base no contexto da notícia.
-        """
         prompt = f"""
 Com base no título e resumo da notícia abaixo, gere APENAS uma sequência de 3 a 4 palavras-chave 
 em INGLÊS que descrevam uma imagem fotográfica ideal para ilustrar esta matéria em um blog de notícias.
@@ -91,25 +84,17 @@ Notícia: {titulo}
 Resumo: {resumo}
 """
 
-        try:
-            response = self.client.models.generate_content(
-                model="gemini-3-flash-preview",
-                contents=prompt
-            )
-            return response.text.strip().replace('"', '').replace("'", "")
-        except Exception:
+        modelos = ["gemini-2.0-flash", "gemini-1.5-pro", "gemini-1.5-flash"]
+
+        for modelo in modelos:
             try:
                 response = self.client.models.generate_content(
-                    model="gemini-1.5-pro",
+                    model=modelo,
                     contents=prompt
                 )
-                return response.text.strip().replace('"', '').replace("'", "")
-            except Exception:
-                try:
-                    response = self.client.models.generate_content(
-                        model="gemini-1.5-flash",
-                        contents=prompt
-                    )
+                if response and hasattr(response, 'text') and response.text:
                     return response.text.strip().replace('"', '').replace("'", "")
-                except Exception:
-                    return None
+            except Exception:
+                continue
+
+        return "news concept professional" # Fallback genérico em vez de None
