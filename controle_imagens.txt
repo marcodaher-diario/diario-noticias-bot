@@ -25,3 +25,4 @@
 2026-03-05|policial|https://images.pexels.com/photos/6069474/pexels-photo-6069474.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
 2026-03-05|policial|https://s2-g1.glbimg.com/NIALK_JmPqZN9LlroepYO2PgFUQ=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/S/b/vAGxsfRMGkuJlmkhK7vA/dinheiro-encontrado-em-operacao.jpg
 2026-03-05|politica|https://images.pexels.com/photos/7876093/pexels-photo-7876093.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
+2026-03-06|policial|https://s2-g1.glbimg.com/LZi3o9m7fXEa19q5Z16n9659078=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/s/w/t9PwkTT7iLD1lBBVEHqA/whatsapp-image-2026-03-06-at-05.51.32.jpeg
