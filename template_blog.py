@@ -71,7 +71,6 @@ def obter_esqueleto_html(dados):
         margin-bottom:20px !important;
         margin-top:10px !important;
         display: block !important;
-        text-decoration: none !important;
     }}
 </style>
 
