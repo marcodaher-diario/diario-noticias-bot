@@ -1,14 +1,22 @@
 # -*- coding: utf-8 -*-
 
 import os
+import re
+import time
 from google import genai
-
+from google.api_core import exceptions
 
 class GeminiEngine:
 
     def __init__(self):
         api_key = os.getenv("GEMINI_API_KEY")
         self.client = genai.Client(api_key=api_key)
+        # Estratégia de Fallback solicitada: 3 Modelos em 3 Ciclos
+        self.modelos_fallback = [
+            "gemini-3-flash-preview",
+            "gemini-2.5-pro", 
+            "gemini-2.5-flash"
+        ]
 
     def gerar_analise_jornalistica(self, titulo, resumo, categoria):
 
@@ -53,24 +61,35 @@ Importante:
 - Entregue apenas o texto final já estruturado.
 """
 
-        try:
-            response = self.client.models.generate_content(
-                model="gemini-3-flash-preview",
-                contents=prompt
-            )
-        except Exception:
+    def _executar_com_resiliencia(self, prompt):
+    """
+    Lógica de 9 tentativas (3 ciclos x 3 modelos) conforme solicitado.
+    """
+    tentativa_total = 1
+    for ciclo in range(1, 4):  # 3 passagens completas
+        for modelo in self.modelos_fallback:
             try:
+                print(f"Tentativa {tentativa_total}/9 | Ciclo {ciclo} | Usando: {modelo}")
+                
                 response = self.client.models.generate_content(
-                    model="gemini-1.5-pro",
+                    model=modelo,
                     contents=prompt
                 )
-            except Exception:
-                response = self.client.models.generate_content(
-                    model="gemini-1.5-flash",
-                    contents=prompt
-                )
-
-        return response.text.strip()
+    
+                if response and hasattr(response, 'text') and response.text:
+                    return response.text
+            
+            except Exception as e:
+                erro_msg = str(e).upper()
+                if any(x in erro_msg for x in ["503", "UNAVAILABLE", "DEADLINE", "429", "QUOTA"]):
+                    print(f"⚠️ Modelo {modelo} indisponível ou lotado. Tentando próximo...")
+                    time.sleep(5) 
+                else:
+                    print(f"❌ Erro no modelo {modelo}: {e}")
+            
+            tentativa_total += 1
+    
+    return None
 
     def gerar_query_visual(self, titulo, resumo):
         """
@@ -90,26 +109,3 @@ Diretrizes:
 Notícia: {titulo}
 Resumo: {resumo}
 """
-
-        try:
-            response = self.client.models.generate_content(
-                model="gemini-3-flash-preview",
-                contents=prompt
-            )
-            return response.text.strip().replace('"', '').replace("'", "")
-        except Exception:
-            try:
-                response = self.client.models.generate_content(
-                    model="gemini-1.5-pro",
-                    contents=prompt
-                )
-                return response.text.strip().replace('"', '').replace("'", "")
-            except Exception:
-                try:
-                    response = self.client.models.generate_content(
-                        model="gemini-1.5-flash",
-                        contents=prompt
-                    )
-                    return response.text.strip().replace('"', '').replace("'", "")
-                except Exception:
-                    return None
