@@ -1,76 +1,93 @@
 # -*- coding: utf-8 -*-
 
-def formatar_texto(texto):
+def formatar_texto(texto, titulo_principal):
+    """
+    Processa o corpo do texto: H2 para subtítulos e P para parágrafos.
+    Remove repetições do título principal dentro do corpo do texto.
+    """
+    if texto is None:
+        return ""
+        
     linhas = [l.strip() for l in texto.split("\n") if l.strip()]
     html_final = ""
-    
-    # Configurações de comando centralizado (Alterando aqui, muda em todos os robôs)
     COR_MD = "rgb(7, 55, 99)"
-    TAMANHO_H2 = "24px"
-    TAMANHO_TEXTO = "18px"
+    titulo_norm = titulo_principal.strip().lower()
 
     for linha in linhas:
-        e_titulo_markdown = linha.startswith("#")
         linha_limpa = linha.strip("#* ").strip()
+        
+        # Pula a linha se for repetição do título (limpeza inteligente)
+        if linha_limpa.lower() == titulo_norm:
+            continue
 
-        # Lógica para detectar se a linha é um título
-        if e_titulo_markdown or (len(linha_limpa.split()) <= 18 and not linha_limpa.endswith(".")):
-            if "considerações finais" in linha_limpa.lower():
-                titulo_texto = "Considerações Finais"
-            else:
-                titulo_texto = linha_limpa
-
-            # --- AQUI VOCÊ CONTROLA O H2 ---
+        # Ordem 5: Subtítulo H2 - Arial 20, Bold, Esquerda, Cor MD, Maiúsculas
+        if linha.startswith("#") or (len(linha_limpa.split()) <= 15 and not linha_limpa.endswith(".")):
             html_final += f"""
-            <h2 style="text-align:left !important; font-family:Arial !important; color:{COR_MD} !important; font-size:{TAMANHO_H2} !important; font-weight:bold !important; margin-top:30px !important; margin-bottom:10px !important; display:block !important;">
-                {titulo_texto}
+            <h2 style="text-align:left !important; font-family:Arial !important; color:{COR_MD} !important; 
+                       font-size:20px !important; font-weight:bold !important; text-transform:uppercase !important; 
+                       margin-top:25px !important; margin-bottom:10px !important;">
+                {linha_limpa}
             </h2>
             """
         else:
-            # --- AQUI VOCÊ CONTROLA O TEXTO DA POSTAGEM ---
+            # Ordem 6: Texto - Fonte 18, Justificado, Cor MD
             html_final += f"""
-            <p style="text-align:justify !important; font-family:Arial !important; color:{COR_MD} !important; font-size:{TAMANHO_TEXTO} !important; margin-bottom:15px !important; line-height:1.7 !important;">
+            <p style="text-align:justify !important; font-family:Arial !important; color:{COR_MD} !important; 
+                      font-size:18px !important; line-height:1.6 !important; margin-bottom:15px !important;">
                 {linha_limpa}
             </p>
             """
-
     return html_final
 
-
 def obter_esqueleto_html(dados):
-    titulo = dados.get("titulo", "")
-    imagem = dados.get("imagem", "")
-    texto_completo = dados.get("texto_completo", "")
+    """
+    Gera o HTML final. 
+    A Ordem 2 (Título) é cumprida via CSS injetado para formatar o título nativo do Blogger.
+    """
+    titulo = dados.get("titulo", "").strip()
+    imagem = dados.get("imagem", "").strip()
+    texto_bruto = dados.get("texto_completo", "")
     assinatura = dados.get("assinatura", "")
 
-    # Chama a função acima que agora já vem com os tamanhos 20px e 16px
-    conteudo_formatado = formatar_texto(texto_completo)
-
-    FONTE_GERAL = "Arial, sans-serif"
+    conteudo_formatado = formatar_texto(texto_bruto, titulo)
     COR_MD = "rgb(7, 55, 99)"
 
-    html = f"""
+    # O CSS abaixo captura os seletores mais comuns de títulos do Blogger
+    return f"""
 <style>
-    /* Esconde o título padrão do Blogger (H3) para não duplicar com o seu H1 */
-    h3.post-title, .post-title {{ display: none !important; visibility: hidden !important; }}
-</style>    
-<div style="max-width:900px !important; margin:auto !important; font-family:{FONTE_GERAL} !important; color:{COR_MD} !important; line-height:1.7 !important; text-align:justify !important;">
+    /* Ordem 2: Formata o título externo do Blogger (h1, h2 ou h3) */
+    /* Seletores universais corrigidos para capturar títulos com ou sem links */
+    h1.post-title, h2.post-title, h3.post-title, 
+    h1.entry-title, h2.entry-title, h3.entry-title,
+    .post-title, .entry-header, .post-header,
+    h1.post-title a, h2.post-title a, h3.post-title a,
+    .post-title a, .entry-title a {{
+        text-align:center !important; 
+        font-family:Arial, sans-serif !important; 
+        font-size:28px !important; 
+        font-weight:bold !important; 
+        color:{COR_MD} !important; 
+        text-transform:uppercase !important;
+        margin-bottom:20px !important;
+        margin-top:10px !important;
+        display: block !important;
+        text-decoration: none !important;
+    }}
+</style>
 
-    <h1 style="text-align:center !important; font-family:{FONTE_GERAL} !important; color:{COR_MD} !important; font-size:28px !important; font-weight:bold !important; margin-bottom:20px !important; display:block !important; text-transform:uppercase !important;">
-        {titulo}
-    </h1>
+<div style="max-width:900px !important; margin:auto !important; font-family:Arial, sans-serif !important;">
 
     <div style="text-align:center !important; margin-bottom:25px !important;">
-        <img src="{imagem}" style="width:100% !important; max-width:100% !important; border-radius:8px !important; box-shadow: 0 4px 8px rgba(0,0,0,0.1) !important; height:auto !important; aspect-ratio:16/9 !important; object-fit:cover !important;">
+        <img src="{imagem}" alt="{titulo}" style="width:100% !important; height:auto !important; aspect-ratio:16/9 !important; object-fit:cover !important; border-radius:8px !important; display:block !important; margin:auto !important;">
     </div>
 
     <div class="conteudo-post">
         {conteudo_formatado}
     </div>
 
-    <div style="margin-top:40px !important; padding-top:20px !important; border-top:1px solid #ddd !important; font-family:{FONTE_GERAL} !important; color:{COR_MD} !important; font-size: 15px !important; font-style: italic !important;">
+    <div style="margin-top:40px !important; padding-top:20px !important; border-top:1px solid #eee !important; color:{COR_MD} !important;">
         {assinatura}
     </div>
+
 </div>
 """
-    return html
