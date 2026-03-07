@@ -55,8 +55,6 @@ def obter_esqueleto_html(dados):
     # O CSS abaixo captura os seletores mais comuns de títulos do Blogger
     return f"""
 <style>
-    /* Ordem 2: Formata o título externo do Blogger (h1, h2 ou h3) */
-    /* Seletores universais corrigidos para capturar títulos com ou sem links */
     h1.post-title, h2.post-title, h3.post-title, 
     h1.entry-title, h2.entry-title, h3.entry-title,
     .post-title, .entry-header, .post-header,
