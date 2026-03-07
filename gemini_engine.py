@@ -6,17 +6,20 @@ import time
 from google import genai
 from google.api_core import exceptions
 
+
 class GeminiEngine:
 
     def __init__(self):
         api_key = os.getenv("GEMINI_API_KEY")
         self.client = genai.Client(api_key=api_key)
+
         # Estratégia de Fallback solicitada: 3 Modelos em 3 Ciclos
         self.modelos_fallback = [
             "gemini-3-flash-preview",
-            "gemini-2.5-pro", 
+            "gemini-2.5-pro",
             "gemini-2.5-flash"
         ]
+
 
     def gerar_analise_jornalistica(self, titulo, resumo, categoria):
 
@@ -61,43 +64,56 @@ Importante:
 - Entregue apenas o texto final já estruturado.
 """
 
+        return self._executar_com_resiliencia(prompt)
+
+
     def _executar_com_resiliencia(self, prompt):
-    """
-    Lógica de 9 tentativas (3 ciclos x 3 modelos) conforme solicitado.
-    """
-    tentativa_total = 1
-    for ciclo in range(1, 4):  # 3 passagens completas
-        for modelo in self.modelos_fallback:
-            try:
-                print(f"Tentativa {tentativa_total}/9 | Ciclo {ciclo} | Usando: {modelo}")
-                
-                response = self.client.models.generate_content(
-                    model=modelo,
-                    contents=prompt
-                )
-    
-                if response and hasattr(response, 'text') and response.text:
-                    return response.text
-            
-            except Exception as e:
-                erro_msg = str(e).upper()
-                if any(x in erro_msg for x in ["503", "UNAVAILABLE", "DEADLINE", "429", "QUOTA"]):
-                    print(f"⚠️ Modelo {modelo} indisponível ou lotado. Tentando próximo...")
-                    time.sleep(5) 
-                else:
-                    print(f"❌ Erro no modelo {modelo}: {e}")
-            
-            tentativa_total += 1
-    
-    return None
+        """
+        Lógica de 9 tentativas (3 ciclos x 3 modelos) conforme solicitado.
+        """
+
+        tentativa_total = 1
+
+        for ciclo in range(1, 4):  # 3 passagens completas
+
+            for modelo in self.modelos_fallback:
+
+                try:
+
+                    print(f"Tentativa {tentativa_total}/9 | Ciclo {ciclo} | Usando: {modelo}")
+
+                    response = self.client.models.generate_content(
+                        model=modelo,
+                        contents=prompt
+                    )
+
+                    if response and hasattr(response, 'text') and response.text:
+                        return response.text
+
+                except Exception as e:
+
+                    erro_msg = str(e).upper()
+
+                    if any(x in erro_msg for x in ["503", "UNAVAILABLE", "DEADLINE", "429", "QUOTA"]):
+                        print(f"⚠️ Modelo {modelo} indisponível ou lotado. Tentando próximo...")
+                        time.sleep(5)
+
+                    else:
+                        print(f"❌ Erro no modelo {modelo}: {e}")
+
+                tentativa_total += 1
+
+        return None
+
 
     def gerar_query_visual(self, titulo, resumo):
         """
-        Gera uma query de busca em inglês otimizada para Pexels/Unsplash 
+        Gera uma query de busca em inglês otimizada para Pexels/Unsplash
         com base no contexto da notícia.
         """
+
         prompt = f"""
-Com base no título e resumo da notícia abaixo, gere APENAS uma sequência de 3 a 4 palavras-chave 
+Com base no título e resumo da notícia abaixo, gere APENAS uma sequência de 3 a 4 palavras-chave
 em INGLÊS que descrevam uma imagem fotográfica ideal para ilustrar esta matéria em um blog de notícias.
 
 Diretrizes:
@@ -109,3 +125,10 @@ Diretrizes:
 Notícia: {titulo}
 Resumo: {resumo}
 """
+
+        resposta = self._executar_com_resiliencia(prompt)
+
+        if resposta:
+            return resposta.strip()
+
+        return None
