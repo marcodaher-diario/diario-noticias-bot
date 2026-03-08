@@ -287,7 +287,7 @@ def buscar_noticia(tipo):
                     if horas_passadas > limite_horas:
                         continue
 
-                conteudo = f"{titulo} {resumo}".lower()
+                conteudo = remover_acentos(f"{titulo} {resumo}".lower())
 
                 score = 0
 
