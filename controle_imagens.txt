@@ -33,3 +33,4 @@
 2026-03-07|economia|https://images.pexels.com/photos/7567443/pexels-photo-7567443.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
 2026-03-07|economia|https://images.pexels.com/photos/35118208/pexels-photo-35118208.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
 2026-03-07|politica|https://s2-g1.glbimg.com/MTzGjDhbXhTNydiY_K3oIuHIaWU=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/1/i/Q7lQY9SX2hZMDXvLd8SA/vorcaro.01-frame-0.jpeg
+2026-03-08|policial|https://images.pexels.com/photos/8369524/pexels-photo-8369524.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
