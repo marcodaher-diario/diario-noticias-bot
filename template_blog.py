@@ -4,6 +4,7 @@ def formatar_texto(texto, titulo_principal):
     """
     Processa o corpo do texto: H2 para subtítulos e P para parágrafos.
     Remove repetições do título principal dentro do corpo do texto.
+    Também cria subtítulos automáticos quando o texto fica muito longo.
     """
     if texto is None:
         return ""
@@ -13,16 +14,23 @@ def formatar_texto(texto, titulo_principal):
     COR_MD = "rgb(7, 55, 99)"
     titulo_norm = titulo_principal.strip().lower()
 
+    contador_paragrafos = 0
+
     for i, linha in enumerate(linhas):
+
         linha_limpa = linha.strip("#* ").strip()
         
-        # Pula a linha se for repetição do título (limpeza inteligente)
+        # Pula a linha se for repetição do título
         if linha_limpa.lower() == titulo_norm:
             continue
 
-        # Ordem 5: Subtítulo H2 - Arial 20, Bold, Esquerda, Cor MD, Maiúsculas
-        # Primeira linha sempre será tratada como subtítulo
+        # ======================================
+        # SUBTÍTULO DETECTADO OU PRIMEIRA LINHA
+        # ======================================
         if i == 0 or linha.startswith("#") or (len(linha_limpa.split()) <= 15 and not linha_limpa.endswith(".")):
+
+            contador_paragrafos = 0
+
             html_final += f"""
             <h2 style="text-align:left !important; font-family:Arial !important; color:{COR_MD} !important; 
                        font-size:20px !important; font-weight:bold !important; text-transform:uppercase !important; 
@@ -30,7 +38,28 @@ def formatar_texto(texto, titulo_principal):
                 {linha_limpa}
             </h2>
             """
+
         else:
+
+            contador_paragrafos += 1
+
+            # ================================
+            # SUBTÍTULO AUTOMÁTICO
+            # ================================
+            if contador_paragrafos == 3 and len(linha_limpa.split()) > 25:
+
+                subtitulo_auto = "ANÁLISE DOS DESDOBRAMENTOS"
+
+                html_final += f"""
+                <h2 style="text-align:left !important; font-family:Arial !important; color:{COR_MD} !important; 
+                           font-size:20px !important; font-weight:bold !important; text-transform:uppercase !important; 
+                           margin-top:25px !important; margin-bottom:10px !important;">
+                    {subtitulo_auto}
+                </h2>
+                """
+
+                contador_paragrafos = 0
+
             # Ordem 6: Texto - Fonte 18, Justificado, Cor MD
             html_final += f"""
             <p style="text-align:justify !important; font-family:Arial !important; color:{COR_MD} !important; 
@@ -38,9 +67,12 @@ def formatar_texto(texto, titulo_principal):
                 {linha_limpa}
             </p>
             """
+
     return html_final
 
-
+# ================================
+# MONTAGEM DO HTML
+# ================================
 def obter_esqueleto_html(dados):
 
     titulo = dados.get("titulo", "").strip()
