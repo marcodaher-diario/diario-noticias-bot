@@ -153,7 +153,7 @@ def registrar_imagem_usada(url_imagem):
 
 
 # ==========================================================
-# VERIFICAR TEMA (ATUALIZADO COM SISTEMA DE PESOS)
+# VERIFICAR TEMA
 # ==========================================================
 
 def verificar_assunto(titulo, texto):
@@ -172,7 +172,6 @@ def verificar_assunto(titulo, texto):
             maior_score = score_atual
             melhor_tema = tema
 
-    # Exige um mínimo de 8 pontos para classificar no tema, senão cai em geral
     if maior_score >= 8:
         return melhor_tema
 
@@ -218,274 +217,119 @@ def gerar_tags_seo(titulo, texto):
 
 
 # ==========================================================
-# BUSCAR NOTÍCIA (ATUALIZADO PARA USAR CONFIGURACOES.PY)
+# BUSCAR NOTÍCIA (BUSCA PROGRESSIVA ATÉ 48H)
 # ==========================================================
 
 def buscar_noticia(tipo):
 
     palavras_peso = PESOS_POR_TEMA.get(tipo, {})
 
-    noticias_validas = []
-
     agora = datetime.utcnow()
 
-    for feed_url in RSS_FEEDS:
+    janelas_busca = [6,12,24,36,48]
 
-        feed = feedparser.parse(feed_url)
+    for limite_horas in janelas_busca:
 
-        for entry in feed.entries[:20]:
+        noticias_validas = []
 
-            titulo = entry.get("title","")
-            resumo = entry.get("summary","")
-            link = entry.get("link","")
+        for feed_url in RSS_FEEDS:
 
-            imagem = ""
+            feed = feedparser.parse(feed_url)
 
-            if "media_content" in entry and len(entry.media_content) > 0:
-                imagem = entry.media_content[0].get("url","")
+            for entry in feed.entries[:20]:
 
-            if not titulo or not link:
-                continue
+                titulo = entry.get("title","")
+                resumo = entry.get("summary","")
+                link = entry.get("link","")
 
-            if verificar_assunto(titulo,resumo) != tipo:
-                continue
+                imagem = ""
 
-            id_noticia = gerar_id_noticia(titulo)
+                if "media_content" in entry and len(entry.media_content) > 0:
+                    imagem = entry.media_content[0].get("url","")
 
-            if link_ja_publicado(link):
-                continue
+                if not titulo or not link:
+                    continue
 
-            if link_ja_publicado(id_noticia):
-                continue
+                if verificar_assunto(titulo,resumo) != tipo:
+                    continue
 
-            data_publicacao = None
+                id_noticia = gerar_id_noticia(titulo)
 
-            if hasattr(entry,"published"):
+                if link_ja_publicado(link):
+                    continue
+
+                if link_ja_publicado(id_noticia):
+                    continue
+
+                data_publicacao = None
+
+                if hasattr(entry,"published"):
+                    try:
+                        data_publicacao = parsedate_to_datetime(entry.published)
+
+                        if data_publicacao.tzinfo is not None:
+                            data_publicacao = data_publicacao.astimezone(tz=None).replace(tzinfo=None)
+
+                    except:
+                        pass
+
+                if data_publicacao:
+
+                    horas_passadas = (agora - data_publicacao).total_seconds() / 3600
+
+                    if horas_passadas > limite_horas:
+                        continue
+
+                conteudo = f"{titulo} {resumo}".lower()
+
+                score = 0
+
+                for palavra,peso in palavras_peso.items():
+
+                    if palavra in conteudo:
+                        score += peso
+
+                if data_publicacao:
+
+                    minutos_passados = (agora - data_publicacao).total_seconds() / 60
+
+                    bonus_recencia = max(0,1200-minutos_passados)/1200
+
+                    score += bonus_recencia * 8
+
+                dominio = ""
+
                 try:
-                    data_publicacao = parsedate_to_datetime(entry.published)
-
-                    if data_publicacao.tzinfo is not None:
-                        data_publicacao = data_publicacao.astimezone(tz=None).replace(tzinfo=None)
-
+                    dominio = link.split("/")[2]
                 except:
                     pass
 
-            # DESCARTA NOTÍCIAS COM MAIS DE 36 HORAS
-            if data_publicacao:
-
-                horas_passadas = (agora - data_publicacao).total_seconds() / 3600
-
-                if horas_passadas > 36:
-                    continue
-
-            conteudo = f"{titulo} {resumo}".lower()
-
-            score = 0
-
-            # PESO POR PALAVRAS-CHAVE
-            for palavra,peso in palavras_peso.items():
-
-                if palavra in conteudo:
-                    score += peso
-
-            # BONUS POR RECÊNCIA
-            if data_publicacao:
-
-                minutos_passados = (agora - data_publicacao).total_seconds() / 60
-
-                bonus_recencia = max(0,1200-minutos_passados)/1200
-
-                score += bonus_recencia * 8
-
-            # BONUS POR FONTE CONFIÁVEL
-            dominio = ""
-
-            try:
-                dominio = link.split("/")[2]
-            except:
-                pass
-
-            fontes_bonus = {
-                "g1.globo.com":4,
-                "uol.com.br":3,
-                "folha.uol.com.br":4,
-                "bbc.co.uk":5,
-                "cnnbrasil.com.br":3,
-                "estadao.com.br":4
-            }
-
-            for fonte,bonus in fontes_bonus.items():
-
-                if fonte in dominio:
-                    score += bonus
-
-            noticias_validas.append({
-                "titulo":titulo,
-                "texto":resumo,
-                "link":link,
-                "imagem":imagem,
-                "score":score
-            })
-
-    if not noticias_validas:
-        return None
-
-    noticia_escolhida = max(noticias_validas,key=lambda x:x["score"])
-
-    return noticia_escolhida
-
-# ==========================================================
-# MODO TESTE
-# ==========================================================
-
-def executar_modo_teste(tema_forcado=None, publicar=False):
-
-    print("=== MODO TESTE ATIVADO ===")
-
-    if not tema_forcado:
-        tema_forcado = "policial"
-
-    noticia = buscar_noticia(tema_forcado)
-
-    if not noticia:
-        print("Nenhuma notícia encontrada para teste.")
-        return
-
-    gemini = GeminiEngine()
-    imagem_engine = ImageEngine()
-
-    texto_ia = gemini.gerar_analise_jornalistica(noticia["titulo"], noticia["texto"], tema_forcado)
-
-    query_visual = gemini.gerar_query_visual(noticia["titulo"], noticia["texto"])
-
-    imagem_final = imagem_engine.obter_imagem(noticia, tema_forcado, query_ia=query_visual)
-
-    tags = gerar_tags_seo(noticia["titulo"], texto_ia)
-
-    dados = {
-        "titulo": noticia["titulo"],
-        "imagem": imagem_final,
-        "texto_completo": texto_ia,
-        "assinatura": BLOCO_FIXO_FINAL
-    }
-
-    html = obter_esqueleto_html(dados)
-
-    service = Credentials.from_authorized_user_file("token.json")
-
-    service = build("blogger", "v3", credentials=service)
-
-    service.posts().insert(
-        blogId=BLOG_ID,
-        body={
-            "title": noticia["titulo"],
-            "content": html,
-            "labels": tags
-        },
-        isDraft=not publicar
-    ).execute()
-
-    print("Postagem de teste concluída.")
-
-
-# ==========================================================
-# EXECUÇÃO PRINCIPAL
-# ==========================================================
-
-if __name__ == "__main__":
-
-    if os.getenv("TEST_MODE") == "true":
-
-        tema_teste = os.getenv("TEST_TEMA","policial")
-
-        publicar_teste = os.getenv("TEST_PUBLICAR","false") == "true"
-
-        executar_modo_teste(
-            tema_forcado=tema_teste,
-            publicar=publicar_teste
-        )
-
-        exit()
-
-    agora = obter_horario_brasilia()
-
-    min_atual = agora.hour * 60 + agora.minute
-
-    data_hoje = agora.strftime("%Y-%m-%d")
-
-    horario_escolhido = None
-
-    tema_escolhido = None
-
-    for horario_agenda,tema in AGENDA_POSTAGENS.items():
-
-        min_agenda = horario_para_minutos(horario_agenda)
-
-        if dentro_da_janela(min_atual,min_agenda):
-
-            if not ja_postou(data_hoje,horario_agenda):
-                horario_escolhido = horario_agenda
-                tema_escolhido = tema
-                break
-
-    if not horario_escolhido:
-        exit()
-
-    noticia = buscar_noticia(tema_escolhido)
-
-    if not noticia:
-        exit()
-
-    gemini = GeminiEngine()
-
-    imagem_engine = ImageEngine()
-
-    texto_ia = gemini.gerar_analise_jornalistica(
-        noticia["titulo"],
-        noticia["texto"],
-        tema_escolhido
-    )
-
-    query_visual = gemini.gerar_query_visual(
-        noticia["titulo"],
-        noticia["texto"]
-    )
-
-    imagem_final = imagem_engine.obter_imagem(
-        noticia,
-        tema_escolhido,
-        query_ia=query_visual
-    )
-
-    tags = gerar_tags_seo(noticia["titulo"], texto_ia)
-
-    dados = {
-        "titulo": noticia["titulo"],
-        "imagem": imagem_final,
-        "texto_completo": texto_ia,
-        "assinatura": BLOCO_FIXO_FINAL
-    }
-
-    html = obter_esqueleto_html(dados)
-
-    service = Credentials.from_authorized_user_file("token.json")
-
-    service = build("blogger", "v3", credentials=service)
-
-    service.posts().insert(
-        blogId=BLOG_ID,
-        body={
-            "title": noticia["titulo"],
-            "content": html,
-            "labels": tags
-        },
-        isDraft=False
-    ).execute()
-
-    registrar_postagem(data_hoje, horario_escolhido)
-
-    registrar_link_publicado(noticia["link"])
-
-    registrar_link_publicado(gerar_id_noticia(noticia["titulo"]))
-
-    print(f"Post publicado com sucesso: {noticia['titulo']}")
+                fontes_bonus = {
+                    "g1.globo.com":4,
+                    "uol.com.br":3,
+                    "folha.uol.com.br":4,
+                    "bbc.co.uk":5,
+                    "cnnbrasil.com.br":3,
+                    "estadao.com.br":4
+                }
+
+                for fonte,bonus in fontes_bonus.items():
+
+                    if fonte in dominio:
+                        score += bonus
+
+                noticias_validas.append({
+                    "titulo":titulo,
+                    "texto":resumo,
+                    "link":link,
+                    "imagem":imagem,
+                    "score":score
+                })
+
+        if noticias_validas:
+
+            noticia_escolhida = max(noticias_validas,key=lambda x:x["score"])
+
+            return noticia_escolhida
+
+    return None
