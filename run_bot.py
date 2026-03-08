@@ -164,21 +164,30 @@ def registrar_imagem_usada(url_imagem):
 # ==========================================================
 
 def verificar_assunto(titulo, texto):
-    conteudo = f"{titulo} {texto}".lower()
-    
+
+    conteudo = remover_acentos(f"{titulo} {texto}".lower())
+
     melhor_tema = "geral"
     maior_score = 0
 
     for tema, palavras_chave in PESOS_POR_TEMA.items():
+
         score_atual = 0
+
         for palavra, peso in palavras_chave.items():
-            if palavra in conteudo:
-                score_atual += peso
-        
+
+            palavra_norm = remover_acentos(palavra.lower())
+
+            ocorrencias = conteudo.count(palavra_norm)
+
+            if ocorrencias > 0:
+                score_atual += peso * ocorrencias
+
         if score_atual > maior_score:
             maior_score = score_atual
             melhor_tema = tema
 
+    # mínimo para considerar tema específico
     if maior_score >= 8:
         return melhor_tema
 
