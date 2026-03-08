@@ -68,7 +68,6 @@ def obter_esqueleto_html(dados):
         text-transform:uppercase !important;
         margin-bottom:20px !important;
         margin-top:10px !important;
-        
     }}
 </style>
 
