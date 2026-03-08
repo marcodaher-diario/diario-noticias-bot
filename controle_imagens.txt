@@ -36,3 +36,4 @@
 2026-03-08|policial|https://images.pexels.com/photos/8369524/pexels-photo-8369524.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
 2026-03-08|policial|https://s2-g1.glbimg.com/eZh_I7SExQEO3WdwjjTNCQOQMXA=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/Y/X/LpSAxzTPOzS8l2AYM7jw/caraubas.png
 2026-03-08|policial|https://images.pexels.com/photos/35677589/pexels-photo-35677589.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
+2026-03-08|política|https://images.pexels.com/photos/35314868/pexels-photo-35314868.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
