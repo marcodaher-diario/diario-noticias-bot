@@ -38,3 +38,4 @@
 2026-03-08|policial|https://images.pexels.com/photos/35677589/pexels-photo-35677589.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
 2026-03-08|política|https://images.pexels.com/photos/35314868/pexels-photo-35314868.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
 2026-03-08|política|https://images.pexels.com/photos/13344830/pexels-photo-13344830.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
+2026-03-08|politica|https://images.pexels.com/photos/13640269/pexels-photo-13640269.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
