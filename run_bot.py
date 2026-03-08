@@ -207,14 +207,20 @@ def buscar_noticia(tipo):
 
                 if link_ja_publicado(link):
                     continue
-
+                    
                 data_publicacao = None
-
+                
                 if hasattr(entry,"published"):
                     try:
                         data_publicacao = parsedate_to_datetime(entry.published)
+                
+                        # normaliza timezone para evitar erro datetime
+                        if data_publicacao.tzinfo is not None:
+                            data_publicacao = data_publicacao.astimezone(tz=None).replace(tzinfo=None)
+                
                     except:
                         pass
+                
 
                 if data_publicacao:
 
