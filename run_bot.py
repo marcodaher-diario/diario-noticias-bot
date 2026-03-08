@@ -97,7 +97,7 @@ def registrar_postagem(data_str, horario_agenda):
 
 
 # ==========================================================
-# CONTROLE DE LINKS (COM RODÍZIO DE 100 LINHAS)
+# CONTROLE DE LINKS
 # ==========================================================
 
 def registrar_link_publicado(link):
@@ -136,30 +136,6 @@ def gerar_id_noticia(titulo):
 
 
 # ==========================================================
-# CONTROLE DE IMAGENS
-# ==========================================================
-
-def registrar_imagem_usada(url_imagem):
-    ARQUIVO_IMAGENS = "imagens_usadas.txt"
-
-    linhas = []
-
-    if os.path.exists(ARQUIVO_IMAGENS):
-        with open(ARQUIVO_IMAGENS, "r", encoding="utf-8") as f:
-            linhas = f.readlines()
-
-    nova_linha = f"{url_imagem}\n"
-
-    if nova_linha not in linhas:
-        linhas.append(nova_linha)
-
-    linhas = linhas[-50:]
-
-    with open(ARQUIVO_IMAGENS, "w", encoding="utf-8") as f:
-        f.writelines(linhas)
-
-
-# ==========================================================
 # VERIFICAR TEMA
 # ==========================================================
 
@@ -187,7 +163,6 @@ def verificar_assunto(titulo, texto):
             maior_score = score_atual
             melhor_tema = tema
 
-    # mínimo para considerar tema específico
     if maior_score >= 8:
         return melhor_tema
 
@@ -195,48 +170,12 @@ def verificar_assunto(titulo, texto):
 
 
 # ==========================================================
-# GERAR TAGS SEO
-# ==========================================================
-
-def gerar_tags_seo(titulo, texto):
-
-    stopwords = ["com","de","do","da","em","para","um","uma","os","as","que","no","na","ao","aos"]
-
-    conteudo = f"{titulo} {texto[:100]}"
-
-    palavras = re.findall(r'\b\w{4,}\b', conteudo.lower())
-
-    tags = []
-
-    for p in palavras:
-        if p not in stopwords and p not in tags:
-            tags.append(p.capitalize())
-
-    tags_fixas = ["Notícias","Diário de Notícias","Marco Daher"]
-
-    for tf in tags_fixas:
-        if tf not in tags:
-            tags.append(tf)
-
-    resultado = []
-
-    tamanho_atual = 0
-
-    for tag in tags:
-        if tamanho_atual + len(tag) + 2 <= 200:
-            resultado.append(tag)
-            tamanho_atual += len(tag) + 2
-        else:
-            break
-
-    return resultado
-
-
-# ==========================================================
-# BUSCAR NOTÍCIA (BUSCA PROGRESSIVA ATÉ 48H)
+# BUSCAR NOTÍCIA (BUSCA PROGRESSIVA)
 # ==========================================================
 
 def buscar_noticia(tipo):
+
+    tipo = remover_acentos(tipo.lower())
 
     palavras_peso = PESOS_POR_TEMA.get(tipo, {})
 
@@ -258,23 +197,15 @@ def buscar_noticia(tipo):
                 resumo = entry.get("summary","")
                 link = entry.get("link","")
 
-                imagem = ""
-
-                if "media_content" in entry and len(entry.media_content) > 0:
-                    imagem = entry.media_content[0].get("url","")
-
                 if not titulo or not link:
                     continue
 
-                if verificar_assunto(titulo,resumo) != tipo:
-                    continue
+                tema_detectado = verificar_assunto(titulo,resumo)
 
-                id_noticia = gerar_id_noticia(titulo)
+                if tema_detectado != tipo and tema_detectado != "geral":
+                    continue
 
                 if link_ja_publicado(link):
-                    continue
-
-                if link_ja_publicado(id_noticia):
                     continue
 
                 data_publicacao = None
@@ -282,10 +213,6 @@ def buscar_noticia(tipo):
                 if hasattr(entry,"published"):
                     try:
                         data_publicacao = parsedate_to_datetime(entry.published)
-
-                        if data_publicacao.tzinfo is not None:
-                            data_publicacao = data_publicacao.astimezone(tz=None).replace(tzinfo=None)
-
                     except:
                         pass
 
@@ -303,44 +230,16 @@ def buscar_noticia(tipo):
                 for palavra,peso in palavras_peso.items():
 
                     palavra_norm = remover_acentos(palavra.lower())
-                
-                    if palavra_norm in conteudo:
-                        score += peso
 
-                if data_publicacao:
+                    ocorrencias = conteudo.count(palavra_norm)
 
-                    minutos_passados = (agora - data_publicacao).total_seconds() / 60
-
-                    bonus_recencia = max(0,1200-minutos_passados)/1200
-
-                    score += bonus_recencia * 8
-
-                dominio = ""
-
-                try:
-                    dominio = link.split("/")[2]
-                except:
-                    pass
-
-                fontes_bonus = {
-                    "g1.globo.com":4,
-                    "uol.com.br":3,
-                    "folha.uol.com.br":4,
-                    "bbc.co.uk":5,
-                    "cnnbrasil.com.br":3,
-                    "estadao.com.br":4
-                }
-
-                for fonte,bonus in fontes_bonus.items():
-
-                    if fonte in dominio:
-                        score += bonus
+                    if ocorrencias > 0:
+                        score += peso * ocorrencias
 
                 noticias_validas.append({
                     "titulo":titulo,
                     "texto":resumo,
                     "link":link,
-                    "imagem":imagem,
                     "score":score
                 })
 
@@ -351,3 +250,124 @@ def buscar_noticia(tipo):
             return noticia_escolhida
 
     return None
+
+
+# ==========================================================
+# MODO TESTE
+# ==========================================================
+
+def executar_modo_teste(tema_forcado=None, publicar=False):
+
+    print("=== MODO TESTE ATIVADO ===")
+
+    if not tema_forcado:
+        tema_forcado = "policial"
+
+    noticia = buscar_noticia(tema_forcado)
+
+    if not noticia:
+        print("Nenhuma notícia encontrada para teste.")
+        return
+
+    gemini = GeminiEngine()
+    imagem_engine = ImageEngine()
+
+    texto_ia = gemini.gerar_analise_jornalistica(
+        noticia["titulo"],
+        noticia["texto"],
+        tema_forcado
+    )
+
+    query_visual = gemini.gerar_query_visual(
+        noticia["titulo"],
+        noticia["texto"]
+    )
+
+    imagem_final = imagem_engine.obter_imagem(
+        noticia,
+        tema_forcado,
+        query_ia=query_visual
+    )
+
+    dados = {
+        "titulo": noticia["titulo"],
+        "imagem": imagem_final,
+        "texto_completo": texto_ia,
+        "assinatura": BLOCO_FIXO_FINAL
+    }
+
+    html = obter_esqueleto_html(dados)
+
+    service = Credentials.from_authorized_user_file("token.json")
+
+    service = build("blogger", "v3", credentials=service)
+
+    service.posts().insert(
+        blogId=BLOG_ID,
+        body={
+            "title": noticia["titulo"],
+            "content": html
+        },
+        isDraft=not publicar
+    ).execute()
+
+    print("Postagem de teste concluída.")
+
+
+# ==========================================================
+# EXECUÇÃO PRINCIPAL
+# ==========================================================
+
+if __name__ == "__main__":
+
+    if os.getenv("TEST_MODE") == "true":
+
+        tema_teste = os.getenv("TEST_TEMA","policial")
+
+        publicar_teste = os.getenv("TEST_PUBLICAR","false") == "true"
+
+        executar_modo_teste(
+            tema_forcado=tema_teste,
+            publicar=publicar_teste
+        )
+
+        exit()
+
+    agora = obter_horario_brasilia()
+
+    min_atual = agora.hour * 60 + agora.minute
+
+    data_hoje = agora.strftime("%Y-%m-%d")
+
+    horario_escolhido = None
+
+    tema_escolhido = None
+
+    for horario_agenda,tema in AGENDA_POSTAGENS.items():
+
+        min_agenda = horario_para_minutos(horario_agenda)
+
+        if dentro_da_janela(min_atual,min_agenda):
+
+            if not ja_postou(data_hoje,horario_agenda):
+                horario_escolhido = horario_agenda
+                tema_escolhido = tema
+                break
+
+    if not horario_escolhido:
+        exit()
+
+    noticia = buscar_noticia(tema_escolhido)
+
+    if not noticia:
+        exit()
+
+    executar_modo_teste(tema_escolhido, True)
+
+    registrar_postagem(data_hoje, horario_escolhido)
+
+    registrar_link_publicado(noticia["link"])
+
+    registrar_link_publicado(gerar_id_noticia(noticia["titulo"]))
+
+    print(f"Post publicado com sucesso: {noticia['titulo']}")
