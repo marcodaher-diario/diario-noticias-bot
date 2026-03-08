@@ -40,24 +40,21 @@ def formatar_texto(texto, titulo_principal):
     return html_final
 
 def obter_esqueleto_html(dados):
-    """
-    Gera o HTML final. 
-    A Ordem 2 (Título) é cumprida via CSS injetado para formatar o título nativo do Blogger.
-    """
+
     titulo = dados.get("titulo", "").strip()
     imagem = dados.get("imagem", "").strip()
     texto_bruto = dados.get("texto_completo", "")
     assinatura = dados.get("assinatura", "")
 
     conteudo_formatado = formatar_texto(texto_bruto, titulo)
-    COR_MD = "rgb(7, 55, 99)"
 
-    # O CSS abaixo captura os seletores mais comuns de títulos do Blogger
-    return f"""
+    COR_MD = "rgb(7,55,99)"
+
+    html = f"""
 <style>
 .post-title,
 .entry-title,
-h3.post-title.entry-title{
+h3.post-title.entry-title{{
     text-align:center !important;
     margin-top:10px !important;
     margin-bottom:20px !important;
@@ -65,36 +62,38 @@ h3.post-title.entry-title{
     font-size:28px !important;
     font-weight:bold !important;
     text-transform:uppercase !important;
-}
+}}
 
 .post-title a,
 .entry-title a,
-h3.post-title.entry-title a{
+h3.post-title.entry-title a{{
     display:block !important;
-    color:rgb(7, 55, 99) !important;
+    color:{COR_MD} !important;
     text-decoration:none !important;
-}
+}}
 
 .post-title a:hover,
-.entry-title a:hover{
-    color:rgb(10, 80, 140) !important;
+.entry-title a:hover{{
+    color:rgb(10,80,140) !important;
     text-decoration:none !important;
-}
+}}
 </style>
 
 <div style="max-width:900px !important; margin:auto !important; font-family:Arial, sans-serif !important;">
 
-    <div style="text-align:center !important; margin-bottom:25px !important;">
-        <img src="{imagem}" alt="{titulo}" style="width:100% !important; height:auto !important; aspect-ratio:16/9 !important; object-fit:cover !important; border-radius:8px !important; display:block !important; margin:auto !important;">
-    </div>
+<div style="text-align:center !important; margin-bottom:25px !important;">
+<img src="{imagem}" alt="{titulo}" style="width:100% !important; height:auto !important; aspect-ratio:16/9 !important; object-fit:cover !important; border-radius:8px !important;">
+</div>
 
-    <div class="conteudo-post">
-        {conteudo_formatado}
-    </div>
+<div class="conteudo-post">
+{conteudo_formatado}
+</div>
 
-    <div style="margin-top:40px !important; padding-top:20px !important; border-top:1px solid #eee !important; color:{COR_MD} !important;">
-        {assinatura}
-    </div>
+<div style="margin-top:40px !important; padding-top:20px !important; border-top:1px solid #eee !important; color:{COR_MD} !important;">
+{assinatura}
+</div>
 
 </div>
 """
+
+    return html
