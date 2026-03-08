@@ -288,6 +288,19 @@ def executar_modo_teste(tema_forcado=None, publicar=False):
         noticia["titulo"],
         noticia["texto"]
     )
+    texto_total = (noticia["titulo"] + " " + noticia["texto"]).lower()
+
+    if "stf" in texto_total or "supremo" in texto_total:
+        query_visual = "Supremo Tribunal Federal Brasília Brazil building"
+    
+    elif "senado" in texto_total:
+        query_visual = "Senado Federal Brasília Brazil congress building"
+    
+    elif "câmara" in texto_total or "camara" in texto_total:
+        query_visual = "Câmara dos Deputados Brasília Brazil congress building"
+    
+    elif "planalto" in texto_total:
+        query_visual = "Palácio do Planalto Brasília Brazil government palace"
 
     imagem_final = imagem_engine.obter_imagem(
         noticia,
