@@ -223,7 +223,6 @@ def gerar_tags_seo(titulo, texto):
 
 def buscar_noticia(tipo):
 
-    # Agora consome diretamente do que foi importado do configuracoes.py
     palavras_peso = PESOS_POR_TEMA.get(tipo, {})
 
     noticias_validas = []
@@ -234,7 +233,7 @@ def buscar_noticia(tipo):
 
         feed = feedparser.parse(feed_url)
 
-        for entry in feed.entries[:15]:
+        for entry in feed.entries[:20]:
 
             titulo = entry.get("title","")
             resumo = entry.get("summary","")
@@ -264,27 +263,61 @@ def buscar_noticia(tipo):
             if hasattr(entry,"published"):
                 try:
                     data_publicacao = parsedate_to_datetime(entry.published)
+
                     if data_publicacao.tzinfo is not None:
                         data_publicacao = data_publicacao.astimezone(tz=None).replace(tzinfo=None)
+
                 except:
                     pass
 
+            # DESCARTA NOTÍCIAS COM MAIS DE 36 HORAS
             if data_publicacao:
-                if (agora - data_publicacao).days > 1:
+
+                horas_passadas = (agora - data_publicacao).total_seconds() / 3600
+
+                if horas_passadas > 36:
                     continue
 
             conteudo = f"{titulo} {resumo}".lower()
 
             score = 0
 
+            # PESO POR PALAVRAS-CHAVE
             for palavra,peso in palavras_peso.items():
+
                 if palavra in conteudo:
                     score += peso
 
+            # BONUS POR RECÊNCIA
             if data_publicacao:
+
                 minutos_passados = (agora - data_publicacao).total_seconds() / 60
-                bonus_recencia = max(0,1000-minutos_passados)/1000
-                score += bonus_recencia
+
+                bonus_recencia = max(0,1200-minutos_passados)/1200
+
+                score += bonus_recencia * 8
+
+            # BONUS POR FONTE CONFIÁVEL
+            dominio = ""
+
+            try:
+                dominio = link.split("/")[2]
+            except:
+                pass
+
+            fontes_bonus = {
+                "g1.globo.com":4,
+                "uol.com.br":3,
+                "folha.uol.com.br":4,
+                "bbc.co.uk":5,
+                "cnnbrasil.com.br":3,
+                "estadao.com.br":4
+            }
+
+            for fonte,bonus in fontes_bonus.items():
+
+                if fonte in dominio:
+                    score += bonus
 
             noticias_validas.append({
                 "titulo":titulo,
@@ -300,7 +333,6 @@ def buscar_noticia(tipo):
     noticia_escolhida = max(noticias_validas,key=lambda x:x["score"])
 
     return noticia_escolhida
-
 
 # ==========================================================
 # MODO TESTE
