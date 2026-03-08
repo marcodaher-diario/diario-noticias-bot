@@ -55,18 +55,31 @@ def obter_esqueleto_html(dados):
     # O CSS abaixo captura os seletores mais comuns de títulos do Blogger
     return f"""
 <style>
-    h1.post-title, h2.post-title, h3.post-title, 
-    h1.entry-title, h2.entry-title, h3.entry-title,
-    .post-title, .entry-header, .post-header {{
-        text-align:center !important; 
-        font-family:Arial, sans-serif !important; 
-        font-size:28px !important; 
-        font-weight:bold !important; 
-        color:{COR_MD} !important; 
-        text-transform:uppercase !important;
-        margin-bottom:20px !important;
-        margin-top:10px !important;
-    }}
+.post-title,
+.entry-title,
+h3.post-title.entry-title{
+    text-align:center !important;
+    margin-top:10px !important;
+    margin-bottom:20px !important;
+    font-family:Arial, sans-serif !important;
+    font-size:28px !important;
+    font-weight:bold !important;
+    text-transform:uppercase !important;
+}
+
+.post-title a,
+.entry-title a,
+h3.post-title.entry-title a{
+    display:block !important;
+    color:rgb(7, 55, 99) !important;
+    text-decoration:none !important;
+}
+
+.post-title a:hover,
+.entry-title a:hover{
+    color:rgb(10, 80, 140) !important;
+    text-decoration:none !important;
+}
 </style>
 
 <div style="max-width:900px !important; margin:auto !important; font-family:Arial, sans-serif !important;">
