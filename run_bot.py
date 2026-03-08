@@ -302,7 +302,9 @@ def buscar_noticia(tipo):
 
                 for palavra,peso in palavras_peso.items():
 
-                    if palavra in conteudo:
+                    palavra_norm = remover_acentos(palavra.lower())
+                
+                    if palavra_norm in conteudo:
                         score += peso
 
                 if data_publicacao:
