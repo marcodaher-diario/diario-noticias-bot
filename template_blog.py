@@ -13,7 +13,7 @@ def formatar_texto(texto, titulo_principal):
     COR_MD = "rgb(7, 55, 99)"
     titulo_norm = titulo_principal.strip().lower()
 
-    for linha in linhas:
+    for i, linha in enumerate(linhas):
         linha_limpa = linha.strip("#* ").strip()
         
         # Pula a linha se for repetição do título (limpeza inteligente)
@@ -21,7 +21,8 @@ def formatar_texto(texto, titulo_principal):
             continue
 
         # Ordem 5: Subtítulo H2 - Arial 20, Bold, Esquerda, Cor MD, Maiúsculas
-        if linha.startswith("#") or (len(linha_limpa.split()) <= 15 and not linha_limpa.endswith(".")):
+        # Primeira linha sempre será tratada como subtítulo
+        if i == 0 or linha.startswith("#") or (len(linha_limpa.split()) <= 15 and not linha_limpa.endswith(".")):
             html_final += f"""
             <h2 style="text-align:left !important; font-family:Arial !important; color:{COR_MD} !important; 
                        font-size:20px !important; font-weight:bold !important; text-transform:uppercase !important; 
@@ -38,6 +39,7 @@ def formatar_texto(texto, titulo_principal):
             </p>
             """
     return html_final
+
 
 def obter_esqueleto_html(dados):
 
