@@ -302,6 +302,27 @@ def executar_modo_teste(tema_forcado=None, publicar=False):
     elif "planalto" in texto_total:
         query_visual = "Palácio do Planalto Brasília Brazil government palace"
 
+    # IRÃ / KHAMENEI
+    if "khamenei" in texto_total or "irã" in texto_total or "ira" in texto_total:
+        query_visual = "Ali Khamenei Iran supreme leader portrait Tehran"
+    
+    # STF
+    elif "stf" in texto_total or "supremo tribunal federal" in texto_total:
+        query_visual = "Supremo Tribunal Federal building Brasília Brazil"
+    
+    # CONGRESSO
+    elif "senado" in texto_total:
+        query_visual = "Senado Federal Brasília Brazil congress building"
+    
+    elif "câmara" in texto_total or "camara" in texto_total:
+        query_visual = "Câmara dos Deputados Brasília Brazil congress building"
+    
+    # GOVERNO BRASIL
+    elif "planalto" in texto_total or "presidente" in texto_total:
+        query_visual = "Palácio do Planalto Brasília Brazil government palace"
+
+    texto_total = (noticia["titulo"] + " " + noticia["texto"]).lower()
+
     imagem_final = imagem_engine.obter_imagem(
         noticia,
         tema_forcado,
