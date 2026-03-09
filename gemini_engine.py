@@ -19,7 +19,26 @@ class GeminiEngine:
             "gemini-2.5-pro",
             "gemini-2.5-flash"
         ]
-
+        
+    def _limpar_e_formatar_markdown(self, texto):
+            """
+            Mantido EXATAMENTE como no seu original:
+            Transforma negritos Markdown em HTML <strong> e remove marcadores de título e lista.
+            """
+            if not texto:
+                return ""
+                
+            # 1. Transforma **texto** em <strong>texto</strong>
+            texto = re.sub(r'\*\*(.*?)\*\*', r'<strong>\1</strong>', texto)
+            
+            # 2. Suprime os marcadores de título #, ##, ###, etc.
+            texto = re.sub(r'#+\s?', '', texto)
+            
+            # 3. Suprime asteriscos isolados (marcadores de lista ou itálico simples)
+            texto = re.sub(r'^\s*\*\s?', '', texto, flags=re.MULTILINE)
+            texto = texto.replace('*', '')
+            
+            return texto.strip()
 
     def gerar_analise_jornalistica(self, titulo, resumo, categoria):
 
@@ -69,19 +88,15 @@ Importante:
 
     def _executar_com_resiliencia(self, prompt):
         """
-        Lógica de 9 tentativas (3 ciclos x 3 modelos) conforme solicitado.
+        Lógica de 9 tentativas (3 ciclos x 3 modelos) 
+        sem alterar os prompts originais.
         """
-
         tentativa_total = 1
-
         for ciclo in range(1, 4):  # 3 passagens completas
-
             for modelo in self.modelos_fallback:
-
                 try:
-
                     print(f"Tentativa {tentativa_total}/9 | Ciclo {ciclo} | Usando: {modelo}")
-
+                    
                     response = self.client.models.generate_content(
                         model=modelo,
                         contents=prompt
@@ -89,20 +104,18 @@ Importante:
 
                     if response and hasattr(response, 'text') and response.text:
                         return response.text
-
+                
                 except Exception as e:
-
                     erro_msg = str(e).upper()
-
+                    # Identifica se o erro é de "Lotado" (503), "Timeout" ou "Cota"
                     if any(x in erro_msg for x in ["503", "UNAVAILABLE", "DEADLINE", "429", "QUOTA"]):
-                        print(f"⚠️ Modelo {modelo} indisponível ou lotado. Tentando próximo...")
-                        time.sleep(5)
-
+                        print(f"⚠️ Modelo {modelo} indisponível ou lotado. Pulando para o próximo...")
+                        time.sleep(5) # Pausa curta antes da próxima tentativa
                     else:
-                        print(f"❌ Erro no modelo {modelo}: {e}")
-
+                        print(f"❌ Erro crítico no modelo {modelo}: {e}")
+                
                 tentativa_total += 1
-
+        
         return None
 
 
