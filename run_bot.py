@@ -26,6 +26,93 @@ from template_blog import obter_esqueleto_html
 from gemini_engine import GeminiEngine
 from imagem_engine import ImageEngine
 
+import requests
+from bs4 import BeautifulSoup
+
+
+def extrair_imagem_noticia(entry):
+
+    # ======================================================
+    # 1️⃣ CAMPOS RSS MAIS COMUNS
+    # ======================================================
+
+    try:
+
+        if hasattr(entry, "media_content"):
+            for media in entry.media_content:
+                url = media.get("url", "")
+                if url:
+                    return url
+
+        if hasattr(entry, "media_thumbnail"):
+            for media in entry.media_thumbnail:
+                url = media.get("url", "")
+                if url:
+                    return url
+
+        if hasattr(entry, "links"):
+            for link in entry.links:
+                if link.get("type", "").startswith("image"):
+                    return link.get("href")
+
+        if hasattr(entry, "enclosures"):
+            for enc in entry.enclosures:
+                if enc.get("type", "").startswith("image"):
+                    return enc.get("href")
+
+    except:
+        pass
+
+
+    # ======================================================
+    # 2️⃣ IMAGEM DENTRO DO SUMMARY
+    # ======================================================
+
+    try:
+
+        if hasattr(entry, "summary"):
+            soup = BeautifulSoup(entry.summary, "html.parser")
+
+            img = soup.find("img")
+
+            if img and img.get("src"):
+                return img.get("src")
+
+    except:
+        pass
+
+
+    # ======================================================
+    # 3️⃣ OG:IMAGE DA PÁGINA DA NOTÍCIA
+    # ======================================================
+
+    try:
+
+        url = entry.link
+
+        headers = {
+            "User-Agent": "Mozilla/5.0"
+        }
+
+        r = requests.get(url, headers=headers, timeout=8)
+
+        soup = BeautifulSoup(r.text, "html.parser")
+
+        og = soup.find("meta", property="og:image")
+
+        if og and og.get("content"):
+            return og.get("content")
+
+        tw = soup.find("meta", attrs={"name": "twitter:image"})
+
+        if tw and tw.get("content"):
+            return tw.get("content")
+
+    except:
+        pass
+
+
+    return ""
 
 # ==========================================================
 # CONFIGURAÇÃO
@@ -196,6 +283,7 @@ def buscar_noticia(tipo):
                 titulo = entry.get("title","")
                 resumo = entry.get("summary","")
                 link = entry.get("link","")
+                imagem = extrair_imagem_noticia(entry)
 
                 if not titulo or not link:
                     continue
@@ -246,6 +334,7 @@ def buscar_noticia(tipo):
                     "titulo":titulo,
                     "texto":resumo,
                     "link":link,
+                    "imagem":imagem,
                     "score":score
                 })
 
