@@ -41,3 +41,4 @@
 2026-03-08|politica|https://images.pexels.com/photos/13640269/pexels-photo-13640269.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
 2026-03-09|politica|https://s2-g1.glbimg.com/IruHNo_xzX2VQYruNlK8YgsNUDs=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/S/K/fYL0F3Q5K6PUXTe1beLQ/ap26063304147652.jpg
 2026-03-09|policial|https://s2-g1.glbimg.com/9dJ-IzBX2DpMXevO8z4WiHORRC4=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/r/y/8q8YaBRJKcbkEOiJH7jQ/vitorino.jpg
+2026-03-09|policial|https://images.pexels.com/photos/35710201/pexels-photo-35710201.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
