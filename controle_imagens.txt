@@ -46,3 +46,4 @@
 2026-03-09|politica|https://s2-g1.glbimg.com/rh6OrRNguw0ikctd51DlkxFGmKM=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/M/d/iDrAXET3mIrDAbtiz0kA/fta20260303153.jpg
 2026-03-10|policial|https://s2-g1.glbimg.com/sQSNoH6pVli3V0BUCbQoCvsbkhE=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/q/u/AATsdQSfCSeajMGpxgyQ/foto-g1-.jpg
 2026-03-10|economia|https://images.pexels.com/photos/35710201/pexels-photo-35710201.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
+2026-03-10|politica|https://s2-g1.glbimg.com/XsJ8WFtq7v0zjRZr1DrlPJeO7jY=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2025/n/6/Ck3VvhToCTwdvAYR74zQ/2025-10-26t080027z-737688219-rc2kjha9zuwl-rtrmadp-3-asean-summit.jpg
