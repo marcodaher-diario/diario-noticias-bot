@@ -59,7 +59,7 @@ Diretrizes Obrigatórias:
 
 Tom e Estilo: Imparcial, técnico e analítico. Use linguagem clara, objetiva e evite adjetivos desnecessários ou termos sensacionalistas.
 
-Extensão: Entre 700 palavras no mínimo e 850 palavras no máximo. Desenvolva os parágrafos com profundidade.
+Extensão: Entre 600 palavras no mínimo e 750 palavras no máximo. Desenvolva os parágrafos com profundidade.
 
 Originalidade: O texto deve ser inédito, processando as informações e reescrevendo-as com uma narrativa própria (sem plágio).
 
