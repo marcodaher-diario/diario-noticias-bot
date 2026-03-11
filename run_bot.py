@@ -618,7 +618,7 @@ service.posts().insert(
     isDraft=False
 ).execute()
 
-    print("Postagem de teste concluída.")
+print("Postagem de teste concluída.")
 
 
 # ==========================================================
