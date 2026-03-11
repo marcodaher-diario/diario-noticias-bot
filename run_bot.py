@@ -608,14 +608,17 @@ def executar_modo_teste(tema_forcado=None, publicar=False):
 
     service = build("blogger", "v3", credentials=service)
 
-    service.posts().insert(
-        blogId=BLOG_ID,
-        body={
-            "title": noticia["titulo"],
-            "content": html
-        },
-        isDraft=not publicar
-    ).execute()
+   tags = gerar_tags_seo(noticia["titulo"], texto_ia)
+
+service.posts().insert(
+    blogId=BLOG_ID,
+    body={
+        "title": noticia["titulo"],
+        "content": html,
+        "labels": tags
+    },
+    isDraft=False
+).execute()
 
     print("Postagem de teste concluída.")
 
