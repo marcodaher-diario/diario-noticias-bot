@@ -552,40 +552,19 @@ def executar_modo_teste(tema_forcado=None, publicar=False):
         noticia["titulo"],
         noticia["texto"]
     )
+
     texto_total = (noticia["titulo"] + " " + noticia["texto"]).lower()
 
     if "stf" in texto_total or "supremo" in texto_total:
         query_visual = "Supremo Tribunal Federal Brasília Brazil building"
-    
     elif "senado" in texto_total:
         query_visual = "Senado Federal Brasília Brazil congress building"
-    
     elif "câmara" in texto_total or "camara" in texto_total:
         query_visual = "Câmara dos Deputados Brasília Brazil congress building"
-    
     elif "planalto" in texto_total:
         query_visual = "Palácio do Planalto Brasília Brazil government palace"
-
-    # IRÃ / KHAMENEI
-    if "khamenei" in texto_total or "irã" in texto_total or "ira" in texto_total:
+    elif "khamenei" in texto_total or "irã" in texto_total or "ira" in texto_total:
         query_visual = "Ali Khamenei Iran supreme leader portrait Tehran"
-    
-    # STF
-    elif "stf" in texto_total or "supremo tribunal federal" in texto_total:
-        query_visual = "Supremo Tribunal Federal building Brasília Brazil"
-    
-    # CONGRESSO
-    elif "senado" in texto_total:
-        query_visual = "Senado Federal Brasília Brazil congress building"
-    
-    elif "câmara" in texto_total or "camara" in texto_total:
-        query_visual = "Câmara dos Deputados Brasília Brazil congress building"
-    
-    # GOVERNO BRASIL
-    elif "planalto" in texto_total or "presidente" in texto_total:
-        query_visual = "Palácio do Planalto Brasília Brazil government palace"
-
-    texto_total = (noticia["titulo"] + " " + noticia["texto"]).lower()
 
     imagem_final = imagem_engine.obter_imagem(
         noticia,
@@ -602,23 +581,49 @@ def executar_modo_teste(tema_forcado=None, publicar=False):
 
     html = obter_esqueleto_html(dados)
 
-    service = Credentials.from_authorized_user_file("token.json")
-
-    service = build("blogger", "v3", credentials=service)
+    # validação de segurança
+    if not html or len(html.strip()) < 50:
+        raise Exception("HTML inválido ou vazio.")
 
     tags = gerar_tags_seo(noticia["titulo"], texto_ia)
+
+    if not tags or not isinstance(tags, list):
+        tags = ["Noticias"]
+
+    tags = [str(t).strip() for t in tags if str(t).strip()]
+
+    if not tags:
+        tags = ["Noticias"]
+
+    titulo_final = noticia["titulo"]
+
+    if not titulo_final or len(titulo_final.strip()) < 5:
+        titulo_final = "Notícia Atual"
+
+    print("Título:", titulo_final)
+    print("Tags:", tags)
+    print("Tamanho do HTML:", len(html))
+
+    if not publicar:
+        print("Modo teste sem publicação.")
+        return
+
+    creds = Credentials.from_authorized_user_file("token.json")
+    service = build("blogger", "v3", credentials=creds)
 
     service.posts().insert(
         blogId=BLOG_ID,
         body={
-            "title": noticia["titulo"],
+            "title": titulo_final,
             "content": html,
             "labels": tags
         },
         isDraft=False
     ).execute()
 
-    print("Postagem de teste concluída.")
+    print("Postagem publicada com sucesso.")
+
+    return noticia
 
 
 # ==========================================================
