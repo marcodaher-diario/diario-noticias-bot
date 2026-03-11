@@ -350,7 +350,7 @@ def buscar_noticia(tipo):
 # GERAR TAGS SEO - SISTEMA AVANÇADO DE NOTÍCIAS
 # ==========================================================
 
-    def gerar_tags_seo(titulo, texto):
+def gerar_tags_seo(titulo, texto):
 
     stopwords = [
         "com","como","para","porque","sobre","entre","de","do","da",
