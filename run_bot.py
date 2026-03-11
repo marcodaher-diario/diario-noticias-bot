@@ -346,6 +346,183 @@ def buscar_noticia(tipo):
 
     return None
 
+# ==========================================================
+# GERAR TAGS SEO - SISTEMA AVANÇADO DE NOTÍCIAS
+# ==========================================================
+
+def gerar_tags_seo(titulo, texto):
+
+    stopwords = [
+        "com","como","para","porque","sobre","entre","de","do","da",
+        "dos","das","em","um","uma","os","as","que","no","na","ao",
+        "aos","por","mais","menos","ser","estar","ter","se","sua",
+        "seu","suas","seus","também","muito","muitos","muitas"
+    ]
+
+    # ======================================================
+    # CLUSTERS PRINCIPAIS
+    # ======================================================
+
+    clusters = {
+
+        "política": [
+            "governo","planalto","presidente","ministro","congresso",
+            "senado","câmara","camara","stf","supremo","eleição",
+            "reforma","partido","deputado","senador"
+        ],
+
+        "economia": [
+            "economia","inflação","inflacao","selic","juros","dólar",
+            "pib","mercado","investimento","bolsa","ibovespa",
+            "ipca","emprego","desemprego"
+        ],
+
+        "segurança": [
+            "polícia","policia","crime","assassinato","homicídio",
+            "latrocínio","tráfico","operação","prisão","suspeito",
+            "delegacia","investigação"
+        ],
+
+        "justiça": [
+            "tribunal","justiça","juiz","sentença","processo",
+            "acusação","denúncia","investigação"
+        ],
+
+        "internacional": [
+            "guerra","otan","china","russia","ucrânia","israel",
+            "irã","eua","europa"
+        ]
+    }
+
+    # ======================================================
+    # ENTIDADES IMPORTANTES
+    # ======================================================
+
+    entidades = {
+
+        "stf": "Supremo Tribunal Federal",
+        "supremo": "Supremo Tribunal Federal",
+        "senado": "Senado Federal",
+        "câmara": "Câmara dos Deputados",
+        "camara": "Câmara dos Deputados",
+        "planalto": "Palácio do Planalto",
+        "congresso": "Congresso Nacional",
+        "polícia federal": "Polícia Federal",
+        "pf": "Polícia Federal",
+        "banco central": "Banco Central",
+        "ibovespa": "Ibovespa",
+        "petrobras": "Petrobras",
+        "vale": "Vale",
+        "onu": "ONU",
+        "otan": "OTAN"
+    }
+
+    # ======================================================
+    # ENTIDADES DE PESSOAS (FIGURAS PÚBLICAS)
+    # ======================================================
+
+    pessoas = {
+        "lula": "Lula",
+        "bolsonaro": "Bolsonaro",
+        "moraes": "Alexandre de Moraes",
+        "barroso": "Luís Roberto Barroso",
+        "fachin": "Edson Fachin",
+        "putin": "Vladimir Putin",
+        "biden": "Joe Biden",
+        "netanyahu": "Benjamin Netanyahu",
+        "xi": "Xi Jinping"
+    }
+
+    conteudo = f"{titulo} {texto[:200]}"
+    texto_total = conteudo.lower()
+
+    palavras_titulo = re.findall(r'\b[a-zà-ÿ]{4,}\b', titulo.lower())
+    palavras_texto = re.findall(r'\b[a-zà-ÿ]{4,}\b', texto_total)
+
+    tags = []
+
+    # ======================================================
+    # TAGS DO TÍTULO
+    # ======================================================
+
+    for p in palavras_titulo:
+        if p not in stopwords:
+            tag = p.capitalize()
+            if tag not in tags:
+                tags.append(tag)
+
+    # ======================================================
+    # TAGS DO TEXTO
+    # ======================================================
+
+    for p in palavras_texto:
+        if p not in stopwords:
+            tag = p.capitalize()
+            if tag not in tags:
+                tags.append(tag)
+
+    # ======================================================
+    # ENTIDADES
+    # ======================================================
+
+    for chave, entidade in entidades.items():
+        if chave in texto_total and entidade not in tags:
+            tags.append(entidade)
+
+    # ======================================================
+    # PESSOAS IMPORTANTES
+    # ======================================================
+
+    for chave, nome in pessoas.items():
+        if chave in texto_total and nome not in tags:
+            tags.append(nome)
+
+    # ======================================================
+    # CLUSTERS
+    # ======================================================
+
+    for cluster, palavras in clusters.items():
+        for palavra in palavras:
+            if palavra in texto_total:
+                tag_cluster = cluster.capitalize()
+                if tag_cluster not in tags:
+                    tags.append(tag_cluster)
+                break
+
+    # ======================================================
+    # TAGS FIXAS
+    # ======================================================
+
+    tags_fixas = [
+        "Notícias",
+        "Brasil",
+        "Diário de Notícias",
+        "Marco Daher"
+    ]
+
+    for tf in tags_fixas:
+        if tf not in tags:
+            tags.append(tf)
+
+    # ======================================================
+    # LIMITADOR DE 200 CARACTERES
+    # ======================================================
+
+    resultado = []
+    tamanho_atual = 0
+
+    for tag in tags:
+
+        tamanho_tag = len(tag)
+
+        if tamanho_atual + tamanho_tag + 2 <= 200:
+            resultado.append(tag)
+            tamanho_atual += tamanho_tag + 2
+        else:
+            break
+
+    return resultado
+
 
 # ==========================================================
 # MODO TESTE
