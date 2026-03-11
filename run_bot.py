@@ -606,7 +606,7 @@ def executar_modo_teste(tema_forcado=None, publicar=False):
 
     service = build("blogger", "v3", credentials=service)
 
-   tags = gerar_tags_seo(noticia["titulo"], texto_ia)
+    tags = gerar_tags_seo(noticia["titulo"], texto_ia)
 
 service.posts().insert(
     blogId=BLOG_ID,
