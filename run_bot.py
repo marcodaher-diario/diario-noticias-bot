@@ -347,7 +347,7 @@ def buscar_noticia(tipo):
     return None
 
 # ==========================================================
-# GERAR TAGS SEO - SISTEMA AVANÇADO DE NOTÍCIAS
+# GERAR TAGS SEO - SISTEMA DE CLUSTERS (DIÁRIO DE NOTÍCIAS)
 # ==========================================================
 
 def gerar_tags_seo(titulo, texto):
@@ -360,7 +360,7 @@ def gerar_tags_seo(titulo, texto):
     ]
 
     # ======================================================
-    # CLUSTERS PRINCIPAIS
+    # CLUSTERS PRINCIPAIS DE NOTÍCIAS
     # ======================================================
 
     clusters = {
@@ -368,29 +368,29 @@ def gerar_tags_seo(titulo, texto):
         "política": [
             "governo","planalto","presidente","ministro","congresso",
             "senado","câmara","camara","stf","supremo","eleição",
-            "reforma","partido","deputado","senador"
+            "deputado","senador","reforma"
         ],
 
         "economia": [
             "economia","inflação","inflacao","selic","juros","dólar",
-            "pib","mercado","investimento","bolsa","ibovespa",
-            "ipca","emprego","desemprego"
+            "pib","mercado","emprego","desemprego","investimento",
+            "ibovespa","ipca"
         ],
 
         "segurança": [
             "polícia","policia","crime","assassinato","homicídio",
-            "latrocínio","tráfico","operação","prisão","suspeito",
-            "delegacia","investigação"
+            "latrocínio","latrocinio","tráfico","prisão","suspeito",
+            "investigação","delegacia","operação"
         ],
 
         "justiça": [
             "tribunal","justiça","juiz","sentença","processo",
-            "acusação","denúncia","investigação"
+            "acusação","denúncia","denuncia","investigação"
         ],
 
         "internacional": [
             "guerra","otan","china","russia","ucrânia","israel",
-            "irã","eua","europa"
+            "irã","ira","eua","europa"
         ]
     }
 
@@ -399,7 +399,6 @@ def gerar_tags_seo(titulo, texto):
     # ======================================================
 
     entidades = {
-
         "stf": "Supremo Tribunal Federal",
         "supremo": "Supremo Tribunal Federal",
         "senado": "Senado Federal",
@@ -418,7 +417,7 @@ def gerar_tags_seo(titulo, texto):
     }
 
     # ======================================================
-    # ENTIDADES DE PESSOAS (FIGURAS PÚBLICAS)
+    # PESSOAS IMPORTANTES
     # ======================================================
 
     pessoas = {
@@ -433,36 +432,37 @@ def gerar_tags_seo(titulo, texto):
         "xi": "Xi Jinping"
     }
 
-    conteudo = f"{titulo} {texto[:200]}"
-    texto_total = conteudo.lower()
+    # ======================================================
+    # PALAVRAS DO TÍTULO
+    # ======================================================
 
     palavras_titulo = re.findall(r'\b[a-zà-ÿ]{4,}\b', titulo.lower())
-    palavras_texto = re.findall(r'\b[a-zà-ÿ]{4,}\b', texto_total)
+
+    conteudo = f"{titulo} {texto[:200]}"
+    palavras_texto = re.findall(r'\b[a-zà-ÿ]{4,}\b', conteudo.lower())
+
+    texto_total = conteudo.lower()
 
     tags = []
 
     # ======================================================
-    # TAGS DO TÍTULO
+    # TAGS DO TÍTULO (PRIORIDADE)
     # ======================================================
 
     for p in palavras_titulo:
-        if p not in stopwords:
-            tag = p.capitalize()
-            if tag not in tags:
-                tags.append(tag)
+        if p not in stopwords and p.capitalize() not in tags:
+            tags.append(p.capitalize())
 
     # ======================================================
     # TAGS DO TEXTO
     # ======================================================
 
     for p in palavras_texto:
-        if p not in stopwords:
-            tag = p.capitalize()
-            if tag not in tags:
-                tags.append(tag)
+        if p not in stopwords and p.capitalize() not in tags:
+            tags.append(p.capitalize())
 
     # ======================================================
-    # ENTIDADES
+    # ENTIDADES IMPORTANTES
     # ======================================================
 
     for chave, entidade in entidades.items():
@@ -484,18 +484,20 @@ def gerar_tags_seo(titulo, texto):
     for cluster, palavras in clusters.items():
         for palavra in palavras:
             if palavra in texto_total:
-                tag_cluster = cluster.capitalize()
-                if tag_cluster not in tags:
-                    tags.append(tag_cluster)
+                cluster_formatado = cluster.capitalize()
+                if cluster_formatado not in tags:
+                    tags.append(cluster_formatado)
                 break
 
     # ======================================================
-    # TAGS FIXAS
+    # TAGS FIXAS DO BLOG
     # ======================================================
 
     tags_fixas = [
         "Diário de Notícias",
-        "Marco Daher"
+        "Notícias",
+        "Brasil",
+        "Atualidades"
     ]
 
     for tf in tags_fixas:
