@@ -52,3 +52,4 @@
 2026-03-11|politica|https://www.camara.leg.br/midias/image/2026/03/img20251015103954836-768x473.jpg
 2026-03-11|policial|https://s2-g1.glbimg.com/pBxokZj28Ly7FujWdS0mdIq7H1I=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/Y/s/o4x4RMTdSiCjz8pMH8AQ/whatsapp-image-2026-03-11-at-13.21.51-1-.jpeg
 2026-03-11|politica|https://s2-g1.glbimg.com/gBAZn-mFTSip699sqlyWnTxXKRY=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2025/F/0/CQvyErSombvRyHuuEEnQ/cultivares-arabica-b-jc-25-08-25.mov-snapshot-05.20.965.jpg
+2026-03-12|policial|https://s2-g1.glbimg.com/lzC7jyvkf0xEQVezFQUdfR-hbvk=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/w/V/OI5XpXQaWdUqcJasp21g/globo-canal-4-20260311-2000-frame-36099.jpeg
