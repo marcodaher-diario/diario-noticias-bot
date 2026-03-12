@@ -98,13 +98,11 @@ text-transform:uppercase !important;
 h3.post-title.entry-title a{{
 display:block !important;
 color:{COR_MD} !important;
-text-decoration:none !important;
 }}
 
 .post-title a:hover,
 .entry-title a:hover{{
 color:rgb(10,80,140) !important;
-text-decoration:none !important;
 }}
 
 .post-container {{
