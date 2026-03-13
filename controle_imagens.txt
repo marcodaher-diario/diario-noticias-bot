@@ -60,3 +60,4 @@
 2026-03-13|policial|https://s2-g1.glbimg.com/wkyMhzLhI6qFrQGJE7xOv-vJc9Q=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/Z/m/Wc0JW9QAyrLl2adta5mw/625611e5-594b-4e30-a545-b15069f2272c.jpg
 2026-03-13|political|https://s2-g1.glbimg.com/zsNO24Woj_yFErkYGl8qPSfJMVc=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/1/Q/Pae70VSrOYsvUqpGKHFQ/league-of-legends.jpg
 2026-03-13|economia|https://s2-g1.glbimg.com/mSUETdK1TF37i1SoIMmsKUEVVfo=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/A/7/QzU6BpSmCqBjUo2f2Zjw/feira-d-mercado-de-origem.jpg
+2026-03-13|policial|https://s2-g1.glbimg.com/G-R-5M1oK9QgrU8qLbsUKOLA83I=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2025/v/O/AuufWqT2O3QKouEPvzsg/sorriso-dp-nova.jpg
