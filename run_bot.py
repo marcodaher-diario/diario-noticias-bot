@@ -504,25 +504,31 @@ def gerar_tags_seo(titulo, texto):
         if tf not in tags:
             tags.append(tf)
 
-    # ======================================================
-    # LIMITADOR DE 200 CARACTERES
-    # ======================================================
+# ======================================================
+# LIMITADOR DE 200 CARACTERES
+# ======================================================
 
-    resultado = []
-    tamanho_atual = 0
+resultado = []
+tamanho_atual = 0
 
-    for tag in tags:
+for tag in tags:
 
-        tamanho_tag = len(tag)
+    # evita palavras muito curtas ou ruins
+    if len(tag) < 4:
+        continue
 
-        if tamanho_atual + tamanho_tag + 2 <= 200:
-            resultado.append(tag)
-            tamanho_atual += tamanho_tag + 2
-        else:
-            break
+    tamanho_tag = len(tag)
 
-    return resultado
+    if tamanho_atual + tamanho_tag + 2 <= 200:
+        resultado.append(tag)
+        tamanho_atual += tamanho_tag + 2
+    else:
+        break
 
+# limite adicional de segurança
+resultado = resultado[:15]
+
+return resultado
 
 # ==========================================================
 # MODO TESTE
