@@ -56,3 +56,4 @@
 2026-03-12|policial|https://s2-g1.glbimg.com/1NnY8_9gYcEH-LV8g9ZWvWDsXpE=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/H/b/nyVn2CTrmucW8kvVBc4Q/410744a7-ab9d-4a6f-a5b8-9f8dfa0f91a0.jpeg
 2026-03-12|economia|https://s2-g1.glbimg.com/9XeY9EkFT8Lk-5XODUutyoElF98=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/8/4/VLvTvnQ8W9wiw85bn06w/canva-2026-03-11t104030.962.png
 2026-03-12|politica|https://images.pexels.com/photos/17291169/pexels-photo-17291169.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
+2026-03-13|economia|https://s2-g1.glbimg.com/WWDRGDMxGNQZCy9ypuF1ackcQ90=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2025/a/S/u3TO0vRgyBsplTZYCmeA/2025-02-04t203004z-2-lynxmpel130tf-rtroptp-4-usa-trump-migration-colombia.jpg
