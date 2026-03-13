@@ -75,7 +75,7 @@ Subtítulos: Utilize pelo menos dois subtítulos para organizar a progressão te
 
 Corpo: Desenvolva os fatos de forma cronológica ou por relevância de impacto.
 
-Conclusão Analítica: Encerre com uma análise técnica sobre as implicações futuras ou o desdobramento esperado dos fatos, sem cair no opinativo subjetivo.
+Conclusão: Encerre o texto com uma análise técnica sobre as implicações futuras ou o desdobramento esperado dos fatos, sem cair no opinativo subjetivo.
 
 Importante:
 - Não escreva explicações externas.
