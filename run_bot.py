@@ -566,7 +566,7 @@ def executar_modo_teste(tema_forcado=None, publicar=False):
     elif "planalto" in texto_total:
         query_visual = "Palácio do Planalto Brasília Brazil government palace"
     elif "khamenei" in texto_total or "irã" in texto_total or "ira" in texto_total:
-        query_visual = "Ali Khamenei Iran supreme leader portrait Tehran"
+        query_visual = "Khamenei Iran supreme leader portrait Tehran"
 
     imagem_final = imagem_engine.obter_imagem(
         noticia,
