@@ -57,3 +57,4 @@
 2026-03-12|economia|https://s2-g1.glbimg.com/9XeY9EkFT8Lk-5XODUutyoElF98=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/8/4/VLvTvnQ8W9wiw85bn06w/canva-2026-03-11t104030.962.png
 2026-03-12|politica|https://images.pexels.com/photos/17291169/pexels-photo-17291169.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
 2026-03-13|economia|https://s2-g1.glbimg.com/WWDRGDMxGNQZCy9ypuF1ackcQ90=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2025/a/S/u3TO0vRgyBsplTZYCmeA/2025-02-04t203004z-2-lynxmpel130tf-rtroptp-4-usa-trump-migration-colombia.jpg
+2026-03-13|policial|https://s2-g1.glbimg.com/wkyMhzLhI6qFrQGJE7xOv-vJc9Q=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/Z/m/Wc0JW9QAyrLl2adta5mw/625611e5-594b-4e30-a545-b15069f2272c.jpg
