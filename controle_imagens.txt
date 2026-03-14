@@ -63,3 +63,4 @@
 2026-03-13|policial|https://s2-g1.glbimg.com/G-R-5M1oK9QgrU8qLbsUKOLA83I=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2025/v/O/AuufWqT2O3QKouEPvzsg/sorriso-dp-nova.jpg
 2026-03-13|politica|https://s2-g1.glbimg.com/xUbdoZ_LAgRUUjxSTD9l70Vqauk=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2024/D/B/r4mvI7TBuQuVyD04dRpQ/captura-de-tela-2024-07-29-110412.png
 2026-03-14|policial|https://s2-g1.glbimg.com/G43NgHw3zbeLhHo-sLMMDWdzRHg=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/1/N/SY28pMTjCZzwDmiDUDRg/bg-vermelho-2026-03-13t112844.603.png
+2026-03-14|economia|https://s2-g1.glbimg.com/QDqCFfrUa-EDaufV5f-L599AMkE=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/V/d/UmBI5dT6qCa2jqYEaOJQ/0b4b1784-0eed-40ae-8d47-28fb924abc53.jpeg
