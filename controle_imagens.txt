@@ -66,3 +66,4 @@
 2026-03-14|economia|https://s2-g1.glbimg.com/QDqCFfrUa-EDaufV5f-L599AMkE=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/V/d/UmBI5dT6qCa2jqYEaOJQ/0b4b1784-0eed-40ae-8d47-28fb924abc53.jpeg
 2026-03-14|politica|https://s2-g1.glbimg.com/dCfW8-SD6meE3Npo9YWFzEeCZSs=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/2/l/OzGADBTAGY5l5j4RqSFw/696e4b60-1e57-11f1-be1b-3f7622e5cadb.jpg
 2026-03-15|policial|https://images.pexels.com/photos/29786929/pexels-photo-29786929.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
+2026-03-15|economia|https://s2-g1.glbimg.com/pxWwoHKyYHVAhAIIz_D5l5fGcH4=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2023/U/5/ZKdD9yRpG6lu6GSHF3eQ/whatsapp-image-2023-10-01-at-12.48.36-1-.jpeg
