@@ -142,7 +142,7 @@ font-size:20px;
 font-weight:bold;
 text-transform:uppercase;
 margin-top:25px;
-margin-bottom:10px;
+margin-bottom:10px !important;
 }}
 
 .paragrafo {{
