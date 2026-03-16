@@ -16,16 +16,16 @@ def formatar_texto(texto, titulo_principal):
 
         linha_limpa = linha.strip()
 
+        # converter **negrito**
+        linha_limpa = re.sub(r"\*\*([^\*]+)\*\*", r"<strong>\1</strong>", linha_limpa)
+
         # remove markdown
-        linha_limpa = linha_limpa.strip("#* ").strip()
+        linha_limpa = linha_limpa.strip("# ").strip()
 
         # remove repetição do título
         if linha_limpa.lower() == titulo_norm:
             continue
-
-        # converter **negrito**
-        linha_limpa = re.sub(r"\*\*(.*?)\*\*", r"<strong>\1</strong>", linha_limpa)
-
+            
         palavras = linha_limpa.split()
 
         # =========================
