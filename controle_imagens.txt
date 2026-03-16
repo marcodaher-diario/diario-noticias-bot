@@ -75,3 +75,4 @@
 2026-03-16|policial|https://s2-g1.glbimg.com/ZSOPK0dce_b8eSZNs9fAKmmcd_Q=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/a/E/3YRmfFSNWti3wtwNfhKw/gisele-alves-santana-e-geraldo-leite-rosa-neto.jpg
 2026-03-16|policial|https://s2-g1.glbimg.com/wryHEIBfIL58OLh2hPsrIbiYaEE=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/C/Z/0vQF5rTXKHrfcaKY0qag/novo-projeto.png
 2026-03-16|policial|https://images.pexels.com/photos/31468386/pexels-photo-31468386.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
+2026-03-16|politica|https://www.camara.leg.br/midias/image/2026/03/img20260210113307234-768x473.jpg
