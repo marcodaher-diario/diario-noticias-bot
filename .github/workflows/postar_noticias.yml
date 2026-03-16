@@ -62,14 +62,13 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-
-          [ -f posts_publicados.txt ] && git add posts_publicados.txt
-          [ -f controle_diario.txt ] && git add controle_diario.txt
-          [ -f controle_imagens.txt ] && git add controle_imagens.txt
-
-          if git diff --staged --quiet; then
+      
+          git add .
+      
+          if git diff --cached --quiet; then
             echo "Nenhuma alteração para commit."
           else
             git commit -m "Atualiza arquivos de controle automaticamente"
-            git push
+            git pull --rebase origin main || true
+            git push origin main
           fi
