@@ -24,9 +24,12 @@ def formatar_texto(texto, titulo_principal):
         linha_limpa = re.sub(r"\*\*(.*?)\*\*", r"<strong>\1</strong>", linha_limpa)
 
         # =========================
-        # H2 DEFINIDO PELA IA
+        # DETECÇÃO DE SUBTÍTULO
         # =========================
-        if linha.startswith("#"):
+        if (
+            linha.startswith("#") 
+            or (len(linha_limpa.split()) <= 15 and not linha_limpa.endswith("."))
+        ):
 
             html_final += f"""
 <h2 class="subtitulo">
@@ -43,7 +46,6 @@ def formatar_texto(texto, titulo_principal):
 """
 
     return html_final
-
 # ==============================
 # MONTAGEM DO HTML
 # ==============================
