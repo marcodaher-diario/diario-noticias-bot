@@ -6,44 +6,77 @@ def formatar_texto(texto, titulo_principal):
     if texto is None:
         return ""
 
-    linhas = [l.strip() for l in texto.split("\n") if l.strip()]
+    linhas = [l.rstrip() for l in texto.split("\n") if l.strip()]
     html_final = ""
     titulo_norm = titulo_principal.strip().lower()
 
+    lista_aberta = False
+
     for linha in linhas:
 
-        linha_limpa = linha.strip("#* ").strip()
+        linha_limpa = linha.strip()
 
-        # Remove repetição do título
+        # remove markdown
+        linha_limpa = linha_limpa.strip("#* ").strip()
+
+        # remove repetição do título
         if linha_limpa.lower() == titulo_norm:
             continue
 
-        # =========================
-        # CONVERTER **NEGRITO**
-        # =========================
+        # converter **negrito**
         linha_limpa = re.sub(r"\*\*(.*?)\*\*", r"<strong>\1</strong>", linha_limpa)
 
+        palavras = linha_limpa.split()
+
         # =========================
-        # DETECÇÃO DE SUBTÍTULO
+        # DETECTAR LISTAS
         # =========================
-        if (
-            linha.startswith("#") 
-            or (len(linha_limpa.split()) <= 15 and not linha_limpa.endswith("."))
-        ):
+        if linha.startswith("- ") or linha.startswith("* ") or re.match(r"^\d+\.", linha):
+
+            if not lista_aberta:
+                html_final += "\n<ul class='lista-post'>\n"
+                lista_aberta = True
+
+            item = re.sub(r"^[-*\d. ]+", "", linha_limpa)
+
+            html_final += f"<li>{item}</li>\n"
+            continue
+
+        else:
+            if lista_aberta:
+                html_final += "</ul>\n"
+                lista_aberta = False
+
+        # =========================
+        # DETECÇÃO DE SUBTÍTULO (H2)
+        # =========================
+        condicao_subtitulo = (
+            3 <= len(palavras) <= 22
+            and not linha_limpa.endswith(".")
+            and not linha_limpa.endswith(":")
+            and linha_limpa[0].isupper()
+        )
+
+        if condicao_subtitulo:
 
             html_final += f"""
 <h2 class="subtitulo">
 {linha_limpa}
 </h2>
 """
+            continue
 
-        else:
-
-            html_final += f"""
+        # =========================
+        # PARÁGRAFO NORMAL
+        # =========================
+        html_final += f"""
 <p class="paragrafo">
 {linha_limpa}
 </p>
 """
+
+    if lista_aberta:
+        html_final += "</ul>\n"
 
     return html_final
 # ==============================
