@@ -71,3 +71,4 @@
 2026-03-16|policial|https://s2-g1.glbimg.com/1IU4Rp5uSpos-Wd3aylVXGFJ9Y4=/1280x0/filters:format(jpeg)/https://thumbor.globoi.com/unsafe/fit-in/1280x720/s03.video.glbimg.com/deo/vi/46/63/14426346
 2026-03-16|politica|https://s2-g1.glbimg.com/IHZBV9afqElSJY3zftsFz2LfCkU=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/b/B/BNZdbBSUWLY1hfQAvsRQ/ap26075021725997.jpg
 2026-03-16|economia|https://s2-g1.glbimg.com/t5FIEbqVAjnZj7K6vUsrsRRmWKA=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2025/m/E/H41pP5To6gy44N8nBi1g/regras-entrevista-df2.transfer-xcode-mix-655-frame-43.jpeg
+2026-03-16|policial|https://images.pexels.com/photos/7714795/pexels-photo-7714795.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
