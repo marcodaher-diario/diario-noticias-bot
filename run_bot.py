@@ -640,7 +640,6 @@ def executar_modo_teste(tema_forcado=None, publicar=False):
 
 if __name__ == "__main__":
 
-    print("Bot iniciado:", agora)
 
     if os.getenv("TEST_MODE") == "true":
 
@@ -656,6 +655,8 @@ if __name__ == "__main__":
         exit()
 
     agora = obter_horario_brasilia()
+
+    print("Bot iniciado:", agora)
 
     min_atual = agora.hour * 60 + agora.minute
 
