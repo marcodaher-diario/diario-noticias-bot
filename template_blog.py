@@ -10,9 +10,7 @@ def formatar_texto(texto, titulo_principal):
     html_final = ""
     titulo_norm = titulo_principal.strip().lower()
 
-    contador_paragrafos = 0
-
-    for i, linha in enumerate(linhas):
+    for linha in linhas:
 
         linha_limpa = linha.strip("#* ").strip()
 
@@ -26,11 +24,9 @@ def formatar_texto(texto, titulo_principal):
         linha_limpa = re.sub(r"\*\*(.*?)\*\*", r"<strong>\1</strong>", linha_limpa)
 
         # =========================
-        # DETECÇÃO DE SUBTÍTULO
+        # H2 DEFINIDO PELA IA
         # =========================
-        if i == 0 or linha.startswith("#") or (len(linha_limpa.split()) <= 15 and not linha_limpa.endswith(".")):
-
-            contador_paragrafos = 0
+        if linha.startswith("#"):
 
             html_final += f"""
 <h2 class="subtitulo">
@@ -40,21 +36,6 @@ def formatar_texto(texto, titulo_principal):
 
         else:
 
-            contador_paragrafos += 1
-
-            # =========================
-            # SUBTÍTULO AUTOMÁTICO
-            # =========================
-            if contador_paragrafos == 3 and len(linha_limpa.split()) > 25:
-
-                html_final += """
-<h2 class="subtitulo">
-ANÁLISE DOS DESDOBRAMENTOS
-</h2>
-"""
-
-                contador_paragrafos = 0
-
             html_final += f"""
 <p class="paragrafo">
 {linha_limpa}
@@ -62,7 +43,6 @@ ANÁLISE DOS DESDOBRAMENTOS
 """
 
     return html_final
-
 
 # ==============================
 # MONTAGEM DO HTML
