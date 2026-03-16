@@ -640,6 +640,8 @@ def executar_modo_teste(tema_forcado=None, publicar=False):
 
 if __name__ == "__main__":
 
+    print("Bot iniciado:", agora)
+
     if os.getenv("TEST_MODE") == "true":
 
         tema_teste = os.getenv("TEST_TEMA","policial")
@@ -659,6 +661,10 @@ if __name__ == "__main__":
 
     data_hoje = agora.strftime("%Y-%m-%d")
 
+    print("Horário atual:", agora)
+
+    print("Minuto atual:", min_atual)
+
     horario_escolhido = None
 
     tema_escolhido = None
@@ -675,11 +681,13 @@ if __name__ == "__main__":
                 break
 
     if not horario_escolhido:
+        print("Fora da janela de postagem.")
         exit()
 
     noticia = buscar_noticia(tema_escolhido)
 
     if not noticia:
+        print("Nenhuma notícia encontrada.")
         exit()
 
     executar_modo_teste(tema_escolhido, True)
