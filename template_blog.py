@@ -123,35 +123,35 @@ color:rgb(10,80,140) !important;
 .post-container {{
 max-width:900px;
 margin:auto;
-font-family:Arial,sans-serif;
+font-family:Arial,sans-serif !important;
 }}
 
 .post-img {{
-width:100%;
-height:auto;
-aspect-ratio:16/9;
-object-fit:cover;
-border-radius:8px;
+width:100% !important;
+height:auto !important;
+aspect-ratio:16/9 !important;
+object-fit:cover !important;
+border-radius:8px !important;
 }}
 
 .subtitulo {{
-text-align:left;
-font-family:Arial;
-color:{COR_MD};
-font-size:20px;
-font-weight:bold;
-text-transform:uppercase;
-margin-top:25px;
+text-align:left !important;
+font-family:Arial !important;
+color:{COR_MD} !important;
+font-size:20px !important;
+font-weight:bold !important;
+text-transform:uppercase !important;
+margin-top:25px !important;
 margin-bottom:10px !important;
 }}
 
 .paragrafo {{
-text-align:justify;
-font-family:Arial;
-color:{COR_MD};
-font-size:18px;
-line-height:1.6;
-margin-bottom:15px;
+text-align:justify !important;
+font-family:Arial !important;
+color:{COR_MD} !important;
+font-size:18px !important;
+line-height:1.6 !important;
+margin-bottom:15px !important;
 }}
 
 </style>
