@@ -14,19 +14,19 @@ def formatar_texto(texto, titulo_principal):
 
     for i, linha in enumerate(linhas):
 
-    linha_limpa = linha.strip()
+        linha_limpa = linha.strip()
+    
+        # converter **negrito**
+        linha_limpa = re.sub(r"\*\*([^\*]+)\*\*", r"<strong>\1</strong>", linha_limpa)
+    
+        # remove markdown
+        linha_limpa = linha_limpa.strip("# ").strip()
+    
+        # remove repetição do título
+        if linha_limpa.lower() == titulo_norm:
+            continue
 
-    # converter **negrito**
-    linha_limpa = re.sub(r"\*\*([^\*]+)\*\*", r"<strong>\1</strong>", linha_limpa)
-
-    # remove markdown
-    linha_limpa = linha_limpa.strip("# ").strip()
-
-    # remove repetição do título
-    if linha_limpa.lower() == titulo_norm:
-        continue
-
-    palavras = linha_limpa.split()
+        palavras = linha_limpa.split()
 
         # =========================
         # DETECTAR LISTAS
