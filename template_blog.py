@@ -12,21 +12,21 @@ def formatar_texto(texto, titulo_principal):
 
     lista_aberta = False
 
-    for linha in linhas:
+    for i, linha in enumerate(linhas):
 
-        linha_limpa = linha.strip()
+    linha_limpa = linha.strip()
 
-        # converter **negrito**
-        linha_limpa = re.sub(r"\*\*([^\*]+)\*\*", r"<strong>\1</strong>", linha_limpa)
+    # converter **negrito**
+    linha_limpa = re.sub(r"\*\*([^\*]+)\*\*", r"<strong>\1</strong>", linha_limpa)
 
-        # remove markdown
-        linha_limpa = linha_limpa.strip("# ").strip()
+    # remove markdown
+    linha_limpa = linha_limpa.strip("# ").strip()
 
-        # remove repetição do título
-        if linha_limpa.lower() == titulo_norm:
-            continue
-            
-        palavras = linha_limpa.split()
+    # remove repetição do título
+    if linha_limpa.lower() == titulo_norm:
+        continue
+
+    palavras = linha_limpa.split()
 
         # =========================
         # DETECTAR LISTAS
@@ -51,10 +51,13 @@ def formatar_texto(texto, titulo_principal):
         # DETECÇÃO DE SUBTÍTULO (H2)
         # =========================
         condicao_subtitulo = (
-            3 <= len(palavras) <= 22
-            and not linha_limpa.endswith(".")
-            and not linha_limpa.endswith(":")
-            and linha_limpa[0].isupper()
+            (i == 0 and 3 <= len(palavras) <= 22)
+            or (
+                3 <= len(palavras) <= 22
+                and not linha_limpa.endswith(".")
+                and not linha_limpa.endswith(":")
+                and linha_limpa[0].isupper()
+            )
         )
 
         if condicao_subtitulo:
