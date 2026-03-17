@@ -78,3 +78,4 @@
 2026-03-16|politica|https://www.camara.leg.br/midias/image/2026/03/img20260210113307234-768x473.jpg
 2026-03-16|politica|https://s2-g1.glbimg.com/6H8OUiyi1DlWd43t6aIT_U3hxJA=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/a/3/Xx7sHWQ3iqihDG1ncXUg/img-5539.jpeg
 2026-03-17|politica|https://s2-g1.glbimg.com/Epikrq6jI-5IyDL9B2yltNYUuQw=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/O/Y/VN0BK0SI6vcoTu6bUuqQ/globo-canal-4-20260316-2000-frame-81392.jpeg
+2026-03-17|policial|https://s2-g1.glbimg.com/trArO0o1e93UWGk2_m3kHcxKPpY=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2025/O/i/BpR8sNRjy48xDvxKIdAw/th-e-bacellar.jpg
