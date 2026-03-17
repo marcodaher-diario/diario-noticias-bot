@@ -60,7 +60,7 @@ h3.post-title.entry-title{{
 text-align:center !important;
 margin-top:10px !important;
 margin-bottom:20px !important;
-font-family:Arial, sans-serif !important;
+font-family:sans-serif !important;
 font-size:28px !important;
 font-weight:bold !important;
 text-transform:uppercase !important;
@@ -81,7 +81,7 @@ color:rgb(10,80,140) !important;
 .post-container {{
 max-width:900px;
 margin:auto;
-font-family:Arial,sans-serif !important;
+font-family:sans-serif !important;
 }}
 
 .post-img {{
@@ -94,7 +94,7 @@ border-radius:8px !important;
 
 .subtitulo {{
 text-align:left !important;
-font-family:Arial,sans-serif !important;
+font-family:sans-serif !important;
 color:{COR_MD} !important;
 font-size:20px !important;
 font-weight:bold !important;
@@ -105,7 +105,7 @@ margin-bottom:10px !important;
 
 .paragrafo {{
 text-align:justify !important;
-font-family:Arial,sans-serif !important;
+font-family:sans-serif !important;
 color:{COR_MD} !important;
 font-size:18px !important;
 line-height:1.6 !important;
