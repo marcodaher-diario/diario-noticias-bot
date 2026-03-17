@@ -11,20 +11,19 @@ def formatar_texto(texto, titulo_principal):
     titulo_norm = titulo_principal.strip().lower()
 
     lista_aberta = False
-    primeira_linha = True
 
     for linha in linhas:
 
         linha_limpa = linha.strip()
 
         # converter **negrito**
-        linha_limpa = re.sub(r"\*\*([^\*]+)\*\*", r"<strong>\1</strong>", linha_limpa)
+        linha_limpa = re.sub(r"\*\*(.*?)\*\*", r"<strong>\1</strong>", linha_limpa)
 
-        # remover markdown simples
+        # remove markdown
         linha_limpa = linha_limpa.strip("# ").strip()
 
-        # evitar remover conteúdo importante
-        if linha_limpa.lower() == titulo_norm and len(linha_limpa.split()) > 6:
+        # remove repetição do título
+        if linha_limpa.lower() == titulo_norm:
             continue
 
         palavras = linha_limpa.split()
@@ -51,15 +50,11 @@ def formatar_texto(texto, titulo_principal):
         # =========================
         # DETECÇÃO DE SUBTÍTULO (H2)
         # =========================
-
         condicao_subtitulo = (
-            (primeira_linha and 3 <= len(palavras) <= 18)
-            or (
-                3 <= len(palavras) <= 18
-                and not linha_limpa.endswith(".")
-                and not linha_limpa.endswith(":")
-                and linha_limpa[0].isupper()
-            )
+            3 <= len(palavras) <= 22
+            and not linha_limpa.endswith(".")
+            and not linha_limpa.endswith(":")
+            and linha_limpa[0].isupper()
         )
 
         if condicao_subtitulo:
@@ -69,7 +64,6 @@ def formatar_texto(texto, titulo_principal):
 {linha_limpa}
 </h2>
 """
-            primeira_linha = False
             continue
 
         # =========================
@@ -81,23 +75,8 @@ def formatar_texto(texto, titulo_principal):
 </p>
 """
 
-        primeira_linha = False
-
     if lista_aberta:
         html_final += "</ul>\n"
-
-    # =========================
-    # PROTEÇÃO FINAL (ANTI HTML VAZIO)
-    # =========================
-    if not html_final.strip():
-
-        texto_seguro = texto.strip()[:800]
-
-        html_final = f"""
-<p class="paragrafo">
-{texto_seguro}
-</p>
-"""
 
     return html_final
 # ==============================
