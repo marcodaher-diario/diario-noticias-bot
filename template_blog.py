@@ -139,7 +139,7 @@ border-radius:8px !important;
 
 .subtitulo {{
 text-align:left !important;
-font-family:Arial !important;
+font-family:Arial, sans-serif !important;
 color:{COR_MD} !important;
 font-size:20px !important;
 font-weight:bold !important;
@@ -150,7 +150,7 @@ margin-bottom:10px !important;
 
 .paragrafo {{
 text-align:justify !important;
-font-family:Arial !important;
+font-family:Arial, sans-serif !important;
 color:{COR_MD} !important;
 font-size:18px !important;
 line-height:1.6 !important;
