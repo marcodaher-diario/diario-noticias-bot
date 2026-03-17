@@ -126,11 +126,12 @@ color:rgb(10,80,140) !important;
 .post-container {{
 max-width:900px;
 margin:auto;
-font-family:Arial,sans-serif !important;
+font-family:Arial, sans-serif !important;
 }}
 
 .post-img {{
 width:100% !important;
+max-width:100% !important;
 height:auto !important;
 aspect-ratio:16/9 !important;
 object-fit:cover !important;
@@ -158,20 +159,4 @@ margin-bottom:15px !important;
 }}
 
 </style>
-
-<div class="post-container">
-
-<div style="text-align:center; margin-bottom:25px;">
-<img src="{imagem}" alt="{titulo}" class="post-img">
-</div>
-
-<div class="conteudo-post">
-{conteudo_formatado}
-</div>
-
-{assinatura}
-
-</div>
 """
-
-    return html
