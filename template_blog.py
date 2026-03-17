@@ -1,34 +1,40 @@
-# -*- coding: utf-8 -*-
-
 def formatar_texto_para_blog(texto_bruto, titulo_principal):
-    """
-    Esta função organiza o conteúdo em HTML. 
-    A limpeza pesada de Markdown (Negritos e Símbolos) já foi feita pelo GeminiEngine.
-    """
     if not texto_bruto:
         return ""
 
-    # Divide o texto em blocos para identificar o que é Subtítulo ou Parágrafo
+    import re
     linhas = [l.strip() for l in texto_bruto.split("\n") if l.strip()]
     html_final = ""
     titulo_norm = titulo_principal.strip().lower()
 
     for linha in linhas:
-        # 1. Ignora se for o título repetido
-        if linha.lower() == titulo_norm:
+        # 1. Primeiro, transformamos o negrito da IA em tag HTML <strong>
+        # Isso mantém o destaque visual sem os asteriscos
+        linha_processada = re.sub(r"\*\*(.*?)\*\*", r"<strong>\1</strong>", linha)
+        
+        # 2. Agora limpamos marcadores de estrutura (# e * das pontas)
+        # O strip aqui remove os símbolos, mas preserva as tags <strong> internas
+        linha_limpa = linha_processada.strip("#* ").strip()
+
+        # 3. Ignora se for o título repetido
+        if linha_limpa.lower() == titulo_norm:
+            continue
+        
+        if not linha_limpa:
             continue
 
-        # 2. Critério para Subtítulo (H2):
-        # Linhas curtas (até 15 palavras) e que não terminam com ponto final
-        palavras = linha.split()
-        if len(palavras) <= 15 and not linha.endswith("."):
-            html_final += f'\n<h2 class="subtitulo">\n{linha}\n</h2>\n'
+        # 4. Critério para Subtítulo (H2):
+        # Removemos as tags HTML apenas para contar palavras reais no critério
+        texto_para_contagem = re.sub(r"<.*?>", "", linha_limpa)
+        palavras = texto_para_contagem.split()
+        
+        if len(palavras) <= 22 and not texto_para_contagem.endswith("."):
+            html_final += f'<h2 class="subtitulo">{linha_limpa}</h2>\n'
         else:
-            # 3. Caso contrário, é Parágrafo
-            html_final += f'\n<p class="paragrafo">\n{linha}\n</p>\n'
+            # 5. Parágrafo (Mantendo o negrito interno)
+            html_final += f'<p class="paragrafo">{linha_limpa}</p>\n'
 
     return html_final
-
 
 # ==============================
 # MONTAGEM DO HTML (MANTIDA INTACTA)
