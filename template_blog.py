@@ -1,49 +1,37 @@
 # -*- coding: utf-8 -*-
-import re
 
-def formatar_texto(texto, titulo_principal):
-    # 1. Verificação de segurança inicial
-    if not texto or not str(texto).strip():
-        return "<p class='paragrafo'>Conteúdo não disponível.</p>"
+def formatar_texto_para_blog(texto_bruto, titulo_principal):
+    """
+    Esta função organiza o conteúdo em HTML. 
+    A limpeza pesada de Markdown (Negritos e Símbolos) já foi feita pelo GeminiEngine.
+    """
+    if not texto_bruto:
+        return ""
 
-    linhas = [l.strip() for l in texto.split("\n") if l.strip()]
+    # Divide o texto em blocos para identificar o que é Subtítulo ou Parágrafo
+    linhas = [l.strip() for l in texto_bruto.split("\n") if l.strip()]
     html_final = ""
     titulo_norm = titulo_principal.strip().lower()
 
-    for i, linha in enumerate(linhas):
-        # Limpeza para comparação e detecção
-        texto_puro = linha.strip("#* ").strip()
-
-        # Pular se for exatamente o título, mas garantir que não estamos deletando o texto todo
-        if texto_puro.lower() == titulo_norm and len(linhas) > 1:
+    for linha in linhas:
+        # 1. Ignora se for o título repetido
+        if linha.lower() == titulo_norm:
             continue
 
-        # Processar Negrito (sempre na linha original)
-        linha_com_negrito = re.sub(r"\*\*(.*?)\*\*", r"<strong>\1</strong>", linha)
-        
-        # Limpar markdowns estruturais após converter o negrito
-        linha_limpa = linha_com_negrito.strip("#* ").strip()
-
-        # Se após a limpeza a linha ficou vazia, pula
-        if not linha_limpa:
-            continue
-
-        # DETECÇÃO DE SUBTÍTULO
-        # Se começar com # OU for curto/sem ponto
-        if linha.startswith("#") or (len(texto_puro.split()) <= 15 and not texto_puro.endswith(".")):
-            html_final += f'\<h2 class="subtitulo">{linha_limpa}</h2>\n'
+        # 2. Critério para Subtítulo (H2):
+        # Linhas curtas (até 15 palavras) e que não terminam com ponto final
+        palavras = linha.split()
+        if len(palavras) <= 15 and not linha.endswith("."):
+            html_final += f'\n<h2 class="subtitulo">\n{linha}\n</h2>\n'
         else:
-            html_final += f'\<p class="paragrafo">{linha_limpa}</p>\n'
-
-    # 2. SE APÓS TUDO O HTML CONTINUAR VAZIO (Segurança contra o Erro que você recebeu)
-    if not html_final.strip():
-        # Caso o filtro de título tenha apagado tudo, retornamos o texto original limpo
-        texto_seguro = texto.replace("**", "").replace("#", "").strip()
-        return f'<p class="paragrafo">{texto_seguro}</p>'
+            # 3. Caso contrário, é Parágrafo
+            html_final += f'\n<p class="paragrafo">\n{linha}\n</p>\n'
 
     return html_final
+
+
 # ==============================
-# MONTAGEM DO HTML
+# MONTAGEM DO HTML (MANTIDA INTACTA)
 # ==============================
 def obter_esqueleto_html(dados):
 
@@ -52,7 +40,8 @@ def obter_esqueleto_html(dados):
     texto_bruto = dados.get("texto_completo", "")
     assinatura = dados.get("assinatura", "")
 
-    conteudo_formatado = formatar_texto(texto_bruto, titulo)
+    # Chama a função de organização acima
+    conteudo_formatado = formatar_texto_para_blog(texto_bruto, titulo)
 
     COR_MD = "rgb(7,55,99)"
 
@@ -86,21 +75,20 @@ color:rgb(10,80,140) !important;
 .post-container {{
 max-width:900px;
 margin:auto;
-font-family:Arial, sans-serif !important;
+font-family:Arial,sans-serif !important;
 }}
 
 .post-img {{
-width:100% !important;
-max-width:100% !important;
-height:auto !important;
-aspect-ratio:16/9 !important;
-object-fit:cover !important;
+width:100%;
+height:auto;
+aspect-ratio:16/9;
+object-fit:cover;
 border-radius:8px !important;
 }}
 
 .subtitulo {{
 text-align:left !important;
-font-family:Arial, sans-serif !important;
+font-family:Arial,sans-serif !important;
 color:{COR_MD} !important;
 font-size:20px !important;
 font-weight:bold !important;
@@ -111,7 +99,7 @@ margin-bottom:10px !important;
 
 .paragrafo {{
 text-align:justify !important;
-font-family:Arial, sans-serif !important;
+font-family:Arial,sans-serif !important;
 color:{COR_MD} !important;
 font-size:18px !important;
 line-height:1.6 !important;
@@ -119,4 +107,20 @@ margin-bottom:15px !important;
 }}
 
 </style>
+
+<div class="post-container">
+
+<div style="text-align:center; margin-bottom:25px;">
+<img src="{imagem}" alt="{titulo}" class="post-img">
+</div>
+
+<div class="conteudo-post">
+{conteudo_formatado}
+</div>
+
+{assinatura}
+
+</div>
 """
+
+    return html
