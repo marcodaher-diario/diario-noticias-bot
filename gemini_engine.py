@@ -28,27 +28,27 @@ class GeminiEngine:
         if not texto:        
             return ""
 
-    # 1. NEGRITO: Transforma **texto** em <strong>texto</strong>
-    texto = re.sub(r'\*\*(.*?)\*\*', r'<strong>\1</strong>', texto)
-
-    # 2. ITÁLICO: Transforma *texto* ou _texto_ em <em>texto</em>
-    # Nota: Fazemos isso DEPOIS do negrito para não conflitar
-    texto = re.sub(r'\*(.*?)\*', r'<em>\1</em>', texto)
-    texto = re.sub(r'_(.*?)_', r'<em>\1</em>', texto)
-
-    # 3. LISTAS: Transforma linhas que começam com "*" ou "-" em <li>
-    # O sinal ^ no regex com flags=re.MULTILINE pega o início de cada linha
-    texto = re.sub(r'^\s*[\*\-]\s+(.*)', r'<li>\1</li>', texto, flags=re.MULTILINE)
-
-    # 4. TÍTULOS: Remove os marcadores #, ##, etc. 
-    # (Mantendo o texto, apenas limpando os símbolos)
-    texto = re.sub(r'#+\s?', '', texto)
-
-    # 5. LIMPEZA FINAL: Remove asteriscos ou underscores que sobraram 
-    # e que não foram capturados pelas regras anteriores
-    texto = texto.replace('*', '').replace('_', '')
-
-    return texto.strip()
+            # 1. NEGRITO: Transforma **texto** em <strong>texto</strong>
+            texto = re.sub(r'\*\*(.*?)\*\*', r'<strong>\1</strong>', texto)
+        
+            # 2. ITÁLICO: Transforma *texto* ou _texto_ em <em>texto</em>
+            # Nota: Fazemos isso DEPOIS do negrito para não conflitar
+            texto = re.sub(r'\*(.*?)\*', r'<em>\1</em>', texto)
+            texto = re.sub(r'_(.*?)_', r'<em>\1</em>', texto)
+        
+            # 3. LISTAS: Transforma linhas que começam com "*" ou "-" em <li>
+            # O sinal ^ no regex com flags=re.MULTILINE pega o início de cada linha
+            texto = re.sub(r'^\s*[\*\-]\s+(.*)', r'<li>\1</li>', texto, flags=re.MULTILINE)
+        
+            # 4. TÍTULOS: Remove os marcadores #, ##, etc. 
+            # (Mantendo o texto, apenas limpando os símbolos)
+            texto = re.sub(r'#+\s?', '', texto)
+        
+            # 5. LIMPEZA FINAL: Remove asteriscos ou underscores que sobraram 
+            # e que não foram capturados pelas regras anteriores
+            texto = texto.replace('*', '').replace('_', '')
+        
+            return texto.strip()
 
     def gerar_analise_jornalistica(self, titulo, resumo, categoria):
 
