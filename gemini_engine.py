@@ -19,10 +19,8 @@ class GeminiEngine:
             "gemini-2.5-pro",
             "gemini-2.5-flash"
         ]
-        
-    import re
 
-def _limpar_e_formatar_markdown(self, texto):
+    def _limpar_e_formatar_markdown(self, texto):
     """
     Converte Markdown (Negrito, Itálico, Listas) para HTML 
     e remove marcadores de títulos excedentes.
