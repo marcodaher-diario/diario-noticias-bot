@@ -21,12 +21,12 @@ class GeminiEngine:
         ]
 
     def _limpar_e_formatar_markdown(self, texto):
-    """
-    Converte Markdown (Negrito, Itálico, Listas) para HTML 
-    e remove marcadores de títulos excedentes.
-    """
-    if not texto:
-        return ""
+        """
+        Converte Markdown (Negrito, Itálico, Listas) para HTML 
+        e remove marcadores de títulos excedentes.
+        """
+        if not texto:        
+            return ""
 
     # 1. NEGRITO: Transforma **texto** em <strong>texto</strong>
     texto = re.sub(r'\*\*(.*?)\*\*', r'<strong>\1</strong>', texto)
