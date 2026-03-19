@@ -86,3 +86,4 @@
 2026-03-18|politica|https://s2-g1.glbimg.com/0T9LWBh5VlB3NNCbneqeYyOy_OA=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2025/b/J/qfeancQkek26IEG93qBw/85587730-b0d7-11f0-aa13-0b0479f6f42a.jpg.webp
 2026-03-19|policial|https://s2-g1.glbimg.com/lGX3U1c4xjh_l0CnIPjj-DHo9AI=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/1/J/8UhAZRRo6DJg1KlYQPoQ/operacao.jpeg
 2026-03-19|economia|https://s2-g1.glbimg.com/JcxiqiVqyV2HxYjjDprvlhgeqcs=/s.glbimg.com/jo/g1/f/original/2015/05/28/rn-dinheiro-20150209-9_3.jpg
+2026-03-19|politica|https://s2-g1.glbimg.com/9GfzfVYM5WZgxseZMe5yyhiUTfE=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2025/f/p/moyAq2SJi4OMqmx3SG1A/54538637064-dc13615e09-o.jpg
