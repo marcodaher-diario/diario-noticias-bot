@@ -91,3 +91,4 @@
 2026-03-20|economia|https://images.pexels.com/photos/7464824/pexels-photo-7464824.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
 2026-03-20|politica|https://s2-g1.glbimg.com/zDy9V7sO-LKKPh41jxx3GRlSphk=/1280x0/filters:format(jpeg)/https://thumbor.globoi.com/unsafe/fit-in/1280x720/s04.video.glbimg.com/deo/vi/07/56/14445607
 2026-03-21|policial|https://s2-g1.glbimg.com/zDSDCPKUoLh0S01D0rhgmHipKcA=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/W/h/5qV3MGQ2uniARqhTuKQA/texto-do-seu-paragrafo-2026-03-21t083943.006.png
+2026-03-21|economia|https://f.i.uol.com.br/fotografia/2026/03/20/177405082969bdde0d2ee06_1774050829_3x2_xl.jpg
