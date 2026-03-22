@@ -93,3 +93,4 @@
 2026-03-21|policial|https://s2-g1.glbimg.com/zDSDCPKUoLh0S01D0rhgmHipKcA=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/W/h/5qV3MGQ2uniARqhTuKQA/texto-do-seu-paragrafo-2026-03-21t083943.006.png
 2026-03-21|economia|https://f.i.uol.com.br/fotografia/2026/03/20/177405082969bdde0d2ee06_1774050829_3x2_xl.jpg
 2026-03-21|politica|https://s2-g1.glbimg.com/2ErKSRKokj0sqRutd4YRvPb3n9c=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/t/X/A74WLlRqaRhyRzVi71zQ/whatsapp-image-2026-03-21-at-17.21.38.jpeg
+2026-03-22|policial|https://s2-g1.glbimg.com/n9dsqp_F3aZ1BRtPufkT-WTxj24=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/U/z/9TtTCxTGeDWr1OEKyXEg/whatsapp-image-2026-03-22-at-08.52.15.jpeg
