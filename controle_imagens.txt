@@ -99,3 +99,4 @@
 2026-03-23|policial|https://s2-g1.glbimg.com/gS6Sqi5z1o9jDIGEA-o_JU6t2vU=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/G/D/dosSnsQIaBc5THovtWEQ/foto-no-tamanho-home-2026-01-26t112004.300.png
 2026-03-23|economia|https://s2-g1.glbimg.com/MzMZlIC4Ss2F47xj8cWwDHqci1c=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/S/g/DZBdSTS2SfBRXXP9wAMQ/midia-de-distribuicao-g1-33-.jpg
 2026-03-23|politica|https://s2-g1.glbimg.com/4X8iF_9TnIaBMmweXMsNADFXb_Q=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/A/b/TBKhpwQNWKQg2EVaOqxQ/globo-canal-4-20260211-2000-frame-5049.jpeg
+2026-03-24|economia|https://s2-g1.glbimg.com/CD3weCLhxi23eiCGyBEunivxl08=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2025/p/x/RcX9nCRau773qDSiAZ9g/globo-canal-5-20251104-1800-frame-295710.jpeg
