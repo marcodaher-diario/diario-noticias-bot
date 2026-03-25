@@ -101,3 +101,4 @@
 2026-03-23|politica|https://s2-g1.glbimg.com/4X8iF_9TnIaBMmweXMsNADFXb_Q=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/A/b/TBKhpwQNWKQg2EVaOqxQ/globo-canal-4-20260211-2000-frame-5049.jpeg
 2026-03-24|economia|https://s2-g1.glbimg.com/CD3weCLhxi23eiCGyBEunivxl08=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2025/p/x/RcX9nCRau773qDSiAZ9g/globo-canal-5-20251104-1800-frame-295710.jpeg
 2026-03-24|politica|https://s2-g1.glbimg.com/-iHcPjSAUlRPfX2hlFZw7okFDVA=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/X/Y/8NnHsHR7Gd8RoH4utmxQ/globo-canal-4-20260211-2000-frame-2551.jpeg
+2026-03-25|policial|https://s2-g1.glbimg.com/BODSrvV8FrabYdHLXbMfsYkxCJk=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2023/x/9/FmGv6KTVqlB9iRJmb6Mw/whatsapp-image-2023-03-02-at-08.41.30.jpeg
