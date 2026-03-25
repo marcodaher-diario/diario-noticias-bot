@@ -103,3 +103,4 @@
 2026-03-24|politica|https://s2-g1.glbimg.com/-iHcPjSAUlRPfX2hlFZw7okFDVA=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/X/Y/8NnHsHR7Gd8RoH4utmxQ/globo-canal-4-20260211-2000-frame-2551.jpeg
 2026-03-25|policial|https://s2-g1.glbimg.com/BODSrvV8FrabYdHLXbMfsYkxCJk=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2023/x/9/FmGv6KTVqlB9iRJmb6Mw/whatsapp-image-2023-03-02-at-08.41.30.jpeg
 2026-03-25|politica|https://www.camara.leg.br/midias/image/2026/03/img20260325143800839-768x473.jpg
+2026-03-25|politica|https://images.pexels.com/photos/6237498/pexels-photo-6237498.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
