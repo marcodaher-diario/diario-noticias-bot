@@ -105,3 +105,4 @@
 2026-03-25|politica|https://www.camara.leg.br/midias/image/2026/03/img20260325143800839-768x473.jpg
 2026-03-25|politica|https://images.pexels.com/photos/6237498/pexels-photo-6237498.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
 2026-03-26|policial|https://s2-g1.glbimg.com/K1qux6XHrxJogdeUKllcEFofOYM=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/t/2/ABRmHDTWO3T9hI1u0ULw/globo-canal-4-20260325-2000-frame-114403.jpeg
+2026-03-26|politica|https://s2-g1.glbimg.com/iITTPypae7bdp31km6B4k7uoQeg=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/9/a/AKNO6PSM2vczSkfacqHQ/douglas-ruas.jpeg
