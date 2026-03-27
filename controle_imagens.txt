@@ -110,3 +110,4 @@
 2026-03-27|policial|https://s2-g1.glbimg.com/sQ2Opu9GDVLDwvSqlb9xHatfhT8=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/U/n/8XM3JpRKywwRB2Wf7Uqg/preso-golpe-pix.jpg
 2026-03-27|economia|https://s2-g1.glbimg.com/MHbx_4HFk-h4edjwXsS35LMA99o=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/c/0/mLGXHFRRiGvHQXg6Bi9Q/72197291-1004.webp
 2026-03-27|politica|https://s2-g1.glbimg.com/EWc-rFoDJRebsx6MLMNnd0CSRFU=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/K/b/AwlEA8RkOBxQXyUC2B4w/captura-de-tela-2026-03-25-170401.png
+2026-03-27|politica|https://f.i.uol.com.br/fotografia/2025/09/23/175863640768d2a977eef45_1758636407_3x2_rt.jpg
