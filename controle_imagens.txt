@@ -108,3 +108,4 @@
 2026-03-26|politica|https://s2-g1.glbimg.com/iITTPypae7bdp31km6B4k7uoQeg=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/9/a/AKNO6PSM2vczSkfacqHQ/douglas-ruas.jpeg
 2026-03-26|policial|https://s2-g1.glbimg.com/uQF1Ys3zw6KP2NTW_NUNDO_ggIc=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/x/M/B5gSe2Qdi4QabJn584Pw/capas-belly-.png
 2026-03-27|policial|https://s2-g1.glbimg.com/sQ2Opu9GDVLDwvSqlb9xHatfhT8=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/U/n/8XM3JpRKywwRB2Wf7Uqg/preso-golpe-pix.jpg
+2026-03-27|economia|https://s2-g1.glbimg.com/MHbx_4HFk-h4edjwXsS35LMA99o=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/c/0/mLGXHFRRiGvHQXg6Bi9Q/72197291-1004.webp
