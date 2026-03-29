@@ -115,3 +115,4 @@
 2026-03-28|economia|https://s2-g1.glbimg.com/FiuZOElLZluqAZ06FcKLeaqn_QA=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/A/O/qs8eIgRKSuBBgXTXhOpQ/1200px-x-900px-1600-x-900-px-1-.jpg
 2026-03-28|politica|https://f.i.uol.com.br/fotografia/2026/03/27/177461833469c686de4dc6c_1774618334_3x2_xl.jpg
 2026-03-29|policial|https://s2-g1.glbimg.com/nqoqb88_907FhBLrjWG1HV8XMRU=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/i/G/7crbSJRxet4rnKsocK3g/befunky-collage-90-.jpg
+2026-03-29|economia|https://f.i.uol.com.br/fotografia/2025/08/20/175569774068a5d24c3b484_1755697740_3x2_rt.jpg
