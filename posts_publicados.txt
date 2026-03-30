@@ -1,5 +1,3 @@
-https://g1.globo.com/mundo/noticia/2026/03/08/ira-nomeia-lider.ghtml
-ir-nomeia-mojtaba-khamenei-filho-de-ali-khamenei
 https://g1.globo.com/ma/maranhao/noticia/2026/03/09/policia-civil-procura-homem-condenado-a-25-anos-de-prisao-por-estuprar-enteada-em-vitorino-freire.ghtml
 polcia-civil-procura-homem-condenado-a-25-anos
 https://g1.globo.com/economia/noticia/2026/03/09/dolar-ibovespa.ghtml
@@ -98,3 +96,5 @@ https://redir.folha.com.br/redir/online/emcimadahora/rss091/*https://www1.folha.
 deciso-do-stf-diminui-penduricalhos-mas-mantm-distores
 https://g1.globo.com/sp/sao-jose-do-rio-preto-aracatuba/noticia/2026/03/30/homem-e-preso-suspeito-de-tentar-matar-a-companheira-a-facadas-em-aracatuba.ghtml
 homem-preso-suspeito-de-tentar-matar-a-companheira
+https://g1.globo.com/economia/noticia/2026/03/30/dolar-ibovespa.ghtml
+dlar-recua-com-petrleo-em-alta-e-tenso

@@ -118,3 +118,4 @@
 2026-03-29|economia|https://f.i.uol.com.br/fotografia/2025/08/20/175569774068a5d24c3b484_1755697740_3x2_rt.jpg
 2026-03-29|politica|https://f.i.uol.com.br/fotografia/2026/02/12/1770947149698e824de7db8_1770947149_3x2_rt.jpg
 2026-03-30|policial|https://s2-g1.glbimg.com/qYHoA8zVhMhH_aDd35A1TkasluE=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2025/U/u/pF3F5mRGq3xVnJ77xPPQ/design-sem-nome-1-.jpg
+2026-03-30|economia|https://s2-g1.glbimg.com/XNe-iZGShwcfxKKIu_dUZJjCMZA=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2024/A/W/pNqFkwSSG90RoeSZ80Pg/drf20241217001.jpg
