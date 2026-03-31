@@ -122,3 +122,4 @@
 2026-03-30|politica|https://www.camara.leg.br/midias/image/2026/03/img20260317183511953-768x473.jpg
 2026-03-31|policial|https://s2-g1.glbimg.com/UtQARH6whncFVd8FEw0ZQDBthX0=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/f/s/OAhwJCTeOrBQZeuaGlNQ/1.jpeg
 2026-03-31|economia|https://s2-g1.glbimg.com/AEDXfkfZ5fWFronQr3SY-8krm2M=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/u/Y/31r0BNTlqABKo5mrF1KQ/esplanada-dos-ministerios-foto-ana-volpe-agencia-senado.jpg
+2026-03-31|politica|https://s2-g1.glbimg.com/sI_JiSKsU0NLlh1rntnZ9rl29MY=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/l/N/u6vwRZQ1KSuMySGPDStA/gasolina.jpg
