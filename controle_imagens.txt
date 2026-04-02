@@ -128,3 +128,4 @@
 2026-04-01|politica|https://www.camara.leg.br/midias/image/2026/02/rbr0804-1-jpg-0-768x512.jpeg
 2026-04-02|policial|https://s2-g1.glbimg.com/hAF9uln6J8l6DYTKirUtb3PnOWw=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/T/A/av9EU9S9OotBboLSLrxQ/presos-buziosss.jpg
 2026-04-02|economia|https://s2-g1.glbimg.com/qJ7O_5T6hSs6HEsS6HwA-Vl1Otk=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2023/2/s/iveHFATICeDrK8diFnLw/pexels-john-guccione-wwwadvergroupcom-3564390.jpg
+2026-04-02|politica|https://s2-g1.glbimg.com/-C4Rd9cF_LNI_4HCXXwf8FnUb40=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/N/1/RY4Bu6QxyuooaZd8EbWA/cpi-da-saude.jpeg
