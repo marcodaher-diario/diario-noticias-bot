@@ -1,5 +1,3 @@
-https://g1.globo.com/politica/noticia/2026/03/11/apos-toffoli-se-declarar-suspeito-zanin-assume-relatoria-de-pedido-que-cobra-instalacao-da-cpi-do-master-na-camara.ghtml
-aps-toffoli-se-declarar-suspeito-zanin-assume-relatoria
 https://g1.globo.com/ba/bahia/noticia/2026/03/12/policia-federal-cumpre-mandados-de-prisao-contra-organizacao-criminosa-especializada-em-trafico-de-animais-ameacados-de-extincao.ghtml
 polcia-federal-cumpre-mandados-de-priso-contra-organizao
 https://g1.globo.com/economia/noticia/2026/03/12/ipca-fevereiro.ghtml
@@ -98,3 +96,5 @@ https://g1.globo.com/economia/noticia/2026/04/01/dolar-ibovespa.ghtml
 dlar-recua-a-r-517-atento-a-sinais
 https://www.camara.leg.br/noticias/1259744-medida-provisoria-abre-credito-de-r-285-milhoes-para-afetados-por-desastres-climaticos/
 medida-provisria-abre-crdito-de-r-285-milhes
+https://g1.globo.com/rj/regiao-dos-lagos/noticia/2026/04/02/dois-homens-sao-presos-por-trafico-em-menos-de-24-horas-em-buzios.ghtml
+dois-homens-so-presos-por-trfico-em-menos
