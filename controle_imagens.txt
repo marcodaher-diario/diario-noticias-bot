@@ -131,3 +131,4 @@
 2026-04-02|politica|https://s2-g1.glbimg.com/-C4Rd9cF_LNI_4HCXXwf8FnUb40=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/N/1/RY4Bu6QxyuooaZd8EbWA/cpi-da-saude.jpeg
 2026-04-03|policial|https://s2-g1.glbimg.com/W3P3r3OupaV8SrJJWmAk-vGx4es=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/r/7/RkonKqR16OuHzyMduNyQ/presa-em-saquarema.jpg
 2026-04-03|economia|https://s2-g1.glbimg.com/CAjnuqWBnm2vRlNsb-r-2g3oBos=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/z/N/FKvJQwT0m7fLZjNdSWig/globo-canal-5-20260119-2000-frame-71850.jpeg
+2026-04-03|politica|https://f.i.uol.com.br/fotografia/2026/03/27/177464968969c701590a9b5_1774649689_3x2_xl.jpg
