@@ -136,3 +136,4 @@
 2026-04-04|economia|https://s2-g1.glbimg.com/vOOO-qK1yMpMah_wv3d0ZmvN1T8=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/a/w/cZm06sTBqHlnd6o5RVyg/capas-belly-.png
 2026-04-04|politica|https://f.i.uol.com.br/fotografia/2022/05/24/1653411963628d107beb99d_1653411963_3x2_rt.jpg
 2026-04-05|policial|https://s2-g1.glbimg.com/C1S50G45UNsASOZ1qQdA4OArLK4=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/N/g/NRUfAoQ1aCpA9QXlwK1A/page.jpg
+2026-04-05|economia|https://s2-g1.glbimg.com/XchgaJ7N1wwhOV3yMY5gQ114m04=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2024/Q/h/A54phySBiogQsVZoTW6A/joao-pessoa-praia-construcao-civil.jpeg
