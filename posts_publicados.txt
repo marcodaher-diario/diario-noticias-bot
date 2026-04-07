@@ -1,5 +1,3 @@
-https://g1.globo.com/economia/noticia/2026/03/20/dolar-ibovespa.ghtml
-ibovespa-recua-com-tenso-no-oriente-mdio-dlar
 https://g1.globo.com/carros/noticia/2026/03/20/setor-de-combustiveis-alerta-para-risco-de-desabastecimento-e-pede-acao-do-governo.ghtml
 setor-de-combustveis-alerta-para-risco-de-desabastecimento
 https://g1.globo.com/ba/feira-de-santana-regiao/noticia/2026/03/21/homens-sao-presos-com-submetralhadora-em-serrinha.ghtml
@@ -98,3 +96,5 @@ https://g1.globo.com/rs/rio-grande-do-sul/noticia/2026/04/07/policia-apreende-ma
 polcia-apreende-macacoprego-com-suspeito-durante-operao-contra
 https://g1.globo.com/economia/noticia/2026/04/07/dolar-ibovespa.ghtml
 dlar-sobe-com-mercado-atento-ao-ultimato-de
+https://g1.globo.com/politica/noticia/2026/04/07/escala-6x1-motta-diz-que-proposta-devera-ser-votada-na-semana-que-vem-na-ccj-governo-cogitou-propor-novo-texto.ghtml
+escala-6x1-motta-diz-que-proposta-dever-ser
