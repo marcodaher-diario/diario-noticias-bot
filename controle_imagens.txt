@@ -147,3 +147,4 @@
 2026-04-08|policial|https://s2-g1.glbimg.com/3v9Kfz_yPyQTSPoCN_3XgKn6jGE=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/C/n/5ebW9SRAepocr9TkBjrw/captura-de-tela-2026-04-08-095037.png
 2026-04-08|politica|https://www.camara.leg.br/midias/image/2026/04/img20260408143117797-768x473.jpg
 2026-04-09|policial|https://s2-g1.glbimg.com/UkLztCni6tEy3DDwSleAfgRG-RY=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/w/l/rEDspuT8a0dfRHmaL1SQ/prisao.jpeg
+2026-04-09|economia|https://s2-g1.glbimg.com/QkG573_c7Bfj7jFBwXDf66yyv2s=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2024/i/Z/9PAlFsQ5uar9JFBAGyxw/enq20241008012.jpg
