@@ -1,5 +1,3 @@
-https://redir.folha.com.br/redir/online/emcimadahora/rss091/*https://www1.folha.uol.com.br/mercado/2026/03/pao-de-acucar-enfrenta-dificuldades-com-fornecedores-e-faltam-produtos-em-lojas.shtml
-po-de-acar-enfrenta-dificuldades-com-fornecedores-e
 https://g1.globo.com/rn/rio-grande-do-norte/eleicoes/2026/noticia/2026/03/21/alvaro-dias-oficializa-filiacao-ao-pl.ghtml
 com-presena-de-flvio-bolsonaro-lvaro-dias-oficializa
 https://g1.globo.com/pa/santarem-regiao/noticia/2026/03/22/homem-e-preso-em-alenquer-suspeito-de-tentar-estuprar-a-avo-de-87-anos.ghtml
@@ -98,3 +96,5 @@ https://g1.globo.com/sp/mogi-das-cruzes-suzano/noticia/2026/04/08/video-motorist
 vdeo-motorista-preso-aps-jogar-carro-contra-motociclista
 https://www.camara.leg.br/noticias/1261342-camara-aprova-regime-de-urgencia-para-tres-projetos-de-lei/
 cmara-aprova-regime-de-urgncia-para-trs-projetos
+https://g1.globo.com/ma/maranhao/regiao-tocantina/noticia/2026/04/09/presos-dois-suspeitos-de-matar-homem-durante-festa-em-povoado-de-acailandia.ghtml
+presos-dois-suspeitos-de-matar-homem-durante-festa
