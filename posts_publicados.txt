@@ -1,5 +1,3 @@
-https://g1.globo.com/ba/feira-de-santana-regiao/noticia/2026/03/23/homem-e-preso-suspeito-de-tentativa-de-feminicidio-na-bahia.ghtml
-homem-preso-em-flagrante-suspeito-de-atear-fogo
 https://g1.globo.com/economia/noticia/2026/03/23/boletim-focus-com-guerra-no-oriente-medio-e-alta-do-petroleo-mercado-projeta-mais-inflacao-neste-ano-e-corte-menor-dos-juros.ghtml
 mercado-projeta-mais-inflao-neste-ano-e-corte
 https://g1.globo.com/economia/noticia/2026/03/23/tecnicos-do-tcu-concluem-que-nao-houve-impropriedades-omissoes-ou-negligencias-do-bc-na-liquidacao-do-master.ghtml
@@ -98,3 +96,5 @@ https://g1.globo.com/df/distrito-federal/noticia/2026/04/10/justica-nega-novo-pe
 justia-nega-novo-pedido-de-celina-leo-para
 https://g1.globo.com/economia/noticia/2026/04/10/dolar-ibovespa.ghtml
 dlar-cai-a-r-5-com-inflao-no
+https://www.camara.leg.br/noticias/1262079-comissao-mista-de-orcamento-deve-ser-instalada-na-segunda-quinzena-de-abril/
+comisso-mista-de-oramento-deve-ser-instalada-na
