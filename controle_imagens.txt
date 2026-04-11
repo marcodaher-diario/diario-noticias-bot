@@ -153,3 +153,4 @@
 2026-04-10|economia|https://s2-g1.glbimg.com/en-e3pXXYmmv5grpZimBQ0X1DaM=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2025/R/L/9pGXOhQjWMbLFeAbXt6w/2025-01-22t173936z-1-lynxnpel0l0qj-rtroptp-4-fluxo-cambial-semanal.jpg
 2026-04-10|politica|https://www.camara.leg.br/midias/image/2026/04/img20230523102312132-768x576.jpg
 2026-04-11|policial|https://s2-g1.glbimg.com/Ern7UgP-wpd95rbIcSPeIRbeoBU=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/d/u/Zpw7SVSh6ZX9pcIr8fpQ/design-sem-nome-2026-04-11t092015.983.png
+2026-04-11|economia|https://f.i.uol.com.br/fotografia/2025/11/27/1764297194692909ea5f444_1764297194_3x2_rt.jpg
