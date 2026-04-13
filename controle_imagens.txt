@@ -159,3 +159,4 @@
 2026-04-12|economia|https://f.i.uol.com.br/fotografia/2026/04/12/177600733369dbb8a544f0c_1776007333_3x2_rt.jpg
 2026-04-12|politica|https://s2-g1.glbimg.com/zJBBHxa6WJZa4DawKxHL-EVc3xg=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2025/Q/B/1QfpEwTemgbBA7jdsphw/whatsapp-image-2025-12-15-at-17.48.12.jpeg
 2026-04-13|policial|https://images.pexels.com/photos/35710201/pexels-photo-35710201.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
+2026-04-13|economia|https://s2-g1.glbimg.com/J30uJdRWd0AnyhCRJv5R1leHof8=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/9/t/q625aUTiay0FHHXdgDTg/2026-02-17t140354z-422355056-rc2knja6s9wt-rtrmadp-3-ukraine-crisis-russia-cucumbers.jpg
