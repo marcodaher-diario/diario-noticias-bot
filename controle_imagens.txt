@@ -165,3 +165,4 @@
 2026-04-14|policial|https://s2-g1.glbimg.com/jwyoLC5dicRnJxMMmqYz9XHe41A=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/l/M/97eBsBR1ucHDo2bdmayQ/4083ef8f-ea38-478f-99c5-90b8294957ad.png
 2026-04-14|economia|https://images.pexels.com/photos/11209128/pexels-photo-11209128.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
 2026-04-14|politica|https://s2-g1.glbimg.com/6d5V0OP7U6FXBM6eoyWnJQzslmU=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/v/3/uZT1G1SRiYGKVmKF9vQw/55006841028-2e3bd01ddb-k.jpg
+2026-04-15|policial|https://s2-g1.glbimg.com/v-2It5okRRhyyxcEQxM0MC8vRzM=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/4/h/arU2PTSY66HbSgzm7xBQ/colar-com-imagem-de-pablo-escobar-e-armas-foram-apreendidos-pela-pf.jpg
