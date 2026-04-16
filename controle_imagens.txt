@@ -169,3 +169,4 @@
 2026-04-15|economia|https://images.pexels.com/photos/10984343/pexels-photo-10984343.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
 2026-04-15|politica|https://s2-g1.glbimg.com/-6PsuV3zEx3RIv4hZB2kXR4RFU4=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/5/b/CQRnB7T5yO1NBxBvu1xg/udesc.jpg
 2026-04-16|policial|https://s2-g1.glbimg.com/1D6ho2S50ma4a5ImkHR37jmweLc=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/j/G/gkvzu9S8uoBu3EhsbGlQ/jovem-investigado-por-armazenar-e-divulgar-imagens-de-abusos-sexuais-infantis-e-preso-pela-policia-civil.jpg
+2026-04-16|economia|https://s2-g1.glbimg.com/YAFXZ4Eh1r2ddEFZcTZ47BR-_LM=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2022/X/R/vdpClUThCOcBY2t8z23A/3a4d5d5f-5ab9-47dc-b656-ddb0cfabe130.jpg
