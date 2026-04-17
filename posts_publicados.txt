@@ -1,5 +1,3 @@
-https://g1.globo.com/economia/noticia/2026/03/31/diesel-estados-proposta-governo.ghtml
-diesel-20-estados-aderem-a-proposta-do-governo
 https://g1.globo.com/sp/sao-paulo/noticia/2026/04/01/tres-sao-presos-por-sequestro-de-caminhoneiros-e-desmanche-de-veiculos-em-sp.ghtml
 trs-so-presos-por-sequestro-de-caminhoneiros-e
 https://g1.globo.com/economia/noticia/2026/04/01/dolar-ibovespa.ghtml
@@ -98,3 +96,5 @@ https://g1.globo.com/go/goias/noticia/2026/04/17/dono-da-choquei-esta-sozinho-em
 dono-da-choquei-est-sozinho-em-cela-na
 https://g1.globo.com/economia/noticia/2026/04/17/dolar-ibovespa.ghtml
 dlar-cai-a-r-497-com-reabertura-do
+https://g1.globo.com/trabalho-e-carreira/noticia/2026/04/17/governo-admite-transicao-para-fim-da-escala-6x1-mas-descarta-desoneracao.ghtml
+escala-6x1-governo-admite-mudana-gradual-mas-descarta
