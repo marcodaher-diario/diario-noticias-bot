@@ -180,3 +180,4 @@
 2026-04-19|policial|https://s2-g1.glbimg.com/GNsVUADsubjPXslNakcYkVsgegQ=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/B/4/aaOBzWQm2eD7pm2Jv1xQ/montagens-1920-x-1080-px-3-.png
 2026-04-19|economia|https://s2-g1.glbimg.com/4dAfT0orCbeRsKF0L49DSuorGq0=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/q/3/KZB1XjRyK8hKVh9jtNXA/videos-automaticos-38985e78-5228-4e05-a148-97f50e05ff1b-3.jpeg
 2026-04-19|politica|https://f.i.uol.com.br/fotografia/2026/03/27/177462987169c6b3efd4817_1774629871_3x2_rt.jpg
+2026-04-20|policial|https://s2-g1.glbimg.com/xvCCbeNcUeFlD5q2ZyMGUtLlBR0=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/z/m/bKUDsESyGxZZ11jUy5pg/g1-pr-15-.png
