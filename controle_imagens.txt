@@ -187,3 +187,4 @@
 2026-04-21|economia|https://s2-g1.glbimg.com/wQpVG_VJNEUDDc6b3cZnchr4V9s=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2025/G/g/vrXwiRQfyPgjHUc2q5pQ/design-sem-nome-60-.jpg
 2026-04-21|politica|https://f.i.uol.com.br/fotografia/2026/01/23/176918519269739fa8d860f_1769185192_3x2_rt.jpg
 2026-04-22|policial|https://s2-g1.glbimg.com/6w8EBQTBO0avWjHfuXERhqzc6w8=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/r/Y/67qwAiQAWCR6Qya3JKtQ/drogas.jpg
+2026-04-22|economia|https://s2-g1.glbimg.com/O49d2V48Q5zIUn7fQPNfoMN5WOI=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2025/K/J/NvIKwCR8arhLFNMisILw/2025-01-21t204813z-1-lynxnpel0k0yk-rtroptp-4-brazil-economy.jpg
