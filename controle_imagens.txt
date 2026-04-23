@@ -191,3 +191,4 @@
 2026-04-22|politica|https://s2-g1.glbimg.com/keT8S2CTiOFb-HpuJFmVfrYwABc=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2023/5/M/3BRWY8RYeBHKCvLJuVOw/foto-t-12-.jpg
 2026-04-23|policial|https://s2-g1.glbimg.com/scI7zlpv_vEBmUQgbZMFvEtz6tU=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/0/d/NgnyncQ0ipc79GtX72QA/montagens-1920-x-1080-px-2026-04-23t094630.737.jpg
 2026-04-23|economia|https://images.pexels.com/photos/7540530/pexels-photo-7540530.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
+2026-04-23|politica|https://images.pexels.com/photos/13344830/pexels-photo-13344830.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
