@@ -194,3 +194,4 @@
 2026-04-23|politica|https://images.pexels.com/photos/13344830/pexels-photo-13344830.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
 2026-04-24|policial|https://s2-g1.glbimg.com/cwI4mbMLdvO6y7_yQvyYXaXPs1Y=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/x/A/PE2RF0Szi4Nk13eCSPQg/apreensoes.png
 2026-04-24|economia|https://s2-g1.glbimg.com/W9PjeRvrGJSQVsmNT3TfZYjwUvc=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2025/n/Q/Tb8nvFT8Gr8JSp12aamg/whatsapp-image-2025-01-21-at-16.45.49.jpeg
+2026-04-24|politica|https://images.pexels.com/photos/37201878/pexels-photo-37201878.jpeg?auto=compress&cs=tinysrgb&h=650&w=940

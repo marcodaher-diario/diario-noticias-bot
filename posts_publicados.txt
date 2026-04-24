@@ -1,5 +1,3 @@
-https://g1.globo.com/politica/noticia/2026/04/07/escala-6x1-motta-diz-que-proposta-devera-ser-votada-na-semana-que-vem-na-ccj-governo-cogitou-propor-novo-texto.ghtml
-escala-6x1-motta-diz-que-proposta-dever-ser
 https://g1.globo.com/sp/mogi-das-cruzes-suzano/noticia/2026/04/08/video-motorista-e-preso-apos-jogar-carro-contra-motociclista-em-mogi-das-cruzes.ghtml
 vdeo-motorista-preso-aps-jogar-carro-contra-motociclista
 https://www.camara.leg.br/noticias/1261342-camara-aprova-regime-de-urgencia-para-tres-projetos-de-lei/
@@ -98,3 +96,5 @@ https://g1.globo.com/mg/minas-gerais/noticia/2026/04/24/video-dois-homens-suspei
 vdeo-dois-homens-suspeitos-de-matar-irmos-em
 https://g1.globo.com/economia/noticia/2026/04/24/com-queda-do-dolar-gastos-de-brasileiros-no-exterior-batem-recorde-no-1o-trimestre.ghtml
 com-queda-do-dlar-gastos-de-brasileiros-no
+https://g1.globo.com/df/distrito-federal/noticia/2026/04/24/caso-master-stf-forma-maioria-para-manter-prisoes-de-ex-presidente-do-brb-e-advogado.ghtml
+caso-master-stf-forma-maioria-para-manter-prises
