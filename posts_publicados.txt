@@ -1,5 +1,3 @@
-https://g1.globo.com/rs/rio-grande-do-sul/noticia/2026/04/07/policia-apreende-macaco-prego-com-suspeito-durante-operacao-contra-roubos-a-casas-no-rs.ghtml
-polcia-apreende-macacoprego-com-suspeito-durante-operao-contra
 https://g1.globo.com/economia/noticia/2026/04/07/dolar-ibovespa.ghtml
 dlar-sobe-com-mercado-atento-ao-ultimato-de
 https://g1.globo.com/politica/noticia/2026/04/07/escala-6x1-motta-diz-que-proposta-devera-ser-votada-na-semana-que-vem-na-ccj-governo-cogitou-propor-novo-texto.ghtml
@@ -98,3 +96,5 @@ https://g1.globo.com/economia/noticia/2026/04/23/dolar-ibovespa.ghtml
 dlar-cai-a-r-495-com-tenso-no
 https://g1.globo.com/economia/noticia/2026/04/23/governo-projeto-receita-do-petroleo-para-reduzir-impostos-sobre-combustiveis.ghtml
 governo-envia-ao-congresso-projeto-que-permite-usar
+https://g1.globo.com/mg/minas-gerais/noticia/2026/04/24/video-dois-homens-suspeitos-de-matar-irmaos-em-ataque-a-tiros-sao-presos-outros-foram-identificados.ghtml
+vdeo-dois-homens-suspeitos-de-matar-irmos-em
