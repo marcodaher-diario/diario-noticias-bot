@@ -198,3 +198,4 @@
 2026-04-25|policial|https://s2-g1.glbimg.com/KuTPZQq_VkVnHbLwuGpXXjz7BJA=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/T/s/zE0VHmQPeKMXynwJW4vg/montagens-1920-x-1080-px-1-.png
 2026-04-25|economia|https://f.i.uol.com.br/fotografia/2026/04/22/177688379669e9185440c58_1776883796_3x2_rt.jpg
 2026-04-25|politica|https://f.i.uol.com.br/fotografia/2026/01/10/1768067233696290a15f4d1_1768067233_3x2_rt.jpg
+2026-04-26|policial|https://s2-g1.glbimg.com/vqWlL_Dzk_tpGVn8_PbYYsayrg8=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/L/i/vn0sDhS3mtxcgmFexXAQ/padrao-foto-texto-g1-2026-04-16t103346.903.jpg
