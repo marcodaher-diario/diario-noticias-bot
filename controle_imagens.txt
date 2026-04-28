@@ -205,3 +205,4 @@
 2026-04-27|politica|https://s2-g1.glbimg.com/l9qJnNSSIFIjl3uM-qIlrYAhZcs=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/A/W/eR0jtvS8eR3TMevqmDjA/globo-canal-4-20260330-2000-frame-79339.jpeg
 2026-04-28|policial|https://s2-g1.glbimg.com/opS2zZF4Vb3tGpmRbfaQ1gsQaQw=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/1/J/0rir7BQWWv4jzRdhWxtQ/pf-encontra-cenario-de-gravacao-de-abuso-sexual-infantil-durante-operacao-nacional-no-am-foto-divulgacao-pf.jpeg
 2026-04-28|politica|https://f.i.uol.com.br/fotografia/2026/04/17/177645485069e28cc2b36f2_1776454850_3x2_rt.jpg
+2026-04-28|economia|https://s2-g1.glbimg.com/JpvDnvSmFRVv5-6SUJ1oyi3uV4U=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/t/k/xzLny9QEunFjNDwk5ifg/informe-g1-2026-03-26t145731.329.png
