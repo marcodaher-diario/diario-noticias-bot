@@ -208,3 +208,4 @@
 2026-04-28|economia|https://s2-g1.glbimg.com/JpvDnvSmFRVv5-6SUJ1oyi3uV4U=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/t/k/xzLny9QEunFjNDwk5ifg/informe-g1-2026-03-26t145731.329.png
 2026-04-28|politica|https://f.i.uol.com.br/fotografia/2026/04/22/177688742169e9267d22e39_1776887421_3x2_xl.jpg
 2026-04-29|politica|https://s2-g1.glbimg.com/vSR2q69Wfscs96i0S1s8O6mz6CA=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/H/6/x9PTAAR1S694rQ6LNZjA/2026-04-29t131456z-1962813354-rc21zkaw19in-rtrmadp-3-brazil-politics.jpg
+2026-04-30|policial|https://f.i.uol.com.br/fotografia/2023/06/08/16862377516481f237a155f_1686237751_3x2_xl.jpg
