@@ -212,3 +212,4 @@
 2026-04-30|economia|https://s2-g1.glbimg.com/AEDXfkfZ5fWFronQr3SY-8krm2M=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/u/Y/31r0BNTlqABKo5mrF1KQ/esplanada-dos-ministerios-foto-ana-volpe-agencia-senado.jpg
 2026-04-30|politica|https://f.i.uol.com.br/fotografia/2025/12/04/176488764069320c585350f_1764887640_3x2_rt.jpg
 2026-05-01|policial|https://images.pexels.com/photos/31262146/pexels-photo-31262146.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
+2026-05-01|economia|https://s2-g1.glbimg.com/ovFsbtmTVOFkTZVVwzRm5gMl1fo=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/A/4/xoiEohRsuNWx588AOLMg/captura-de-tela-2026-04-30-203104.png
