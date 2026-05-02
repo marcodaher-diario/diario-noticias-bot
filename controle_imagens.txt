@@ -216,3 +216,4 @@
 2026-05-01|politica|https://s2-g1.glbimg.com/Vz5xlnRvJf7FK-adRiRYHhLDRhQ=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/D/1/Amrod0QDiWDRW4Qff0cA/ap26102802553726.jpg
 2026-05-02|policial|https://s2-g1.glbimg.com/IF9a-PruZlXCeXVFR3XGq9ep-Hw=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/K/m/NLqZWpSmuBN3u0jSBIjQ/montagens-1920-x-1080-px-2026-05-02t092715.196.jpg
 2026-05-02|economia|https://f.i.uol.com.br/fotografia/2026/04/21/177679956169e7cf49b9d28_1776799561_3x2_lg.jpg
+2026-05-02|politica|https://s2-g1.glbimg.com/GUmm7ZN00zYe1vuX7tRisWWFDL8=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/c/Y/aQrp8BSLusuz6C8sxDRQ/whatsapp-image-2026-01-07-at-16.31.19.jpeg
