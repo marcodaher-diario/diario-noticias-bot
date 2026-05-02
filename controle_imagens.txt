@@ -215,3 +215,4 @@
 2026-05-01|economia|https://s2-g1.glbimg.com/ovFsbtmTVOFkTZVVwzRm5gMl1fo=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/A/4/xoiEohRsuNWx588AOLMg/captura-de-tela-2026-04-30-203104.png
 2026-05-01|politica|https://s2-g1.glbimg.com/Vz5xlnRvJf7FK-adRiRYHhLDRhQ=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/D/1/Amrod0QDiWDRW4Qff0cA/ap26102802553726.jpg
 2026-05-02|policial|https://s2-g1.glbimg.com/IF9a-PruZlXCeXVFR3XGq9ep-Hw=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/K/m/NLqZWpSmuBN3u0jSBIjQ/montagens-1920-x-1080-px-2026-05-02t092715.196.jpg
+2026-05-02|economia|https://f.i.uol.com.br/fotografia/2026/04/21/177679956169e7cf49b9d28_1776799561_3x2_lg.jpg
