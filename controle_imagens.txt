@@ -218,3 +218,4 @@
 2026-05-02|economia|https://f.i.uol.com.br/fotografia/2026/04/21/177679956169e7cf49b9d28_1776799561_3x2_lg.jpg
 2026-05-02|politica|https://s2-g1.glbimg.com/GUmm7ZN00zYe1vuX7tRisWWFDL8=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/c/Y/aQrp8BSLusuz6C8sxDRQ/whatsapp-image-2026-01-07-at-16.31.19.jpeg
 2026-05-03|policial|https://s2-g1.glbimg.com/D9kGyayJIWm0NHZG3_ocnkbGGys=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/Z/l/eV0yZYSWmxYq2ex2F0Ag/imagem-1-fug.jpg
+2026-05-03|economia|https://media.gazetadopovo.com.br/2026/04/28150503/29296403-600x372.jpg
