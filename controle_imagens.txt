@@ -220,3 +220,4 @@
 2026-05-03|policial|https://s2-g1.glbimg.com/D9kGyayJIWm0NHZG3_ocnkbGGys=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/Z/l/eV0yZYSWmxYq2ex2F0Ag/imagem-1-fug.jpg
 2026-05-03|economia|https://media.gazetadopovo.com.br/2026/04/28150503/29296403-600x372.jpg
 2026-05-03|politica|https://images.pexels.com/photos/37201884/pexels-photo-37201884.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
+2026-05-04|politica|https://reporterbrasil.org.br/wp-content/uploads/2026/05/Card-twitter.png
