@@ -221,3 +221,4 @@
 2026-05-03|economia|https://media.gazetadopovo.com.br/2026/04/28150503/29296403-600x372.jpg
 2026-05-03|politica|https://images.pexels.com/photos/37201884/pexels-photo-37201884.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
 2026-05-04|politica|https://reporterbrasil.org.br/wp-content/uploads/2026/05/Card-twitter.png
+2026-05-05|economia|https://s2-g1.glbimg.com/HXrne9C2lYbCpJrvTGN5AhshrOo=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2022/e/S/rSoZ5kSP2MM3ZAOVtAAA/billie-dollar-with-business-chart-1-.jpg
