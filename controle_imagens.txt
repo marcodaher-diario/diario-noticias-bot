@@ -226,3 +226,4 @@
 2026-05-06|politica|https://f.i.uol.com.br/fotografia/2026/05/06/177810412369fbb73bf12c4_1778104123_3x2_rt.jpg
 2026-05-07|politica|https://s2-g1.glbimg.com/J4V5R5bGg9NC9098f2cRWof7sJE=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/a/u/tYsR2ISnKoyzo3H89flw/260506-info-terras-raras-tipos-usos.jpg
 2026-05-08|policial|https://s2-g1.glbimg.com/B_lrhAccmkvMq__ZCW0bmfwglrU=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2024/7/G/6ElqWCR1OOGgjXJ8HlCQ/mayc-elizeu.jpg
+2026-05-08|economia|https://s2-g1.glbimg.com/WWDRGDMxGNQZCy9ypuF1ackcQ90=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2025/a/S/u3TO0vRgyBsplTZYCmeA/2025-02-04t203004z-2-lynxmpel130tf-rtroptp-4-usa-trump-migration-colombia.jpg
