@@ -233,3 +233,4 @@
 2026-05-09|politica|https://f.i.uol.com.br/fotografia/2026/05/09/177835427069ff885e78208_1778354270_3x2_lg.jpg
 2026-05-10|policial|https://images.pexels.com/photos/532001/pexels-photo-532001.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
 2026-05-10|economia|https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/Reuters_Direct_Media/BrazilOnlineReportBusinessNews/tagreuters.com2024binary_LYNXMPEK690EN-FILEDIMAGE.jpg?w=1200&h=630&crop=1
+2026-05-10|politica|https://f.i.uol.com.br/fotografia/2023/10/24/16981448176537a2316c529_1698144817_3x2_rt.jpg
