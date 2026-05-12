@@ -236,3 +236,4 @@
 2026-05-10|politica|https://f.i.uol.com.br/fotografia/2023/10/24/16981448176537a2316c529_1698144817_3x2_rt.jpg
 2026-05-11|economia|https://s2-g1.glbimg.com/Pu8q2I3AmWPlml4OQVNVOEm8ODA=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2025/i/s/ZC3RRqSGiYbHLwfgfCvA/ap25100227604373-1-.jpg
 2026-05-11|politica|https://s2-g1.glbimg.com/eqSjN0tpA9joTUjS5u5V1EdPSnY=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/p/w/wCR8ddTkWlDT6bfcazyg/mg-1446-0.jpg
+2026-05-12|politica|https://s2-g1.glbimg.com/HcwmEbfVH2IkcS7MVXcDwnZudQw=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2023/h/j/Eq3ZokTTyUwibWOHaaCA/53013054839-adb26eec52-k.jpg
