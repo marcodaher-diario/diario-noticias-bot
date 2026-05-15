@@ -239,3 +239,4 @@
 2026-05-12|politica|https://s2-g1.glbimg.com/HcwmEbfVH2IkcS7MVXcDwnZudQw=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2023/h/j/Eq3ZokTTyUwibWOHaaCA/53013054839-adb26eec52-k.jpg
 2026-05-13|politica|https://s2-g1.glbimg.com/PfPeRIpsrccvrIkQl2NSGSe6uZ0=/1280x0/filters:format(jpeg)/https://thumbor.globoi.com/unsafe/fit-in/1280x720/s03.video.glbimg.com/deo/vi/38/02/14610238
 2026-05-14|politica|https://f.i.uol.com.br/fotografia/2026/05/14/17787956426a06447a1a6d0_1778795642_3x2_rt.jpg
+2026-05-15|economia|https://images.pexels.com/photos/13344830/pexels-photo-13344830.jpeg?auto=compress&cs=tinysrgb&h=650&w=940

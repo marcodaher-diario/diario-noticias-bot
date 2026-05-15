@@ -1,5 +1,3 @@
-https://redir.folha.com.br/redir/online/emcimadahora/rss091/*https://www1.folha.uol.com.br/colunas/painel/2026/04/senado-avisa-damares-que-nao-ha-base-legal-para-compartilhar-documentos-de-cpi-do-crime-organizado.shtml
-senado-avisa-damares-que-no-h-base-legal
 https://g1.globo.com/rj/norte-fluminense/noticia/2026/04/22/operacao-da-policia-civil-prende-quatro-suspeitos-por-homicidio-e-trafico-de-drogas-em-bom-jesus-do-itabapoana.ghtml
 operao-da-polcia-civil-prende-quatro-suspeitos-por
 https://g1.globo.com/economia/noticia/2026/04/22/dolar-ibovespa.ghtml
@@ -98,3 +96,5 @@ https://g1.globo.com/politica/noticia/2026/05/13/combate-ao-crime-memes-e-visual
 combate-ao-crime-memes-e-visual-como-governadores
 https://g1.globo.com/rj/rio-de-janeiro/noticia/2026/05/14/prazo-pedido-de-cpi-do-banco-master-alerj-rioprevidencia.ghtml
 pedido-de-cpi-do-banco-master-chega-a
+https://g1.globo.com/economia/noticia/2026/05/15/dolar-ibovespa.ghtml
+dlar-sobe-a-r-507-com-cenrio-eleitoral
