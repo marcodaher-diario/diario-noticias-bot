@@ -241,3 +241,4 @@
 2026-05-14|politica|https://f.i.uol.com.br/fotografia/2026/05/14/17787956426a06447a1a6d0_1778795642_3x2_rt.jpg
 2026-05-15|economia|https://images.pexels.com/photos/13344830/pexels-photo-13344830.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
 2026-05-15|politica|https://f.i.uol.com.br/fotografia/2023/02/03/167545465063dd68bae7efa_1675454650_3x2_rt.jpg
+2026-05-16|policial|https://s2-g1.glbimg.com/rrZk_0_ne85Ddn3Tfpqm1mQQmOc=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/w/g/8bBaF6SKO4ZP7C2TKCrg/potugues-2.jpg
