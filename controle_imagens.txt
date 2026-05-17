@@ -245,3 +245,4 @@
 2026-05-16|economia|https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2022/03/pexels-monstera-7412098.jpg?w=1200&h=630&crop=1
 2026-05-16|politica|https://s2-g1.glbimg.com/cgLrqHBhd8v6YVF62j0f9W2ZvrU=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/T/l/TABPvzRgqFTBuYfRVtmg/marcelo-ramos-amazonas.jpg
 2026-05-17|policial|https://s2-g1.glbimg.com/fkxSsqi0HMOt4f7DC12aSi4x7cY=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2024/a/4/hcNcT1TACwq460O0J5hw/whatsapp-image-2024-07-20-at-10.03.24.jpeg
+2026-05-17|economia|https://f.i.uol.com.br/fotografia/2025/07/31/1753998598688be50620891_1753998598_3x2_rt.jpg
