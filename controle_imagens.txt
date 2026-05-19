@@ -249,3 +249,4 @@
 2026-05-17|politica|https://s2-g1.glbimg.com/NEa0O_u84tbjF8GTMCDnu2Hs1mY=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/N/q/GuAX9TSPiioyl0dCg93Q/convencao-sampaio.jpeg
 2026-05-18|economia|https://s2-g1.glbimg.com/_C8SzkqPLfusRrt0OMxfHsBXNLk=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2019/v/C/oJvHQJSIKR4qxnBiAlzA/industria-pib-0469-fabio-tito-g1.jpg
 2026-05-18|politica|https://www.camara.leg.br/midias/image/2026/05/img20190530114919598-768x512.jpg
+2026-05-19|economia|https://images.pexels.com/photos/25568547/pexels-photo-25568547.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
