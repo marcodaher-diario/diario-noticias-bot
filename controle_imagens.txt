@@ -262,3 +262,4 @@
 2026-05-23|politica|https://f.i.uol.com.br/fotografia/2026/05/23/17795686836a12102b832ea_1779568683_3x2_lg.jpg
 2026-05-24|policial|https://s2-g1.glbimg.com/soD7ZRowm5kutfnSPjuYd2rjCHk=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/k/Z/3VWBufRpA096Yq9VPsRg/texto-do-seu-paragrafo-2026-05-24t093440.265.png
 2026-05-24|economia|https://f.i.uol.com.br/fotografia/2026/05/24/17796367576a131a1566989_1779636757_3x2_rt.jpg
+2026-05-24|politica|https://s2-g1.glbimg.com/HQzzio3Amrsnhsj_aHfrA3bXd50=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/7/T/OPsBPqTcOfAcoOHWxrAA/imagem-redimensionada-1200px-3.webp
