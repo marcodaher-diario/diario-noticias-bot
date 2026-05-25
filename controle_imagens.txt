@@ -264,3 +264,4 @@
 2026-05-24|economia|https://f.i.uol.com.br/fotografia/2026/05/24/17796367576a131a1566989_1779636757_3x2_rt.jpg
 2026-05-24|politica|https://s2-g1.glbimg.com/HQzzio3Amrsnhsj_aHfrA3bXd50=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/7/T/OPsBPqTcOfAcoOHWxrAA/imagem-redimensionada-1200px-3.webp
 2026-05-25|economia|https://s2-g1.glbimg.com/qp3V1SR_T_ulDxWqvmUzaWhnUEM=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/5/4/sdL2RrSO2QbV4jfIzq7Q/globo-canal-4-20260413-2000-frame-79216.jpeg
+2026-05-25|politica|https://www.camara.leg.br/midias/image/2026/05/img20260512173916029-768x473.jpg
