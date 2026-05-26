@@ -266,3 +266,4 @@
 2026-05-25|economia|https://s2-g1.glbimg.com/qp3V1SR_T_ulDxWqvmUzaWhnUEM=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/5/4/sdL2RrSO2QbV4jfIzq7Q/globo-canal-4-20260413-2000-frame-79216.jpeg
 2026-05-25|politica|https://www.camara.leg.br/midias/image/2026/05/img20260512173916029-768x473.jpg
 2026-05-26|economia|https://s2-g1.glbimg.com/WgX1m7gmGu1TpvMyLFJuJkJuosI=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2021/b/B/3dVxIdRBG3TBG4Tap31w/2021-07-08t204723z-1-lynxnpeh6715r-rtroptp-4-global-currencies-survey.jpg
+2026-05-26|politica|https://s2-g1.glbimg.com/3DZw-mnIneooCPlbSDcAIsMCZ7I=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/w/3/y3amoBRNSrY4JszVuOTg/coletiva-octaciliobarbosa-13-05-2026-5.jpg
