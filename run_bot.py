@@ -413,7 +413,8 @@ def gerar_tags_seo(titulo, texto):
         "petrobras": "Petrobras",
         "vale": "Vale",
         "onu": "ONU",
-        "otan": "OTAN"
+        "otan": "OTAN",
+        "presidência da república": "PRESIDÊNCIA DA REPÚBLICA"
     }
 
     # ======================================================
@@ -429,7 +430,14 @@ def gerar_tags_seo(titulo, texto):
         "putin": "Vladimir Putin",
         "biden": "Joe Biden",
         "netanyahu": "Benjamin Netanyahu",
-        "xi": "Xi Jinping"
+        "xi": "Xi Jinping",
+        "flávio bolsonaro": "Flávio Bolsonaro",
+        "eduardo bolsonaro": "Eduardo Bolsonaro",
+        "carlos bolsonaro": "Carlos Bolsonaro",
+        "lulinha": "Fábio Luís Lula da Silva",
+        "jair bolsonaro": "Jair Bolsonaro",
+        "michelle bolsonaro": "Michelle Bolsonaro",
+        "janja": "Janja da Silva"
     }
 
     # ======================================================
