@@ -29,15 +29,15 @@ RSS_FEEDS = [
 PESOS_POR_TEMA = {
     "policial": {
         "greve": 13, "chacina": 12, "homicídio": 12, "assassinato": 11, "latrocínio": 11,
-        "operação": 10, "prisão": 10, "preso": 9, "fuzil": 10, "tráfico": 9,
-        "investigação": 8, "mandado": 8, "flagrante": 9, "confronto": 8,
-        "crime": 5, "suspeito": 5, "delegacia": 4, "ocorrência": 4, "polícia": 5
+        "operação": 10, "prisão": 10, "preso": 9, "fuzil": 10, "tráfico": 9, "André Mendonça": 14,
+        "investigação": 8, "mandado": 8, "flagrante": 9, "confronto": 8, "Lula": 13,
+        "crime": 5, "suspeito": 5, "delegacia": 4, "ocorrência": 4, "polícia": 5, "Lulinha": 15
     },
     "politica": {
         "greve": 13, "stf": 12, "supremo": 12, "impeachment": 12, "planalto": 10, 
-        "congresso": 10, "senado": 9, "câmara": 9, "ministro": 10,
-        "votação": 8, "reforma": 9, "partido": 7, "eleição": 10,
-        "governo": 6, "oposição": 6, "política": 5, "base": 4, "cpi": 11
+        "congresso": 10, "senado": 9, "câmara": 9, "ministro": 10, "André Mendonça": 14,
+        "votação": 8, "reforma": 9, "partido": 7, "eleição": 10, "Lula": 13,
+        "governo": 6, "oposição": 6, "política": 5, "base": 4, "cpi": 11, "Lulinha": 15
     },
     "economia": {
         "inflação": 12, "greve": 13, "selic": 12, "juros": 10, "dólar": 11, 
