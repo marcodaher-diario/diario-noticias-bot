@@ -271,3 +271,4 @@
 2026-05-27|politica|https://s2-g1.glbimg.com/oHh8Wc27z90gL-A6pHCOT6QC9sk=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/w/T/ByyNiKTjKIKK8N55rY6g/1.png
 2026-05-28|politica|https://s2-g1.glbimg.com/977Y6IXSVK5ztcaWYy4uFQ-MiIU=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/T/I/IKZdoRQXKv5YatDf2amQ/whatsapp-image-2026-01-13-at-09.36.17-1-.jpeg
 2026-05-28|politica|https://images.pexels.com/photos/8644601/pexels-photo-8644601.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
+2026-05-28|policial|https://s2-g1.glbimg.com/RG2OjhXgac9bFfBs7N9datAOrew=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/Z/r/9QEE2KTeAnb0AEsakmbg/augusto-lima-foto-vanner-casaes-agencia-alba.jpg
