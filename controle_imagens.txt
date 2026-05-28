@@ -272,3 +272,4 @@
 2026-05-28|politica|https://s2-g1.glbimg.com/977Y6IXSVK5ztcaWYy4uFQ-MiIU=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/T/I/IKZdoRQXKv5YatDf2amQ/whatsapp-image-2026-01-13-at-09.36.17-1-.jpeg
 2026-05-28|politica|https://images.pexels.com/photos/8644601/pexels-photo-8644601.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
 2026-05-28|policial|https://s2-g1.glbimg.com/RG2OjhXgac9bFfBs7N9datAOrew=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/Z/r/9QEE2KTeAnb0AEsakmbg/augusto-lima-foto-vanner-casaes-agencia-alba.jpg
+2026-05-28|economia|https://s2-g1.glbimg.com/AwPjpQl4j6H8d4sTHgGgbt2XfsA=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2024/5/G/y3VSlYQDAv1nqeDvq16A/2024-07-02t201319z-1-lynxmpek610va-rtroptp-4-dolar-abre.jpg
