@@ -281,3 +281,4 @@
 2026-05-30|politica|https://f.i.uol.com.br/fotografia/2026/05/30/17801705456a1b3f31383dd_1780170545_3x2_lg.jpg
 2026-05-31|policial|https://s2-g1.glbimg.com/7F-sgO6lufr4hBVbsXqFR2klTiU=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/d/D/v1a5qWSWmah7iInqNANQ/befunky-collage-2026-05-30t145234.695.jpg
 2026-05-31|economia|https://f.i.uol.com.br/fotografia/2026/05/28/17799706236a18323f09ac4_1779970623_3x2_xl.jpg
+2026-05-31|politica|https://f.i.uol.com.br/fotografia/2026/05/28/17800021506a18ad668cff6_1780002150_3x2_xl.jpg
