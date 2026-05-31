@@ -279,3 +279,4 @@
 2026-05-30|policial|https://s2-g1.glbimg.com/jonz6fQOgaFO8RgwWDJzSYJ4ahA=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/Z/Q/zeGyaRSgymFZpthNo69w/tamanho-g1ba-68-.png
 2026-05-30|economia|https://s2-g1.glbimg.com/ZSKcBN1n6YZNsYskXNjs5Z79G6U=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/J/b/kEzRYiTIAmqvtbAQ905g/edicao-imagens-g1-17-.jpg
 2026-05-30|politica|https://f.i.uol.com.br/fotografia/2026/05/30/17801705456a1b3f31383dd_1780170545_3x2_lg.jpg
+2026-05-31|policial|https://s2-g1.glbimg.com/7F-sgO6lufr4hBVbsXqFR2klTiU=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/d/D/v1a5qWSWmah7iInqNANQ/befunky-collage-2026-05-30t145234.695.jpg
