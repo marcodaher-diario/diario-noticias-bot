@@ -283,3 +283,4 @@
 2026-05-31|economia|https://f.i.uol.com.br/fotografia/2026/05/28/17799706236a18323f09ac4_1779970623_3x2_xl.jpg
 2026-05-31|politica|https://f.i.uol.com.br/fotografia/2026/05/28/17800021506a18ad668cff6_1780002150_3x2_xl.jpg
 2026-06-01|politica|https://s2-g1.glbimg.com/co21LOiz6o_dmiXUsj3Gk8GlWLk=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/x/R/ZrIm5nR7CGXE0xcOCyxQ/polymarket.png
+2026-06-02|economia|https://s2-g1.glbimg.com/U7ibWMT99ckazBhPRV9OjFpjjjA=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2025/Q/s/wn0CJZRQqQ1YaWNBbg4A/mg-5213.jpg
