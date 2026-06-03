@@ -285,3 +285,4 @@
 2026-06-01|politica|https://s2-g1.glbimg.com/co21LOiz6o_dmiXUsj3Gk8GlWLk=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/x/R/ZrIm5nR7CGXE0xcOCyxQ/polymarket.png
 2026-06-02|economia|https://s2-g1.glbimg.com/U7ibWMT99ckazBhPRV9OjFpjjjA=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2025/Q/s/wn0CJZRQqQ1YaWNBbg4A/mg-5213.jpg
 2026-06-02|politica|https://s2-g1.glbimg.com/IEa7QT4G8zFmO5yJBjhlPARl5Vw=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/e/q/BhLa2hTqe356nh6kOqCg/banco-master-1.jpeg
+2026-06-03|economia|https://s2-g1.glbimg.com/KbOg1q3fzRMd5YV3G82VDQOh1V0=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2025/D/u/bIbO92QKm2Mwko6Uw45w/2025-08-13t150516z-1527003558-rc2e6gazlupi-rtrmadp-3-zelle-new-york.jpg
