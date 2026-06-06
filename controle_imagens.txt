@@ -291,3 +291,4 @@
 2026-06-04|politica|https://s2-g1.glbimg.com/9enb9ivDL-E4a5l2blzafwM5svQ=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/v/F/T58DVITwunKePUObr2IA/whatsapp-image-2026-05-26-at-17.50.28.jpeg
 2026-06-05|economia|https://s2-g1.glbimg.com/5b3No2jzOqlFV_iL1WjQlBxTNwQ=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2025/f/D/MS4yEaTkqIFoMjdGfx3A/2025-12-31t181616z-716243511-rc2tria44ux8-rtrmadp-3-usa-moneymarket-liquidity.jpg
 2026-06-05|politica|https://f.i.uol.com.br/fotografia/2026/05/15/17788742576a0777915a935_1778874257_3x2_rt.jpg
+2026-06-06|policial|https://s2-g1.glbimg.com/NLUBjFYoWxGRjp3WlyVWvQRGw5k=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/9/J/TiSJkyTEeNtsgvQGEEHg/foto-no-tamanho-home-33-.png
