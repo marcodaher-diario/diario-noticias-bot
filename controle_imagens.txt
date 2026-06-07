@@ -294,3 +294,4 @@
 2026-06-06|policial|https://s2-g1.glbimg.com/NLUBjFYoWxGRjp3WlyVWvQRGw5k=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/9/J/TiSJkyTEeNtsgvQGEEHg/foto-no-tamanho-home-33-.png
 2026-06-06|economia|https://s2-g1.glbimg.com/PQIIfv9mx0sDx0H5NIhw9MucWIs=/s.glbimg.com/jo/g1/f/original/2015/08/12/china_moeda_ap_1.jpg
 2026-06-06|politica|https://s2-g1.glbimg.com/llD8s7LXRy4r8lKoME0bdqe7V7U=/1280x0/filters:format(jpeg)/https://thumbor.globoi.com/unsafe/fit-in/1280x720/s03.video.glbimg.com/deo/vi/82/84/14678482
+2026-06-07|economia|https://f.i.uol.com.br/fotografia/2025/08/07/17545920836894f35316389_1754592083_3x2_rt.jpg
