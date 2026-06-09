@@ -298,3 +298,4 @@
 2026-06-07|politica|https://s2-g1.glbimg.com/Rs8tEh0DS9QdoMemr1ZfF56zqS4=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/B/D/xTCKMBSPKIziJmugM2VA/afp-20260607-b6az4g8-v1-highres-comboperuelectionrunoffvote.jpg
 2026-06-08|economia|https://s2-g1.glbimg.com/kwhpnxebCnxpKeYvioSvYx9BeJQ=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2024/O/o/cXv51xRgeBRQU6yZ8bvw/thumbnail-image001.png
 2026-06-08|politica|https://f.i.uol.com.br/fotografia/2026/06/08/17809515286a2729e82b853_1780951528_3x2_xl.jpg
+2026-06-09|economia|https://s2-g1.glbimg.com/E1wdrFOmdr92_HLrVIn4I7FQM14=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2024/b/B/mHT6XmTS6IhdTDQDmvAA/pexels-karolina-grabowska-4386421.jpg
