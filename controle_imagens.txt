@@ -301,3 +301,4 @@
 2026-06-09|economia|https://s2-g1.glbimg.com/E1wdrFOmdr92_HLrVIn4I7FQM14=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2024/b/B/mHT6XmTS6IhdTDQDmvAA/pexels-karolina-grabowska-4386421.jpg
 2026-06-09|politica|https://s2-g1.glbimg.com/4uXebRPmzh9CSTdn2HnbtQmmbKk=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/x/C/ixeIUPSBeFbVapTsvBig/flavio-vorcaro.jpg
 2026-06-10|economia|https://s2-g1.glbimg.com/XNe-iZGShwcfxKKIu_dUZJjCMZA=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2024/A/W/pNqFkwSSG90RoeSZ80Pg/drf20241217001.jpg
+2026-06-10|politica|https://s2-g1.glbimg.com/_cRBljKgtgH2OO5TpoNEa-Jcp-o=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/e/s/eXwLJ2QmWVeFtDivEA8w/55199249110-8d099d956c-o.jpg
