@@ -1,5 +1,3 @@
-https://g1.globo.com/economia/noticia/2026/05/18/previa-do-pib-do-banco-central-mostra-expansao-de-13percent-no-1o-trimestre.ghtml
-prvia-do-pib-do-banco-central-mostra-crescimento
 https://www.camara.leg.br/noticias/1273482-relatorio-sobre-novo-piso-dos-professores-sera-apresentado-em-comissao-mista-nesta-terca/
 relatrio-sobre-novo-piso-dos-professores-ser-apresentado
 https://g1.globo.com/economia/noticia/2026/05/19/dolar-ibovespa.ghtml
@@ -98,3 +96,5 @@ https://g1.globo.com/economia/noticia/2026/06/09/dolar-ibovespa.ghtml
 dlar-opera-em-queda-e-vai-a-r
 https://g1.globo.com/politica/noticia/2026/06/09/tse-julgamento-decisao-de-nunes-marques-que-suspendeu-pesquisa-com-queda-de-flavio.ghtml
 tse-analisa-deciso-de-nunes-marques-que-suspendeu
+https://g1.globo.com/economia/noticia/2026/06/10/dolar-ibovespa.ghtml
+dlar-oscila-e-ibovespa-cai-aps-dados-de
