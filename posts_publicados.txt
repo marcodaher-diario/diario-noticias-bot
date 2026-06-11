@@ -1,5 +1,3 @@
-https://g1.globo.com/economia/noticia/2026/05/19/dolar-ibovespa.ghtml
-ibovespa-cai-com-tenso-entre-eua-e-ir
 https://g1.globo.com/economia/noticia/2026/05/19/auditoria-do-tcu-aponta-diferenca-de-300-mil-entre-numero-de-cpfs-ativos-de-pessoas-com-mais-de-100-anos-e-populacao-nessa-faixa-etaria.ghtml
 auditoria-do-tcu-aponta-diferena-de-300-mil
 https://g1.globo.com/economia/noticia/2026/05/20/dolar-ibovespa.ghtml
@@ -98,3 +96,5 @@ https://g1.globo.com/economia/noticia/2026/06/10/dolar-ibovespa.ghtml
 dlar-oscila-e-ibovespa-cai-aps-dados-de
 https://g1.globo.com/politica/noticia/2026/06/10/durigan-diz-que-governo-avalia-vetar-renegociacao-de-dividas-rurais-caso-projeto-passe-na-camara-senado-aprovou-proposta.ghtml
 durigan-diz-que-governo-avalia-vetar-renegociao-de
+https://g1.globo.com/economia/noticia/2026/06/11/eu-amo-a-inflacao-diz-trump-enquanto-precos-nos-eua-sobem-no-ritmo-mais-acelerado-em-3-anos.ghtml
+eu-amo-a-inflao-diz-trump-enquanto-preos
