@@ -303,3 +303,4 @@
 2026-06-10|economia|https://s2-g1.glbimg.com/XNe-iZGShwcfxKKIu_dUZJjCMZA=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2024/A/W/pNqFkwSSG90RoeSZ80Pg/drf20241217001.jpg
 2026-06-10|politica|https://s2-g1.glbimg.com/_cRBljKgtgH2OO5TpoNEa-Jcp-o=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/e/s/eXwLJ2QmWVeFtDivEA8w/55199249110-8d099d956c-o.jpg
 2026-06-11|economia|https://s2-g1.glbimg.com/eiHZtWdBbirvArOnzGYt1MtiAnQ=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/o/K/OeU5NuTLWgu3y7wmi8oA/f468cc40-656f-11f1-b034-6181319b209d.jpg.webp
+2026-06-11|politica|https://images.pexels.com/photos/13344830/pexels-photo-13344830.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
