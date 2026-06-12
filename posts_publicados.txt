@@ -1,5 +1,3 @@
-https://g1.globo.com/economia/noticia/2026/05/20/dolar-ibovespa.ghtml
-dlar-e-ibovespa-sobem-com-mercado-atento-ata
 https://www.camara.leg.br/noticias/1274521-camara-aprova-projeto-que-retoma-a-reducao-dos-limites-da-floresta-nacional-do-jamanxim-no-para-acompanhe/
 cmara-aprova-projeto-que-retoma-a-reduo-dos
 https://g1.globo.com/economia/noticia/2026/05/21/dolar-ibovespa.ghtml
@@ -98,3 +96,5 @@ https://g1.globo.com/economia/noticia/2026/06/11/eu-amo-a-inflacao-diz-trump-enq
 eu-amo-a-inflao-diz-trump-enquanto-preos
 https://g1.globo.com/economia/noticia/2026/06/11/fazenda-refaz-calculos-e-agora-diz-que-impacto-de-pautas-bomba-do-congresso-supera-r-111-bilhoes-por-ano.ghtml
 fazenda-refaz-clculos-e-diz-que-pautasbomba-do
+https://g1.globo.com/economia/noticia/2026/06/12/ipca-inflacao-maio.ghtml
+ipca-inflao-desacelera-para-058-em-maio-mas
