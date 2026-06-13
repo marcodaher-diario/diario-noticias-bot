@@ -307,3 +307,4 @@
 2026-06-12|economia|https://s2-g1.glbimg.com/hEorMc6b4zL7txWXRk9KTZT9g5g=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2025/G/I/LBifS8SoyIDywGJXmt4w/fta20250306036.jpg
 2026-06-12|politica|https://images.pexels.com/photos/37201884/pexels-photo-37201884.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
 2026-06-13|economia|https://f.i.uol.com.br/fotografia/2026/06/13/17813628716a2d70b76295e_1781362871_3x2_rt.jpg
+2026-06-13|politica|https://s2-g1.glbimg.com/dICaVeYFZTszZthOWVc8j2RkGUY=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/S/Z/vAoKmqRTiqtKgvlvo7sw/2026-06-01t015028z-283734192-rc2oklay0ztb-rtrmadp-3-peru-election-debate.jpg
