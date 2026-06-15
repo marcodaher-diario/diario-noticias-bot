@@ -310,3 +310,4 @@
 2026-06-13|politica|https://s2-g1.glbimg.com/dICaVeYFZTszZthOWVc8j2RkGUY=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/S/Z/vAoKmqRTiqtKgvlvo7sw/2026-06-01t015028z-283734192-rc2oklay0ztb-rtrmadp-3-peru-election-debate.jpg
 2026-06-14|economia|https://f.i.uol.com.br/fotografia/2026/06/14/17814498646a2ec4882a83f_1781449864_3x2_md.jpg
 2026-06-14|politica|https://s2-g1.glbimg.com/bQk46W4Q61yyeIvEmSjCMSc9ThE=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/M/U/RO5cXIRbyrnoClLyQqGA/2026-05-29t093129z-833218144-rc2wilaxyi3o-rtrmadp-3-iran-crisis-talks.jpg
+2026-06-15|economia|https://s2-g1.glbimg.com/4SVqnsMzTBZu7-yQve5CPjvAsco=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2025/D/y/8dMSZZTJObIth6baVP7Q/centro-teresina-1-.jpg
