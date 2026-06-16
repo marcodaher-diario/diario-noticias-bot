@@ -311,3 +311,4 @@
 2026-06-14|economia|https://f.i.uol.com.br/fotografia/2026/06/14/17814498646a2ec4882a83f_1781449864_3x2_md.jpg
 2026-06-14|politica|https://s2-g1.glbimg.com/bQk46W4Q61yyeIvEmSjCMSc9ThE=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/M/U/RO5cXIRbyrnoClLyQqGA/2026-05-29t093129z-833218144-rc2wilaxyi3o-rtrmadp-3-iran-crisis-talks.jpg
 2026-06-15|economia|https://s2-g1.glbimg.com/4SVqnsMzTBZu7-yQve5CPjvAsco=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2025/D/y/8dMSZZTJObIth6baVP7Q/centro-teresina-1-.jpg
+2026-06-16|politica|https://s2-g1.glbimg.com/hImN0zPdm9DqjzaaEFkkXpipkcc=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2022/m/L/sZuh72TSqFSveHQg6Etg/pia-produto-home-leandro-grandi-ag-vale.jpg
