@@ -317,3 +317,4 @@
 2026-06-17|economia|https://s2-g1.glbimg.com/O49d2V48Q5zIUn7fQPNfoMN5WOI=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2025/K/J/NvIKwCR8arhLFNMisILw/2025-01-21t204813z-1-lynxnpel0k0yk-rtroptp-4-brazil-economy.jpg
 2026-06-17|politica|https://s2-g1.glbimg.com/BTC5mUtlX1K7oCs9VA6UgDDlqm4=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/e/z/6k7qa7SzG0CbeV5hAGwA/55341724835-cde8e245d0-k.jpg
 2026-06-18|economia|https://s2-g1.glbimg.com/wfZ5moSYkzWL4s990ULEHysEouU=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2024/1/P/tCWnbnTHuFIxLcWlmcGA/globo-canal-5-20241101-1800-frame-310355.jpeg
+2026-06-18|politica|https://s2-g1.glbimg.com/aeWqdAi9N0O3UU04AzXxLJftewA=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/Z/o/bonemwR2y6ylwH4POiIA/wagner-waldemir-barreto-agencia-senado.jpg
