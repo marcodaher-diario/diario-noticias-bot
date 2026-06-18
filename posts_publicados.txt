@@ -1,5 +1,3 @@
-https://g1.globo.com/economia/noticia/2026/05/25/com-alta-do-petroleo-mercado-financeiro-passa-a-projetar-inflacao-acima-de-5percent-neste-ano.ghtml
-com-alta-do-petrleo-mercado-financeiro-passa-a
 https://www.camara.leg.br/noticias/1274810-comissao-analisa-parecer-sobre-a-pec-que-propoe-fim-da-escala-6x1-assista/
 comisso-analisa-parecer-sobre-a-pec-que-prope
 https://g1.globo.com/economia/noticia/2026/05/26/dolar-ibovespa.ghtml
@@ -98,3 +96,5 @@ https://g1.globo.com/economia/noticia/2026/06/17/dolar-ibovespa.ghtml
 dlar-opera-em-queda-com-decises-de-juros
 https://g1.globo.com/politica/noticia/2026/06/17/stf-faz-ajustes-na-responsabilizacao-das-big-techs-nao-cabe-mais-recursos-da-decisao-dos-ministros.ghtml
 stf-ajusta-responsabilizao-das-big-techs-no-cabe
+https://g1.globo.com/economia/noticia/2026/06/18/dolar-ibovespa.ghtml
+dlar-opera-em-alta-e-vai-a-r
