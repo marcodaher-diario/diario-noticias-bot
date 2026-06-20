@@ -321,3 +321,4 @@
 2026-06-19|economia|https://images.pexels.com/photos/8644601/pexels-photo-8644601.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
 2026-06-19|politica|https://s2-g1.glbimg.com/J5cyMuGzQvI_RbdxIbvbWO1PWoU=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/Y/7/WtyK47QfqPuUwWv7pgSA/55296078779-d56d05d61b-k.jpg
 2026-06-20|economia|https://f.i.uol.com.br/fotografia/2026/06/01/17803234716a1d948f84ea2_1780323471_3x2_rt.jpg
+2026-06-20|politica|https://f.i.uol.com.br/fotografia/2026/06/05/17806822406a230e0025690_1780682240_3x2_rt.jpg
