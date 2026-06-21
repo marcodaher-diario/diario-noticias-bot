@@ -323,3 +323,4 @@
 2026-06-20|economia|https://f.i.uol.com.br/fotografia/2026/06/01/17803234716a1d948f84ea2_1780323471_3x2_rt.jpg
 2026-06-20|politica|https://f.i.uol.com.br/fotografia/2026/06/05/17806822406a230e0025690_1780682240_3x2_rt.jpg
 2026-06-21|economia|https://f.i.uol.com.br/fotografia/2025/11/26/176418330769274d0bbc8fc_1764183307_3x2_xl.jpg
+2026-06-21|politica|https://s2-g1.glbimg.com/nRs3g7m_QE-ePRkmempHIyve-bQ=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/k/x/3SrFF7QeuJRlgLubLltg/carlos-jpg.jpg
