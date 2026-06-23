@@ -326,3 +326,4 @@
 2026-06-21|politica|https://s2-g1.glbimg.com/nRs3g7m_QE-ePRkmempHIyve-bQ=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/k/x/3SrFF7QeuJRlgLubLltg/carlos-jpg.jpg
 2026-06-22|economia|https://s2-g1.glbimg.com/uYcu4AIXBzJmCJuRWnm1XOfk3eg=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2025/i/W/MR2ARPTgm4b6Ht3tiAoQ/thumbnail-gettyimages-2153051764.jpg
 2026-06-22|politica|https://s2-g1.glbimg.com/lwEc3KnySkXabHdSPVHTp8zT0Fk=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/A/a/94vJNCQHGFftZ9Jdjzrg/arthur-henrique-vota.jpeg
+2026-06-23|economia|https://images.pexels.com/photos/7540530/pexels-photo-7540530.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
