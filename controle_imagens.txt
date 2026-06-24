@@ -328,3 +328,4 @@
 2026-06-22|politica|https://s2-g1.glbimg.com/lwEc3KnySkXabHdSPVHTp8zT0Fk=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/A/a/94vJNCQHGFftZ9Jdjzrg/arthur-henrique-vota.jpeg
 2026-06-23|economia|https://images.pexels.com/photos/7540530/pexels-photo-7540530.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
 2026-06-23|politica|https://s2-g1.glbimg.com/uwVYmLue3Gv9k_c5B0BGH8YAuvo=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2025/o/N/JT89fuTK2HxZjvArZftA/globo-canal-4-20250324-2000-frame-72444.jpeg
+2026-06-24|politica|https://s2-g1.glbimg.com/CXGdGd2cbJda9z5PLNIklp2W-T0=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/p/J/BYiOFMSX20YqfxgpBuGA/whatsapp-image-2026-06-24-at-18.15.37-1-.jpeg
