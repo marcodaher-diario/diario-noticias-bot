@@ -1,5 +1,3 @@
-https://redir.folha.com.br/redir/online/emcimadahora/rss091/*https://www1.folha.uol.com.br/colunas/painel/2026/05/presidente-do-tce-am-desafia-stf-e-tenta-aprovar-lei-que-permite-mais-de-uma-reeleicao.shtml
-presidente-do-tceam-desafia-stf-e-tenta-aprovar
 https://g1.globo.com/tecnologia/noticia/2026/06/01/polymarket-kalshi-pesquisas-eleitorais.ghtml
 proibidos-no-brasil-polymarket-e-kalshi-viralizam-na
 https://g1.globo.com/economia/noticia/2026/06/02/por-que-o-pix-virou-alvo-de-trump-em-investigacao-comercial-contra-o-brasil.ghtml
@@ -98,3 +96,5 @@ https://g1.globo.com/df/distrito-federal/noticia/2026/06/25/tcu-arquiva-processo
 tcu-arquiva-processo-sobre-emprstimo-bilionrio-do-governo
 https://noticias.uol.com.br/politica/ultimas-noticias/2026/06/26/pf-conclui-que-flavio-caluniou-lula-por-acusa-lo-de-trafico-de-drogas.ghtm
 pf-diz-a-moraes-que-flvio-caluniou-lula
+https://g1.globo.com/rj/rio-de-janeiro/noticia/2026/06/27/dono-da-outsider-tours-e-preso-novamente.ghtml
+dono-da-outsider-tours-preso-novamente-por-estelionato
