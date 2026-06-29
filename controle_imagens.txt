@@ -338,3 +338,4 @@
 2026-06-28|economia|https://f.i.uol.com.br/fotografia/2026/06/28/17826554066a4129ae94689_1782655406_3x2_rt.jpg
 2026-06-28|politica|https://s2-g1.glbimg.com/qcCKFrPVjUZq2CLgRGS_NL307_M=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/v/D/mBB63jRfeqfe0aYBHPaw/ap26178477857550.jpg
 2026-06-29|economia|https://s2-g1.glbimg.com/wuCJsUdsr54qUyZS0D39qEyEnJg=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/x/J/NG6wxBRUaLjnXzDApA1A/2026-03-18t125756z-1386581843-rc2od1azr1td-rtrmadp-3-markets-dollar.jpg
+2026-06-29|politica|https://s2-g1.glbimg.com/9UH9SBJmIfyQsbPzc76lyL8xWaI=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/J/d/spYt7MRkW3vZ01hHJ9PQ/55264854907-0df7857795-k.jpg
