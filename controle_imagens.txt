@@ -342,3 +342,4 @@
 2026-06-30|politica|https://f.i.uol.com.br/fotografia/2026/06/30/17828569536a443cf9392e4_1782856953_3x2_rt.jpg
 2026-07-01|politica|https://www.camara.leg.br/midias/image/2026/07/img20260701154947230-768x473.jpg
 2026-07-02|politica|https://s2-g1.glbimg.com/vVK90IwxEef7e6jwekBD7AJkDso=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/Y/K/IEbV0yRoiMiORautoJsA/55226440422-273c964e9e-o.jpg
+2026-07-03|economia|https://images.pexels.com/photos/35710201/pexels-photo-35710201.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
