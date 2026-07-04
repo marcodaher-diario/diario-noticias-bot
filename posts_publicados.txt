@@ -1,5 +1,3 @@
-https://redir.folha.com.br/redir/online/emcimadahora/rss091/*https://www1.folha.uol.com.br/mercado/2026/06/openai-planeja-maior-reformulacao-do-chatgpt-desde-o-lancamento.shtml
-openai-planeja-maior-reformulao-do-chatgpt-desde-o
 https://g1.globo.com/mundo/noticia/2026/06/07/eleicoes-no-peru-boca-de-urna.ghtml
 eleies-no-peru-boca-de-urna-aponta-keiko
 https://g1.globo.com/economia/noticia/2026/06/08/mercado-financeiro-eleva-novamente-estimativa-de-inflacao-em-2026-e-ve-corte-menor-de-juros.ghtml
@@ -98,3 +96,5 @@ https://g1.globo.com/sp/sorocaba-jundiai/noticia/2026/07/03/ministro-da-saude-se
 ministro-da-sade-se-rene-com-famlia-de
 https://g1.globo.com/pi/piaui/noticia/2026/07/04/vendedor-joias-parnaiba.ghtml
 vendedor-de-joias-agredido-sequestrado-e-roubado-em
+https://redir.folha.com.br/redir/online/emcimadahora/rss091/*https://www1.folha.uol.com.br/colunas/painelsa/2026/07/boletim-focus-escuta-so-o-mercado-financeiro-e-isso-gera-um-vies-diz-diretor-do-instituto-esfera.shtml
+boletim-focus-escuta-s-o-mercado-financeiro-e
