@@ -354,3 +354,4 @@
 2026-07-06|politica|https://s2-g1.glbimg.com/Ml_sprFRW23mp7JhU8YtYEawc5U=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/U/2/U6eCOZQnyTv5cgKcmJcA/55240312176-f4669e7bc4-k.jpg
 2026-07-07|politica|https://s2-g1.glbimg.com/VxQJzlTSXGNyj0eUlvaCkeT7hfc=/1280x0/filters:format(jpeg)/https://thumbor.globoi.com/unsafe/fit-in/1280x720/s04.video.glbimg.com/deo/vi/87/97/14759787
 2026-07-08|politica|https://s2-g1.glbimg.com/wPLsHrHDH9Ol-H6erugS8aEN4I0=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/h/V/uUUo0SSzWnBI947rT1Ew/prefeitura-de-japeri.jpeg
+2026-07-09|economia|https://images.pexels.com/photos/38419886/pexels-photo-38419886.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
