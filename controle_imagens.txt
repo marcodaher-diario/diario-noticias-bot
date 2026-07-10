@@ -356,3 +356,4 @@
 2026-07-08|politica|https://s2-g1.glbimg.com/wPLsHrHDH9Ol-H6erugS8aEN4I0=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/h/V/uUUo0SSzWnBI947rT1Ew/prefeitura-de-japeri.jpeg
 2026-07-09|economia|https://images.pexels.com/photos/38419886/pexels-photo-38419886.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
 2026-07-09|politica|https://s2-g1.glbimg.com/QgBtJYi1vG_RJuJ32pPpNw55WBI=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/x/7/7h6xGfToqWiyAR3NeZlQ/55327628389-a0f827fec7-o.jpg
+2026-07-10|politica|https://s2-g1.glbimg.com/AWK8NmpsBuwLiH0Mza0LreZDYEE=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/B/6/tlCpQaQHedSiWv5Pg0LQ/gnews-hn-agenda-haddad-02-klj00083-gnews-0003-frame-3644.jpeg
