@@ -359,3 +359,4 @@
 2026-07-10|politica|https://s2-g1.glbimg.com/AWK8NmpsBuwLiH0Mza0LreZDYEE=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/B/6/tlCpQaQHedSiWv5Pg0LQ/gnews-hn-agenda-haddad-02-klj00083-gnews-0003-frame-3644.jpeg
 2026-07-11|policial|https://s2-g1.glbimg.com/_amDwukXuQix0vylSPR5EiKQ6sM=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/I/w/xO1QJWSSquxqeSjOeMXg/foto-droga.png
 2026-07-11|economia|https://s2-g1.glbimg.com/k-SVy6vK5Z9lQsTXrwm8wuk9bS8=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/V/A/CBnjHXSSK5KAM4Lz0NZg/tem-solucao-5.jpg
+2026-07-11|politica|https://f.i.uol.com.br/fotografia/2026/07/09/17836303526a500a1089206_1783630352_3x2_rt.jpg
