@@ -357,3 +357,4 @@
 2026-07-09|economia|https://images.pexels.com/photos/38419886/pexels-photo-38419886.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
 2026-07-09|politica|https://s2-g1.glbimg.com/QgBtJYi1vG_RJuJ32pPpNw55WBI=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/x/7/7h6xGfToqWiyAR3NeZlQ/55327628389-a0f827fec7-o.jpg
 2026-07-10|politica|https://s2-g1.glbimg.com/AWK8NmpsBuwLiH0Mza0LreZDYEE=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/B/6/tlCpQaQHedSiWv5Pg0LQ/gnews-hn-agenda-haddad-02-klj00083-gnews-0003-frame-3644.jpeg
+2026-07-11|policial|https://s2-g1.glbimg.com/_amDwukXuQix0vylSPR5EiKQ6sM=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/I/w/xO1QJWSSquxqeSjOeMXg/foto-droga.png
