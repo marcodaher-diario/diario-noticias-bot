@@ -363,3 +363,4 @@
 2026-07-12|policial|https://s2-g1.glbimg.com/xDKWX8xER4qBeMAXc_edxLC5VYw=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/u/d/M3ZW3AT5K7H2mpoo7O5g/montagens-1920-x-1080-px-1-.jpg
 2026-07-12|economia|https://images.pexels.com/photos/30773222/pexels-photo-30773222.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
 2026-07-12|politica|https://s2-g1.glbimg.com/xCr6mi4JEim0LR7sjNDUhJ-w2TQ=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/8/B/k4LrinQ5at9icThLrsPA/2026-07-10t162918z-205511634-rc23bmaty2q7-rtrmadp-3-ukraine-crisis-usa-senator.jpg
+2026-07-13|politica|https://s2-g1.glbimg.com/uG2BmMZvRrzGuSXxC7VijCM2zT4=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/Y/w/iXQGlqShe86ViBbVSwBQ/flavio-bolsonao.jpg
