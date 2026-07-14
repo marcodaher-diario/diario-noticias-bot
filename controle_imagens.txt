@@ -366,3 +366,4 @@
 2026-07-13|politica|https://s2-g1.glbimg.com/uG2BmMZvRrzGuSXxC7VijCM2zT4=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/Y/w/iXQGlqShe86ViBbVSwBQ/flavio-bolsonao.jpg
 2026-07-14|policial|https://s2-g1.glbimg.com/EsZgJh1nSfriLYx7WDTRKSyHztk=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2025/C/P/rA8NoeSm6x5BqdnVGspg/feminicidio-fortaleza.jpg
 2026-07-14|economia|https://images.pexels.com/photos/38419885/pexels-photo-38419885.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
+2026-07-14|politica|https://f.i.uol.com.br/fotografia/2024/01/10/1704870115659e40e3a1363_1704870115_3x2_rt.jpg
