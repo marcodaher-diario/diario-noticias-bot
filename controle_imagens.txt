@@ -369,3 +369,4 @@
 2026-07-14|politica|https://f.i.uol.com.br/fotografia/2024/01/10/1704870115659e40e3a1363_1704870115_3x2_rt.jpg
 2026-07-15|policial|https://s2-g1.glbimg.com/t9fsUr2L2Xbm9dLSswdBPY92pAg=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/3/X/NiorwHT8SETudaULIyMw/whatsapp-image-2026-07-15-at-08.44.53.jpeg
 2026-07-15|economia|https://s2-g1.glbimg.com/71lutmJJKA5fJqjd9R1-LwVvlSs=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2024/B/T/uVtAgOTCA9ejx6BjZi1g/globo-canal-4-20241217-2000-frame-99768.jpeg
+2026-07-15|politica|https://www.camara.leg.br/midias/image/2026/07/img20260714162203047-1-768x473.jpg
