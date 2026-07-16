@@ -1,5 +1,3 @@
-https://redir.folha.com.br/redir/online/emcimadahora/rss091/*https://www1.folha.uol.com.br/mercado/2026/06/china-calcula-risco-flavio-com-alinhamento-a-trump-e-freio-em-desdolarizacao.shtml
-china-calcula-risco-flvio-com-alinhamento-a-trump
 https://redir.folha.com.br/redir/online/emcimadahora/rss091/*https://www1.folha.uol.com.br/poder/2026/06/datafolha-aliados-de-flavio-esperam-melhora-apos-efeito-jaques-wagner-campanha-de-lula-minimiza.shtml
 datafolha-aliados-de-flvio-esperam-melhora-aps-efeito
 https://redir.folha.com.br/redir/online/emcimadahora/rss091/*https://www1.folha.uol.com.br/mercado/2026/06/multas-para-quebra-de-exclusividade-de-restaurantes-com-ifood-custam-milhoes-a-keeta-no-brasil.shtml
@@ -98,3 +96,5 @@ https://www.camara.leg.br/noticias/1291461-camara-aprova-seis-medidas-provisoria
 cmara-aprova-seis-medidas-provisrias-com-crditos-extras
 https://g1.globo.com/economia/noticia/2026/07/16/dolar-ibovespa.ghtml
 dlar-opera-em-alta-e-bate-r-510
+https://g1.globo.com/economia/noticia/2026/07/16/governo-tera-programa-de-apoio-para-empresas-que-tiverem-problemas-com-novas-taxas-dos-eua-sobre-o-brasil-diz-alckmin.ghtml
+alckmin-diz-que-empresas-afetadas-pelo-tarifao-tero
