@@ -378,3 +378,4 @@
 2026-07-18|policial|https://s2-g1.glbimg.com/cegSZOjNlHDPNecIOqlXyF6KYp0=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/l/A/sfAAhvToOFlunxrSxqqw/nioaque.jpg
 2026-07-18|economia|https://f.i.uol.com.br/fotografia/2026/07/18/17843877126a5b98809483c_1784387712_3x2_rt.jpg
 2026-07-18|politica|https://f.i.uol.com.br/fotografia/2026/07/18/17844084506a5be982b8775_1784408450_3x2_lg.jpg
+2026-07-19|policial|https://s2-g1.glbimg.com/4vfQ-VlbAqw24h6qz4RrU-O72jw=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/Z/3/zho7zJTwaAwAmJPghQDg/celular-messi.jpg
