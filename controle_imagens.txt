@@ -386,3 +386,4 @@
 2026-07-21|politica|https://s2-g1.glbimg.com/0njnD8C9z_m7735Evj3lhrCr_nA=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/9/Y/vOILb8QAGjJWOrFINBaA/69cd9d10-851b-11f1-bf4e-6b2bb6027b0a.png.webp
 2026-07-22|economia|https://images.pexels.com/photos/8644601/pexels-photo-8644601.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
 2026-07-22|politica|https://s2-g1.glbimg.com/BEXC6Jam5aDe_4SDmUmBYgiI7y8=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/I/c/OOk2IYTeyeGRL13BSZAQ/trump-1200px-largura.png
+2026-07-23|economia|https://s2-g1.glbimg.com/1YXVQdJYbeM_282ghL10_02ayNk=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/T/0/TX8XW2RP6Go2X8PRFz5A/globo-canal-4-20260209-2000-frame-80048.jpeg
