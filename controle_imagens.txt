@@ -389,3 +389,4 @@
 2026-07-23|economia|https://s2-g1.glbimg.com/1YXVQdJYbeM_282ghL10_02ayNk=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/T/0/TX8XW2RP6Go2X8PRFz5A/globo-canal-4-20260209-2000-frame-80048.jpeg
 2026-07-23|politica|https://f.i.uol.com.br/fotografia/2026/07/23/17848315146a625e1ad5d80_1784831514_3x2_rt.jpg
 2026-07-24|policial|https://s2-g1.glbimg.com/9h40yf8nXDZqfYFuXCLZiOZopTQ=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2023/r/m/QJZQPqQvS3o1jWXxbTnw/porto-velho-leandro-morais-1-12-.jpg
+2026-07-24|politica|https://s2-g1.glbimg.com/oU9yGEAZyXSvWEyZSBlgI99yzIE=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2025/m/p/wojX1jRgqGy2D9v3BIFg/13059-portos-658-1-.jpg
