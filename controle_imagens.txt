@@ -394,3 +394,4 @@
 2026-07-25|economia|https://s2-g1.glbimg.com/SjTBYahEcDCOepo4E_Le-DVv86k=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/z/X/lZKnACTXu8Drk1fjSZoA/foto-g1-1-.jpg
 2026-07-25|politica|https://s2-g1.glbimg.com/8e39tiBp2dMvXGO34WXlpQL5Z_w=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/g/M/BREBLzRZOtdfcT4M0nvQ/copia-de-edicao-imagens-g1-4-.png
 2026-07-26|policial|https://s2-g1.glbimg.com/jwWXk7-aY86nMt8RtLO2wASLYqA=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/D/6/GhjgD2R5SiTAFlNxP2HA/g1-2-.jpg
+2026-07-26|economia|https://s2-g1.glbimg.com/u23CoG4TokMX9n3JESO9r86sQ0Y=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/o/A/b6tmuwQjiAoStpuZmZfw/carteira-de-trabalho.jpg
