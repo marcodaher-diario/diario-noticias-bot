@@ -1,5 +1,3 @@
-https://g1.globo.com/pr/norte-noroeste/noticia/2026/07/05/bandeira-do-brasil-com-limoes-e-hexa-escrito-com-creme-de-leite-repositor-usa-pixel-art-para-deixar-prateleiras-do-parana-em-clima-de-copa-do-mundo.ghtml
-bandeira-do-brasil-com-limes-e-hexa-escrito
 https://g1.globo.com/pe/pernambuco/noticia/2026/07/05/concursos-e-selecoes-em-pe-tem-255-vagas-e-salarios-de-quase-r-36-mil-saiba-como-se-inscrever.ghtml
 concursos-e-selees-em-pe-tm-255-vagas
 https://g1.globo.com/economia/noticia/2026/07/06/dolar-ibovespa.ghtml
@@ -98,3 +96,5 @@ https://g1.globo.com/sp/ribeirao-preto-franca/eleicoes/2026/noticia/2026/07/27/a
 andr-do-prado-questiona-impacto-da-reforma-tributria
 https://g1.globo.com/economia/noticia/2026/07/28/dolar-ibovespa.ghtml
 dlar-e-ibovespa-operam-em-alta-com-expectativa
+https://g1.globo.com/mundo/noticia/2026/07/28/eua-prorrogam-ordem-executiva-contra-o-brasil.ghtml
+governo-trump-alega-que-brasil-interfere-na-economia
