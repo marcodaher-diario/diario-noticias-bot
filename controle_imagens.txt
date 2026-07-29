@@ -400,3 +400,4 @@
 2026-07-28|economia|https://s2-g1.glbimg.com/qJ7O_5T6hSs6HEsS6HwA-Vl1Otk=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2023/2/s/iveHFATICeDrK8diFnLw/pexels-john-guccione-wwwadvergroupcom-3564390.jpg
 2026-07-28|politica|https://s2-g1.glbimg.com/Qj9MNkNfIyAqQDXrHtRujRbyaqM=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/m/o/5Ff9fhRhu61eA44GneMQ/2026-07-27t203021z-144689481-rc2kmma1ese1-rtrmadp-3-usa-trump-michigan.jpg
 2026-07-29|economia|https://s2-g1.glbimg.com/WWDRGDMxGNQZCy9ypuF1ackcQ90=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2025/a/S/u3TO0vRgyBsplTZYCmeA/2025-02-04t203004z-2-lynxmpel130tf-rtroptp-4-usa-trump-migration-colombia.jpg
+2026-07-29|politica|https://www.camara.leg.br/midias/image/2026/07/img20260617100601884-768x473.jpg
