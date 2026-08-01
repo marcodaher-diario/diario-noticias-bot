@@ -407,3 +407,4 @@
 2026-07-31|politica|https://f.i.uol.com.br/fotografia/2025/08/13/1755099248689cb070ae34c_1755099248_3x2_rt.jpg
 2026-08-01|policial|https://s2-g1.glbimg.com/f2hwfj9PYmro8lwpab4cLgpipdg=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/3/U/34RDTjRaCKjNeZeQK9zg/whatsapp-image-2026-08-01-at-09.22.05.jpeg
 2026-08-01|economia|https://f.i.uol.com.br/fotografia/2026/08/01/17855950916a6e04d3c11d7_1785595091_3x2_rt.jpg
+2026-08-01|politica|https://f.i.uol.com.br/fotografia/2024/03/13/171036654465f21f50b3506_1710366544_3x2_rt.jpg
