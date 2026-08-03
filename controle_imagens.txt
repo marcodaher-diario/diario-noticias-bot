@@ -411,3 +411,4 @@
 2026-08-02|policial|https://s2-g1.glbimg.com/SjJ9fbjLCzglI2PjZoLjaYA7qdk=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/T/l/upNyu4Q3aDXH1oZfZOmg/fotojet-85-.jpg
 2026-08-02|economia|https://s2-g1.glbimg.com/cwJGYUPJLrG2GPwo1vJruZK51vk=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/7/y/zobvBcREqcBZjQyhMzQw/edicao-g1-agenda-1-.png
 2026-08-02|politica|https://s2-g1.glbimg.com/o3wWZqWa2uYPvFP40TFbB7it3Is=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/I/G/90S0B7T7irWI608Ukmng/imagem-g1-31-.png
+2026-08-03|economia|https://s2-g1.glbimg.com/qp3V1SR_T_ulDxWqvmUzaWhnUEM=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/5/4/sdL2RrSO2QbV4jfIzq7Q/globo-canal-4-20260413-2000-frame-79216.jpeg
