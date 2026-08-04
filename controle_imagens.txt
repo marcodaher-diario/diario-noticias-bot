@@ -413,3 +413,4 @@
 2026-08-02|politica|https://s2-g1.glbimg.com/o3wWZqWa2uYPvFP40TFbB7it3Is=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/I/G/90S0B7T7irWI608Ukmng/imagem-g1-31-.png
 2026-08-03|economia|https://s2-g1.glbimg.com/qp3V1SR_T_ulDxWqvmUzaWhnUEM=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/5/4/sdL2RrSO2QbV4jfIzq7Q/globo-canal-4-20260413-2000-frame-79216.jpeg
 2026-08-03|politica|https://www.camara.leg.br/midias/image/2026/01/img20230523102312132-768x576.jpg
+2026-08-04|politica|https://s2-g1.glbimg.com/EmkhETnyx-fXxmTFaaTCfhHjniA=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/d/b/WAUaaXRXCOZPACvvi85A/whatsapp-image-2026-08-04-at-19.30.18.jpeg
