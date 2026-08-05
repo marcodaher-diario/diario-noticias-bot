@@ -1,5 +1,3 @@
-https://g1.globo.com/ce/ceara/noticia/2026/07/14/caso-clarissa-julgamento-e-retomado-apos-acusado-de-feminicidio-ter-passado-mal-no-primeiro-dia.ghtml
-caso-clarissa-julgamento-retomado-aps-acusado-de-feminicdio
 https://g1.globo.com/economia/noticia/2026/07/14/dolar-ibovespa.ghtml
 dlar-opera-em-queda-e-vai-a-r
 https://g1.globo.com/politica/noticia/2026/07/14/deputado-de-minas-e-ex-ministro-de-bolsonaro-estao-entre-os-indiciados-pela-pf-por-suspeita-de-fraudes-no-inss.ghtml
@@ -98,3 +96,5 @@ https://www.camara.leg.br/noticias/1294662-congresso-vai-votar-a-lei-de-diretriz
 congresso-vai-votar-a-lei-de-diretrizes-oramentrias
 https://g1.globo.com/politica/noticia/2026/08/04/brasil-avalia-que-eua-atropelaram-rito-ao-indicar-embaixador-sem-consulta-previa.ghtml
 brasil-avalia-que-eua-atropelaram-rito-ao-indicar
+https://g1.globo.com/sp/sao-paulo/noticia/2026/08/05/fim-da-greve-da-cptm-termina-com-confusao-correria-e-passageiros-pulando-catracas-na-linha-12-safira.ghtml
+fim-da-greve-da-cptm-termina-com-confuso
