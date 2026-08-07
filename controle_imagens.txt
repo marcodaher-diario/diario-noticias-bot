@@ -416,3 +416,4 @@
 2026-08-04|politica|https://s2-g1.glbimg.com/EmkhETnyx-fXxmTFaaTCfhHjniA=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/d/b/WAUaaXRXCOZPACvvi85A/whatsapp-image-2026-08-04-at-19.30.18.jpeg
 2026-08-05|politica|https://s2-g1.glbimg.com/-T53o6F1m8AzO17XyZ6p3j0n2Gg=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/v/s/VMCoAiSoyMUhEtjgGuAQ/fotojet-2026-08-05t191543.528.jpg
 2026-08-07|policial|https://s2-g1.glbimg.com/-Rn3-9mpXPHLyyTvgtf43Nq7AsA=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/q/I/SJaqhpSxKZwqikeRwBzg/edimilsson-2026-08-07t085947.105.png
+2026-08-07|economia|https://s2-g1.glbimg.com/en-e3pXXYmmv5grpZimBQ0X1DaM=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2025/R/L/9pGXOhQjWMbLFeAbXt6w/2025-01-22t173936z-1-lynxnpel0l0qj-rtroptp-4-fluxo-cambial-semanal.jpg
