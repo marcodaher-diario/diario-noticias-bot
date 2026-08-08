@@ -420,3 +420,4 @@
 2026-08-07|politica|https://images.pexels.com/photos/13344830/pexels-photo-13344830.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
 2026-08-08|policial|https://s2-g1.glbimg.com/WYD7hi0GllVgj4rBfn4c8KwwlTg=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/z/D/i5mD2wSruYTtBCbY43PQ/montagens-imi-6-.png
 2026-08-08|economia|https://s2-g1.glbimg.com/IWeKgOe_CKnlCJEOFABi8YoyiJs=/1280x0/filters:format(jpeg)/https://thumbor.globoi.com/unsafe/fit-in/1280x720/s02.video.glbimg.com/deo/vi/29/29/14562929
+2026-08-08|politica|https://f.i.uol.com.br/fotografia/2026/08/08/17862103476a77682bb77c9_1786210347_3x2_rt.jpg
