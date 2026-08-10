@@ -425,3 +425,4 @@
 2026-08-09|economia|https://s2-g1.glbimg.com/gycYDE9pdp6nFQKQYgPe8y-oKc8=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2021/q/8/OHT4VaR9WbEHrNFmxXyg/santarita.jpg
 2026-08-09|politica|https://f.i.uol.com.br/fotografia/2026/08/02/17856941506a6f87c6ce1f8_1785694150_3x2_rt.jpg
 2026-08-10|policial|https://s2-g1.glbimg.com/ymW66r8wgXX4INVWS14BgY6rX0U=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/z/m/o3kAEuQt21P99AM77TdA/foto-no-tamanho-home-2026-08-08t120337.596.jpg
+2026-08-10|economia|https://s2-g1.glbimg.com/RVMIVR5UlfxXlAq3AVzl0Z_UGPs=/1280x0/filters:format(jpeg)/https://thumbor.globoi.com/unsafe/fit-in/1280x720/s02.video.glbimg.com/deo/vi/05/46/14854605
