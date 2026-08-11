@@ -427,3 +427,4 @@
 2026-08-10|policial|https://s2-g1.glbimg.com/ymW66r8wgXX4INVWS14BgY6rX0U=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/z/m/o3kAEuQt21P99AM77TdA/foto-no-tamanho-home-2026-08-08t120337.596.jpg
 2026-08-10|economia|https://s2-g1.glbimg.com/RVMIVR5UlfxXlAq3AVzl0Z_UGPs=/1280x0/filters:format(jpeg)/https://thumbor.globoi.com/unsafe/fit-in/1280x720/s02.video.glbimg.com/deo/vi/05/46/14854605
 2026-08-10|politica|https://f.i.uol.com.br/fotografia/2026/05/20/17793188276a0e402b0c11d_1779318827_3x2_rt.jpg
+2026-08-11|policial|https://s2-g1.glbimg.com/FLsz_M8e2aiagVbcjxrGUf-HvaY=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/K/w/Axg6XXT3KKp2ck36zF2Q/whatsapp-image-2026-08-10-at-14.52.38-1-.jpeg
