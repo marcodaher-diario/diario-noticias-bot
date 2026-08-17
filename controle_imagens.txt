@@ -438,3 +438,4 @@
 2026-08-16|politica|https://s2-g1.glbimg.com/UKBAYz6wLFpXuzdVjhrLapUspew=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/t/x/FzkaJDRGaZnMi4MVkeew/edicao-imagens-g1-33-.png
 2026-08-17|policial|https://s2-g1.glbimg.com/wARJNLCwWpzOTmZHqcgDz8u4YvM=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/4/X/5OPtPoQZejZTW74iGSjg/furto-ziane.png
 2026-08-17|economia|https://s2-g1.glbimg.com/5b3No2jzOqlFV_iL1WjQlBxTNwQ=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2025/f/D/MS4yEaTkqIFoMjdGfx3A/2025-12-31t181616z-716243511-rc2tria44ux8-rtrmadp-3-usa-moneymarket-liquidity.jpg
+2026-08-17|politica|https://s2-g1.glbimg.com/mAwI2na6hfZhiwfUSpJSPc1uDQg=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/x/n/to2NMVSru88RFYtQ3PsQ/0a9546b0-9112-11f1-b8ee-9b3c26ad07bb.jpg
