@@ -441,3 +441,4 @@
 2026-08-17|politica|https://s2-g1.glbimg.com/mAwI2na6hfZhiwfUSpJSPc1uDQg=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/x/n/to2NMVSru88RFYtQ3PsQ/0a9546b0-9112-11f1-b8ee-9b3c26ad07bb.jpg
 2026-08-18|policial|https://f.i.uol.com.br/fotografia/2026/08/18/17870537896a8446dd1c5e0_1787053789_3x2_lg.jpg
 2026-08-18|economia|https://s2-g1.glbimg.com/ZtvFth22s13rE3IwkwS_Mk-x7sc=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/U/d/sI284TRlG2HtLYMSAMaQ/afp-20260310-a2ql3m4-v1-midres-brazilfooddebtsupermarket.jpg
+2026-08-18|politica|https://s2-g1.glbimg.com/ivXSTT1H1W_Rrhm2T3CVwpUTgyw=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/2/B/udVDOHQWC7dyiQVA91dA/copia-de-design-sem-nome.png
