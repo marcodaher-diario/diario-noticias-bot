@@ -446,3 +446,4 @@
 2026-08-19|economia|https://images.pexels.com/photos/13344830/pexels-photo-13344830.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
 2026-08-19|politica|https://www.camara.leg.br/midias/image/2026/07/img20241216203141935-768x473.jpg
 2026-08-20|policial|https://s2-g1.glbimg.com/PJfV5TQwS8vglyKP7KdhwdpS7CA=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/s/5/mBAPYZQ56HhntbixMCkQ/g1-pr-2026-08-20t090447.967.jpg
+2026-08-20|economia|https://s2-g1.glbimg.com/XNe-iZGShwcfxKKIu_dUZJjCMZA=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2024/A/W/pNqFkwSSG90RoeSZ80Pg/drf20241217001.jpg
