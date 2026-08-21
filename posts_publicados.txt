@@ -1,5 +1,3 @@
-https://g1.globo.com/economia/noticia/2026/07/28/dolar-ibovespa.ghtml
-dlar-e-ibovespa-operam-em-alta-com-expectativa
 https://g1.globo.com/mundo/noticia/2026/07/28/eua-prorrogam-ordem-executiva-contra-o-brasil.ghtml
 governo-trump-alega-que-brasil-interfere-na-economia
 https://g1.globo.com/economia/noticia/2026/07/29/dolar-ibovespa.ghtml
@@ -98,3 +96,5 @@ https://g1.globo.com/am/amazonas/eleicoes/2026/noticia/2026/08/20/rede-amazonica
 rede-amaznica-define-cobertura-de-candidatos-ao-governo
 https://g1.globo.com/rs/rio-grande-do-sul/noticia/2026/08/21/caso-samylle-entrevista-delegada-inquerito-sera-concluido-em-10-dias.ghtml
 caso-samylle-mais-pessoas-da-famlia-podem-ser
+https://g1.globo.com/economia/noticia/2026/08/21/dolar-ibovespa.ghtml
+ibovespa-sobe-quase-2-com-ajuda-do-exterior
