@@ -1,5 +1,3 @@
-https://g1.globo.com/mundo/noticia/2026/07/28/eua-prorrogam-ordem-executiva-contra-o-brasil.ghtml
-governo-trump-alega-que-brasil-interfere-na-economia
 https://g1.globo.com/economia/noticia/2026/07/29/dolar-ibovespa.ghtml
 dlar-opera-em-alta-com-foco-em-deciso
 https://www.camara.leg.br/noticias/1294169-projeto-susta-decretos-de-demarcacao-de-terras-indigenas-em-santa-catarina
@@ -98,3 +96,5 @@ https://g1.globo.com/rs/rio-grande-do-sul/noticia/2026/08/21/caso-samylle-entrev
 caso-samylle-mais-pessoas-da-famlia-podem-ser
 https://g1.globo.com/economia/noticia/2026/08/21/dolar-ibovespa.ghtml
 ibovespa-sobe-quase-2-com-ajuda-do-exterior
+https://g1.globo.com/economia/noticia/2026/08/21/entrevista-dario-durigan.ghtml
+durigan-diz-que-crise-da-casas-bahia-no
