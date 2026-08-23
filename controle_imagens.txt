@@ -455,3 +455,4 @@
 2026-08-23|politica|https://f.i.uol.com.br/fotografia/2026/08/22/17873973836a89850774f93_1787397383_3x2_rt.jpg
 2026-08-23|policial|https://s2-g1.glbimg.com/w2_E6Owjhaq01sppX2gG1OwSwhA=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/7/0/rO8HJhRFGNngilit9VPA/g1-4-.png
 2026-08-23|politica|https://f.i.uol.com.br/fotografia/2026/05/18/17791308006a0b61b003e02_1779130800_3x2_rt.jpg
+2026-08-23|politica|https://images.pexels.com/photos/37201884/pexels-photo-37201884.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
