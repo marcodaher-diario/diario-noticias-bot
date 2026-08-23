@@ -699,7 +699,6 @@ entidades = {
     "amazon": "Amazon"
 }
 
-
 # ======================================================
 # PESSOAS IMPORTANTES
 # ======================================================
@@ -756,19 +755,20 @@ pessoas = {
     "xi": "Xi Jinping",
     "xi jinping": "Xi Jinping",
     "marco rubio": "Marco Rubio"
-    }
-    # ======================================================
-    # PALAVRAS DO TÍTULO
-    # ======================================================
+}
 
-    palavras_titulo = re.findall(r'\b[a-zà-ÿ]{4,}\b', titulo.lower())
+# ======================================================
+# PALAVRAS DO TÍTULO
+# ======================================================
 
-    conteudo = f"{titulo} {texto[:200]}"
-    palavras_texto = re.findall(r'\b[a-zà-ÿ]{4,}\b', conteudo.lower())
+palavras_titulo = re.findall(r'\b[a-zà-ÿ]{4,}\b', titulo.lower())
 
-    texto_total = conteudo.lower()
+conteudo = f"{titulo} {texto[:200]}"
+palavras_texto = re.findall(r'\b[a-zà-ÿ]{4,}\b', conteudo.lower())
 
-    tags = []
+texto_total = conteudo.lower()
+
+tags = []
 
     # ======================================================
     # TAGS DO TÍTULO (PRIORIDADE)
