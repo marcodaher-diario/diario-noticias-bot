@@ -756,7 +756,7 @@ pessoas = {
     "xi": "Xi Jinping",
     "xi jinping": "Xi Jinping",
     "marco rubio": "Marco Rubio"
-}
+    }
     # ======================================================
     # PALAVRAS DO TÍTULO
     # ======================================================
