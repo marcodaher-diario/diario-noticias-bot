@@ -770,22 +770,64 @@ texto_total = conteudo.lower()
 
 tags = []
 
-    # ======================================================
-    # TAGS DO TÍTULO (PRIORIDADE)
-    # ======================================================
+# ======================================================
+# TAGS DO TÍTULO (PRIORIDADE)
+# ======================================================
 
-    for p in palavras_titulo:
-        if p not in stopwords and p.capitalize() not in tags:
-            tags.append(p.capitalize())
+for p in palavras_titulo:
+    if p not in stopwords and p.capitalize() not in tags:
+        tags.append(p.capitalize())
 
-    # ======================================================
-    # TAGS DO TEXTO
-    # ======================================================
+# ======================================================
+# TAGS DO TEXTO
+# ======================================================
 
-    for p in palavras_texto:
-        if p not in stopwords and p.capitalize() not in tags:
-            tags.append(p.capitalize())
+for p in palavras_texto:
+    if p not in stopwords and p.capitalize() not in tags:
+        tags.append(p.capitalize())
 
+# ======================================================
+# ENTIDADES IMPORTANTES
+# ======================================================
+
+for chave, entidade in entidades.items():
+    if chave in texto_total and entidade not in tags:
+        tags.append(entidade)
+
+# ======================================================
+# PESSOAS IMPORTANTES
+# ======================================================
+
+for chave, nome in pessoas.items():
+    if chave in texto_total and nome not in tags:
+        tags.append(nome)
+
+# ======================================================
+# CLUSTERS
+# ======================================================
+
+for cluster, palavras in clusters.items():
+    for palavra in palavras:
+        if palavra in texto_total:
+            cluster_formatado = cluster.capitalize()
+            if cluster_formatado not in tags:
+                tags.append(cluster_formatado)
+            break
+
+# ======================================================
+# TAGS FIXAS DO BLOG
+# ======================================================
+
+tags_fixas = [
+    "Diário de Notícias",
+    "Notícias",
+    "Brasil",
+    "Atualidades"
+]
+
+for tf in tags_fixas:
+    if tf not in tags:
+        tags.append(tf)
     # ======================================================
     # ENTIDADES IMPORTANTES
     # ======================================================
