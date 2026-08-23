@@ -357,9 +357,17 @@ def gerar_tags_seo(titulo, texto):
         "dos","das","em","um","uma","os","as","que","no","na","ao",
         "aos","por","mais","menos","ser","estar","ter","se","sua",
         "seu","suas","seus","também","muito","muitos","muitas"
-    ]
 
-    istro", "ministério", "congresso",
+# ======================================================
+# CLUSTERS PRINCIPAIS DE NOTÍCIAS
+# Atualizado para o cenário de notícias de 2026
+# ======================================================
+
+clusters = {
+
+    "política": [
+        "governo", "governo federal", "planalto", "presidente",
+        "presidência", "ministro", "ministério", "congresso",
         "congresso nacional", "senado", "senador", "câmara",
         "camara", "deputado", "deputada", "stf", "supremo",
         "supremo tribunal federal", "tse", "tribunal superior eleitoral",
@@ -749,7 +757,6 @@ pessoas = {
     "xi jinping": "Xi Jinping",
     "marco rubio": "Marco Rubio"
 }
-
     # ======================================================
     # PALAVRAS DO TÍTULO
     # ======================================================
