@@ -356,7 +356,7 @@ def gerar_tags_seo(titulo, texto):
         "com","como","para","porque","sobre","entre","de","do","da",
         "dos","das","em","um","uma","os","as","que","no","na","ao",
         "aos","por","mais","menos","ser","estar","ter","se","sua",
-        "seu","suas","seus","também","muito","muitos","muitas"
+        "seu","suas","seus","também","muito","muitos","muitas"]
 
 # ======================================================
 # CLUSTERS PRINCIPAIS DE NOTÍCIAS
