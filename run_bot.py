@@ -359,86 +359,396 @@ def gerar_tags_seo(titulo, texto):
         "seu","suas","seus","também","muito","muitos","muitas"
     ]
 
-    # ======================================================
-    # CLUSTERS PRINCIPAIS DE NOTÍCIAS
-    # ======================================================
+    istro", "ministério", "congresso",
+        "congresso nacional", "senado", "senador", "câmara",
+        "camara", "deputado", "deputada", "stf", "supremo",
+        "supremo tribunal federal", "tse", "tribunal superior eleitoral",
+        "eleição", "eleições", "eleitoral", "candidatura",
+        "candidato", "candidata", "campanha", "voto", "votação",
+        "pesquisa eleitoral", "intenção de voto", "primeiro turno",
+        "segundo turno", "presidencial", "governador",
+        "governador interino", "prefeito", "prefeita",
+        "vice-presidente", "oposição", "base governista",
+        "aliado", "aliados", "bolsonarismo", "petismo",
+        "direita", "esquerda", "partido", "pl", "pt",
+        "psd", "mdb", "união brasil", "reforma política",
+        "impeachment", "emenda constitucional", "pec",
+        "projeto de lei", "pl", "medida provisória", "mp"
+    ],
 
-    clusters = {
+    "eleições_2026": [
+        "eleição 2026", "eleições 2026", "eleições presidenciais",
+        "eleição presidencial", "corrida presidencial",
+        "disputa presidencial", "candidatura presidencial",
+        "candidato à presidência", "candidata à presidência",
+        "primeiro turno", "segundo turno", "pesquisa eleitoral",
+        "pesquisa presidencial", "intenção de voto",
+        "datafolha", "quaest", "paraná pesquisas",
+        "ibope", "instituto de pesquisa", "debate eleitoral",
+        "campanha eleitoral", "horário eleitoral",
+        "tse", "justiça eleitoral", "ficha limpa",
+        "registro de candidatura", "registro de candidatura presidencial",
+        "lula", "flávio bolsonaro", "jair bolsonaro",
+        "tarcísio", "caiado", "ratinho jr",
+        "simone tebet", "romeu zema"
+    ],
 
-        "política": [
-            "governo","planalto","presidente","ministro","congresso",
-            "senado","câmara","camara","stf","supremo","eleição",
-            "deputado","senador","reforma"
-        ],
+    "economia": [
+        "economia", "econômico", "econômica", "inflação",
+        "inflacao", "ipca", "igp-m", "inpc", "selic",
+        "taxa selic", "juros", "juros básicos", "copom",
+        "banco central", "bacen", "dólar", "dolar",
+        "euro", "câmbio", "cambio", "pib", "crescimento",
+        "recessão", "recessao", "mercado", "mercado financeiro",
+        "ibovespa", "ações", "acoes", "bolsa", "investimento",
+        "investimentos", "renda fixa", "poupança", "poupanca",
+        "tesouro direto", "crédito", "credito", "financiamento",
+        "empréstimo", "emprestimo", "endividamento",
+        "inadimplência", "inadimplencia", "dívida pública",
+        "divida publica", "resultado fiscal", "déficit",
+        "deficit", "superávit", "superavit", "arcabouço fiscal",
+        "meta fiscal", "contas públicas", "contas publicas"
+    ],
 
-        "economia": [
-            "economia","inflação","inflacao","selic","juros","dólar",
-            "pib","mercado","emprego","desemprego","investimento",
-            "ibovespa","ipca"
-        ],
+    "impostos_e_tributos": [
+        "imposto", "impostos", "tributo", "tributos",
+        "tributação", "tributacao", "reforma tributária",
+        "reforma tributaria", "taxa", "taxação", "taxacao",
+        "isenção", "isencao", "icms", "ipi", "iss",
+        "pis", "cofins", "irpf", "imposto de renda",
+        "irpj", "simples nacional", "mei", "receita federal",
+        "receita", "fisco", "arrecadação", "arrecadacao",
+        "taxa das blusinhas", "compras internacionais",
+        "importação", "importacao", "exportação", "exportacao"
+    ],
 
-        "segurança": [
-            "polícia","policia","crime","assassinato","homicídio",
-            "latrocínio","latrocinio","tráfico","prisão","suspeito",
-            "investigação","delegacia","operação"
-        ],
+    "segurança": [
+        "segurança", "seguranca", "segurança pública",
+        "seguranca publica", "polícia", "policia", "policial",
+        "polícia federal", "pf", "polícia civil", "policia civil",
+        "polícia militar", "policia militar", "crime",
+        "criminalidade", "assassinato", "homicídio", "homicidio",
+        "latrocínio", "latrocinio", "roubo", "furto",
+        "sequestro", "estupro", "violência", "violencia",
+        "violência contra a mulher", "feminicídio", "feminicidio",
+        "tráfico", "trafico", "narcotráfico", "narcotrafico",
+        "facção", "facção criminosa", "faccoes",
+        "crime organizado", "organização criminosa",
+        "milícia", "milicia", "presídio", "presidio",
+        "prisão", "prisao", "preso", "suspeito",
+        "investigação", "investigacao", "operação policial",
+        "operação", "operacao", "mandado", "apreensão",
+        "apreensao", "armas", "drogas", "narcotráfico",
+        "terrorismo", "terrorista"
+    ],
 
-        "justiça": [
-            "tribunal","justiça","juiz","sentença","processo",
-            "acusação","denúncia","denuncia","investigação"
-        ],
+    "justiça": [
+        "justiça", "justica", "judiciário", "judiciario",
+        "tribunal", "tribunais", "juiz", "juíza", "juiza",
+        "ministro do stf", "sentença", "decisão judicial",
+        "decisao judicial", "processo", "ação judicial",
+        "acao judicial", "acusação", "acusacao", "denúncia",
+        "denuncia", "investigação", "investigacao",
+        "inquérito", "inquerito", "mandado", "liminar",
+        "recurso", "condenação", "condenacao", "absolvição",
+        "absolvicao", "réu", "reu", "réus", "reus",
+        "julgamento", "julgamento virtual", "habeas corpus",
+        "ficha limpa", "stf", "tse", "stj", "tribunal superior",
+        "procuradoria", "pgr", "ministério público",
+        "ministerio publico", "mpf", "advocacia-geral da união",
+        "agu"
+    ],
 
-        "internacional": [
-            "guerra","otan","china","russia","ucrânia","israel",
-            "irã","ira","eua","europa"
-        ]
-    }
+    "stf": [
+        "stf", "supremo", "supremo tribunal federal",
+        "alexandre de moraes", "moraes", "barroso",
+        "luís roberto barroso", "luis roberto barroso",
+        "edson fachin", "fachin", "gilmar mendes",
+        "cármen lúcia", "carmen lucia", "luiz fux", "fux",
+        "flávio dino", "flavio dino", "andre mendonça",
+        "andré mendonça", "cristiano z anin", "z anin",
+        "julgamento no stf", "decisão do stf", "decisao do stf",
+        "ministro do supremo", "ministra do supremo",
+        "plenário do stf", "plenario do stf",
+        "supremo tribunal"
+    ],
 
-    # ======================================================
-    # ENTIDADES IMPORTANTES
-    # ======================================================
+    "internacional": [
+        "internacional", "exterior", "mundo", "guerra",
+        "conflito", "ataque", "ofensiva", "invasão", "invasao",
+        "sanções", "sancoes", "otan", "nato", "onu",
+        "conselho de segurança", "oriente médio", "oriente medio",
+        "ucrânia", "ucrania", "rússia", "russia",
+        "israel", "irã", "ira", "palestina", "gaza",
+        "hamas", "hezbollah", "síria", "siria",
+        "china", "taiwan", "coreia do norte",
+        "coreia do sul", "japão", "japao",
+        "europa", "união europeia", "uniao europeia",
+        "eua", "estados unidos", "américa latina",
+        "america latina", "venezuela", "argentina",
+        "méxico", "mexico"
+    ],
 
-    entidades = {
-        "stf": "Supremo Tribunal Federal",
-        "supremo": "Supremo Tribunal Federal",
-        "senado": "Senado Federal",
-        "câmara": "Câmara dos Deputados",
-        "camara": "Câmara dos Deputados",
-        "planalto": "Palácio do Planalto",
-        "congresso": "Congresso Nacional",
-        "polícia federal": "Polícia Federal",
-        "pf": "Polícia Federal",
-        "banco central": "Banco Central",
-        "ibovespa": "Ibovespa",
-        "petrobras": "Petrobras",
-        "vale": "Vale",
-        "onu": "ONU",
-        "otan": "OTAN",
-        "presidência da república": "PRESIDÊNCIA DA REPÚBLICA"
-    }
+    "brasil_eua": [
+        "brasil eua", "brasil estados unidos",
+        "brasil-estados unidos", "relações brasil-eua",
+        "relacoes brasil-eua", "trump", "donald trump",
+        "governo trump", "casa branca", "washington",
+        "tarifas americanas", "tarifas dos eua",
+        "tarifaço", "tarifaco", "tarifas sobre produtos brasileiros",
+        "produtos brasileiros", "comércio exterior",
+        "comercio exterior", "sanções americanas",
+        "sancoes americanas", "embaixada americana",
+        "embaixada dos estados unidos", "marco rubio",
+        "secretário de estado", "secretario de estado"
+    ],
 
-    # ======================================================
-    # PESSOAS IMPORTANTES
-    # ======================================================
+    "trabalho": [
+        "trabalho", "emprego", "empregos", "desemprego",
+        "mercado de trabalho", "trabalhador", "trabalhadores",
+        "salário", "salario", "salário mínimo", "salario minimo",
+        "renda", "carteira assinada", "clt", "fgts",
+        "férias", "ferias", "13º salário", "13 salario",
+        "jornada de trabalho", "escala 6x1", "fim da escala 6x1",
+        "40 horas", "44 horas", "horas trabalhadas",
+        "trabalho remoto", "home office", "informalidade",
+        "trabalhador informal", "uber", "motorista de aplicativo",
+        "aplicativo", "uberização", "uberizacao"
+    ],
 
-    pessoas = {
-        "lula": "Lula",
-        "bolsonaro": "Bolsonaro",
-        "moraes": "Alexandre de Moraes",
-        "barroso": "Luís Roberto Barroso",
-        "fachin": "Edson Fachin",
-        "putin": "Vladimir Putin",
-        "biden": "Joe Biden",
-        "netanyahu": "Benjamin Netanyahu",
-        "xi": "Xi Jinping",
-        "flávio bolsonaro": "Flávio Bolsonaro",
-        "eduardo bolsonaro": "Eduardo Bolsonaro",
-        "carlos bolsonaro": "Carlos Bolsonaro",
-        "lulinha": "Fábio Luís Lula da Silva",
-        "jair bolsonaro": "Jair Bolsonaro",
-        "michelle bolsonaro": "Michelle Bolsonaro",
-        "janja": "Janja da Silva"
-    }
+    "previdência": [
+        "previdência", "previdencia", "inss",
+        "aposentadoria", "aposentado", "aposentados",
+        "pensão", "pensao", "benefício", "beneficio",
+        "benefícios", "beneficios", "bpc",
+        "auxílio-doença", "auxilio-doenca",
+        "auxílio", "auxilio", "segurado", "contribuição",
+        "contribuicao", "tempo de contribuição",
+        "tempo de contribuicao", "reforma da previdência",
+        "reforma da previdencia", "idade mínima",
+        "idade minima", "perícia", "pericia",
+        "salário de benefício", "salario de beneficio"
+    ],
+
+    "saúde": [
+        "saúde", "saude", "sus", "ministério da saúde",
+        "ministerio da saude", "hospital", "hospitais",
+        "médico", "medico", "médicos", "medicos",
+        "doença", "doenca", "epidemia", "pandemia",
+        "vírus", "virus", "vacina", "vacinação",
+        "vacinacao", "dengue", "covid", "influenza",
+        "gripe", "câncer", "cancer", "tratamento",
+        "medicamento", "remédio", "remedio",
+        "anvisa", "oms", "obesidade", "diabetes",
+        "hipertensão", "hipertensao"
+    ],
+
+    "educação": [
+        "educação", "educacao", "ensino", "escola", "escolas",
+        "professor", "professores", "aluno", "alunos",
+        "universidade", "faculdade", "enem", "sisu",
+        "prouni", "fies", "vestibular", "mec",
+        "ministério da educação", "ministerio da educacao",
+        "ensino superior", "ensino médio", "ensino medio",
+        "educação infantil", "educacao infantil",
+        "escola integral", "ensino integral"
+    ],
+
+    "tecnologia": [
+        "tecnologia", "inteligência artificial",
+        "inteligencia artificial", "ia", "chatgpt",
+        "gemini", "openai", "google", "microsoft",
+        "apple", "meta", "amazon", "nvidia",
+        "robô", "robo", "robôs", "robos", "software",
+        "hardware", "aplicativo", "aplicativos",
+        "internet", "redes sociais", "cibersegurança",
+        "ciberseguranca", "hacker", "dados", "privacidade",
+        "5g", "6g", "semicondutores", "chips"
+    ],
+
+    "meio_ambiente": [
+        "meio ambiente", "ambiental", "amazônia", "amazonia",
+        "desmatamento", "queimada", "queimadas", "incêndio",
+        "incendio", "incêndios", "incendios", "clima",
+        "mudanças climáticas", "mudancas climaticas",
+        "aquecimento global", "chuva", "enchente",
+        "enchentes", "alagamento", "seca", "estiagem",
+        "rios", "floresta", "ibama", "icmbio",
+        "licenciamento ambiental", "emissões", "emissoes",
+        "energia renovável", "energia renovavel"
+    ],
+
+    "energia": [
+        "energia", "energia elétrica", "energia eletrica",
+        "eletricidade", "aneel", "usina", "hidrelétrica",
+        "hidreletrica", "termelétrica", "termeletrica",
+        "energia solar", "energia eólica", "energia eolica",
+        "petróleo", "petroleo", "gás natural", "gas natural",
+        "combustíveis", "combustiveis", "gasolina", "diesel",
+        "etanol", "preço dos combustíveis",
+        "preco dos combustiveis", "petrobras"
+    ],
+
+    "agropecuária": [
+        "agronegócio", "agronegocio", "agro", "agricultura",
+        "pecuária", "pecuaria", "produtor rural",
+        "produtores rurais", "soja", "milho", "café", "cafe",
+        "carne bovina", "carne", "gado", "boi",
+        "exportação agrícola", "exportacao agricola",
+        "safra", "colheita", "conab", "embrapa",
+        "mst", "terra", "reforma agrária", "reforma agraria"
+    ],
+
+    "infraestrutura": [
+        "infraestrutura", "rodovia", "rodovias", "estrada",
+        "estradas", "ferrovia", "ferrovias", "metrô", "metro",
+        "aeroporto", "portos", "porto", "saneamento",
+        "água", "agua", "esgoto", "habitação", "habitacao",
+        "minha casa minha vida", "obras públicas",
+        "obras publicas", "concessão", "concessao",
+        "privatização", "privatizacao", "pedágio", "pedagio"
+    ],
+
+    "empresas_e_mercado": [
+        "empresa", "empresas", "companhia", "companhias",
+        "mercado", "varejo", "varejista", "banco", "bancos",
+        "fintech", "startup", "falência", "falencia",
+        "recuperação judicial", "recuperacao judicial",
+        "fusão", "fusao", "aquisição", "aquisicao",
+        "petrobras", "vale", "embraer", "magalu",
+        "americanas", "itau", "itaú", "bradesco",
+        "bradesco", "santander", "nubank"
+    ],
+
+    "esportes": [
+        "futebol", "futebol brasileiro", "brasileirão",
+        "brasileirao", "libertadores", "copa do brasil",
+        "seleção brasileira", "selecao brasileira",
+        "cbf", "flamengo", "corinthians", "palmeiras",
+        "são paulo", "sao paulo", "vasco", "botafogo",
+        "fluminense", "grêmio", "gremio", "internacional",
+        "cruzeiro", "atlético", "atletico", "nba",
+        "fórmula 1", "formula 1", "olimpíadas", "olimpiadas"
+    ]
+}
+
+
+# ======================================================
+# ENTIDADES IMPORTANTES
+# ======================================================
+
+entidades = {
+
+    # Governo e instituições
+    "stf": "Supremo Tribunal Federal",
+    "supremo": "Supremo Tribunal Federal",
+    "tse": "Tribunal Superior Eleitoral",
+    "stj": "Superior Tribunal de Justiça",
+    "senado": "Senado Federal",
+    "senado federal": "Senado Federal",
+    "câmara": "Câmara dos Deputados",
+    "camara": "Câmara dos Deputados",
+    "câmara dos deputados": "Câmara dos Deputados",
+    "congresso": "Congresso Nacional",
+    "congresso nacional": "Congresso Nacional",
+    "planalto": "Palácio do Planalto",
+    "presidência da república": "Presidência da República",
+
+    # Segurança e Justiça
+    "polícia federal": "Polícia Federal",
+    "policia federal": "Polícia Federal",
+    "pf": "Polícia Federal",
+    "ministério público": "Ministério Público",
+    "ministerio publico": "Ministério Público",
+    "pgr": "Procuradoria-Geral da República",
+    "agu": "Advocacia-Geral da União",
+
+    # Economia
+    "banco central": "Banco Central do Brasil",
+    "bacen": "Banco Central do Brasil",
+    "ibovespa": "Ibovespa",
+    "petrobras": "Petrobras",
+    "vale": "Vale",
+    "embraer": "Embraer",
+    "receita federal": "Receita Federal",
+    "tesouro nacional": "Tesouro Nacional",
+    "copom": "Comitê de Política Monetária",
+
+    # Organismos internacionais
+    "onu": "Organização das Nações Unidas",
+    "otan": "Organização do Tratado do Atlântico Norte",
+    "oms": "Organização Mundial da Saúde",
+    "união europeia": "União Europeia",
+    "uniao europeia": "União Europeia",
+
+    # Tecnologia
+    "openai": "OpenAI",
+    "google": "Google",
+    "microsoft": "Microsoft",
+    "meta": "Meta",
+    "nvidia": "NVIDIA",
+    "apple": "Apple",
+    "amazon": "Amazon"
+}
+
+
+# ======================================================
+# PESSOAS IMPORTANTES
+# ======================================================
+
+pessoas = {
+
+    # Brasil - Governo
+    "lula": "Luiz Inácio Lula da Silva",
+    "luiz inácio lula da silva": "Luiz Inácio Lula da Silva",
+    "jair bolsonaro": "Jair Bolsonaro",
+    "bolsonaro": "Jair Bolsonaro",
+    "flávio bolsonaro": "Flávio Bolsonaro",
+    "flavio bolsonaro": "Flávio Bolsonaro",
+    "eduardo bolsonaro": "Eduardo Bolsonaro",
+    "carlos bolsonaro": "Carlos Bolsonaro",
+    "michelle bolsonaro": "Michelle Bolsonaro",
+    "janja": "Janja da Silva",
+
+    # STF / Judiciário
+    "moraes": "Alexandre de Moraes",
+    "alexandre de moraes": "Alexandre de Moraes",
+    "barroso": "Luís Roberto Barroso",
+    "luís roberto barroso": "Luís Roberto Barroso",
+    "luis roberto barroso": "Luís Roberto Barroso",
+    "fachin": "Edson Fachin",
+    "edson fachin": "Edson Fachin",
+    "gilmar mendes": "Gilmar Mendes",
+    "cármen lúcia": "Cármen Lúcia",
+    "carmen lucia": "Cármen Lúcia",
+    "luiz fux": "Luiz Fux",
+    "fux": "Luiz Fux",
+    "flávio dino": "Flávio Dino",
+    "flavio dino": "Flávio Dino",
+    "andre mendonça": "André Mendonça",
+    "andré mendonça": "André Mendonça",
+
+    # Política / Eleições
+    "tarcísio": "Tarcísio de Freitas",
+    "tarcísio de freitas": "Tarcísio de Freitas",
+    "caiado": "Ronaldo Caiado",
+    "ronaldo caiado": "Ronaldo Caiado",
+    "ratinho jr": "Ratinho Júnior",
+    "ratinho junior": "Ratinho Júnior",
+    "romeu zema": "Romeu Zema",
+    "simone tebet": "Simone Tebet",
+
+    # Internacional
+    "trump": "Donald Trump",
+    "donald trump": "Donald Trump",
+    "putin": "Vladimir Putin",
+    "vladimir putin": "Vladimir Putin",
+    "netanyahu": "Benjamin Netanyahu",
+    "benjamin netanyahu": "Benjamin Netanyahu",
+    "xi": "Xi Jinping",
+    "xi jinping": "Xi Jinping",
+    "marco rubio": "Marco Rubio"
+}
 
     # ======================================================
     # PALAVRAS DO TÍTULO
