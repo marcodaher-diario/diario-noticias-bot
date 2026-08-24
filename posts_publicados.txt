@@ -1,5 +1,3 @@
-https://redir.folha.com.br/redir/online/emcimadahora/rss091/*https://www1.folha.uol.com.br/poder/2026/07/zanin-arquiva-inquerito-contra-ministro-do-stj-em-caso-de-venda-de-decisoes.shtml
-zanin-arquiva-inqurito-contra-ministro-do-stj-em
 https://g1.globo.com/pa/santarem-regiao/noticia/2026/08/01/condenado-por-estupro-de-vulneravel-no-amazonas-e-preso-em-fazenda-no-interior-do-para.ghtml
 condenado-por-estupro-de-vulnervel-no-amazonas-preso
 https://redir.folha.com.br/redir/online/emcimadahora/rss091/*https://www1.folha.uol.com.br/mercado/2026/08/dirigente-do-fed-defende-aumento-de-juros-para-conter-inflacao-nos-eua.shtml
@@ -98,3 +96,5 @@ https://g1.globo.com/ba/bahia/noticia/2026/08/24/video-mostra-momento-em-que-hom
 vdeo-mostra-momento-em-que-homem-morto-durante
 https://g1.globo.com/economia/noticia/2026/08/24/mercado-financeiro-baixa-projecao-de-crescimento-da-economia-em-2026-para-195percent.ghtml
 mercado-financeiro-baixa-projeo-de-crescimento-da-economia
+https://g1.globo.com/politica/eleicoes/2026/noticia/2026/08/24/eleicoes-2026-ministro-da-fazenda-defende-combater-pejotizacao-para-reduzir-deficit-da-previdencia-social.ghtml
+eleies-2026-ministro-da-fazenda-defende-combater-pejotizao
