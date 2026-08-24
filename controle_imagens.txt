@@ -458,3 +458,4 @@
 2026-08-23|politica|https://images.pexels.com/photos/37201884/pexels-photo-37201884.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
 2026-08-23|economia|https://s2-g1.glbimg.com/3vDa7M5J9GDxT58tHLFLhUHSwoM=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/2/d/Np7kZcTlGXgF104gSNFQ/2026-08-14t200613z-1795537502-rc2jymam5ni2-rtrmadp-3-usa-trump.jpg
 2026-08-23|politica|https://s2-g1.glbimg.com/lvICkeMV06gfH73Bw4RFzE2PVnw=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/e/I/JAke60StyIAJZBI3QBsw/presidente.png
+2026-08-24|policial|https://s2-g1.glbimg.com/Sriy256RbCymlB_uBe2F9_vpjVQ=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/N/z/A3HYxoRy26TABofDdMDQ/foto-no-tamanho-home-2026-08-24t092358.127.jpg
