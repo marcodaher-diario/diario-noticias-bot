@@ -1,5 +1,3 @@
-https://g1.globo.com/pop-arte/cinema/noticia/2026/08/02/homem-aranha-um-novo-dia-tem-a-2a-maior-estreia-mundial-na-historia-do-cinema.ghtml
-homemaranha-um-novo-dia-tem-a-2-maior
 https://g1.globo.com/df/distrito-federal/eleicoes/2026/noticia/2026/08/02/pl-oficializa-bia-kicis-e-michelle-bolsonaro-como-candidatas-ao-senado-pelo-distrito-federal.ghtml
 pl-oficializa-candidaturas-ao-senado-de-michelle-e
 https://g1.globo.com/economia/noticia/2026/08/03/mercado-reduz-pela-5a-semana-seguida-estimativa-de-inflacao-em-2026-e-projeta-corte-maior-de-juros.ghtml
@@ -98,3 +96,5 @@ https://redir.folha.com.br/redir/online/emcimadahora/rss091/*https://www1.folha.
 justia-nega-pedido-de-lulinha-para-derrubar-vdeo
 https://g1.globo.com/ba/feira-de-santana-regiao/noticia/2026/08/26/motorista-por-aplicativo-preso-na-bahia.ghtml
 motorista-de-aplicativo-preso-suspeito-de-cancelar-corrida
+https://g1.globo.com/economia/noticia/2026/08/26/dolar-ibovespa.ghtml
+dlar-sobe-com-ipca15-dvida-pblica-e-indicadores
