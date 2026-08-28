@@ -467,3 +467,4 @@
 2026-08-26|policial|https://s2-g1.glbimg.com/CpsPqOLoulznyvvcKPyVo77y-pI=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/e/0/OkxBJiR4ySwOltgtZx6Q/edimilsson-2026-08-26t075138.455.png
 2026-08-26|economia|https://images.pexels.com/photos/8644601/pexels-photo-8644601.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
 2026-08-27|politica|https://s2-g1.glbimg.com/Gz-Gbu5Mxn8J05kPm80caU-IGWw=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/f/k/AXxvTPSRy3iBf4jayOcw/55227748493-7951e3623d-o.jpg
+2026-08-28|politica|https://www.camara.leg.br/midias/image/2026/08/img20241008113612402-768x512.jpg
