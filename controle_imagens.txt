@@ -469,3 +469,4 @@
 2026-08-27|politica|https://s2-g1.glbimg.com/Gz-Gbu5Mxn8J05kPm80caU-IGWw=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/f/k/AXxvTPSRy3iBf4jayOcw/55227748493-7951e3623d-o.jpg
 2026-08-28|politica|https://www.camara.leg.br/midias/image/2026/08/img20241008113612402-768x512.jpg
 2026-08-29|economia|https://s2-g1.glbimg.com/jUMHwddNxO1eky7Kzu04sNeD4Lg=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/a/2/iokNNWQVqsiBFrPztDjA/thumb-fotos-2026-08-28t173140.036.jpg
+2026-09-01|politica|https://s2-g1.glbimg.com/BAiT7R8jgPDu5Uv1JyucE2VLVjw=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/f/O/aeU9diQrWnkSjkdQ2nYA/55460151926-1f2ab3ab4b-o.jpg
