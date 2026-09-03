@@ -477,3 +477,4 @@
 2026-09-03|politica|https://s2-g1.glbimg.com/lH9CqBiHV-75mcmSdwDLuZSPXq0=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/A/2/vMlYjkRHifdFd5Maduew/globo-canal-4-20260902-2000-frame-39150.jpeg
 2026-09-03|politica|https://images.pexels.com/photos/20758172/pexels-photo-20758172.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
 2026-09-03|economia|https://images.pexels.com/photos/25568547/pexels-photo-25568547.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
+2026-09-03|policial|https://s2-g1.glbimg.com/5clRaBK7hcNliY-N2UWnJ-wxOXI=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/A/q/pczdvQQMOulJBcc3vC9A/inserir-um-titulo-2026-09-03t094409.710.jpg
