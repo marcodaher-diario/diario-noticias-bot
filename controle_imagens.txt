@@ -484,3 +484,4 @@
 2026-09-05|politica|https://s2-g1.glbimg.com/SdCMIRwbU8nYPYNp08zt-WEf7B4=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/q/O/TexlJMSMKAeagQBoJIYA/felipe-camarao-5-stembro.jpg
 2026-09-06|economia|https://s2-g1.glbimg.com/0v1c1AwQxS24hMk27oXLH5B5lgQ=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/4/S/azBZJiRwqB9oVN3jCLOw/nc-safra-laranja-060926-frame-3867.jpeg
 2026-09-06|politica|https://s2-g1.glbimg.com/h6Q5dJILczZz_XFq7kOADn4qUYc=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/m/K/srR9JySMmReQJknAKYsQ/2026-09-06t205139z-2093134816-rc2vdnandkf5-rtrmadp-3-germany-election-saxony-anhalt-afd.jpg
+2026-09-07|economia|https://f.i.uol.com.br/fotografia/2026/09/01/17882811486a97013c34d6a_1788281148_3x2_rt.jpg
