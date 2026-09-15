@@ -489,3 +489,4 @@
 2026-09-15|policial|https://s2-g1.glbimg.com/1mDoC15WrQxRJ7ImsnxxVSksLdk=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/5/e/m0jcIrTZuOHiLXU3PZ3w/fotojet-52-.jpg
 2026-09-15|politica|https://s2-g1.glbimg.com/A5Aibww2zTQvEeR4FhTeBypR-FQ=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/h/w/nPfnthROK1HDBGMNQ4vA/globo-canal-4-20260914-2000-frame-135783.jpeg
 2026-09-15|politica|https://images.pexels.com/photos/8644601/pexels-photo-8644601.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
+2026-09-15|economia|https://s2-g1.glbimg.com/RNqzvX_Et_A7CtadGX6eXKp2HuM=/1280x0/filters:format(jpeg)/https://thumbor.globoi.com/unsafe/fit-in/1280x720/s03.video.glbimg.com/deo/vi/42/10/14961042
