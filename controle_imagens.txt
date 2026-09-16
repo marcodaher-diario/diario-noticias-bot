@@ -492,3 +492,4 @@
 2026-09-15|economia|https://s2-g1.glbimg.com/RNqzvX_Et_A7CtadGX6eXKp2HuM=/1280x0/filters:format(jpeg)/https://thumbor.globoi.com/unsafe/fit-in/1280x720/s03.video.glbimg.com/deo/vi/42/10/14961042
 2026-09-15|economia|https://images.pexels.com/photos/13640269/pexels-photo-13640269.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
 2026-09-16|economia|https://s2-g1.glbimg.com/WWDRGDMxGNQZCy9ypuF1ackcQ90=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2025/a/S/u3TO0vRgyBsplTZYCmeA/2025-02-04t203004z-2-lynxmpel130tf-rtroptp-4-usa-trump-migration-colombia.jpg
+2026-09-16|policial|https://s2-g1.glbimg.com/OuGE_AqyBz6Hk4ukCglIdxJ25dQ=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/F/X/7kgKxcQWKTZ2DuOAghtw/adail-pinheiro.jpg
