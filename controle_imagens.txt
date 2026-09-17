@@ -495,3 +495,4 @@
 2026-09-16|policial|https://s2-g1.glbimg.com/OuGE_AqyBz6Hk4ukCglIdxJ25dQ=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/F/X/7kgKxcQWKTZ2DuOAghtw/adail-pinheiro.jpg
 2026-09-16|politica|https://f.i.uol.com.br/fotografia/2026/09/15/17894938156aa982370ed8d_1789493815_3x2_rt.jpg
 2026-09-16|economia|https://s2-g1.glbimg.com/Sw2CxPnFGTH-Paj18JSZew574Uo=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2020/S/z/QNN6LlTDioqEtAjg5R3g/2020-06-03t000000z-487125308-rc2v1h9a67l7-rtrmadp-3-usa-fed-liquidity.jpg
+2026-09-17|politica|https://s2-g1.glbimg.com/St_o0E1qLtbSZuFP8450veoofh0=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/B/c/5T4nZ4R5ytOomDu50jmg/globo-canal-4-20260916-2000-frame-7417.jpeg
