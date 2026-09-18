@@ -497,3 +497,4 @@
 2026-09-16|economia|https://s2-g1.glbimg.com/Sw2CxPnFGTH-Paj18JSZew574Uo=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2020/S/z/QNN6LlTDioqEtAjg5R3g/2020-06-03t000000z-487125308-rc2v1h9a67l7-rtrmadp-3-usa-fed-liquidity.jpg
 2026-09-17|politica|https://s2-g1.glbimg.com/St_o0E1qLtbSZuFP8450veoofh0=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/B/c/5T4nZ4R5ytOomDu50jmg/globo-canal-4-20260916-2000-frame-7417.jpeg
 2026-09-17|economia|https://images.pexels.com/photos/20758172/pexels-photo-20758172.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
+2026-09-18|politica|https://s2-g1.glbimg.com/5RTigyIQnvVlZNEUTOnhzC60ue4=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/a/N/KbSUyAQa2vmD6T5BDhIQ/flavio-bolsonaro-live-30-julho.jpg
