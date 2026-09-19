@@ -499,3 +499,4 @@
 2026-09-17|economia|https://images.pexels.com/photos/20758172/pexels-photo-20758172.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
 2026-09-18|politica|https://s2-g1.glbimg.com/5RTigyIQnvVlZNEUTOnhzC60ue4=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/a/N/KbSUyAQa2vmD6T5BDhIQ/flavio-bolsonaro-live-30-julho.jpg
 2026-09-18|economia|https://s2-g1.glbimg.com/O49d2V48Q5zIUn7fQPNfoMN5WOI=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2025/K/J/NvIKwCR8arhLFNMisILw/2025-01-21t204813z-1-lynxnpel0k0yk-rtroptp-4-brazil-economy.jpg
+2026-09-19|politica|https://f.i.uol.com.br/fotografia/2026/08/05/17858989466a72a7c249601_1785898946_3x2_rt.jpg
