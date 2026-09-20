@@ -502,3 +502,4 @@
 2026-09-19|politica|https://f.i.uol.com.br/fotografia/2026/08/05/17858989466a72a7c249601_1785898946_3x2_rt.jpg
 2026-09-19|economia|https://f.i.uol.com.br/fotografia/2023/05/15/168418485264629f14778dd_1684184852_3x2_rt.jpg
 2026-09-20|politica|https://s2-g1.glbimg.com/M-z2fMl295ygY-U3o6pjVPO8f90=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/w/d/A1cVrpRL6wWrU0oEDMrQ/montagem-para-news-de-eleicoes.png
+2026-09-20|economia|https://f.i.uol.com.br/fotografia/2026/04/21/177681688869e812f886a5a_1776816888_3x2_rt.jpg
