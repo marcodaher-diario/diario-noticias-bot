@@ -508,3 +508,4 @@
 2026-09-21|politica|https://s2-g1.glbimg.com/kaAHyrS647GjRVuGIZ-1pvdYHJk=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2025/m/u/zQPX5oS0iDQ2T5RVnIiw/globo-canal-4-20251218-2000-frame-95020.jpeg
 2026-10-10|policial|https://s2-g1.glbimg.com/nAzw4-P8aU-cs1TOUvR76WnsXMU=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/M/E/wZwUEATmAo7uvq1LuBkg/fotojet-2026-10-10t194147.105.jpg
 2026-10-11|politica|https://s2-g1.glbimg.com/gUXkOortsXUkKcbStwLqAXoX-EI=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/A/Z/A7FvHjTHWE3Vw0IfxADA/captura-de-tela-2026-10-10-205654.png
+2026-10-11|economia|https://s2-g1.glbimg.com/fk5ljfWBhY8-cqLHDTCX51uLEVc=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/o/A/Hf94KWThGTJltRU8OqFQ/captura-de-tela-2026-10-10-213253.png
