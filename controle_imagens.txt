@@ -510,3 +510,4 @@
 2026-10-11|politica|https://s2-g1.glbimg.com/gUXkOortsXUkKcbStwLqAXoX-EI=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/A/Z/A7FvHjTHWE3Vw0IfxADA/captura-de-tela-2026-10-10-205654.png
 2026-10-11|economia|https://s2-g1.glbimg.com/fk5ljfWBhY8-cqLHDTCX51uLEVc=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/o/A/Hf94KWThGTJltRU8OqFQ/captura-de-tela-2026-10-10-213253.png
 2026-10-11|economia|https://images.pexels.com/photos/8644601/pexels-photo-8644601.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
+2026-10-12|politica|https://f.i.uol.com.br/fotografia/2018/05/20/15268702775b023105efa96_1526870277_3x2_rt.jpg
