@@ -513,3 +513,4 @@
 2026-10-12|politica|https://f.i.uol.com.br/fotografia/2018/05/20/15268702775b023105efa96_1526870277_3x2_rt.jpg
 2026-10-13|politica|https://s2-g1.glbimg.com/lCBLPxKrIfeXBrt4TrPm9XQJ2Hs=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2025/s/Y/8fpBeATE6P9VNZHBAZZw/pgm-globonews-limpo-ao-vivo-20250201-1559-frame-315825.jpeg
 2026-10-14|economia|https://s2-g1.glbimg.com/jp13l7e40BNCnkPgMkejddtlrQc=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2024/T/n/cGMV0bQQOi6xrnJErPtg/pexels-karolina-grabowska-4386473.jpg
+2026-10-15|economia|https://s2-g1.glbimg.com/qJ7O_5T6hSs6HEsS6HwA-Vl1Otk=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2023/2/s/iveHFATICeDrK8diFnLw/pexels-john-guccione-wwwadvergroupcom-3564390.jpg
