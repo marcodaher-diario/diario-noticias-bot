@@ -515,3 +515,4 @@
 2026-10-14|economia|https://s2-g1.glbimg.com/jp13l7e40BNCnkPgMkejddtlrQc=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2024/T/n/cGMV0bQQOi6xrnJErPtg/pexels-karolina-grabowska-4386473.jpg
 2026-10-15|economia|https://s2-g1.glbimg.com/qJ7O_5T6hSs6HEsS6HwA-Vl1Otk=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2023/2/s/iveHFATICeDrK8diFnLw/pexels-john-guccione-wwwadvergroupcom-3564390.jpg
 2026-10-16|politica|https://s2-g1.glbimg.com/tIps-lZkiXOWveam-ZVTlQKQto8=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2023/B/O/BUATPiRlA9WZUyeCWemA/deputado-jose-guimaraes-10.jpg
+2026-10-16|economia|https://images.pexels.com/photos/13344830/pexels-photo-13344830.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
