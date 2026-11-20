@@ -518,3 +518,4 @@
 2026-10-16|economia|https://images.pexels.com/photos/13344830/pexels-photo-13344830.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
 2026-10-17|economia|https://f.i.uol.com.br/fotografia/2021/02/12/16131707336027082d4a93d_1613170733_3x2_rt.jpg
 2026-10-17|politica|https://s2-g1.glbimg.com/cp9P-G2axP5GLwup1lPnr1mYM_M=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/r/i/7dP9bpQOaTOA1qyKcZMA/28-26-ato-lula-sabado-drone-thammer-17-oct-2026.mxf.png
+2026-11-20|policial|https://s2-g1.glbimg.com/FsKJt80HNSmxIzq7jtb-Otu5fz8=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/j/0/7FujMZS66AKs7fJZ7svg/edicao-imagens-g1-10-.png
