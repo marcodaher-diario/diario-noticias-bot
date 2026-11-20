@@ -520,3 +520,4 @@
 2026-10-17|politica|https://s2-g1.glbimg.com/cp9P-G2axP5GLwup1lPnr1mYM_M=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/r/i/7dP9bpQOaTOA1qyKcZMA/28-26-ato-lula-sabado-drone-thammer-17-oct-2026.mxf.png
 2026-11-20|policial|https://s2-g1.glbimg.com/FsKJt80HNSmxIzq7jtb-Otu5fz8=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/j/0/7FujMZS66AKs7fJZ7svg/edicao-imagens-g1-10-.png
 2026-11-20|politica|https://s2-g1.glbimg.com/qrHttzhcAXN1RIeqnCZZUJ7N4_U=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/1/a/vLrGcISnSoxJyQ8xvFBg/55574114509-aab923515e-k.jpg
+2026-11-20|economia|https://f.i.uol.com.br/fotografia/2026/11/18/17950115246afdb3c48b0a3_1795011524_3x2_lg.jpg
