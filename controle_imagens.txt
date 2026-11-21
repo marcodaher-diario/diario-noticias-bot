@@ -522,3 +522,4 @@
 2026-11-20|politica|https://s2-g1.glbimg.com/qrHttzhcAXN1RIeqnCZZUJ7N4_U=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/1/a/vLrGcISnSoxJyQ8xvFBg/55574114509-aab923515e-k.jpg
 2026-11-20|economia|https://f.i.uol.com.br/fotografia/2026/11/18/17950115246afdb3c48b0a3_1795011524_3x2_lg.jpg
 2026-11-20|politica|https://f.i.uol.com.br/fotografia/2026/09/24/17902852656ab595d1e7e7f_1790285265_3x2_rt.jpg
+2026-11-21|politica|https://f.i.uol.com.br/fotografia/2026/11/21/17952900096b01f3991e1c2_1795290009_3x2_rt.jpg
