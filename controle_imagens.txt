@@ -525,3 +525,4 @@
 2026-11-21|politica|https://f.i.uol.com.br/fotografia/2026/11/21/17952900096b01f3991e1c2_1795290009_3x2_rt.jpg
 2026-11-22|politica|https://f.i.uol.com.br/fotografia/2026/11/22/17953755766b0341d8616c2_1795375576_3x2_rt.jpg
 2026-11-23|politica|https://www.camara.leg.br/midias/image/2026/11/img20260527095623268-768x473.jpg
+2026-11-24|politica|https://s2-g1.glbimg.com/1vnhucQ7fyLY0FDrZ0Fthi6uJ8o=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/e/G/ooU2YBTvmw1us4MRk6Bg/fabio-rodrigues-pozzebom-agencia-brasil.jpg
