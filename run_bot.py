@@ -1,3 +1,4 @@
+
 # -*- coding: utf-8 -*-
 
 import os
@@ -35,7 +36,7 @@ from bs4 import BeautifulSoup
 def extrair_imagem_noticia(entry):
 
     # ======================================================
-    # 1️⃣ CAMPOS RSS MAIS COMUNS
+    # 1. CAMPOS RSS MAIS COMUNS
     # ======================================================
 
     try:
@@ -66,7 +67,7 @@ def extrair_imagem_noticia(entry):
         pass
 
     # ======================================================
-    # 2️⃣ IMAGEM DENTRO DO SUMMARY
+    # 2. IMAGEM DENTRO DO SUMMARY
     # ======================================================
 
     try:
@@ -83,7 +84,7 @@ def extrair_imagem_noticia(entry):
         pass
 
     # ======================================================
-    # 3️⃣ OG:IMAGE DA PÁGINA DA NOTÍCIA
+    # 3. OG:IMAGE DA PÁGINA DA NOTÍCIA
     # ======================================================
 
     try:
@@ -119,9 +120,12 @@ def extrair_imagem_noticia(entry):
 # ==========================================================
 
 AGENDA_POSTAGENS = {
-    "09:00": "policial",
-    "13:00": "economia",
-    "19:00": "politica"
+    "07:00": "policial",
+    "10:00": "economia",
+    "13:00": "politica",
+    "16:00": "saude",
+    "19:00": "tecnologia",
+    "22:00": "oportunidades"
 }
 
 JANELA_MINUTOS = 90
@@ -147,7 +151,7 @@ def dentro_da_janela(min_atual, min_agenda):
 
 
 # ==========================================================
-# CONTROLE DE PUBLICAÇÃO (COM RODÍZIO DE 15 LINHAS)
+# CONTROLE DE PUBLICAÇÃO
 # ==========================================================
 
 def ja_postou(data_str, horario_agenda):
@@ -190,7 +194,9 @@ def registrar_postagem(data_str, horario_agenda):
     if nova_linha not in linhas:
         linhas.append(nova_linha)
 
-    linhas = linhas[-15:]
+    # Mantém histórico suficiente para o teste de 30 dias.
+    # São seis publicações por dia: 180 registros em 30 dias.
+    linhas = linhas[-200:]
 
     with open(ARQUIVO_CONTROLE_DIARIO, "w", encoding="utf-8") as f:
         f.writelines(linhas)
@@ -214,7 +220,7 @@ def registrar_link_publicado(link):
     if nova_linha not in linhas:
         linhas.append(nova_linha)
 
-    linhas = linhas[-100:]
+    linhas = linhas[-300:]
 
     with open(ARQUIVO_POSTS_PUBLICADOS, "w", encoding="utf-8") as f:
         f.writelines(linhas)
@@ -329,7 +335,6 @@ def buscar_noticia(tipo):
                             entry.published
                         )
 
-                        # normaliza timezone para evitar erro datetime
                         if data_publicacao.tzinfo is not None:
 
                             data_publicacao = (
@@ -388,7 +393,7 @@ def buscar_noticia(tipo):
 
 
 # ==========================================================
-# GERAR TAGS SEO - SISTEMA DE CLUSTERS (DIÁRIO DE NOTÍCIAS)
+# GERAR TAGS SEO - SISTEMA DE CLUSTERS
 # ==========================================================
 
 def gerar_tags_seo(titulo, texto):
@@ -399,11 +404,6 @@ def gerar_tags_seo(titulo, texto):
         "aos", "por", "mais", "menos", "ser", "estar", "ter", "se", "sua",
         "seu", "suas", "seus", "também", "muito", "muitos", "muitas"
     ]
-
-    # ======================================================
-    # CLUSTERS PRINCIPAIS DE NOTÍCIAS
-    # Atualizado para o cenário de notícias de 2026
-    # ======================================================
 
     clusters = {
 
@@ -682,13 +682,8 @@ def gerar_tags_seo(titulo, texto):
         ]
     }
 
-    # ======================================================
-    # ENTIDADES IMPORTANTES
-    # ======================================================
-
     entidades = {
 
-        # Governo e instituições
         "stf": "Supremo Tribunal Federal",
         "supremo": "Supremo Tribunal Federal",
         "tse": "Tribunal Superior Eleitoral",
@@ -703,7 +698,6 @@ def gerar_tags_seo(titulo, texto):
         "planalto": "Palácio do Planalto",
         "presidência da república": "Presidência da República",
 
-        # Segurança e Justiça
         "polícia federal": "Polícia Federal",
         "policia federal": "Polícia Federal",
         "pf": "Polícia Federal",
@@ -712,7 +706,6 @@ def gerar_tags_seo(titulo, texto):
         "pgr": "Procuradoria-Geral da República",
         "agu": "Advocacia-Geral da União",
 
-        # Economia
         "banco central": "Banco Central do Brasil",
         "bacen": "Banco Central do Brasil",
         "ibovespa": "Ibovespa",
@@ -723,14 +716,12 @@ def gerar_tags_seo(titulo, texto):
         "tesouro nacional": "Tesouro Nacional",
         "copom": "Comitê de Política Monetária",
 
-        # Organismos internacionais
         "onu": "Organização das Nações Unidas",
         "otan": "Organização do Tratado do Atlântico Norte",
         "oms": "Organização Mundial da Saúde",
         "união europeia": "União Europeia",
         "uniao europeia": "União Europeia",
 
-        # Tecnologia
         "openai": "OpenAI",
         "google": "Google",
         "microsoft": "Microsoft",
@@ -740,13 +731,8 @@ def gerar_tags_seo(titulo, texto):
         "amazon": "Amazon"
     }
 
-    # ======================================================
-    # PESSOAS IMPORTANTES
-    # ======================================================
-
     pessoas = {
 
-        # Brasil - Governo
         "lula": "Luiz Inácio Lula da Silva",
         "luiz inácio lula da silva": "Luiz Inácio Lula da Silva",
         "jair bolsonaro": "Jair Bolsonaro",
@@ -758,7 +744,6 @@ def gerar_tags_seo(titulo, texto):
         "michelle bolsonaro": "Michelle Bolsonaro",
         "janja": "Janja da Silva",
 
-        # STF / Judiciário
         "moraes": "Alexandre de Moraes",
         "alexandre de moraes": "Alexandre de Moraes",
         "barroso": "Luís Roberto Barroso",
@@ -776,7 +761,6 @@ def gerar_tags_seo(titulo, texto):
         "andre mendonça": "André Mendonça",
         "andré mendonça": "André Mendonça",
 
-        # Política / Eleições
         "tarcísio": "Tarcísio de Freitas",
         "tarcísio de freitas": "Tarcísio de Freitas",
         "caiado": "Ronaldo Caiado",
@@ -786,7 +770,6 @@ def gerar_tags_seo(titulo, texto):
         "romeu zema": "Romeu Zema",
         "simone tebet": "Simone Tebet",
 
-        # Internacional
         "trump": "Donald Trump",
         "donald trump": "Donald Trump",
         "putin": "Vladimir Putin",
@@ -797,10 +780,6 @@ def gerar_tags_seo(titulo, texto):
         "xi jinping": "Xi Jinping",
         "marco rubio": "Marco Rubio"
     }
-
-    # ======================================================
-    # PALAVRAS DO TÍTULO
-    # ======================================================
 
     palavras_titulo = re.findall(
         r'\b[a-zà-ÿ]{4,}\b',
@@ -818,45 +797,25 @@ def gerar_tags_seo(titulo, texto):
 
     tags = []
 
-    # ======================================================
-    # TAGS DO TÍTULO (PRIORIDADE)
-    # ======================================================
-
     for p in palavras_titulo:
 
         if p not in stopwords and p.capitalize() not in tags:
             tags.append(p.capitalize())
-
-    # ======================================================
-    # TAGS DO TEXTO
-    # ======================================================
 
     for p in palavras_texto:
 
         if p not in stopwords and p.capitalize() not in tags:
             tags.append(p.capitalize())
 
-    # ======================================================
-    # ENTIDADES IMPORTANTES
-    # ======================================================
-
     for chave, entidade in entidades.items():
 
         if chave in texto_total and entidade not in tags:
             tags.append(entidade)
 
-    # ======================================================
-    # PESSOAS IMPORTANTES
-    # ======================================================
-
     for chave, nome in pessoas.items():
 
         if chave in texto_total and nome not in tags:
             tags.append(nome)
-
-    # ======================================================
-    # CLUSTERS
-    # ======================================================
 
     for cluster, palavras in clusters.items():
 
@@ -871,10 +830,6 @@ def gerar_tags_seo(titulo, texto):
 
                 break
 
-    # ======================================================
-    # TAGS FIXAS DO BLOG
-    # ======================================================
-
     tags_fixas = [
         "Diário de Notícias",
         "Notícias",
@@ -887,16 +842,11 @@ def gerar_tags_seo(titulo, texto):
         if tf not in tags:
             tags.append(tf)
 
-    # ======================================================
-    # LIMITADOR DE 200 CARACTERES
-    # ======================================================
-
     resultado = []
     tamanho_atual = 0
 
     for tag in tags:
 
-        # evita palavras muito curtas ou ruins
         if len(tag) < 4:
             continue
 
@@ -911,28 +861,36 @@ def gerar_tags_seo(titulo, texto):
         else:
             break
 
-    # limite adicional de segurança
     resultado = resultado[:15]
 
     return resultado
 
 
 # ==========================================================
-# MODO TESTE
+# MODO TESTE E PUBLICAÇÃO
 # ==========================================================
 
-def executar_modo_teste(tema_forcado=None, publicar=False):
+def executar_modo_teste(
+    tema_forcado=None,
+    publicar=False,
+    noticia_pronta=None
+):
 
-    print("=== MODO TESTE ATIVADO ===")
+    print("=== MODO TESTE / PUBLICAÇÃO ===")
 
     if not tema_forcado:
         tema_forcado = "policial"
 
-    noticia = buscar_noticia(tema_forcado)
+    # Usa a notícia já selecionada pelo programa principal.
+    # No modo de teste manual, realiza uma nova busca.
+    noticia = noticia_pronta
+
+    if not noticia:
+        noticia = buscar_noticia(tema_forcado)
 
     if not noticia:
         print("Nenhuma notícia encontrada para teste.")
-        return
+        return None
 
     gemini = GeminiEngine()
     imagem_engine = ImageEngine()
@@ -997,7 +955,6 @@ def executar_modo_teste(tema_forcado=None, publicar=False):
 
     html = obter_esqueleto_html(dados)
 
-    # validação de segurança
     if not html or len(html.strip()) < 50:
         raise Exception("HTML inválido ou vazio.")
 
@@ -1023,13 +980,14 @@ def executar_modo_teste(tema_forcado=None, publicar=False):
     if not titulo_final or len(titulo_final.strip()) < 5:
         titulo_final = "Notícia Atual"
 
+    print("Editoria:", tema_forcado)
     print("Título:", titulo_final)
     print("Tags:", tags)
     print("Tamanho do HTML:", len(html))
 
     if not publicar:
         print("Modo teste sem publicação.")
-        return
+        return noticia
 
     creds = Credentials.from_authorized_user_file(
         "token.json"
@@ -1093,7 +1051,6 @@ if __name__ == "__main__":
     print("Minuto atual:", min_atual)
 
     horario_escolhido = None
-
     tema_escolhido = None
 
     for horario_agenda, tema in AGENDA_POSTAGENS.items():
@@ -1119,8 +1076,11 @@ if __name__ == "__main__":
 
     if not horario_escolhido:
 
-        print("Fora da janela de postagem.")
+        print("Fora da janela de postagem ou horários já publicados.")
         exit()
+
+    print("Horário da agenda:", horario_escolhido)
+    print("Editoria selecionada:", tema_escolhido)
 
     noticia = buscar_noticia(
         tema_escolhido
@@ -1128,29 +1088,37 @@ if __name__ == "__main__":
 
     if not noticia:
 
-        print("Nenhuma notícia encontrada.")
+        print("Nenhuma notícia encontrada para a editoria:", tema_escolhido)
         exit()
 
-    executar_modo_teste(
+    # Publica exatamente a notícia que foi selecionada acima.
+    noticia_publicada = executar_modo_teste(
         tema_escolhido,
-        True
+        True,
+        noticia_pronta=noticia
     )
 
+    if not noticia_publicada:
+
+        print("A publicação não foi concluída. Controle não atualizado.")
+        exit()
+
+    # Registra somente depois da confirmação da publicação.
     registrar_postagem(
         data_hoje,
         horario_escolhido
     )
 
     registrar_link_publicado(
-        noticia["link"]
+        noticia_publicada["link"]
     )
 
     registrar_link_publicado(
         gerar_id_noticia(
-            noticia["titulo"]
+            noticia_publicada["titulo"]
         )
     )
 
     print(
-        f"Post publicado com sucesso: {noticia['titulo']}"
+        f"Post publicado com sucesso: {noticia_publicada['titulo']}"
     )
