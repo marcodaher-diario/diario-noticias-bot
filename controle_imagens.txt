@@ -265,3 +265,4 @@ eu-paragrafo-2026-05-24t093440.265.png
 2026-11-23|politica|https://www.camara.leg.br/midias/image/2026/11/img20260527095623268-768x473.jpg
 2026-11-24|politica|https://s2-g1.glbimg.com/1vnhucQ7fyLY0FDrZ0Fthi6uJ8o=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/e/G/ooU2YBTvmw1us4MRk6Bg/fabio-rodrigues-pozzebom-agencia-brasil.jpg
 2026-11-27|policial|https://s2-g1.glbimg.com/GPLvvjR6KibqSgl6Mk8HuIimcKk=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/Q/8/wynbLZTUO9axAbCKGHGA/co-33-.jpg
+2026-11-27|saude|https://images.pexels.com/photos/8644601/pexels-photo-8644601.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
