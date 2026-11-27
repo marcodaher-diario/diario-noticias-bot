@@ -1,4 +1,3 @@
-
 # ==========================================
 # CONFIGURAÇÕES GERAIS DO BLOG
 # ==========================================
@@ -51,25 +50,20 @@ PESOS_POR_TEMA = {
 
     # --------------------------------------
     # SEGURANÇA E POLÍCIA
-    # Chave original preservada: policial
     # --------------------------------------
 
     "policial": {
         "chacina": 12,
-        "homicídio": 12,
         "homicidio": 12,
         "assassinato": 11,
-        "latrocínio": 11,
         "latrocinio": 11,
-        "operação policial": 12,
-        "operação": 10,
-        "prisão": 10,
-        "prisões": 10,
+        "operacao policial": 12,
+        "operacao": 10,
+        "prisao": 10,
+        "prisoes": 10,
         "preso": 9,
         "fuzil": 10,
-        "tráfico": 9,
         "trafico": 9,
-        "investigação": 8,
         "investigacao": 8,
         "mandado": 8,
         "flagrante": 9,
@@ -78,9 +72,7 @@ PESOS_POR_TEMA = {
         "criminoso": 6,
         "suspeito": 5,
         "delegacia": 4,
-        "ocorrência": 4,
         "ocorrencia": 4,
-        "polícia": 5,
         "policia": 5,
         "policial": 6,
         "assalto": 8,
@@ -88,31 +80,23 @@ PESOS_POR_TEMA = {
         "furto": 7,
         "sequestro": 10,
         "estupro": 10,
-        "violência": 6,
         "violencia": 6,
-        "milícia": 9,
         "milicia": 9,
-        "facção criminosa": 10,
         "faccao criminosa": 10,
-        "facção": 9,
         "faccao": 9,
-        "batalhão": 5,
         "batalhao": 5,
-        "polícia federal": 8,
-        "polícia civil": 8,
-        "polícia militar": 8,
-        "polícia rodoviária": 8,
-        "polícia penal": 8,
+        "policia federal": 8,
+        "policia civil": 8,
+        "policia militar": 8,
+        "policia rodoviaria": 8,
+        "policia penal": 8,
         "foragido": 8,
-        "receptação": 7,
         "receptacao": 7,
-        "corrupção policial": 9,
+        "corrupcao policial": 9,
     },
-
 
     # --------------------------------------
     # POLÍTICA E GOVERNO
-    # Chave original preservada: politica
     # --------------------------------------
 
     "politica": {
@@ -122,31 +106,23 @@ PESOS_POR_TEMA = {
         "planalto": 10,
         "congresso": 10,
         "senado": 9,
-        "câmara": 9,
         "camara": 9,
         "ministro": 10,
         "ministra": 10,
-        "votação": 8,
         "votacao": 8,
         "reforma": 5,
         "partido": 5,
-        "eleição": 10,
         "eleicao": 10,
-        "eleições": 10,
         "eleicoes": 10,
         "governo": 6,
-        "oposição": 6,
         "oposicao": 6,
-        "política": 5,
         "politica": 5,
         "base governista": 7,
         "cpi": 11,
-        "comissão parlamentar": 9,
         "comissao parlamentar": 9,
         "deputado": 8,
         "deputada": 8,
         "presidente": 7,
-        "presidência": 8,
         "presidencia": 8,
         "governador": 8,
         "governadora": 8,
@@ -157,21 +133,17 @@ PESOS_POR_TEMA = {
         "senador": 8,
         "senadora": 8,
         "projeto de lei": 9,
-        "medida provisória": 9,
         "medida provisoria": 9,
         "veto": 8,
-        "sanção presidencial": 9,
         "sancao presidencial": 9,
-        "justiça eleitoral": 8,
         "justica eleitoral": 8,
-        "TSE": 10,
+        "tse": 10,
     },
 
     # --------------------------------------
     # ECONOMIA E FINANÇAS
-    # Chave original preservada: economia
     # --------------------------------------
-    
+
     "economia": {
         "inflacao": 12,
         "selic": 12,
@@ -209,14 +181,13 @@ PESOS_POR_TEMA = {
         "mercado financeiro": 9,
         "financas": 7,
         "orcamento": 8,
-        "precos": 8
+        "precos": 8,
     },
 
     # --------------------------------------
     # SAÚDE E SOCIEDADE
-    # Nova editoria
     # --------------------------------------
-    
+
     "saude": {
         "saude": 12,
         "sus": 11,
@@ -268,14 +239,13 @@ PESOS_POR_TEMA = {
         "violencia domestica": 9,
         "moradia": 6,
         "saneamento": 7,
-        "meio ambiente": 6
+        "meio ambiente": 6,
     },
-    
+
     # --------------------------------------
     # TECNOLOGIA E CIÊNCIA
-    # Nova editoria
     # --------------------------------------
-    
+
     "tecnologia": {
         "tecnologia": 10,
         "inteligencia artificial": 12,
@@ -324,14 +294,13 @@ PESOS_POR_TEMA = {
         "biotecnologia": 9,
         "genetica": 8,
         "clima": 6,
-        "mudancas climaticas": 8
+        "mudancas climaticas": 8,
     },
 
     # --------------------------------------
     # OPORTUNIDADES E SERVIÇOS
-    # Nova editoria
     # --------------------------------------
-    
+
     "oportunidades": {
         "vagas de emprego": 13,
         "vaga de emprego": 12,
@@ -385,8 +354,9 @@ PESOS_POR_TEMA = {
         "pagamentos": 6,
         "prazo de inscricao": 9,
         "matricula": 8,
-        "matriculas": 8
+        "matriculas": 8,
     },
+
 }
 
 # ==========================================
