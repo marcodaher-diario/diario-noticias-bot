@@ -147,7 +147,9 @@ def horario_para_minutos(hhmm):
 
 
 def dentro_da_janela(min_atual, min_agenda):
-    return abs(min_atual - min_agenda) <= JANELA_MINUTOS
+    diferenca = min_atual - min_agenda
+
+    return 0 <= diferenca <= JANELA_MINUTOS
 
 
 # ==========================================================
