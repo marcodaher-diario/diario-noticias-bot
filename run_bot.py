@@ -1209,20 +1209,10 @@ if __name__ == "__main__":
         print("A publicação não foi concluída. Controle não atualizado.")
         exit()
 
-    # Registra somente depois da confirmação da publicação.
+    # Registra o horário da publicação automática.
     registrar_postagem(
         data_hoje,
         horario_escolhido
-    )
-
-    registrar_link_publicado(
-        noticia_publicada["link"]
-    )
-
-    registrar_link_publicado(
-        gerar_id_noticia(
-            noticia_publicada["titulo"]
-        )
     )
 
     print(
