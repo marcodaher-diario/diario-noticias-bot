@@ -269,3 +269,4 @@ eu-paragrafo-2026-05-24t093440.265.png
 2026-11-27|tecnologia|https://s2-g1.glbimg.com/nZHl0EBl2o_SsODD1aIWyCCpSKg=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2025/4/r/15qtZ1S8q9AYYixoA0cw/pexels-goumbik-574071.jpg
 2026-11-27|tecnologia|https://images.pexels.com/photos/8644601/pexels-photo-8644601.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
 2026-11-27|economia|https://s2-g1.glbimg.com/6_JOFNTaoi9PoCWBd-c3FqDnfXg=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/b/w/DxUIE4Ss2SFaF3CNAGEg/25955686427-a866fcdcb2-k.jpg
+2026-11-27|saude|https://s2-g1.glbimg.com/WOw-Qyl_4A8xF2zTzECtBROy5dQ=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/R/h/vowNvFQOGT9I5cZz218Q/professora-que-morreu-afogada-.png
