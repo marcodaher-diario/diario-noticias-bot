@@ -6,19 +6,26 @@ on:
     - cron: '*/15 * * * *'
 
   workflow_dispatch:
-    inputs:
-      test_tema:
-        description: "Escolha a editoria para testar"
-        required: true
-        type: choice
-        options:
-          - "1"
-          - "2"
-          - "3"
-          - "4"
-          - "5"
-          - "6"
-        default: "1"
+  inputs:
+    test_tema:
+      description: |
+        Escolha a editoria para testar:
+        1 - Segurança e Polícia
+        2 - Economia e Finanças
+        3 - Política e Governo
+        4 - Saúde e Sociedade
+        5 - Tecnologia e Ciência
+        6 - Oportunidades e Serviços
+      required: true
+      type: choice
+      options:
+        - "1"
+        - "2"
+        - "3"
+        - "4"
+        - "5"
+        - "6"
+      default: "1"
 
       test_publicar:
         description: "Publicar a postagem de teste? 0 = NÃO | 1 = SIM"
