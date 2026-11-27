@@ -243,7 +243,7 @@ def link_ja_publicado(link):
 
 def gerar_id_noticia(titulo):
 
-    texto = titulo.lower()
+    texto = remover_acentos(titulo.lower())
 
     texto = re.sub(r'[^a-z0-9\s]', '', texto)
 
