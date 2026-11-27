@@ -93,8 +93,9 @@ PESOS_POR_TEMA = {
         "milícia": 9,
         "milicia": 9,
         "facção criminosa": 10,
+        "faccao criminosa": 10,
         "facção": 9,
-        "facção": 9,
+        "faccao": 9,
         "batalhão": 5,
         "batalhao": 5,
         "polícia federal": 8,
@@ -106,11 +107,6 @@ PESOS_POR_TEMA = {
         "receptação": 7,
         "receptacao": 7,
         "corrupção policial": 9,
-        "André Mendonça": 14,
-        "Lula": 13,
-        "Delação": 12,
-        "Lulinha": 15,
-        "greve": 13
     },
 
 
@@ -130,11 +126,10 @@ PESOS_POR_TEMA = {
         "camara": 9,
         "ministro": 10,
         "ministra": 10,
-        "André Mendonça": 14,
         "votação": 8,
         "votacao": 8,
-        "reforma": 9,
-        "partido": 7,
+        "reforma": 5,
+        "partido": 5,
         "eleição": 10,
         "eleicao": 10,
         "eleições": 10,
@@ -170,10 +165,6 @@ PESOS_POR_TEMA = {
         "justiça eleitoral": 8,
         "justica eleitoral": 8,
         "TSE": 10,
-        "Lula": 13,
-        "Delação": 12,
-        "Lulinha": 15,
-        "greve": 13
     },
 
 
@@ -185,7 +176,6 @@ PESOS_POR_TEMA = {
     "economia": {
         "inflação": 12,
         "inflacao": 12,
-        "greve": 13,
         "selic": 12,
         "juros": 10,
         "dólar": 11,
