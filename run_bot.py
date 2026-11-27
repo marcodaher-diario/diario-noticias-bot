@@ -4,7 +4,7 @@
 import os
 import re
 import feedparser
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 from email.utils import parsedate_to_datetime
