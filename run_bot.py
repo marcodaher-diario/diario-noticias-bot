@@ -399,7 +399,10 @@ def buscar_noticia(tipo):
                 continue
 
             # Evita republicar notícias já utilizadas.
-            if link_ja_publicado(link):
+            if (
+                link_ja_publicado(link)
+                or link_ja_publicado(gerar_id_noticia(titulo))
+            ):
                 continue
 
             # Normaliza as palavras para não duplicar pesos por acentuação.
