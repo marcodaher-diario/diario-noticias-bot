@@ -399,7 +399,7 @@ def buscar_noticia(tipo):
                 continue
 
             # Evita republicar notícias já utilizadas.
-            if link in LINKS_PUBLICADOS:
+            if link_ja_publicado(link):
                 continue
 
             # Normaliza as palavras para não duplicar pesos por acentuação.
@@ -1088,9 +1088,6 @@ def executar_modo_teste(
 # ==========================================================
 # EXECUÇÃO PRINCIPAL
 # ==========================================================
-
-if __name__ == "__main__":
-
 
 if __name__ == "__main__":
 
