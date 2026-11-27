@@ -1091,23 +1091,50 @@ def executar_modo_teste(
 
 if __name__ == "__main__":
 
+
+if __name__ == "__main__":
+
     if os.getenv("TEST_MODE") == "true":
 
-        tema_teste = os.getenv(
-            "TEST_TEMA",
-            "policial"
-        )
+        editorias_teste = {
+            "1": "policial",
+            "2": "economia",
+            "3": "politica",
+            "4": "saude",
+            "5": "tecnologia",
+            "6": "oportunidades"
+        }
 
-        publicar_teste = (
-            os.getenv("TEST_PUBLICAR", "false") == "true"
-        )
+        opcao_tema = os.getenv("TEST_TEMA", "1").strip()
+
+        tema_teste = editorias_teste.get(opcao_tema)
+
+        if not tema_teste:
+            print(f"Opção de editoria inválida: {opcao_tema}")
+            raise SystemExit(1)
+
+        opcao_publicar = os.getenv(
+            "TEST_PUBLICAR",
+            "0"
+        ).strip()
+
+        if opcao_publicar not in ("0", "1"):
+            print("Opção inválida para publicação. Use 0 ou 1.")
+            raise SystemExit(1)
+
+        publicar_teste = opcao_publicar == "1"
+
+        print("=== CONFIGURAÇÃO DO TESTE ===")
+        print("Editoria:", tema_teste)
+        print("Publicar postagem:", "SIM" if publicar_teste else "NÃO")
 
         executar_modo_teste(
             tema_forcado=tema_teste,
             publicar=publicar_teste
         )
 
-        exit()
+        raise SystemExit(0)
+
 
     agora = obter_horario_brasilia()
 
