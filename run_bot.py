@@ -1085,6 +1085,14 @@ def executar_modo_teste(
 
     print("Postagem publicada com sucesso.")
 
+    # Registra a notícia para evitar republicação futura.
+    registrar_link_publicado(noticia["link"])
+    registrar_link_publicado(
+        gerar_id_noticia(noticia["titulo"])
+    )
+    
+    print("Notícia registrada no controle de duplicidade.")
+    
     return noticia
 
 
