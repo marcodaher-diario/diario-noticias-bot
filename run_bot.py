@@ -257,27 +257,35 @@ def gerar_id_noticia(titulo):
 # ==========================================================
 
 def verificar_assunto(titulo, texto):
-
     conteudo = remover_acentos(f"{titulo} {texto}".lower())
 
     melhor_tema = "geral"
     maior_score = 0
 
     for tema, palavras_chave in PESOS_POR_TEMA.items():
-
         score_atual = 0
+        palavras_normalizadas = {}
 
+        # Evita contar duas vezes palavras iguais com e sem acento.
         for palavra, peso in palavras_chave.items():
+            palavra_norm = remover_acentos(palavra.lower()).strip()
 
-            palavra_norm = remover_acentos(palavra.lower())
+            if palavra_norm:
+                palavras_normalizadas[palavra_norm] = max(
+                    palavras_normalizadas.get(palavra_norm, 0),
+                    peso
+                )
 
-            ocorrencias = conteudo.count(palavra_norm)
+        for palavra_norm, peso in palavras_normalizadas.items():
+            ocorrencias = len(re.findall(
+                rf"(?<!\w){re.escape(palavra_norm)}(?!\w)",
+                conteudo
+            ))
 
-            if ocorrencias > 0:
+            if ocorrencias:
                 score_atual += peso * ocorrencias
 
         if score_atual > maior_score:
-
             maior_score = score_atual
             melhor_tema = tema
 
@@ -285,112 +293,173 @@ def verificar_assunto(titulo, texto):
         return melhor_tema
 
     return "geral"
-
-
+    
 # ==========================================================
 # BUSCAR NOTÍCIA (BUSCA PROGRESSIVA)
 # ==========================================================
 
-def buscar_noticia(tipo):
+def buscar_noticia(tipo="geral"):
+    tipo = remover_acentos(tipo.lower().strip())
 
-    tipo = remover_acentos(tipo.lower())
+    palavras_peso = PESOS_POR_TEMA.get(tipo)
 
-    palavras_peso = PESOS_POR_TEMA.get(tipo, {})
+    if not palavras_peso:
+        print(f"Categoria inválida: {tipo}")
+        return None
 
-    agora = datetime.utcnow()
+    agora = datetime.now(timezone.utc)
 
     janelas_busca = [6, 12, 24, 36, 48]
 
-    for limite_horas in janelas_busca:
+    # Consulta cada feed apenas uma vez.
+    entradas_rss = []
+
+    for url in RSS_FEEDS:
+        try:
+            feed = feedparser.parse(url)
+
+            for entry in feed.entries:
+                entradas_rss.append(entry)
+
+        except Exception as erro:
+            print(f"Erro ao consultar RSS {url}: {erro}")
+
+    if not entradas_rss:
+        print("Nenhuma notícia encontrada nos feeds RSS.")
+        return None
+
+    for horas in janelas_busca:
+        print(f"Buscando notícias das últimas {horas} horas...")
 
         noticias_validas = []
+        links_analisados = set()
 
-        for feed_url in RSS_FEEDS:
+        for entry in entradas_rss:
+            link = entry.get("link", "").strip()
 
-            feed = feedparser.parse(feed_url)
+            if not link or link in links_analisados:
+                continue
 
-            for entry in feed.entries[:20]:
+            links_analisados.add(link)
 
-                titulo = entry.get("title", "")
-                resumo = entry.get("summary", "")
-                link = entry.get("link", "")
-                imagem = extrair_imagem_noticia(entry)
+            # Exige uma data válida de publicação ou atualização.
+            data_texto = entry.get("published") or entry.get("updated")
 
-                if not titulo or not link:
-                    continue
+            if not data_texto:
+                continue
 
-                tema_detectado = verificar_assunto(titulo, resumo)
-
-                if tema_detectado != tipo and tema_detectado != "geral":
-                    continue
-
-                if link_ja_publicado(link):
-                    continue
-
-                data_publicacao = None
-
-                if hasattr(entry, "published"):
-
-                    try:
-
-                        data_publicacao = parsedate_to_datetime(
-                            entry.published
-                        )
-
-                        if data_publicacao.tzinfo is not None:
-
-                            data_publicacao = (
-                                data_publicacao
-                                .astimezone(tz=None)
-                                .replace(tzinfo=None)
-                            )
-
-                    except:
-                        pass
-
-                if data_publicacao:
-
-                    horas_passadas = (
-                        (agora - data_publicacao).total_seconds() / 3600
+            try:
+                try:
+                    data_publicacao = parsedate_to_datetime(str(data_texto))
+                except (TypeError, ValueError, OverflowError):
+                    data_publicacao = datetime.fromisoformat(
+                        str(data_texto).replace("Z", "+00:00")
                     )
 
-                    if horas_passadas > limite_horas:
-                        continue
-
-                conteudo = remover_acentos(
-                    f"{titulo} {resumo}".lower()
-                )
-
-                score = 0
-
-                for palavra, peso in palavras_peso.items():
-
-                    palavra_norm = remover_acentos(
-                        palavra.lower()
+                if data_publicacao.tzinfo is None:
+                    data_publicacao = data_publicacao.replace(
+                        tzinfo=timezone.utc
+                    )
+                else:
+                    data_publicacao = data_publicacao.astimezone(
+                        timezone.utc
                     )
 
-                    ocorrencias = conteudo.count(palavra_norm)
+            except (TypeError, ValueError, OverflowError):
+                continue
 
-                    if ocorrencias > 0:
-                        score += peso * ocorrencias
+            # Descarta notícias com data futura.
+            if data_publicacao > agora:
+                continue
 
-                noticias_validas.append({
-                    "titulo": titulo,
-                    "texto": resumo,
-                    "link": link,
-                    "imagem": imagem,
-                    "score": score
-                })
+            # Descarta notícias fora da janela atual.
+            idade_horas = (agora - data_publicacao).total_seconds() / 3600
 
-        if noticias_validas:
+            if idade_horas > horas:
+                continue
 
-            noticia_escolhida = max(
-                noticias_validas,
-                key=lambda x: x["score"]
+            titulo = entry.get("title", "").strip()
+
+            if not titulo:
+                continue
+
+            texto = entry.get("summary", "") or ""
+
+            if not texto:
+                texto = entry.get("description", "") or ""
+
+            conteudo = remover_acentos(
+                f"{titulo} {texto}".lower()
             )
 
-            return noticia_escolhida
+            # A notícia precisa pertencer exatamente à editoria solicitada.
+            tema_detectado = verificar_assunto(titulo, texto)
 
+            if tema_detectado != tipo:
+                continue
+
+            # Evita republicar notícias já utilizadas.
+            if link in LINKS_PUBLICADOS:
+                continue
+
+            # Normaliza as palavras para não duplicar pesos por acentuação.
+            palavras_normalizadas = {}
+
+            for palavra, peso in palavras_peso.items():
+                palavra_norm = remover_acentos(
+                    palavra.lower()
+                ).strip()
+
+                if palavra_norm:
+                    palavras_normalizadas[palavra_norm] = max(
+                        palavras_normalizadas.get(palavra_norm, 0),
+                        peso
+                    )
+
+            score = 0
+
+            for palavra_norm, peso in palavras_normalizadas.items():
+                ocorrencias = len(re.findall(
+                    rf"(?<!\w){re.escape(palavra_norm)}(?!\w)",
+                    conteudo
+                ))
+
+                if ocorrencias:
+                    score += peso * ocorrencias
+
+            # Exige pontuação mínima para aceitar a notícia.
+            if score < 8:
+                continue
+
+            noticias_validas.append({
+                "titulo": titulo,
+                "texto": texto,
+                "link": link,
+                "score": score,
+                "_entry": entry
+            })
+
+        if noticias_validas:
+            melhor_noticia = max(
+                noticias_validas,
+                key=lambda noticia: noticia["score"]
+            )
+
+            # Extrai a imagem somente da notícia escolhida.
+            melhor_noticia["imagem"] = extrair_imagem_noticia(
+                melhor_noticia["_entry"]
+            )
+
+            del melhor_noticia["_entry"]
+
+            print(
+                f"Notícia selecionada: {melhor_noticia['titulo']} "
+                f"| Pontuação: {melhor_noticia['score']}"
+            )
+
+            return melhor_noticia
+
+    print(f"Nenhuma notícia adequada encontrada para: {tipo}")
     return None
 
 
