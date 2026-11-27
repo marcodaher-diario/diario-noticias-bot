@@ -7,20 +7,27 @@ on:
 
   workflow_dispatch:
     inputs:
-      test_mode:
-        description: "Ativar modo teste? (true ou false)"
-        required: false
-        default: "false"
-
       test_tema:
-        description: "Tema para teste (policial, politica, economia, saude, tecnologia, oportunidades)"
-        required: false
-        default: "policial"
+        description: "Escolha a editoria para testar"
+        required: true
+        type: choice
+        options:
+          - "1"
+          - "2"
+          - "3"
+          - "4"
+          - "5"
+          - "6"
+        default: "1"
 
       test_publicar:
-        description: "Publicar ao vivo? (true ou false)"
-        required: false
-        default: "false"
+        description: "Publicar a postagem de teste? 0 = NÃO | 1 = SIM"
+        required: true
+        type: choice
+        options:
+          - "0"
+          - "1"
+        default: "0"
 
 permissions:
   contents: write
@@ -54,9 +61,9 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
           UNSPLASH_API_KEY: ${{ secrets.UNSPLASH_API_KEY }}
-          TEST_MODE: ${{ github.event.inputs.test_mode || 'false' }}
-          TEST_TEMA: ${{ github.event.inputs.test_tema || 'policial' }}
-          TEST_PUBLICAR: ${{ github.event.inputs.test_publicar || 'false' }}
+          TEST_MODE: ${{ github.event_name == 'workflow_dispatch' && 'true' || 'false' }}
+          TEST_TEMA: ${{ github.event.inputs.test_tema || '1' }}
+          TEST_PUBLICAR: ${{ github.event.inputs.test_publicar || '0' }}
         run: python run_bot.py
 
       - name: Commitar arquivos de controle automaticamente
