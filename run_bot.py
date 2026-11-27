@@ -298,7 +298,7 @@ def verificar_assunto(titulo, texto):
 # BUSCAR NOTÍCIA (BUSCA PROGRESSIVA)
 # ==========================================================
 
-def buscar_noticia(tipo="geral"):
+def buscar_noticia(tipo):
     tipo = remover_acentos(tipo.lower().strip())
 
     palavras_peso = PESOS_POR_TEMA.get(tipo)
